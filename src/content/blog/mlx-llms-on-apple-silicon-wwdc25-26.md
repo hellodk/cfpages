@@ -2,7 +2,7 @@
 title: "From One Mac to a Desk-Sized AI Cluster: Running LLMs with MLX (WWDC25 & WWDC26)"
 date: 2026-06-20
 description: "A practical walkthrough of Apple's MLX framework for local LLMs — inference, quantization, fine-tuning on a single Mac, then scaling to multi-Mac clusters with JACCL and Thunderbolt 5."
-tags: [mlx, apple, llm, machine-learning, devops]
+tags: [mlx, apple, llm, machine-learning, devops, mlops]
 draft: false
 cover: "assets/images/Coding_with_Style-2_uhd.jpg"
 ---

@@ -3,7 +3,7 @@ title: "My Resume Hosted"
 date: 2021-06-06
 description: "My Resume Hosted"
 tags: [tutorials]
-draft: true
+draft: false
 ---
 
 <!DOCTYPE html>

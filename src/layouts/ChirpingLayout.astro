@@ -4,6 +4,7 @@ import LeftSidebar from '../components/chirping/LeftSidebar.astro';
 import RightSidebar from '../components/chirping/RightSidebar.astro';
 import ChatWidget from '../components/ChatWidget.astro';
 import { getCollection } from 'astro:content';
+import { mainNav, llmNav } from '../data/navigation';
 
 interface Props {
   title?: string;
@@ -50,12 +51,16 @@ const allTags = [...new Set(allPosts.flatMap(p => p.data.tags))].sort();
       <nav class="chirp-mobile-nav" aria-label="Mobile navigation">
         <a href="/" class="chirp-mobile-logo">hello<em>dk</em></a>
         <div class="chirp-mobile-links" id="mob-links">
-          <a href="/">Blog</a>
+          <p class="chirp-mobile-section">Menu</p>
+          {mainNav.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))}
+          <p class="chirp-mobile-section">LLM</p>
+          {llmNav.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))}
           <a href="/search">Search</a>
-          <a href="/tag/devops">DevOps</a>
-          <a href="/tag/kubernetes">Kubernetes</a>
-          <a href="/about">About</a>
-          <a href="/hellodk-content-migration-guide">Launch guide</a>
+          <a href="/contact">Contact</a>
         </div>
         <button id="mob-burger" aria-label="Menu"><span></span><span></span><span></span></button>
       </nav>
@@ -155,6 +160,11 @@ const allTags = [...new Set(allPosts.flatMap(p => p.data.tags))].sort();
 }
 .chirp-mobile-links.open { display: flex; }
 .chirp-mobile-links a { padding: 10px 20px; font-size: 0.9rem; color: #1a1a1a; text-decoration: none; border-bottom: 1px solid #dee2e6; }
+.chirp-mobile-section {
+  margin: 0; padding: 12px 20px 4px;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #868e96; background: #eef1f4;
+}
 .chirp-mobile-links a:hover { background: #e9ecef; }
 #mob-burger {
   display: flex; flex-direction: column; gap: 4px;

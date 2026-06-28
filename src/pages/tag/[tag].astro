@@ -3,10 +3,12 @@ import { getCollection } from 'astro:content';
 import ChirpingLayout from '../../layouts/ChirpingLayout.astro';
 import PostGrid from '../../components/PostGrid.astro';
 import { toPost } from '../../utils/toPost';
+import { navTagSlugs } from '../../data/navigation';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
-  const allTags = [...new Set(posts.flatMap(p => p.data.tags))];
+  const postTags = posts.flatMap(p => p.data.tags);
+  const allTags = [...new Set([...postTags, ...navTagSlugs])];
   return allTags.map(tag => ({
     params: { tag },
     props: {
@@ -28,10 +30,14 @@ const { tag, posts } = Astro.props;
     <p class="tag-head__count">{posts.length} post{posts.length !== 1 ? 's' : ''}</p>
   </header>
   <PostGrid posts={posts} featureFirst={false} />
+  {posts.length === 0 && (
+    <p class="tag-empty">No published posts in this section yet — check back soon.</p>
+  )}
 </ChirpingLayout>
 
 <style>
 .tag-head { margin-bottom: 8px; padding-bottom: 16px; border-bottom: 1px solid #dee2e6; }
 .tag-head__title { font-family: var(--font-sans); font-size: 1.5rem; font-weight: 700; color: #e5645e; }
 .tag-head__count { font-size: 0.82rem; color: #6c757d; margin-top: 4px; }
+.tag-empty { color: #6c757d; font-size: 0.9rem; margin-top: 16px; }
 </style>
