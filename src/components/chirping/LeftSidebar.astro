@@ -1,6 +1,6 @@
 ---
 import NavIcon from '../icons/NavIcon.astro';
-import { mainNav, llmNav, isNavActive } from '../../data/navigation';
+import { topicNav, llmNav, siteNav, isNavActive } from '../../data/navigation';
 
 const currentPath = Astro.url.pathname;
 ---
@@ -12,9 +12,8 @@ const currentPath = Astro.url.pathname;
   </div>
 
   <nav class="lsb__nav" aria-label="Main">
-    <h3 class="lsb__section-title">Menu</h3>
-    <ul>
-      {mainNav.map((link) => (
+    <ul class="lsb__group">
+      {topicNav.map((link) => (
         <li>
           <a
             href={link.href}
@@ -28,8 +27,22 @@ const currentPath = Astro.url.pathname;
     </ul>
 
     <h3 class="lsb__section-title">LLM</h3>
-    <ul>
+    <ul class="lsb__group">
       {llmNav.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={['lsb__link', isNavActive(link.href, currentPath) && 'active']}
+          >
+            <span class="icon"><NavIcon name={link.icon} size={18} /></span>
+            <span class="label">{link.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <ul class="lsb__group lsb__group--site">
+      {siteNav.map((link) => (
         <li>
           <a
             href={link.href}
@@ -73,16 +86,17 @@ const currentPath = Astro.url.pathname;
 .lsb__logo { font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 700; color: #1a1a1a; text-decoration: none; display: block; margin-bottom: 4px; }
 .lsb__logo em { color: #e5645e; font-style: normal; }
 .lsb__tagline { font-size: 0.7rem; color: #6c757d; }
-.lsb__nav { flex: 1; padding: 4px 0 8px; overflow-y: auto; }
+.lsb__nav { flex: 1; padding: 8px 0; overflow-y: auto; }
+.lsb__group { list-style: none; padding: 0; margin: 0; }
+.lsb__group--site { margin-top: 8px; padding-top: 8px; border-top: 1px solid #dee2e6; }
 .lsb__section-title {
-  margin: 12px 16px 6px;
+  margin: 14px 16px 6px;
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #868e96;
 }
-.lsb__nav ul { list-style: none; padding: 0; margin: 0 0 4px; }
 .lsb__link {
   display: flex; align-items: center; gap: 10px;
   padding: 8px 16px; color: #495057; text-decoration: none;

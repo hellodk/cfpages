@@ -74,6 +74,12 @@ const stroke = {
 {name === 'graphify' && (
   <svg {...stroke}><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.49l-6.82 3.98"/></svg>
 )}
-{!['home','search','databases','devops','fiction','mlops','travel','resume','photography','about','author','contact','llm','machine-learning','ai-agents','claude-code','mlx','graphify'].includes(name) && (
+{name === 'antigravity' && (
+  <svg {...stroke}><path d="M12 2 4 12h4v8h8v-8h4L12 2z"/></svg>
+)}
+{name === 'cursor' && (
+  <svg {...stroke}><path d="M5 3l14 9-6 1-3 7-5-17z"/></svg>
+)}
+{!['home','search','databases','devops','fiction','mlops','travel','resume','photography','about','author','contact','llm','machine-learning','ai-agents','claude-code','mlx','graphify','cursor','antigravity'].includes(name) && (
   <svg {...stroke}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
 )}
