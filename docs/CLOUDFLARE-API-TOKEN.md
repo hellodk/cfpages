@@ -1,71 +1,70 @@
 # Cloudflare API token for Git deploy
 
-Deploy fails with **`Authentication error [code: 10000]`** when the build token cannot access Pages — even if your user is Super Admin. The **API token scopes** are separate from your dashboard role.
+## Why deploy failed after adding secrets
 
-## Fix (5 minutes)
+You added `CLOUDFLARE_API_TOKEN` under **Variables and secrets** (runtime). That is **not** what the deploy step uses.
 
-### 1. Create a new token
+Workers Builds authenticates deploy with the token in **Settings → Builds → API token** (yours is named **cfpages build token**). That auto-generated token has **Workers Scripts → Edit** but **not Cloudflare Pages → Edit**.
 
-1. Open [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
-2. **Create Token** → **Create Custom Token**
+Our deploy script was calling `wrangler pages deploy`, which needs the **Pages API** → auth 10000 even when `whoami` succeeds.
 
-| Field | Value |
-|-------|--------|
-| Token name | `cfpages-git-deploy` |
-| Account resources | Include → **hellodk** |
-| Account permissions | **Cloudflare Pages** → **Edit** |
-| | **Workers Scripts** → **Edit** (required for `/api/*` Functions) |
-| | **Workers AI** → **Read** (optional, for chat binding) |
-| User permissions | **User Details** → **Read** (wrangler `whoami`) |
+**Fix (in repo):** deploy now uses `wrangler deploy` (Workers API), which matches the build token you already have. No new token required.
 
-3. **Continue to summary** → **Create Token**
-4. Copy the token once (you won’t see it again)
+---
 
-### 2. Add to the Cloudflare build environment
+## If deploy still fails
 
-**Workers & Pages → cfpages → Settings → Variables and secrets**
+### 1. Check Builds API token
 
-Add as **encrypted** secrets (Production + Preview):
+**Workers & Pages → cfpages → Settings → Builds → API token**
 
-| Name | Value |
-|------|--------|
-| `CLOUDFLARE_API_TOKEN` | *(paste new token — no quotes, no spaces)* |
-| `CLOUDFLARE_ACCOUNT_ID` | `d78f7ab0a83aeb09e9d06ad8dc6757c3` |
+Default **cfpages build token** permissions (auto-created):
 
-Also update the project’s **API token** field (build configuration) if it uses a separate “cfpages build token” — replace it with this new token or ensure that token has the same permissions above.
+| Permission | Access |
+|------------|--------|
+| Workers Scripts | Edit |
+| Workers Routes | Edit (all zones) |
+| Account Settings | Read |
+| User Details | Read |
 
-### 3. Build settings checklist
+That is enough for `wrangler deploy`. You do **not** need Pages Edit anymore.
+
+To rotate: **Create new token** in Builds settings, or edit the existing token at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens).
+
+### 2. Runtime vs build secrets
+
+| Location | When used |
+|----------|-----------|
+| **Settings → Builds → API token** | Build + deploy (wrangler auth) |
+| **Settings → Builds → Build variables** | Build step only |
+| **Settings → Variables and secrets** | Runtime (Functions, `/api/*`) |
+
+`CLOUDFLARE_API_TOKEN` in Variables and secrets is **not** read by wrangler during deploy unless you also add it under **Build variables** (not needed with the new deploy script).
+
+Runtime secrets you still need in **Variables and secrets**:
+
+- `BREVO_API_KEY`, `CONTACT_*` (contact form)
+- `PUBLIC_*` analytics IDs (build-time for Astro — set as build vars too if missing in HTML)
+
+Optional:
+
+- `CLOUDFLARE_ACCOUNT_ID` = `d78f7ab0a83aeb09e9d06ad8dc6757c3` (deploy script defaults this)
+
+### 3. Build settings
 
 | Setting | Value |
 |---------|--------|
 | Build command | `npm run build` |
 | Deploy command | `npm run cf:deploy` |
-| Build output directory | `dist` |
-| Version command | *(leave empty if optional — not needed for Pages)* |
-
-### 4. Retry deployment
-
-**Deployments → Retry deployment**
+| Version command | *(leave empty)* |
 
 ---
 
-## Verify token locally (optional)
+## Verify locally (optional)
 
 ```bash
-export CLOUDFLARE_API_TOKEN="your-token"
-curl -s "https://api.cloudflare.com/client/v4/user/tokens/verify" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | head -c 200
+npm run build
+npm run cf:deploy   # needs CLOUDFLARE_API_TOKEN + Workers Scripts Edit
 ```
-
-Should return `"status": "active"`.
-
----
-
-## Still failing?
-
-1. **No whitespace** in the token when pasted into CF dashboard
-2. **Delete build cache** — Settings → Build cache → Clear cache
-3. Token must be for account **hellodk** (`d78f7ab0a83aeb09e9d06ad8dc6757c3`), not a personal zone-only token
-4. Project name must be **`cfpages`** (matches `wrangler.toml` and `--project-name`)
 
 See also [DEPLOY-AND-SECURITY.md](./DEPLOY-AND-SECURITY.md).

@@ -7,19 +7,18 @@ Last reviewed: 2026-06-28. Repo: `hellodk/cfpages`.
 | Risk | Status | Notes |
 |------|--------|--------|
 | `rsync` missing on CF build image | **Fixed** | `sync-public-assets.sh` falls back to `cp -a` |
-| `[assets]` in `wrangler.toml` breaks Pages | **Fixed** | Use `pages_build_output_dir` only |
-| Deploy command | **OK** | `npm run cf:deploy` → `wrangler pages deploy dist` |
-| `functions/` not deployed | **OK** | Wrangler picks up `/functions` from repo root |
+| Deploy command | **OK** | `npm run cf:deploy` → functions build + `wrangler deploy` |
+| `[assets]` in wrangler.toml | **OK** | Workers Builds path; `pages_build_output_dir` removed |
+| `functions/` not deployed | **OK** | `cf-deploy.sh` runs `wrangler pages functions build` then `wrangler deploy` |
 | Node version | **OK** | `.node-version` = 22, CF detects 22.x |
 | `knowledge-index.json` for chat/search | **OK** | Built in `prebuild` → copied to `dist/` |
 | Git hooks in CI | **Fixed** | `npm prepare` skips when `CI` or `CF_PAGES=1` |
 
 ### If deploy still fails
 
-1. **Auth 10000** → [CLOUDFLARE-API-TOKEN.md](./CLOUDFLARE-API-TOKEN.md) — recreate token with **Pages Edit**
-2. **API token** — set `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` in build env
-3. **Deploy command** must be `npm run cf:deploy`
-4. Clear **build cache** in dashboard if account/token was recently changed
+1. **Auth 10000** → should be fixed by `wrangler deploy` (see [CLOUDFLARE-API-TOKEN.md](./CLOUDFLARE-API-TOKEN.md)). If not, check **Settings → Builds → API token** (not runtime Variables).
+2. **Deploy command** must be `npm run cf:deploy`
+3. Clear **build cache** if a stale token was cached
 
 ---
 

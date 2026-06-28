@@ -12,6 +12,7 @@ public/knowledge-index.json
 !.env.example
 .dev.vars
 .wrangler/
+.worker-build/
 *.pem
 *.key
 credentials.json

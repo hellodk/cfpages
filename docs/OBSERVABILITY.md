@@ -43,12 +43,17 @@ You do **not** need external OTel destinations unless you use Honeycomb/Grafana/
 
 ## What stays in `wrangler.toml`
 
-Only Pages-supported settings — see [`wrangler.toml`](../wrangler.toml):
+Workers project — see [`wrangler.toml`](../wrangler.toml):
 
 ```toml
 name = "cfpages"
 compatibility_date = "2024-06-01"
-pages_build_output_dir = "dist"
+main = ".worker-build/index.js"
+
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"
+run_worker_first = ["/api/*"]
 
 [ai]
 binding = "AI"

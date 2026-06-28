@@ -142,7 +142,7 @@ Run `npm run dev` — hot reload picks it up. Set `draft: true` to hide from pro
 |---------|-------------|
 | `npm run dev` | Dev server on `:4321` |
 | `npm run build` | Production build + Pagefind |
-| `npm run cf:deploy` | `wrangler pages deploy` (CI deploy step) |
+| `npm run cf:deploy` | Compile `functions/` + `wrangler deploy` (Workers Builds) |
 | `npm run check:secrets` | Pre-push secret scan |
 | `npm run dev:layouts` | Compare layout B vs C locally (`:4325` / `:4326`) |
 

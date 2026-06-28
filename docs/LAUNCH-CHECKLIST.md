@@ -34,12 +34,14 @@ Use these values for **hellodk/cfpages** (Git-connected Pages):
 | **Build output directory** | **`dist`** |
 | Node.js | **22** — `NODE_VERSION=22` or `.node-version` in repo |
 
-Deploy uses [`wrangler.toml`](../wrangler.toml) (`pages_build_output_dir = "dist"`, `AI` binding).
+Deploy uses [`wrangler.toml`](../wrangler.toml) (`[assets]` + compiled `functions/`, `AI` binding).
 
-### API token (required for deploy)
+### API token
 
-If deploy fails with **`Authentication error [code: 10000]`**, the build token lacks **Cloudflare Pages → Edit**.  
-→ Follow **[docs/CLOUDFLARE-API-TOKEN.md](./CLOUDFLARE-API-TOKEN.md)** (create token + set `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in Variables and secrets).
+Deploy auth comes from **Settings → Builds → API token** (default **cfpages build token**).  
+Runtime **Variables and secrets** (where you added `CLOUDFLARE_API_TOKEN`) do **not** control deploy.
+
+If deploy still fails → **[docs/CLOUDFLARE-API-TOKEN.md](./CLOUDFLARE-API-TOKEN.md)**
 
 **Settings → Build** — build command, deploy command, output directory.
 
