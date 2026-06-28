@@ -31,7 +31,7 @@ Dashboard build settings:
 |---------|--------|
 | Production branch | `main` |
 | Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy` |
+| Deploy command | `npm run cf:deploy` |
 | Build output directory | `dist` |
 | Node.js | 22 |
 

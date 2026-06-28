@@ -27,7 +27,7 @@ Use these values for **hellodk/cfpages** (Git-connected Pages):
 | Production branch | `main` (must contain the Astro code) |
 | Root directory | `/` |
 | Build command | `npm run build` |
-| **Deploy command** | **`npx wrangler deploy`** (required in your CF project) |
+| Deploy command | `npm run cf:deploy` |
 | Version command | `npx wrangler versions upload` (if CF requires it) |
 | **Build output directory** | **`dist`** |
 | Node.js | **22** — `NODE_VERSION=22` or `.node-version` in repo |
