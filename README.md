@@ -111,6 +111,7 @@ Then configure **Variables and secrets** and the **Workers AI** binding (`AI`).
 |-----|---------|
 | [Launch checklist](docs/LAUNCH-CHECKLIST.md) | GA4, Giscus, Brevo, DNS, go-live checks |
 | [Deploy & security audit](docs/DEPLOY-AND-SECURITY.md) | Build failures, security fixes, CF checklist |
+| [Cloudflare API token](docs/CLOUDFLARE-API-TOKEN.md) | Fix deploy auth error 10000 |
 | [Cloudflare DNS](docs/cloudflare-dns.md) | Custom domains, `hellodk.in` → `.io` redirect |
 | [Secrets policy](docs/SECRETS.md) | What never goes in git |
 | [Content migration guide](https://hellodk.io/hellodk-content-migration-guide) | Post-audit & launch tasks |

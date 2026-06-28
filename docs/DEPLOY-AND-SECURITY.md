@@ -16,10 +16,10 @@ Last reviewed: 2026-06-28. Repo: `hellodk/cfpages`.
 
 ### If deploy still fails
 
-1. **API token** — CF project needs a token with **Cloudflare Pages Edit** (your “cfpages build token”).
-2. **Deploy command** must be `npm run cf:deploy` (not bare `wrangler deploy`).
-3. **`[ai]` binding** — set in `wrangler.toml` *and* confirm in dashboard if chat returns 503.
-4. Paste full deploy log if error persists.
+1. **Auth 10000** → [CLOUDFLARE-API-TOKEN.md](./CLOUDFLARE-API-TOKEN.md) — recreate token with **Pages Edit**
+2. **API token** — set `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` in build env
+3. **Deploy command** must be `npm run cf:deploy`
+4. Clear **build cache** in dashboard if account/token was recently changed
 
 ---
 
