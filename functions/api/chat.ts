@@ -1,8 +1,7 @@
+import { isAllowedOrigin, jsonResponse, optionsResponse, sanitizeText } from '../lib/http';
+
 interface Env {
   AI?: Ai;
-  BREVO_API_KEY?: string;
-  CONTACT_TO_EMAIL?: string;
-  CONTACT_FROM_EMAIL?: string;
 }
 
 interface KnowledgePost {
@@ -12,16 +11,6 @@ interface KnowledgePost {
   description: string;
   tags: string[];
   excerpt: string;
-}
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    },
-  });
 }
 
 function scorePost(post: KnowledgePost, query: string): number {
@@ -53,36 +42,44 @@ async function retrieveContext(request: Request, query: string): Promise<string>
     .join('\n\n');
 }
 
+function parseSources(contextText: string) {
+  return contextText.split('### ').slice(1).map(block => {
+    const title = block.split('\n')[0];
+    const url = block.match(/URL: (https:\/\/[^\n]+)/)?.[1];
+    return { title, url };
+  }).filter(s => s.url);
+}
+
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
+
+  if (!isAllowedOrigin(request.headers.get('Origin'))) {
+    return jsonResponse(request, { error: 'Forbidden' }, 403);
+  }
 
   let body: { message?: string };
   try {
     body = await request.json();
   } catch {
-    return json({ error: 'Invalid JSON body' }, 400);
+    return jsonResponse(request, { error: 'Invalid JSON body' }, 400);
   }
 
-  const message = body.message?.trim();
-  if (!message || message.length > 500) {
-    return json({ error: 'Message required (max 500 chars)' }, 400);
+  const message = sanitizeText(body.message ?? '', 500);
+  if (!message) {
+    return jsonResponse(request, { error: 'Message required (max 500 chars)' }, 400);
   }
 
   const contextText = await retrieveContext(request, message);
 
   if (!env.AI) {
     if (contextText) {
-      return json({
+      return jsonResponse(request, {
         answer: 'Here are relevant posts from hellodk.io that may help:',
-        sources: contextText.split('### ').slice(1).map(block => {
-          const title = block.split('\n')[0];
-          const url = block.match(/URL: (https:\/\/[^\n]+)/)?.[1];
-          return { title, url };
-        }).filter(s => s.url),
+        sources: parseSources(contextText),
         mode: 'search-only',
       });
     }
-    return json({
+    return jsonResponse(request, {
       answer: 'AI is not configured yet. Try /search or browse posts on the homepage.',
       sources: [],
       mode: 'fallback',
@@ -102,27 +99,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       max_tokens: 512,
     }) as { response?: string };
 
-    return json({
+    return jsonResponse(request, {
       answer: result.response ?? 'No response generated.',
-      sources: contextText
-        ? contextText.split('### ').slice(1).map(block => ({
-            title: block.split('\n')[0],
-            url: block.match(/URL: (https:\/\/[^\n]+)/)?.[1],
-          })).filter(s => s.url)
-        : [],
+      sources: contextText ? parseSources(contextText) : [],
       mode: 'rag',
     });
   } catch (err) {
-    console.error('AI error:', err);
-    return json({ error: 'AI request failed', answer: null }, 500);
+    console.error('AI error:', err instanceof Error ? err.message : 'unknown');
+    return jsonResponse(request, { error: 'AI request failed', answer: null }, 500);
   }
 };
 
-export const onRequestOptions: PagesFunction = async () =>
-  new Response(null, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
+export const onRequestOptions: PagesFunction = async ({ request }) => optionsResponse(request);

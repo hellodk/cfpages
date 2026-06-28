@@ -8,7 +8,13 @@ if [[ ! -d dist ]]; then
   exit 1
 fi
 
-# Pages project (includes functions/api/*). Prefer over plain wrangler deploy.
-exec npx wrangler pages deploy dist \
-  --project-name=cfpages \
-  --commit-dirty=true
+BRANCH="${CF_PAGES_BRANCH:-main}"
+COMMIT="${CF_PAGES_COMMIT_SHA:-}"
+
+ARGS=(pages deploy dist --project-name=cfpages --branch="$BRANCH" --commit-dirty=true)
+if [[ -n "$COMMIT" ]]; then
+  ARGS+=(--commit-hash="$COMMIT")
+fi
+
+echo "Deploying to Pages project cfpages (branch: $BRANCH)"
+exec npx wrangler "${ARGS[@]}"

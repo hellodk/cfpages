@@ -5,6 +5,10 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-XSS-Protection: 1; mode=block
 
+/api/*
+  Cache-Control: no-store
+  X-Content-Type-Options: nosniff
+
 /pagefind/*
   Cache-Control: public, max-age=31536000, immutable
 

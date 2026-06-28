@@ -1,3 +1,5 @@
+import { jsonResponse, optionsResponse, sanitizeText } from '../lib/http';
+
 interface Env {
   BREVO_API_KEY?: string;
   CONTACT_TO_EMAIL?: string;
@@ -5,49 +7,38 @@ interface Env {
   CONTACT_FROM_NAME?: string;
 }
 
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    },
-  });
-}
-
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
 
   if (!env.BREVO_API_KEY) {
-    return json({ error: 'Contact form not configured' }, 503);
+    return jsonResponse(request, { error: 'Contact form not configured' }, 503);
   }
   if (!env.CONTACT_TO_EMAIL?.trim()) {
-    return json({ error: 'Contact form not configured' }, 503);
+    return jsonResponse(request, { error: 'Contact form not configured' }, 503);
   }
 
   let body: { name?: string; email?: string; message?: string };
   try {
     body = await request.json();
   } catch {
-    return json({ error: 'Invalid JSON' }, 400);
+    return jsonResponse(request, { error: 'Invalid JSON' }, 400);
   }
 
-  const { name, email, message } = body;
+  const name = sanitizeText(body.name ?? '', 200);
+  const email = sanitizeText(body.email ?? '', 254);
+  const message = sanitizeText(body.message ?? '', 5000);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!name?.trim() || !email?.trim() || !message?.trim()) {
-    return json({ error: 'Name, email, and message are required' }, 400);
+  if (!name || !email || !message) {
+    return jsonResponse(request, { error: 'Name, email, and message are required' }, 400);
   }
   if (!emailRegex.test(email)) {
-    return json({ error: 'Invalid email address' }, 400);
-  }
-  if (message.length > 5000) {
-    return json({ error: 'Message too long' }, 400);
+    return jsonResponse(request, { error: 'Invalid email address' }, 400);
   }
 
   const toEmail = env.CONTACT_TO_EMAIL.trim();
   const fromEmail = env.CONTACT_FROM_EMAIL?.trim() || toEmail;
-  const fromName = env.CONTACT_FROM_NAME || 'hellodk.io';
+  const fromName = sanitizeText(env.CONTACT_FROM_NAME || 'hellodk.io', 100);
 
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
@@ -59,25 +50,18 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     body: JSON.stringify({
       sender: { name: fromName, email: fromEmail },
       to: [{ email: toEmail, name: 'Deepak Gupta' }],
-      replyTo: { email: email.trim(), name: name.trim() },
-      subject: `[hellodk.io] Contact from ${name.trim()}`,
-      textContent: `From: ${name.trim()} <${email.trim()}>\n\n${message.trim()}`,
+      replyTo: { email, name },
+      subject: `[hellodk.io] Contact from ${name}`,
+      textContent: `From: ${name} <${email}>\n\n${message}`,
     }),
   });
 
   if (!res.ok) {
-    console.error('Brevo error:', await res.text());
-    return json({ error: 'Failed to send message' }, 502);
+    console.error('Brevo error:', res.status, res.statusText);
+    return jsonResponse(request, { error: 'Failed to send message' }, 502);
   }
 
-  return json({ ok: true });
+  return jsonResponse(request, { ok: true });
 };
 
-export const onRequestOptions: PagesFunction = async () =>
-  new Response(null, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
+export const onRequestOptions: PagesFunction = async ({ request }) => optionsResponse(request);

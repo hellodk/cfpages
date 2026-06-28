@@ -14,6 +14,7 @@ const stagedOnly = process.argv.includes('--staged');
 const FORBIDDEN = [
   { name: 'Brevo API key', re: /xkeysib-[a-zA-Z0-9]{16,}/ },
   { name: 'GitHub PAT', re: /ghp_[a-zA-Z0-9]{36,}/ },
+  { name: 'GitHub OAuth', re: /gho_[a-zA-Z0-9]{36,}/ },
   { name: 'OpenAI key', re: /sk-[a-zA-Z0-9]{20,}/ },
   { name: 'Google API key', re: /AIza[0-9A-Za-z\-_]{35}/ },
   { name: 'Private key block', re: /-----BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY-----/ },

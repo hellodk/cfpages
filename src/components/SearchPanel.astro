@@ -40,7 +40,7 @@
     }
 
     function renderFallback(items) {
-      results.innerHTML = '';
+      results.replaceChildren();
       if (!items.length) {
         empty.hidden = false;
         return;
@@ -49,9 +49,16 @@
       for (const post of items) {
         const li = document.createElement('li');
         li.className = 'search__hit';
+        const a = document.createElement('a');
         const path = post.url.replace('https://hellodk.io', '') || `/${post.slug}`;
-        li.innerHTML = `<a href="${path}"><strong>${post.title}</strong><span>${post.description || post.excerpt?.slice(0, 120) || ''}</span></a>`;
-        results.appendChild(li);
+        a.href = path;
+        const strong = document.createElement('strong');
+        strong.textContent = post.title;
+        const span = document.createElement('span');
+        span.textContent = post.description || post.excerpt?.slice(0, 120) || '';
+        a.append(strong, span);
+        li.append(a);
+        results.append(li);
       }
     }
 
