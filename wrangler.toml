@@ -11,3 +11,12 @@ run_worker_first = ["/api/*"]
 
 [ai]
 binding = "AI"
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+
+# Optional — enable in dashboard or uncomment after verifying in CF UI:
+# [observability.traces]
+# enabled = true
+# head_sampling_rate = 1
