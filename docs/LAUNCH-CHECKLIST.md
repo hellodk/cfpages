@@ -41,7 +41,7 @@ Deploy uses [`wrangler.toml`](../wrangler.toml) (`pages_build_output_dir = "dist
 If deploy fails with **`Authentication error [code: 10000]`**, the build token lacks **Cloudflare Pages → Edit**.  
 → Follow **[docs/CLOUDFLARE-API-TOKEN.md](./CLOUDFLARE-API-TOKEN.md)** (create token + set `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in Variables and secrets).
 
-**Settings → Build**
+**Settings → Build** — build command, deploy command, output directory.
 
 **Settings → Variables and secrets** is where env vars live (see below).
 
