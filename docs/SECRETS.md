@@ -22,6 +22,17 @@
 npm run check:secrets
 ```
 
+## Pre-commit hook
+
+`npm ci` / `npm install` runs `npm prepare`, which sets `core.hooksPath` to `.githooks/`.
+
+Every commit scans **staged files** and blocks:
+
+- `.env`, `.dev.vars`, `*.pem`, `*.key`, credentials JSON
+- API key patterns (Brevo, GitHub PAT, OpenAI, Google, private keys)
+
+Manual install: `bash scripts/install-git-hooks.sh`
+
 GitHub **secret scanning** is enabled on `hellodk/cfpages`.
 
 ## Contact form

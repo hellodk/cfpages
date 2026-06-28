@@ -14,6 +14,7 @@
     "prebuild": "bash scripts/sync-public-assets.sh && node scripts/build-knowledge-index.mjs",
     "build": "astro build && npx pagefind --site dist",
     "check:secrets": "node scripts/check-secrets.mjs",
+    "prepare": "bash scripts/install-git-hooks.sh",
     "cf:deploy": "bash scripts/cf-deploy.sh",
     "preview": "astro preview",
     "preview:all": "ASTRO_TELEMETRY_DISABLED=1 ./scripts/preview-all.sh",

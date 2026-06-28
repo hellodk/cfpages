@@ -76,6 +76,8 @@ npm run preview        # serve production build locally
 npm run check:secrets  # scan tracked files before push
 ```
 
+Git hooks (`.githooks/pre-commit`) install automatically on `npm ci` — see [SECRETS.md](docs/SECRETS.md).
+
 ## Project layout
 
 ```text

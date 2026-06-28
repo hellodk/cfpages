@@ -1,0 +1,5 @@
+#!/bin/sh
+# Blocks commits that add secrets or forbidden files (.env, keys, …)
+set -e
+cd "$(dirname "$0")/.."
+node scripts/check-secrets.mjs --staged
