@@ -40,7 +40,7 @@ p.big {
 
 <h1 >Deepak Gupta</h1>
 <ul>
-	<li>Email: <span class="tab-1">hello.dk@outlook.com</li>
+	<li>Email: <span class="tab-1">hello@hellodk.io</li>
 	<li>About.me: <span class="tab-1"><a href="https://about.me/hellodk" target="_blank">about.me/hellodk</a></li>
 	<li>Blog: <span class="tab-1"><a href="https://www.hellodk.io" target="_blank">hellodk.io</a></li></li>
     <li>Github: <span class="tab-1"><a href="https://github.com/hellodk" target="_blank">github.com/hellodk</a></li></li>

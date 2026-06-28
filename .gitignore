@@ -5,9 +5,18 @@ _site/
 .sass-cache/
 public/knowledge-index.json
 *.DS_Store
+
+# Secrets — never commit
 .env
 .env.*
 !.env.example
+.dev.vars
+.wrangler/
+*.pem
+*.key
+credentials.json
+secrets.json
+
 .playwright-mcp/
 
 # Source images live in assets/ — synced to public/ on build (not committed)

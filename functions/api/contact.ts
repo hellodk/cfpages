@@ -21,6 +21,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (!env.BREVO_API_KEY) {
     return json({ error: 'Contact form not configured' }, 503);
   }
+  if (!env.CONTACT_TO_EMAIL?.trim()) {
+    return json({ error: 'Contact form not configured' }, 503);
+  }
 
   let body: { name?: string; email?: string; message?: string };
   try {
@@ -42,8 +45,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return json({ error: 'Message too long' }, 400);
   }
 
-  const toEmail = env.CONTACT_TO_EMAIL || 'hello.dk@outlook.com';
-  const fromEmail = env.CONTACT_FROM_EMAIL || toEmail;
+  const toEmail = env.CONTACT_TO_EMAIL.trim();
+  const fromEmail = env.CONTACT_FROM_EMAIL?.trim() || toEmail;
   const fromName = env.CONTACT_FROM_NAME || 'hellodk.io';
 
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {

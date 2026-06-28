@@ -71,7 +71,7 @@ sequenceDiagram
 
     B->>CF: GET https://guac.thecylon.org
     CF->>B: Enter your email address
-    B->>CF: hello.dk@outlook.com
+    B->>CF: you@example.com
     CF->>OL: One-time PIN email
     OL-->>B: PIN code (e.g. 847291)
     B->>CF: Submit PIN → ✅ Factor 1 complete

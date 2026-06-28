@@ -37,6 +37,8 @@ Dashboard build settings:
 
 Add **Variables and secrets** and **Workers AI** binding (`AI`) per [docs/LAUNCH-CHECKLIST.md](docs/LAUNCH-CHECKLIST.md).
 
+**Secrets:** see [docs/SECRETS.md](docs/SECRETS.md). Run `npm run check:secrets` before pushing.
+
 ## License
 
 MIT (theme portions under Ghost Foundation license — see GHOST.txt)

@@ -1,5 +1,7 @@
 # Launch Checklist
 
+> **Secrets:** Never commit `.env` or API keys. See [SECRETS.md](./SECRETS.md). Run `npm run check:secrets` before push.
+
 ## Cloudflare dashboard — where things are
 
 All paths start here:
