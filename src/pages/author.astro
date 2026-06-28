@@ -1,0 +1,93 @@
+---
+import ChirpingLayout from '../layouts/ChirpingLayout.astro';
+import NewsletterCTA from '../components/NewsletterCTA.astro';
+---
+
+<ChirpingLayout title="Author — hellodk.io" description="Connect with Deepak Gupta — calendar, scheduling, and contact." breadcrumb="Author">
+  <article class="author-page">
+    <header class="author-page__header">
+      <h1>Author</h1>
+      <p class="author-page__lead">
+        Too often we under-estimate the power of a touch, a smile, a kind word, a listening ear,
+        an honest compliment, or the smallest act of caring — all of which have the potential to
+        turn a life around. This site exists to connect with people and share experiences.
+      </p>
+    </header>
+
+    <section class="author-page__calendar" aria-label="Availability calendar">
+      <h2>Availability</h2>
+      <p>You can find my availability from the calendar below.</p>
+      <div class="calendar-embed">
+        <iframe
+          title="Deepak Gupta calendar"
+          src="https://calendar.google.com/calendar/embed?src=hcb2b4c4iegm7p70eg2geeu7ck%40group.calendar.google.com&ctz=Asia%2FKolkata"
+          width="100%"
+          height="400"
+          style="border:0"
+          loading="lazy"
+        ></iframe>
+      </div>
+      <p>Found your slot? I'll be happy to talk as per your preferred schedule.</p>
+      <p>
+        <a href="https://calendly.com/hellodk" target="_blank" rel="noopener noreferrer" class="btn-calendly">
+          Block my calendar on Calendly →
+        </a>
+      </p>
+      <p class="calendar-fullscreen">
+        <a
+          href="https://calendar.google.com/calendar/embed?src=hcb2b4c4iegm7p70eg2geeu7ck%40group.calendar.google.com&ctz=Asia%2FKolkata"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open full-screen calendar view
+        </a>
+      </p>
+    </section>
+  </article>
+  <NewsletterCTA title="Stay in touch" subtitle="Subscribe for new posts — no spam, just things worth reading." />
+</ChirpingLayout>
+
+<style>
+.author-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+  color: var(--color-text, #1a1a1a);
+  font-family: var(--font-serif, Georgia, serif);
+  line-height: 1.75;
+}
+.author-page__header h1 {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.author-page__lead { margin-bottom: 32px; color: #495057; }
+.author-page h2 {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.calendar-embed {
+  border: 1px solid var(--color-border, #dee2e6);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0 24px;
+  min-height: 400px;
+}
+.btn-calendly {
+  display: inline-block;
+  padding: 10px 18px;
+  background: #0066cc;
+  color: #fff !important;
+  border-radius: 6px;
+  text-decoration: none;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.btn-calendly:hover { background: #0052a3; }
+.calendar-fullscreen { font-size: 0.875rem; }
+.calendar-fullscreen a { color: #0066cc; }
+</style>

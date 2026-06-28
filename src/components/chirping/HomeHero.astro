@@ -1,0 +1,80 @@
+---
+import { site } from '../../data/site';
+
+interface Props {
+  cover?: string;
+}
+
+const { cover = site.homeCover } = Astro.props;
+---
+
+<section class="hero" style={`background-image: url('${cover}')`}>
+  <div class="hero__shade"></div>
+  <div class="hero__inner">
+    <h1 class="hero__title">{site.name}</h1>
+    <p class="hero__sub">{site.description}</p>
+    <p class="hero__tagline">{site.heroTagline}</p>
+  </div>
+</section>
+
+<style>
+.hero {
+  position: relative;
+  margin: -24px -24px 28px;
+  min-height: min(52vh, 420px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 28px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid #dee2e6;
+  text-align: center;
+}
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  /* Light tint — original Jasper shows the photo through */
+  background: rgba(0, 0, 0, 0.38);
+}
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.hero__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 4vw, 2.75rem);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.96);
+  line-height: 1.2;
+  margin: 0 0 14px;
+  letter-spacing: 0.01em;
+}
+.hero__sub {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.2vw, 1.45rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.55;
+  margin: 0 auto 16px;
+  max-width: 38em;
+}
+.hero__tagline {
+  font-family: var(--font-sans);
+  font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+@media (max-width: 768px) {
+  .hero {
+    margin: 0 -24px 24px;
+    min-height: 44vh;
+    padding: 40px 20px;
+  }
+}
+</style>

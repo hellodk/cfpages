@@ -1,0 +1,278 @@
+---
+import ChirpingLayout from '../../layouts/ChirpingLayout.astro';
+import { contentAudit, userTasks, agentTasks } from '../../data/content-audit';
+
+const statusLabel: Record<string, string> = {
+  clean: 'Clean',
+  thin: 'Thin',
+  'html-heavy': 'HTML-heavy',
+  'migration-junk': 'Migration junk',
+};
+
+const statusColor: Record<string, string> = {
+  clean: '#238636',
+  thin: '#bf8700',
+  'html-heavy': '#0969da',
+  'migration-junk': '#cf222e',
+};
+---
+
+<ChirpingLayout
+  title="Content migration guide — hellodk.io"
+  description="What’s done, what’s broken, and what you need to do before launch."
+  breadcrumb="Content guide"
+>
+  <article class="guide">
+    <header class="guide__hero">
+      <p class="guide__eyebrow">Launch checklist · content audit</p>
+      <h1>What still needs fixing — and who does it</h1>
+      <p class="guide__lead">
+        Layout C is done. Search, chat, and Cloudflare wiring are in place.
+        What remains is mostly <strong>post bodies</strong> — the words inside each article.
+        <a href="/hellodk-content-migration-guide">Read the blog version</a> for a shareable permalink.
+      </p>
+    </header>
+
+    <!-- SVG 1: Three layers (vertical stack, no crossing lines) -->
+    <section class="guide__section">
+      <h2>Where problems live</h2>
+      <p class="guide__text">The homepage can look great while individual posts still hurt. These are separate layers.</p>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 360 420" class="svg-diagram" role="img" aria-label="Three layers: theme, post body, reader view">
+          <defs>
+            <linearGradient id="g1a" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e7f1ff"/>
+              <stop offset="100%" stop-color="#cfe2ff"/>
+            </linearGradient>
+            <linearGradient id="g1b" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff3e0"/>
+              <stop offset="100%" stop-color="#ffe0b2"/>
+            </linearGradient>
+            <linearGradient id="g1c" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e8f5e9"/>
+              <stop offset="100%" stop-color="#c8e6c9"/>
+            </linearGradient>
+          </defs>
+          <rect class="box box--a" x="40" y="24" width="280" height="100" rx="12" fill="url(#g1a)" stroke="#0066cc" stroke-width="2"/>
+          <text x="180" y="58" text-anchor="middle" class="svg-title">Layout C (theme)</text>
+          <text x="180" y="82" text-anchor="middle" class="svg-sub">Cards · hero · sidebars</text>
+          <text x="180" y="104" text-anchor="middle" class="svg-tag svg-tag--ok">✓ Done</text>
+
+          <line class="arrow-v" x1="180" y1="128" x2="180" y2="148" stroke="#0066cc" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+          <rect class="box box--b" x="40" y="152" width="280" height="100" rx="12" fill="url(#g1b)" stroke="#bf8700" stroke-width="2"/>
+          <text x="180" y="186" text-anchor="middle" class="svg-title">Post markdown body</text>
+          <text x="180" y="210" text-anchor="middle" class="svg-sub">src/content/blog/*.md</text>
+          <text x="180" y="232" text-anchor="middle" class="svg-tag svg-tag--warn">13 posts need work</text>
+
+          <line class="arrow-v" x1="180" y1="256" x2="180" y2="276" stroke="#0066cc" stroke-width="2"/>
+
+          <rect class="box box--c" x="40" y="280" width="280" height="100" rx="12" fill="url(#g1c)" stroke="#238636" stroke-width="2"/>
+          <text x="180" y="314" text-anchor="middle" class="svg-title">Reader sees</text>
+          <text x="180" y="338" text-anchor="middle" class="svg-sub">Title + cover + prose</text>
+          <text x="180" y="360" text-anchor="middle" class="svg-tag">Only as good as the body</text>
+
+          <defs>
+            <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <polygon points="0 0, 8 4, 0 8" fill="#0066cc"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </section>
+
+    <!-- SVG 2: Audit grid 2x2 symmetric -->
+    <section class="guide__section">
+      <h2>Published posts audit ({contentAudit.scanned})</h2>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 400 280" class="svg-diagram" role="img" aria-label="Post audit summary">
+          <rect class="stat-box stat-box--1" x="24" y="24" width="168" height="108" rx="12" fill="#eefbf0" stroke="#238636" stroke-width="2"/>
+          <text x="108" y="64" text-anchor="middle" class="svg-stat-num">{contentAudit.summary.clean}</text>
+          <text x="108" y="88" text-anchor="middle" class="svg-stat-label">Clean</text>
+          <text x="108" y="108" text-anchor="middle" class="svg-stat-desc">Ready to ship</text>
+
+          <rect class="stat-box stat-box--2" x="208" y="24" width="168" height="108" rx="12" fill="#fff8e6" stroke="#bf8700" stroke-width="2"/>
+          <text x="292" y="64" text-anchor="middle" class="svg-stat-num">{contentAudit.summary.thin}</text>
+          <text x="292" y="88" text-anchor="middle" class="svg-stat-label">Thin</text>
+          <text x="292" y="108" text-anchor="middle" class="svg-stat-desc">Stubs / wrong topic</text>
+
+          <rect class="stat-box stat-box--3" x="24" y="148" width="168" height="108" rx="12" fill="#eef4ff" stroke="#0969da" stroke-width="2"/>
+          <text x="108" y="188" text-anchor="middle" class="svg-stat-num">{contentAudit.summary.htmlHeavy}</text>
+          <text x="108" y="212" text-anchor="middle" class="svg-stat-label">HTML-heavy</text>
+          <text x="108" y="232" text-anchor="middle" class="svg-stat-desc">Legacy Jekyll HTML</text>
+
+          <rect class="stat-box stat-box--4" x="208" y="148" width="168" height="108" rx="12" fill="#ffeef0" stroke="#cf222e" stroke-width="2"/>
+          <text x="292" y="188" text-anchor="middle" class="svg-stat-num">{contentAudit.summary.migrationJunk}</text>
+          <text x="292" y="212" text-anchor="middle" class="svg-stat-label">Migration junk</text>
+          <text x="292" y="232" text-anchor="middle" class="svg-stat-desc">Sidebar debris</text>
+        </svg>
+      </div>
+
+      <div class="legend">
+        <div class="legend__item"><span class="dot" style="background:#238636"></span> <strong>Clean</strong> — proper markdown, headings, readable</div>
+        <div class="legend__item"><span class="dot" style="background:#bf8700"></span> <strong>Thin</strong> — title exists, body is notes or wrong content</div>
+        <div class="legend__item"><span class="dot" style="background:#0969da"></span> <strong>HTML-heavy</strong> — old &lt;p&gt; / &lt;ul&gt; markup, needs conversion</div>
+        <div class="legend__item"><span class="dot" style="background:#cf222e"></span> <strong>Migration junk</strong> — Chirping layout text baked into the body</div>
+      </div>
+    </section>
+
+    <!-- SVG 3: You vs We columns -->
+    <section class="guide__section">
+      <h2>Who does what</h2>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 400 320" class="svg-diagram" role="img" aria-label="Your tasks versus automated fixes">
+          <rect x="24" y="20" width="168" height="280" rx="12" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+          <text x="108" y="52" text-anchor="middle" class="svg-col-title">You</text>
+          <rect class="you-box" x="44" y="68" width="128" height="48" rx="8" fill="#fff" stroke="#0066cc" stroke-width="1.5"/>
+          <text x="108" y="88" text-anchor="middle" class="svg-mini">Env vars & secrets</text>
+          <text x="108" y="104" text-anchor="middle" class="svg-mini-sub">Cloudflare dashboard</text>
+          <rect class="you-box" x="44" y="128" width="128" height="48" rx="8" fill="#fff" stroke="#0066cc" stroke-width="1.5"/>
+          <text x="108" y="148" text-anchor="middle" class="svg-mini">DNS redirects</text>
+          <text x="108" y="164" text-anchor="middle" class="svg-mini-sub">hellodk.in → .io</text>
+          <rect class="you-box" x="44" y="188" width="128" height="48" rx="8" fill="#fff" stroke="#0066cc" stroke-width="1.5"/>
+          <text x="108" y="208" text-anchor="middle" class="svg-mini">Proofread & fiction</text>
+          <text x="108" y="224" text-anchor="middle" class="svg-mini-sub">Your voice only</text>
+          <rect class="you-box" x="44" y="248" width="128" height="48" rx="8" fill="#fff" stroke="#0066cc" stroke-width="1.5"/>
+          <text x="108" y="268" text-anchor="middle" class="svg-mini">Cover photos</text>
+          <text x="108" y="284" text-anchor="middle" class="svg-mini-sub">Optional frontmatter</text>
+
+          <rect x="208" y="20" width="168" height="280" rx="12" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+          <text x="292" y="52" text-anchor="middle" class="svg-col-title">We (scripts / agent)</text>
+          <rect class="we-box" x="228" y="68" width="128" height="48" rx="8" fill="#fff" stroke="#238636" stroke-width="1.5"/>
+          <text x="292" y="88" text-anchor="middle" class="svg-mini">Restore from backup</text>
+          <text x="292" y="104" text-anchor="middle" class="svg-mini-sub">fix-empty-posts.mjs</text>
+          <rect class="we-box" x="228" y="128" width="128" height="48" rx="8" fill="#fff" stroke="#238636" stroke-width="1.5"/>
+          <text x="292" y="148" text-anchor="middle" class="svg-mini">HTML → markdown</text>
+          <text x="292" y="164" text-anchor="middle" class="svg-mini-sub">Headings & lists</text>
+          <rect class="we-box" x="228" y="188" width="128" height="48" rx="8" fill="#fff" stroke="#238636" stroke-width="1.5"/>
+          <text x="292" y="208" text-anchor="middle" class="svg-mini">Strip junk</text>
+          <text x="292" y="224" text-anchor="middle" class="svg-mini-sub">Migration debris</text>
+          <rect class="we-box" x="228" y="248" width="128" height="48" rx="8" fill="#fff" stroke="#238636" stroke-width="1.5"/>
+          <text x="292" y="268" text-anchor="middle" class="svg-mini">Rewrite thin posts</text>
+          <text x="292" y="284" text-anchor="middle" class="svg-mini-sub">Like dns-explained</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Post table -->
+    <section class="guide__section">
+      <h2>Every published post</h2>
+      <div class="table-wrap">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th>Post</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contentAudit.posts.map(p => (
+              <tr>
+                <td><a href={`/${p.slug}`}>{p.title}</a></td>
+                <td><span class="badge" style={`background:${statusColor[p.status]}20;color:${statusColor[p.status]};border-color:${statusColor[p.status]}`}>{statusLabel[p.status]}</span></td>
+                <td>{p.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Your checklist -->
+    <section class="guide__section guide__section--you">
+      <h2>Your action items</h2>
+      <ol class="task-list">
+        {userTasks.map(t => (
+          <li>
+            <strong>{t.title}</strong>
+            <p>{t.detail}</p>
+            {t.doc && <code>{t.doc}</code>}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- Agent checklist -->
+    <section class="guide__section">
+      <h2>Next automated passes</h2>
+      <ul class="agent-list">
+        {agentTasks.map(t => <li>{t}</li>)}
+      </ul>
+      <p class="guide__text">Say <em>“fix all html-heavy posts”</em> or <em>“fix thin posts from backup”</em> to run the next batch.</p>
+    </section>
+  </article>
+</ChirpingLayout>
+
+<style>
+.guide { max-width: 720px; font-family: var(--font-serif); color: #212529; }
+.guide__hero { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid #dee2e6; }
+.guide__eyebrow { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0066cc; margin-bottom: 8px; }
+.guide__hero h1 { font-family: var(--font-sans); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+.guide__lead { font-size: 1.05rem; line-height: 1.65; color: #495057; }
+.guide__section { margin-bottom: 48px; }
+.guide__section h2 { font-family: var(--font-sans); font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+.guide__text { font-size: 0.95rem; color: #6c757d; margin-bottom: 20px; line-height: 1.6; }
+
+.svg-wrap {
+  display: flex; justify-content: center;
+  background: #fff; border: 1px solid #dee2e6; border-radius: 12px;
+  padding: 24px; margin-bottom: 16px;
+}
+.svg-diagram { width: 100%; max-width: 400px; height: auto; display: block; }
+
+.svg-title { font-family: system-ui, sans-serif; font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+.svg-sub { font-family: system-ui, sans-serif; font-size: 11px; fill: #6c757d; }
+.svg-tag { font-family: system-ui, sans-serif; font-size: 10px; fill: #495057; }
+.svg-tag--ok { fill: #238636; font-weight: 700; }
+.svg-tag--warn { fill: #bf8700; font-weight: 700; }
+.svg-stat-num { font-family: system-ui, sans-serif; font-size: 32px; font-weight: 700; fill: #1a1a1a; }
+.svg-stat-label { font-family: system-ui, sans-serif; font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+.svg-stat-desc { font-family: system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+.svg-col-title { font-family: system-ui, sans-serif; font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+.svg-mini { font-family: system-ui, sans-serif; font-size: 10px; font-weight: 600; fill: #1a1a1a; }
+.svg-mini-sub { font-family: system-ui, sans-serif; font-size: 8px; fill: #6c757d; }
+
+/* Animations — subtle, no skew */
+.box { animation: breathe 4s ease-in-out infinite; }
+.box--b { animation-delay: 0.5s; }
+.box--c { animation-delay: 1s; }
+.arrow-v { animation: flow 2s ease-in-out infinite; }
+.stat-box { animation: breathe 5s ease-in-out infinite; }
+.stat-box--2 { animation-delay: 0.4s; }
+.stat-box--3 { animation-delay: 0.8s; }
+.stat-box--4 { animation-delay: 1.2s; }
+.you-box, .we-box { animation: breathe 4.5s ease-in-out infinite; }
+.we-box:nth-of-type(2) { animation-delay: 0.3s; }
+.we-box:nth-of-type(3) { animation-delay: 0.6s; }
+.we-box:nth-of-type(4) { animation-delay: 0.9s; }
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.92; transform: translateY(-2px); }
+}
+@keyframes flow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.legend { display: flex; flex-direction: column; gap: 8px; font-family: var(--font-sans); font-size: 0.82rem; }
+.legend__item { display: flex; align-items: flex-start; gap: 10px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+
+.table-wrap { overflow-x: auto; border: 1px solid #dee2e6; border-radius: 8px; }
+.audit-table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: 0.82rem; }
+.audit-table th { text-align: left; padding: 10px 12px; background: #f8f9fa; border-bottom: 1px solid #dee2e6; font-weight: 700; }
+.audit-table td { padding: 10px 12px; border-bottom: 1px solid #f1f3f5; vertical-align: top; }
+.audit-table a { color: #0066cc; text-decoration: none; font-weight: 600; }
+.audit-table a:hover { text-decoration: underline; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; border: 1px solid; white-space: nowrap; }
+
+.task-list { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 16px; }
+.task-list li strong { font-family: var(--font-sans); display: block; margin-bottom: 4px; }
+.task-list p { font-size: 0.92rem; color: #495057; margin-bottom: 4px; }
+.task-list code { font-size: 0.78rem; background: #f1f3f5; padding: 2px 6px; border-radius: 4px; }
+
+.agent-list { padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.8; }
+.guide__section--you { background: #f8f9fa; margin-left: -24px; margin-right: -24px; padding: 32px 24px; border-radius: 8px; }
+</style>

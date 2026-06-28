@@ -1,0 +1,254 @@
+---
+import { tagAccent } from '../utils/tagAccent';
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+  cover?: string;
+  readingTime?: number;
+  featured?: boolean;
+}
+
+const {
+  slug,
+  title,
+  description,
+  date,
+  tags,
+  cover = '/assets/images/utilities/IMG_75751.JPG',
+  readingTime = 1,
+  featured = false,
+} = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+
+const primaryTag = tags[0] ?? 'blog';
+const accent = tagAccent(primaryTag);
+---
+
+<article class:list={['card', { 'card--featured': featured }]} style={`--tag-accent: ${accent}`}>
+  <a href={`/${slug}`} class="card__media" aria-label={title}>
+    <img src={cover} alt="" class="card__img" loading={featured ? 'eager' : 'lazy'} />
+    <div class="card__scrim" aria-hidden="true"></div>
+    {featured && (
+      <div class="card__overlay">
+        <span class="card__pill">{primaryTag}</span>
+        <h2 class="card__overlay-title">{title}</h2>
+      </div>
+    )}
+    {!featured && tags[0] && (
+      <span class="card__pill card__pill--corner">{primaryTag}</span>
+    )}
+  </a>
+  <div class="card__body">
+    {!featured && (
+      <h2 class="card__title">
+        <a href={`/${slug}`}>{title}</a>
+      </h2>
+    )}
+    <p class="card__excerpt">{description}</p>
+    <footer class="card__foot">
+      <div class="card__meta">
+        <img src="/assets/images/resume/dk.jpg" alt="" class="card__avatar" width="22" height="22" />
+        <span>Deepak Gupta</span>
+        <span class="card__dot">·</span>
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        <span class="card__dot">·</span>
+        <span>{readingTime} min</span>
+      </div>
+      {tags.length > 0 && (
+        <div class="card__tags">
+          {tags.slice(0, featured ? 4 : 3).map(tag => (
+            <a href={`/tag/${tag}`} class="tag">{tag}</a>
+          ))}
+        </div>
+      )}
+    </footer>
+  </div>
+</article>
+
+<style>
+.card {
+  --tag-accent: #738a94;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    8px 14px 38px rgba(39, 44, 49, 0.06),
+    1px 3px 8px rgba(39, 44, 49, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 1px rgba(39, 44, 49, 0.08),
+    0 12px 28px rgba(39, 44, 49, 0.1);
+}
+.card--featured {
+  flex-direction: row;
+  min-height: 280px;
+}
+.card__media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.card:not(.card--featured) .card__media {
+  aspect-ratio: 16 / 10;
+}
+.card--featured .card__media {
+  width: 52%;
+  min-height: 280px;
+}
+.card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.card:hover .card__img { transform: scale(1.04); }
+.card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(9, 10, 11, 0.55) 100%
+  );
+  opacity: 0.85;
+  transition: opacity 0.25s;
+}
+.card:not(.card--featured) .card__scrim {
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    rgba(9, 10, 11, 0.35) 100%
+  );
+  opacity: 0;
+}
+.card:hover:not(.card--featured) .card__scrim { opacity: 1; }
+.card__overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 22px;
+  z-index: 1;
+}
+.card__overlay-title {
+  font-family: var(--font-sans);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+  margin-top: 8px;
+}
+.card__pill {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--tag-accent);
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+.card__pill--corner {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.card__body {
+  padding: 20px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.card--featured .card__body {
+  justify-content: center;
+  padding: 28px 26px;
+}
+.card__title {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.card__title a {
+  color: #15171a;
+  text-decoration: none;
+}
+.card__title a:hover { color: var(--color-accent); }
+.card__excerpt {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  color: #5d6d76;
+  line-height: 1.6;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card--featured .card__excerpt {
+  -webkit-line-clamp: 4;
+}
+.card__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+.card__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: #738a94;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.card__avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.card__dot { color: #dae2e7; }
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+@media (max-width: 899px) {
+  .card--featured {
+    flex-direction: column;
+    min-height: 0;
+  }
+  .card--featured .card__media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
+  .card__overlay-title { font-size: 1.2rem; }
+}
+</style>

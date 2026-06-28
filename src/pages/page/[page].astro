@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import ChirpingLayout from '../../layouts/ChirpingLayout.astro';
+import PostGrid from '../../components/PostGrid.astro';
+import Pagination from '../../components/Pagination.astro';
+import { toPost } from '../../utils/toPost';
+
+export async function getStaticPaths() {
+  const POSTS_PER_PAGE = 12;
+  const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  return Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: String(i + 1) },
+    props: {
+      posts: allPosts.slice(i * POSTS_PER_PAGE, (i + 1) * POSTS_PER_PAGE).map(toPost),
+      currentPage: i + 1,
+      totalPages,
+    },
+  }));
+}
+
+const { posts, currentPage, totalPages } = Astro.props;
+---
+
+<ChirpingLayout title={`hellodk.io — Page ${currentPage}`} breadcrumb={`Page ${currentPage}`}>
+  <PostGrid posts={posts} featureFirst={currentPage === 1} />
+  <Pagination currentPage={currentPage} totalPages={totalPages} />
+</ChirpingLayout>

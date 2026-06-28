@@ -1,0 +1,81 @@
+---
+import ChirpingLayout from '../layouts/ChirpingLayout.astro';
+---
+
+<ChirpingLayout title="Contact — hellodk.io" description="Get in touch with Deepak Gupta." breadcrumb="Contact">
+  <article class="contact-page">
+    <h1>Contact</h1>
+    <p>Send a message — delivered via Brevo to my inbox.</p>
+    <form id="contact-form" class="contact-form">
+      <label>
+        Name
+        <input type="text" name="name" required autocomplete="name" />
+      </label>
+      <label>
+        Email
+        <input type="email" name="email" required autocomplete="email" />
+      </label>
+      <label>
+        Message
+        <textarea name="message" rows="6" required maxlength="5000"></textarea>
+      </label>
+      <button type="submit">Send message</button>
+      <p id="contact-status" class="contact-status" role="status"></p>
+    </form>
+  </article>
+</ChirpingLayout>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('contact-status');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    status.textContent = 'Sending…';
+    status.className = 'contact-status';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: fd.get('name'),
+          email: fd.get('email'),
+          message: fd.get('message'),
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        status.textContent = 'Message sent — thank you!';
+        status.className = 'contact-status contact-status--ok';
+        form.reset();
+      } else {
+        status.textContent = data.error || 'Failed to send.';
+        status.className = 'contact-status contact-status--err';
+      }
+    } catch {
+      status.textContent = 'Network error. Try email: hello.dk@outlook.com';
+      status.className = 'contact-status contact-status--err';
+    }
+  });
+</script>
+
+<style>
+.contact-page { max-width: 520px; margin: 0 auto; padding: 32px 24px; }
+.contact-page h1 { font-size: 1.75rem; margin-bottom: 8px; }
+.contact-form { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+.contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.875rem; font-weight: 600; }
+.contact-form input, .contact-form textarea {
+  padding: 10px 12px; border: 1px solid #dee2e6; border-radius: 6px;
+  font-size: 0.9rem; font-family: inherit;
+}
+.contact-form button {
+  padding: 12px; background: #0066cc; color: #fff; border: none;
+  border-radius: 6px; font-weight: 600; cursor: pointer;
+}
+.contact-form button:hover { background: #0052a3; }
+.contact-status { font-size: 0.875rem; min-height: 1.25rem; }
+.contact-status--ok { color: #198754; }
+.contact-status--err { color: #dc3545; }
+</style>

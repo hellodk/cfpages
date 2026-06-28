@@ -1,0 +1,138 @@
+---
+---
+
+<div class="search">
+  <header class="search__head">
+    <h1>Search</h1>
+    <p>Find posts by topic, tool, or keyword across hellodk.io.</p>
+  </header>
+
+  <div id="pagefind-mount" class="search__pagefind" hidden></div>
+
+  <div id="search-fallback" class="search__fallback">
+    <label class="search__label" for="search-input">Search posts</label>
+    <input id="search-input" type="search" placeholder="kubernetes, salt, prometheus…" autocomplete="off" />
+    <ul id="search-results" class="search__results" role="list"></ul>
+    <p id="search-empty" class="search__empty" hidden>No matches. Try a shorter keyword or browse <a href="/">all posts</a>.</p>
+  </div>
+</div>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  (function () {
+    const mount = document.getElementById('pagefind-mount');
+    const fallback = document.getElementById('search-fallback');
+    const input = document.getElementById('search-input');
+    const results = document.getElementById('search-results');
+    const empty = document.getElementById('search-empty');
+    let index = null;
+
+    function score(post, q) {
+      const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+      const hay = `${post.title} ${post.description} ${(post.tags || []).join(' ')} ${post.excerpt}`.toLowerCase();
+      let s = 0;
+      for (const t of terms) {
+        if (hay.includes(t)) s += 1;
+        if (post.title.toLowerCase().includes(t)) s += 2;
+      }
+      return s;
+    }
+
+    function renderFallback(items) {
+      results.innerHTML = '';
+      if (!items.length) {
+        empty.hidden = false;
+        return;
+      }
+      empty.hidden = true;
+      for (const post of items) {
+        const li = document.createElement('li');
+        li.className = 'search__hit';
+        const path = post.url.replace('https://hellodk.io', '') || `/${post.slug}`;
+        li.innerHTML = `<a href="${path}"><strong>${post.title}</strong><span>${post.description || post.excerpt?.slice(0, 120) || ''}</span></a>`;
+        results.appendChild(li);
+      }
+    }
+
+    async function loadIndex() {
+      if (index) return index;
+      const res = await fetch('/knowledge-index.json');
+      if (!res.ok) throw new Error('index missing');
+      const data = await res.json();
+      index = data.posts || [];
+      return index;
+    }
+
+    async function runFallback(q) {
+      const posts = await loadIndex();
+      const ranked = posts
+        .map(p => ({ post: p, s: score(p, q) }))
+        .filter(r => r.s > 0)
+        .sort((a, b) => b.s - a.s)
+        .slice(0, 12)
+        .map(r => r.post);
+      renderFallback(ranked);
+    }
+
+    function usePagefind() {
+      if (typeof PagefindUI === 'undefined') return false;
+      mount.hidden = false;
+      fallback.hidden = true;
+      new PagefindUI({
+        element: '#pagefind-mount',
+        showSubResults: true,
+        resetStyles: false,
+      });
+      return true;
+    }
+
+    // Pagefind loads from production build; fallback for dev / missing index
+    if (!usePagefind()) {
+      input?.addEventListener('input', () => {
+        const q = input.value.trim();
+        if (q.length < 2) {
+          results.innerHTML = '';
+          empty.hidden = true;
+          return;
+        }
+        runFallback(q).catch(() => {
+          empty.textContent = 'Search index unavailable. Run npm run build first.';
+          empty.hidden = false;
+        });
+      });
+      input?.focus();
+    }
+  })();
+</script>
+
+<style>
+.search { max-width: 640px; margin: 0 auto; }
+.search__head { margin-bottom: 24px; }
+.search__head h1 { font-family: var(--font-sans); font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
+.search__head p { font-size: 0.9rem; color: #6c757d; }
+.search__label { display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 8px; color: #495057; }
+.search__fallback input {
+  width: 100%; padding: 12px 14px; border: 1px solid #dee2e6; border-radius: 8px;
+  font-size: 1rem; margin-bottom: 16px;
+}
+.search__fallback input:focus { outline: 2px solid #0066cc; border-color: transparent; }
+.search__results { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.search__hit a {
+  display: block; padding: 14px 16px; background: #fff; border: 1px solid #dee2e6;
+  border-radius: 8px; text-decoration: none; color: inherit; transition: border-color 0.15s;
+}
+.search__hit a:hover { border-color: #0066cc; }
+.search__hit strong { display: block; font-size: 0.95rem; color: #1a1a1a; margin-bottom: 4px; }
+.search__hit span { font-size: 0.8rem; color: #6c757d; line-height: 1.45; }
+.search__empty { font-size: 0.875rem; color: #6c757d; margin-top: 12px; }
+.search__empty a { color: #0066cc; }
+
+:global(#pagefind-mount) {
+  --pagefind-ui-primary: #0066cc;
+  --pagefind-ui-background: #ffffff;
+  --pagefind-ui-border: #dee2e6;
+  --pagefind-ui-text: #3a4145;
+  --pagefind-ui-scale: 0.95;
+}
+</style>

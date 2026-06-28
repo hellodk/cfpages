@@ -1,0 +1,27 @@
+---
+import ChirpingLayout from '../layouts/ChirpingLayout.astro';
+import NewsletterCTA from '../components/NewsletterCTA.astro';
+---
+
+<ChirpingLayout title="Newsletter — hellodk.io" description="Subscribe to hellodk.io — DevOps, SRE, and homelab deep-dives." breadcrumb="Newsletter">
+  <article class="nl-page">
+    <h1>Newsletter</h1>
+    <p>
+      DevOps deep-dives, homelab stories, debugging war stories, and tools worth knowing about.
+      No spam — sent when something is actually worth reading.
+    </p>
+    <a href="https://substack.com/@hellodk" target="_blank" rel="noopener" class="nl-page__substack">Follow on Substack →</a>
+  </article>
+  <NewsletterCTA title="Get hellodk in your inbox" subtitle="DevOps deep-dives and homelab stories. No spam." />
+</ChirpingLayout>
+
+<style>
+.nl-page { max-width: 520px; text-align: center; margin: 0 auto 24px; }
+.nl-page h1 { font-family: var(--font-sans); font-size: 1.75rem; font-weight: 700; margin-bottom: 12px; }
+.nl-page p { color: #6c757d; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+.nl-page__substack {
+  display: inline-block; background: var(--color-accent); color: #fff;
+  padding: 10px 22px; border-radius: 6px; text-decoration: none; font-weight: 600; font-family: var(--font-sans);
+}
+.nl-page__substack:hover { opacity: 0.92; }
+</style>

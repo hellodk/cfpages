@@ -1,0 +1,17 @@
+# Legacy Jekyll feeds
+/rss.xml       /feed.xml       301
+/atom.xml      /feed.xml       301
+
+# Legacy Jekyll permalink slugs (underscore → kebab-case)
+/getting_familiar_with_cassandra          /getting-familiar-with-cassandra          301
+/5_interesting_cloud_predictions_2016     /5-interesting-cloud-predictions-2016     301
+/rethinkdb_installation_ubuntu14          /rethinkdb-installation-ubuntu14          301
+/the_road_to_a_kingdom                    /the-road-to-a-kingdom                    301
+/how_to_pass_datastax_cassandra_administrator_certification  /how-to-pass-datastax-cassandra-administrator-certification  301
+/kubernetes_cluster_vagrant               /kubernetes-cluster-vagrant               301
+
+# Old about.md page → dedicated About route
+/about/index.html   /about   301
+
+# hellodk.in apex (handled in Cloudflare dashboard; kept for reference)
+# https://hellodk.in/* → https://hellodk.io/:splat 301

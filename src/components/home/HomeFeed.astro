@@ -1,0 +1,17 @@
+---
+import FeaturedPost from '../chirping/FeaturedPost.astro';
+import PostFeed from '../chirping/PostFeed.astro';
+import Pagination from '../Pagination.astro';
+import type { PostSummary } from '../../utils/toPost';
+
+interface Props {
+  posts: PostSummary[];
+  totalPages: number;
+}
+
+const { posts, totalPages } = Astro.props;
+---
+
+<FeaturedPost post={posts[0]} />
+<PostFeed posts={posts.slice(1)} />
+<Pagination currentPage={1} totalPages={totalPages} />

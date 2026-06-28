@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.astro/
+_site/
+.sass-cache/
+public/knowledge-index.json
+*.DS_Store
+.env
+.env.*
+!.env.example
+.playwright-mcp/
+
+# Source images live in assets/ — synced to public/ on build (not committed)
+assets/images/
+
+# Built/synced assets and OG image are committed
+!public/assets/**
+!public/images/**

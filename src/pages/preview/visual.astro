@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import { toPost } from '../../utils/toPost';
+import FeaturedPost from '../../components/chirping/FeaturedPost.astro';
+import PostFeed from '../../components/chirping/PostFeed.astro';
+import PostGrid from '../../components/PostGrid.astro';
+
+const samples = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 4)
+  .map(toPost);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Visual layout samples — hellodk.io</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.5; }
+    header { padding: 32px 24px 16px; max-width: 1200px; margin: 0 auto; }
+    header h1 { font-size: 1.5rem; margin-bottom: 8px; }
+    header p { color: #8b949e; font-size: 0.95rem; max-width: 60ch; }
+    header a { color: #58a6ff; }
+    .samples { max-width: 1200px; margin: 0 auto; padding: 0 24px 48px; display: flex; flex-direction: column; gap: 40px; }
+    .sample { background: #161b22; border: 1px solid #30363d; border-radius: 12px; overflow: hidden; }
+    .sample__head { padding: 16px 20px; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .sample__head h2 { font-size: 1.05rem; }
+    .sample__head span { font-size: 0.8rem; color: #8b949e; }
+    .sample__body { background: #fff; color: #1a1a1a; padding: 20px; }
+    .sample__body--dark { background: #f4f8fb; }
+    .legacy-list { display: flex; flex-direction: column; }
+    .legacy-item { padding: 18px 0; border-bottom: 1px solid #f1f3f5; }
+    .legacy-item:last-child { border-bottom: none; }
+    .legacy-meta { font-size: 0.72rem; color: #6c757d; margin-bottom: 5px; }
+    .legacy-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; }
+    .legacy-title a { color: #1a1a1a; text-decoration: none; }
+    .legacy-desc { font-size: 0.78rem; color: #6c757d; }
+    .pill { display: inline-block; background: #238636; color: #fff; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Chirping visual samples</h1>
+    <p>
+      Compare layouts side-by-side. The fix: serve images from <code>public/assets</code> and
+      auto-pick a cover per post (frontmatter → first image in body → tag default).
+      <a href="/">← Back to live homepage</a>
+    </p>
+  </header>
+
+  <div class="samples">
+    <section class="sample">
+      <div class="sample__head">
+        <h2>A — Current (text-only feed)</h2>
+        <span>No thumbnails when <code>cover</code> is missing · 13/35 posts had covers</span>
+      </div>
+      <div class="sample__body">
+        <div class="legacy-list">
+          {samples.slice(1).map(p => (
+            <article class="legacy-item">
+              <div class="legacy-meta">{p.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} · {p.tags[0]}</div>
+              <h3 class="legacy-title"><a href={`/${p.slug}`}>{p.title}</a></h3>
+              <p class="legacy-desc">{p.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sample">
+      <div class="sample__head">
+        <h2>B — Improved Chirping feed <span class="pill">recommended</span></h2>
+        <span>Featured hero + 168×112 thumbnails on every row</span>
+      </div>
+      <div class="sample__body">
+        <FeaturedPost post={samples[0]} />
+        <PostFeed posts={samples.slice(1)} />
+      </div>
+    </section>
+
+    <section class="sample">
+      <div class="sample__head">
+        <h2>C — Card grid (Jasper-style)</h2>
+        <span>16:9 cover cards — closer to your old Jekyll look</span>
+      </div>
+      <div class="sample__body sample__body--dark">
+        <PostGrid posts={samples} />
+      </div>
+    </section>
+  </div>
+</body>
+</html>

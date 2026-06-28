@@ -1,0 +1,17 @@
+---
+import HomeHero from '../chirping/HomeHero.astro';
+import PostGrid from '../PostGrid.astro';
+import Pagination from '../Pagination.astro';
+import type { PostSummary } from '../../utils/toPost';
+
+interface Props {
+  posts: PostSummary[];
+  totalPages: number;
+}
+
+const { posts, totalPages } = Astro.props;
+---
+
+<HomeHero />
+<PostGrid posts={posts} featureFirst />
+<Pagination currentPage={1} totalPages={totalPages} />

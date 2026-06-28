@@ -1,0 +1,16 @@
+---
+import ChirpingLayout from '../layouts/ChirpingLayout.astro';
+import HomeGrid from '../components/home/HomeGrid.astro';
+import { getCollection } from 'astro:content';
+import { toPost } from '../utils/toPost';
+
+const POSTS_PER_PAGE = 12;
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+const pagePosts = allPosts.slice(0, POSTS_PER_PAGE).map(toPost);
+---
+
+<ChirpingLayout>
+  <HomeGrid posts={pagePosts} totalPages={totalPages} />
+</ChirpingLayout>

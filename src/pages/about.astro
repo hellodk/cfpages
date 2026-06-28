@@ -1,0 +1,46 @@
+---
+import ChirpingLayout from '../layouts/ChirpingLayout.astro';
+import NewsletterCTA from '../components/NewsletterCTA.astro';
+---
+
+<ChirpingLayout title="About — hellodk.io" description="About Deepak Gupta — DevOps, SRE, homelab builder and writer." breadcrumb="About">
+  <article class="about">
+    <h1>About</h1>
+    <p>
+      I'm Deepak Gupta — a full-time technologist based in Bangalore, India.
+      I spend most of my time building and operating infrastructure: Kubernetes clusters,
+      SaltStack fleet management, CI/CD pipelines, observability stacks, and the occasional
+      homelab experiment.
+    </p>
+    <p>
+      I've been writing on hellodk.io since 2015. Most posts are about things I've debugged,
+      built, or broken — and what I learned from it.
+    </p>
+    <h2>What I work on</h2>
+    <ul>
+      <li><strong>kri</strong> — fleet management for Apple Silicon Mac Mini build infrastructure</li>
+      <li>Kubernetes — production and homelab</li>
+      <li>SaltStack — configuration management and orchestration</li>
+      <li>Observability — Prometheus, Grafana, OpenTelemetry</li>
+      <li>CI/CD — Jenkins, GitHub Actions, Gitea</li>
+    </ul>
+    <h2>Find me</h2>
+    <ul>
+      <li><a href="https://github.com/hellodk" target="_blank" rel="noopener">GitHub @hellodk</a></li>
+      <li><a href="/newsletter">Newsletter</a></li>
+      <li><a href="/feed.xml">RSS feed</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </article>
+  <NewsletterCTA />
+</ChirpingLayout>
+
+<style>
+.about { max-width: 640px; font-family: var(--font-serif); font-size: 1rem; line-height: 1.8; color: #212529; }
+.about h1 { font-family: var(--font-sans); font-size: 1.75rem; font-weight: 700; margin-bottom: 16px; }
+.about h2 { font-family: var(--font-sans); font-size: 1.15rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+.about p { margin-bottom: 1.25rem; }
+.about ul { margin: 0 0 1.25rem 1.25rem; }
+.about li { margin-bottom: 0.4rem; }
+.about a { color: #0066cc; }
+</style>
