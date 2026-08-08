@@ -219,7 +219,12 @@ function inferLanguage(code) {
   return 'bash';
 }
 
-function buildTurndown() {
+/**
+ * Exported so one-shot recovery scripts get the same table and fenced-code
+ * handling as the main migration, rather than reaching for the GFM plugin and
+ * adding a dependency for rules this module already implements.
+ */
+export function buildTurndown() {
   const td = new TurndownService({
     headingStyle: 'atx',
     codeBlockStyle: 'fenced',
