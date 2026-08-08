@@ -1,410 +1,167 @@
 ---
-title: "My Resume Hosted"
+title: "Resume"
 date: 2021-06-06
-description: "My Resume Hosted"
-tags: [tutorials]
+description: "Deepak Gupta — DevOps and SRE. Kubernetes, MLOps, observability and platform engineering across gaming, e-commerce, cloud telephony and telecom."
+tags: [resume]
 draft: false
 ---
 
-<!DOCTYPE html>
-<html>
+**Deepak Gupta** — DevOps · SRE · Platform Engineering
 
-<style>
-.tab-1 {position:absolute;left:180px; }
+- Email: [hello@hellodk.io](mailto:hello@hellodk.io)
+- Blog: [hellodk.io](https://hellodk.io)
+- GitHub: [github.com/hellodk](https://github.com/hellodk)
+- LinkedIn: [linkedin.com/in/hellodk](https://linkedin.com/in/hellodk)
+- Docker Hub: [hub.docker.com/r/hellodk](https://hub.docker.com/r/hellodk)
+- About: [about.me/hellodk](https://about.me/hellodk)
 
-.tab-2 {position:absolute;left:300px; }
+## Work experience
 
-p.small {
-  line-height: 0.7;
-}
+### SDE III — Play Games24x7, Bengaluru
+*October 2020 – Present*
 
-p.big {
-  line-height: 1.8;
-}
+One of the fastest-growing online gaming companies in India. Contributions:
 
+- Migrating databases to the Kubernetes ecosystem
+- Developing MLOps architecture and pipelines for the Data Science team
+- Running Spark jobs in containerised environments using Kubeflow
+- Data cleansing, EDA, inference and hyperparameter tuning on Kubeflow
+- Spark job internal metrics with Graphite and Grafana
+- Jenkins pipelines for app deployments and rollbacks
+- Stable Kubernetes cluster autoscaling with spot instances
+- Service mesh implementation with Istio
+- Automated Docker image builds for custom Spark applications and operators
+- EKS maintenance — upgrades, monitoring, alerting
+- Microservices network flow diagrams from VPC flow logs and Neo4j, giving a bird's-eye view of service communication
+- Monitoring systems for Kubernetes
+- Chaos engineering framework for Kubernetes with Litmus Chaos
+- Sprint planning and task distribution
 
+### DevOps Consultant / Trainer — Bengaluru
+*January 2018 – September 2020*
 
-</style>
+Helped organisations adopt DevOps tooling and practices, scaling strategies, and delivered training.
 
-<head>
-	<!-- Commented on 3rd June 2021 -->
-	<!--link rel="stylesheet" href="{{ site.baseurl }}assets/css/hr_tag.css" /-->
-	<title>Curriculum Vitae</title>
-</head>
+- Built and ran an online virtual lab platform, operated profitably
+- Active development in Python
+- Automation with Ansible
+- Website content publishing on Heroku
+- Google Analytics and SEO implementation
+- Scalable, automated, deployable apps on Kubernetes clusters
+- Evaluating new cloud solutions for clients
+- Managing SQL and NoSQL databases — MySQL, MariaDB, Cassandra, MongoDB
 
-<body>
+### Systems Engineer — Myntra Designs, Bengaluru
+*June 2016 – January 2018*
 
-<a href="{{site.baseurl}}" class="home_icon">
-	<img src="{{ site.baseurl }}{{ page.logo }}" alt="Blog Logo" style="cursor: pointer;width: 40px; height: 40px;   float: right;" />
-</a>
+India's largest fashion e-commerce organisation. Part of the sysadmin team.
 
-<h1 >Deepak Gupta</h1>
-<ul>
-	<li>Email: <span class="tab-1">hello@hellodk.io</li>
-	<li>About.me: <span class="tab-1"><a href="https://about.me/hellodk" target="_blank">about.me/hellodk</a></li>
-	<li>Blog: <span class="tab-1"><a href="https://www.hellodk.io" target="_blank">hellodk.io</a></li></li>
-    <li>Github: <span class="tab-1"><a href="https://github.com/hellodk" target="_blank">github.com/hellodk</a></li></li>
-    <li>LinkedIn: <span class="tab-1"><a href="https://www.linkedin.com/in/hellodk" target="_blank">linkedin.com/in/hellodk</a></li></li>
-    <li>Docker Hub: <span class="tab-1"><a href="https://hub.docker.com/r/hellodk" target="_blank">hub.docker.com/r/hellodk</a></li></li>
-</ul>
+- Maintaining 99.9999% infrastructure uptime across datacentre, AWS and Azure
+- Monitoring microservice API calls, revenue metrics, on-call rotation
+- Writing scalable internal tools in Python and Go
+- Automating deployments and audits with Ansible
+- Database maintenance
+- PCI maintenance and audit
 
-<hr class="bigHr">
+### DevOps Engineer — Knowlarity Communications, Bengaluru
+*January 2015 – May 2016*
 
-<h2>Work Experience:</h2>
+AI-enabled cloud telephony.
 
-<ul>
+- Debian packaging of applications
+- Automating deployments with Ansible
+- Maintaining RethinkDB — backup, recovery, scaling, sharding
+- Custom tools and APIs to scrub data across 440 million records
+- Billing framework with Cassandra and ELK
+- Grafana dashboards using statsd and Graphite
+- Maintaining RabbitMQ clusters
 
-<li><h3>SDE III, Play Games24x7, Bengaluru</h3></li>
-<h5>October 2020 - PRESENT</h5>
-<p>
-Play Games24x7 is one of the fastest growing online gaming company in India and we are rapidly expanding over other continents.
-I've been contributing to this journey of success in the below areas
-<ul>
-	<li>Migrating databases to Kubernetes ecosystem</li>
-	<li>Developing MLOps architecture/pipelines for our Data Science team</li>
-    <li>Running Spark Jobs over containerized environment using Kubeflow</li>
-    <li>Data Cleansing, EDA, Inference, Hyperparameter Tuning on Kubeflow</li>
-    <li>Spark Jobs internal metrics implementation with Graphite and Grafana</li>
-    <li>Jenkins pipelines for app deployments/rollbacks</li>
-    <li>Stable Kubernetes Cluster Autoscaling with Spot Instances</li>
-    <li>Service Mesh Implementation with Istio</li>
-    <li>Automated building of Docker images for Custom Spark Applications and Spark Operators</li>
-    <li>EKS maintenance(upgrade, monitoring, alerts etc.)</li>
-    <li>Microservices Network Flow Diagram using VPC flow logs and Neo4j - Allows birds eye view of the components and the costs involved</li>
-    <li>Implementing Monitoring Systems for k8s systems</li>
-    <li>Chaos Engineering Framework Development for k8s with Litmus Chaos</li>
-    <li>Sprint Planning and task distribution.</li>
-</ul>
-</p>
+### Project Engineer — Wipro Technologies, Bengaluru
+*November 2011 – January 2015*
 
-<li><h3>DevOps Consultant/Trainer, Bengaluru</h3></li>
-<h5>January 2018 - September 2020</h5>
-<p>I've helped organisations adopt DevOps tooling/practices, scaling strategies & have delivered 200+ corporate trainings on DevOps tools across the globe to a broad set of audiences(Developers/Sysadmins, Freshers, Architects, CTO's, VP) with nearabout 95% success rate. My work at any usual day comprised of
-<ul>
-<li>Working on an Online Virtual Labs(running profitably)</li>
-<li>Active Development on Python</li>
-<li>Automation with Ansible</li>
-<li>Website content publishing on Heroku</li>
-<li>Google Analytics & Few SEO implementations</li>
-<li>Developing Scalable Automated Deployable Apps on k8s cluster</li>
-<li>Exploring new cloud solutions for my clients</li>
-<li>Managing SQL/NoSQL Databases(MySQL/MariaDB/Cassandra/Mongo)</li>
-</ul>
-</p>
+Indian IT consulting and services multinational.
 
-<li><h3>Systems Engineer - Myntra Designs, Bengaluru</h3></li>
-<h5>June 2016 - January 2018</h5>
-<p>Myntra Designs is the biggest Indian fashion e-commerce organisation in India.
-I was a part of the sysadmin team and my responsibilites included
-<ul>
-	<li>managing 99.9999% uptime of infrastructure(Datacenter, AWS & Azure)</li>
-    <li>monitoring microservices API calls, revenue metrics, on-calls</li>
-    <li>Writing scalable internal tools on python and golang</li>
-    <li>Automating deployments and audits with Ansible</li>
-    <li>database maintenance etc.</li>
-    <li>PCI maintenance and audit</li>
-</p>
-</ul>
+- Applications in Java/CORBA for telecom OSS
+- Python APIs for a custom OpenStack implementation
+- Monitoring OpenStack with Zabbix
 
-<li><h3>DevOps Engineer - Knowlarity Communications, Bengaluru</h3></li>
-<h5>January 2015 - May 2016</h5>
-<p>Knowlarity Communications works on AI enabled cloud telephony. My primary responsibilities were to
-<ul>
-<li>Debian packaging of the applications</li>
-<li>Automate deployments using Ansible</li>
-<li>Maintaining RethinkDB databases - backup, recovery, scaling, sharding</li>
-<li>Writing custom tools and API's to scrub data upto 440 million records</li>
-<li>Implementing Billing framework model with Cassandra and ELK</li>
-<li>Creating grafana dashboards using statsd and graphite</li>
-<li>Maintaining rabbitmq clusters</li>
-</ul>
-</p>
+## Skills
 
-<li><h3>Project Engineer - Wipro Technologies, Bengaluru</h3></li>
-<h5>November 2011 - January 2015</h5>
-<p>Wipro Technologies is an Indian MNC providing IT consulting & services.
-I was primarily responsible for
-<ul>
-	<li>Writing applications in Java/CORBA for telecom OSS</li>
-	<li>Creating python API's for custom Openstack implementation</li>
-	<li>Monitoring Openstack with Zabbix</li>
-</ul></p>
-</br>
-</ul>
+| Area | Tools |
+|---|---|
+| Programming (current) | Python, Go, Bash |
+| Programming (past) | Java, Rust, C |
+| Cloud | AWS, Azure, Heroku, OpenStack |
+| Containers | Docker, Kubernetes |
+| Monitoring | Prometheus, Zabbix, Nagios, Sensu, Datadog, Icinga2 |
+| SQL databases | MySQL, MariaDB, PostgreSQL |
+| NoSQL databases | MongoDB, Cassandra, Redis, DynamoDB, CouchDB |
+| Web servers / load balancers | Nginx, HAProxy, Apache, Gunicorn, uWSGI, Tomcat |
+| Messaging | RabbitMQ, Kafka |
+| Configuration management | Ansible, Terraform, Chef, Puppet, SaltStack, Fabric |
+| Visualisation | Grafana, D3, Kibana, Talend |
+| Log management | Elasticsearch, Solr, Fluentd, Logstash |
+| Web frameworks | Django, Flask, Falcon, Spring Boot, Spring Cloud |
+| Build / CI | Jenkins, Jira, Gerrit |
+| CDN | Akamai, CloudFront, Cloudflare |
+| Protocols | REST, CORBA, SNMP, HTTP, TCP/IP, SIP |
+| Blockchain | Bitcoin, Ethereum, Hyperledger |
+| Hardware / other | Raspberry Pi, Arduino, Spartan 3E, AVR, Debian packaging, FreeSWITCH, Litmus Chaos |
 
-<hr class="bigHr">
-<h2>Software Skills:</h2>
-<ul>
-<!---li>Programming: 	Python, Java, Golang, Nodejs, C(Agile/Kanban Methodology)</li>
-<li>Web Frameworks: Django, Spring Boot, Flask, Falcon, Spring Cloud</li>
-<li>Build Tools: Jenkins, Jira, Gerrit</li>
-<li>Cryptocurrency: Blockchain, Bitcoin, Ethereum, Hyperledger</li>
-<li>Load balancers: HA Proxy, Nginx</li>
-<li>CDN: Akamai, CloudFront, Cloudflare</li>
-<li>Web/App servers: Nginx, Apache, Gunicorn, uwsgi, tomcat</li>
-<li>Configuration Management: Ansible, Saltstack, Fabric, Puppet, Chef</li>
-<li>Protocols/ Architectures:	REST, CORBA, SNMP, HTTP, TCP/IP, SIP, Wireshark</li>
-<li>Cloud/ Virtualizations: AWS, Azure, Heroku, OpenStack, Vagrant, KVM, Docker</li>
-<li>Visualizations: Grafana, D3, Kibana, Talend</li>
-<li>Others: RaspberryPi, Spartan 3E, AVR, Elasticsearch, Induino, Arduino, MOSHELL, Debian Packaging, freeswitch, WCDMA, LTE, 3PP, NMS, EMS, FCAPS, RNC, RBS, Scribe, Logstash, Fluentd,heka</li--->
-<li>Programming:
-<ul>
-	<li>Present Proficiency: <span class="tab-2"> Python, Golang, Bash</li>
-	<li>Past Proficiency: <span class="tab-2"> Java, Golang, Rust, C</li>
-</ul>
-</li>
-<li>Cloud Computing: <span class="tab-2">  AWS, Azure, Heroku, Openstack</li>
-<li>Container Technologies: <span class="tab-2">  Docker, Kubernetes</li>
-<li>Monitoring Tools: <span class="tab-2">  Prometheus, Zabbix, Nagios, Sensu, Datadog, Icinga2</li>
-<li>SQL Databases: <span class="tab-2">  MySQL, MariaDB, PostgreSQL</li>
-<li>NoSQL Databases: <span class="tab-2">  MongoDB, Cassandra, Redis, DynamoDB, CouchDB</li>
-<li>Web Server/Load Balancers: <span class="tab-2">  Nginx, HA Proxy</li>
-<li>Messaging Tools: <span class="tab-2">  RabbitMQ, Kafka</li>
-<li>Configuration Management: <span class="tab-2">  Ansible, Terraform, Chef, Puppet</li>
-<li>Programming: <span class="tab-2">  Java, Python, Golang</span></li>
-<li>Visualizations: <span class="tab-2">  Grafana, D3, Kibana, Talend</li>
-<li>Log Management: <span class="tab-2"> Elasticsearch, Solr, Fluentd, Logstash</li>
-<li>Others: <span class="tab-2"> Litmus Chaos, Jenkins
-</ul>
+## Projects
 
-<hr class="bigHr">
-<h2>
-	Projects Summary:
-</h2>
-<ul>
-	<li><h3>Fulcrum</h3></li>
-	<p>I've worked independently on streamlining the ML flow for our organisation. Using kubeflow it has helped our ML Developers save a lot of time for running their jobs on Kubeflow and we do save cost as the entire setup is running on k8s, which itself is running on a autoscaled Spot Instance nodegroup.</p>
+**Fulcrum** — Streamlined the ML workflow for the organisation using Kubeflow, worked independently.
 
-<li><h3>Havoc</h3></li>
-<p>We used Litmus Chaos tool to test the scalability of our k8s cluaters, DNS lags etc. This was primarily helpful to understand how the infra would look like under stress.</p>
+**Havoc** — Used Litmus Chaos to test Kubernetes cluster scalability and DNS lag behaviour.
 
-<li><h3>Cylon</h3></li>
-<p>I've worked on this independently to bring up a virtual lab to be used by students during online trainings. It used to automatically build up a k8s cluster with support for VNC, SSH and RDP sessions for the participants.</p>
+**Cylon** — Built a virtual lab for students during online training, independently.
 
-<li><h3>Disaster Recovery</h3></li>
-<p>Creating DR infrastructure, requirement gathering and creation of Kubernetes cluster on bare metal servers and implementing the deployment pipelines - blue-green and canary
-Infrastructure & service monitoring, sending alerts over slack and SMS
-</p>
+**Disaster recovery** — DR infrastructure from requirement gathering through Kubernetes clusters on bare metal, with infrastructure and service monitoring alerting to Slack and SMS.
 
-<li>
-	<h3>Payments Service
-</h3>
-</li>
-<p>
-Create payments service for facilitating payments transactions using Java and Spring Boot and implementing analytics with Talend to monitor the payments/orders. Invoved in Sprint Planning, Requirement gathering, Architecture planning, writing unit test-cases, coding configuration of the cluster, managing shards/replicas of the payments database, coordinating UAT and SIT and load tests
-</p>
+**Payments service** — Payment transaction service in Java and Spring Boot, with analytics.
 
-<li>
-	<h3>Centralized Log Management
-</h3>
-</li>
-<p>
-To monitor logs centrally, we needed a powerful tool. Elasticsearch is what we choose for this project and developed on top of Java using Spring Cloud. Initiated the requirement gathering, created UML diagrams, architecture planning, automated deployment & configuration of the cluster, managing shards and the replicas for elasticsearch cluster, analytics on the data using talend
-</p>
+**Centralised log management** — Elasticsearch-based central log monitoring, from evaluation through delivery.
 
-<li>
-	<h3>
-PCI Compliance
-</h3>
-</li>
-<p>
-Ensured the Payments setup is PCI DSS compliant by creating network segmentations for servers(DMZ environment) and implementing Intrusion Detection Systems(OSSEC/Alienvault) & patching(Spacewalk) the air gapped systems. Responsible for getting the VAPT(Vulnerability Assessment & Penetration Testing)
-</p>
+**PCI compliance** — Made the payments setup PCI DSS compliant via network segmentation and DMZ environments.
 
-<li>
-	<h3>
-	Apollo
-</h3>
-</li>
-<p>
-App deployment via one click using Ansible, Docker and Kubernetes by  automatically creating templates for tasks using jinja2 templating systems and wrote executors, setting up Jenkins jobs etc.
-</p>
+**Apollo** — One-click app deployment with Ansible, Docker and Kubernetes, automatically generating templates.
 
-<li>
-	<h3>
-Sethji:
-</h3>
-</li>
-<p>
-Track AWS/Azure Billing Charges
-Bill analysis using ETL & Setup the billing management stack on python and flask
-reduced billing costs by 25% by identifying overprovisioned/unused services etc.
-</p>
+**Sethji** — AWS and Azure billing tracker. Bill analysis via ETL, billing management stack in Python and Flask. Reduced billing costs by 25% by identifying overprovisioned and unused services.
 
-<li>
-	<h3>
-	Graphite Grafana Integration
-</h3>
-</li>
-<p>
-monitor services, function calls, throughput, response code status, revenue etc.
-Requirement gathering, UML, coding, writing automation, configuration and deployment on Python
-</p>
+**Graphite / Grafana integration** — Monitoring services, function calls, throughput, response codes and revenue. Requirement gathering through UML, coding, automation and deployment in Python.
 
-<li>
-<h3>
-	Monitoring Setup
-</h3>
-</li>
-<p>
-	Monitoring for complete Infrastructure
-Setup monitoring for our infrastructure(hybrid) over Icinga2/Zabbix and Talend
-Ensured High Availability of Services
-</p>
+**Monitoring setup** — Hybrid infrastructure monitoring over Icinga2, Zabbix and Talend, ensuring service high availability.
 
-<li><h3>Daily Operations - A usual day in the life of a DevOps</h3></li>
-<p>
-	<ul>
-<li>Developing tools over C++/Java/Python/Golang</br></li>
-<li>Security Audit - Implemented IDS, DDOS mitigation via fail2ban</br></li>
-<li>Packet tracing/filtering using customized tool & Wireshark</br></li>
-<li>Fixing security vulnerabilities in infrastructure</br></li>
-<li>Log Aggregation and Analytics using Elasticsearch/Solr/Kibana</br></li>
-<li>Implemented key rotation policy</br></li>
-<li>Implemented HA RabbitMQ cluster serving as a backbone for intercommunication between microservices(close to 400+ microservices) with 99.99999% SLA</br></li>
-<li>DNS, LDAP, Monitoring, Load Balancing over Nginx/HA Proxy</br></li>
-<li>Reduce data transfer costs & improved performance</br></li>
-<li>Subnet planning helped reduce the complexity of whitelisting services/IP’s</br></li>
-<li>Network planning for infrastructure migration</br></li>
-<li>Helped setup Azure account with basic services like DNS, LDAP, monitoring</br></li>
-</ul>
-</p>
+**Daily operations** — Tooling in C++, Java, Python and Go. Security audit with IDS and DDoS mitigation via fail2ban. Packet tracing and filtering with custom tooling and Wireshark. Fixing infrastructure vulnerabilities. Log aggregation and analytics with Elasticsearch, Solr and Kibana. Key rotation policy. HA RabbitMQ cluster serving as the backbone for intercommunication between roughly 40 microservices. DNS, LDAP, monitoring and load balancing over Nginx and HAProxy. Reduced data transfer costs, improved performance. Subnet planning to simplify service and IP whitelisting. Network planning for infrastructure migration. Azure account setup with DNS, LDAP and monitoring.
 
-<li>
-	<h3>
-	Clickstream Analytics
-</h3>
-</li>
-<p>
-A single point to handle all clickstream data and do analytics on that
-Integrating the existing SQL databases with ETL(Talend) and creating dashboards
-Fine details like demography, geographic locations, time etc were extracted
-Used the analytics data to create recommendation engine
-</p>
+**Clickstream analytics** — Single point for clickstream data and analysis. Integrated existing SQL databases with Talend ETL and built dashboards covering demography, geography and time, feeding a recommendation engine.
 
-<li>
-<h3>
-	WRAN CM OSS-RC (Operational Support System – Radio & Core)
-</h3>
-</li>
-<p>
-OSS-RC is a comprehensive domain manager for network infrastructure deployed with operators around the world integrating and managing a wide range of network components. Together with IP and Broadband offering, it’s a comprehensive solution for total network management of the telecommunications infrastructure
-Design of OSSRC products, configuring network elements of OSS-RC using Spring/Java
-Sprint Planning, Requirement gathering, Implementation for new changes proposed, creating user stories
-followed Test Driven Development, Coordinating in SIT, UAT
-</p>
-<li>
-<h3>
-	Cloud Adapter
-</h3>
-</li>
-<p>
-Integrate cloud services with services on physical machines for centralized monitoring
-Set up the development environment, configurations, writing test cases using J-unit
-wrote authentication modules, schedulers, startup scripts, managing notifications on Java
-</p>
-<li>
-<h3>
-	Billing Framework
-</h3>
-</li>
-<p>
-The most challenging work for any organisation, taking care of different types of contracts etc.
-Created the Billing Framework using Python and Django
-</p>
-<li>
-<h3>
-	NDNC Deployment
-</h3>
-</li>
-<p>
-Being a telemarketer, we can call only to non-dnd registered numbers
-TRAI only provides dnd data in form of CSV(500 million rows)
-Challenge was to develop our own NDNC scrubbing solution and keep it updated using Spring Boot
-Requirement gathering, UML/flow diagrams getting the NDNC data, feeding the data into our database, writing API's, automated product deployment automation, performance tuning etc. using Python/Falcon and RethinkDB
-</p></ul>
-<hr class="bigHr">
-<h3>
-	Side Projects
-</h3>
-<ul>
-<p>
-<li>Developed several multiplayer games in Python, e.g. Stopwatch, Pong, Memory, Spaceship, Blackjack & Rice Rocks Full Game
-</li>
-</p>
+**WRAN CM OSS-RC** — Operational Support System for radio and core, a domain manager for operator network infrastructure. Product design and network element configuration in Spring and Java. Sprint planning, requirement gathering, user stories, TDD, SIT and UAT coordination.
 
-<p>
-<li>
-RTL design & Synthesis of a 32-bit Microprocessor using VHDL
-</li>
-Our goal was to design a 32-bit microprocessor in VHDL, which will perform arithmetic and logic function that is on a standard 32-bit microprocessor
-Target Device: Spartan 3E Tools
-Used: Xilinx 9.1, Modelsim SE 5.7f
-</p>
+**Cloud adapter** — Integrated cloud services with physical machines for centralised monitoring. Development environment and configuration, JUnit test cases, authentication modules, schedulers, startup scripts and notification management in Java.
 
-<p>
-<li>
-Blockchain Signalling System
-</li>
-Used blockchain for Signalling DDOS attacks in a cooperative & distributed network defence
-</p>
+**Billing framework** — Billing framework in Python and Django, handling multiple contract types.
 
-<p>
-<li>
-Real-time Bitcoin Price Monitor using Arduino
-</li>
-</p>
+**NDNC deployment** — Telemarketing regulation requires calling only non-DND-registered numbers. TRAI provides DND data as CSV with 500 million rows. Built an in-house NDNC scrubbing solution kept continuously updated, using Spring Boot — requirement gathering, UML and flow diagrams, data ingestion and APIs.
 
-<p>
-	<li>
-Decentralized fleet tracking with blockchain
-</li>
-Asset tracking mechanism in a decentralized fashion. Each action, event, alerts were stored in the blockchain
-</p>
+## Side projects
 
-<p>
-<li>
-Developed an own cryptocurrency for testing purpose using Litecoin
-</li>
-</p>
-</ul>
+- Multiplayer games in Python — Stopwatch, Pong, Memory, Spaceship, Blackjack, Rice Rocks
+- RTL design and synthesis of a 32-bit microprocessor in VHDL performing arithmetic and logic functions. Target device Spartan 3E; tools Xilinx 9.1 and ModelSim SE 5.7f
+- Blockchain signalling system — using blockchain to signal DDoS attacks in a cooperative, distributed network defence
+- Real-time Bitcoin price monitor using Arduino
+- Decentralised fleet tracking with blockchain — asset tracking where each action, event and alert is stored on-chain
+- A cryptocurrency built on Litecoin for testing purposes
 
-<hr class="bigHr">
+## Awards
 
-<h3>
-	Awards & Achievements:
-</h3>
+- **Maestro Award** — for making a difference in the account, for technically ramping up team members in a short span
+- **High Flyer Award** — for individual contribution in the account
 
-<ul>
-<li>Maestro Award for Making a Difference in the Account</li>
-<p>I was awarded for technically ramping up my team members in short span of time & making a difference in the Account</p>
-<li>High Flyer Award for individual contribution in the Account</li>
-<p>I was awarded for my role as an Individual Contributor in the team</p>
-</ul>
+## Certifications
 
-<hr class="bigHr">
-
-<h3>
-Certifications:
-</h3>
-
-<ul>
-	<p>
-		<li><a href="https://academy.datastax.com/certs/lookup/2303fe2a-eecb-4db2-abd4-274e17160b6f" target="_blank">Apache Cassandra 3.x Administrator Associate</a></li>
-	</p>
-	<p>
-		<li><a href="https://www.coursera.org/account/accomplishments/certificate/S87NC2BJCLZ6" target="_blank">Big Data, Cloud Computing, & CDN Emerging Technologies</a></li>
-	</p>
-	<p>
-		<li><a href="https://cert.nobleprog.com/certificate/528869/5fe84" target="_blank">Blockchain for Developers</a></li>
-	</p>
-	<p>
-		<li><a href="https://www.coursera.org/account/accomplishments/verify/NS4UB74CKYTX" target="_blank">Interfacing with the Raspberry Pi</a></li>
-	</p>
-	<p>
-		<li><a href="https://www.coursera.org/account/accomplishments/verify/BMXZN7BA4Y" target="_blank">An Introduction to Interactive Programming with Python(RICE University)</a></li>
-	</p>
-</ul>
-
-</body>
-</html>
+- Apache Cassandra 3.x Administrator Associate
+- Big Data, Cloud Computing & CDN Emerging Technologies
+- Blockchain for Developers
+- Interfacing with the Raspberry Pi
+- An Introduction to Interactive Programming with Python — Rice University
