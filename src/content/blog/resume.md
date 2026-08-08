@@ -1,7 +1,7 @@
 ---
 title: "Resume"
 date: 2021-06-06
-description: "Deepak Gupta — DevOps and SRE. Kubernetes, MLOps, observability and platform engineering across gaming, e-commerce, cloud telephony and telecom."
+description: "Deepak Gupta — Lead DevSecOps Engineer. Fifteen years across banking, gaming, e-commerce and telecom: secure CI/CD, Kubernetes, MLOps and observability."
 tags: [resume]
 draft: false
 ---
@@ -17,8 +17,22 @@ draft: false
 
 ## Work experience
 
+### Lead DevSecOps Engineer — HDFC Bank, Bengaluru
+*December 2021 – Present*
+
+Indian banking and financial services company headquartered in Mumbai.
+
+- Defining secure CI/CD workflow architecture — OSA, SAST, container trust registry, DAST
+- Writing IaC for Kubernetes, RabbitMQ, Kafka and Nginx
+- Detecting application security issues by implementing policy as code
+- Monitoring systems with Prometheus, Grafana, Graphite and ELK
+- MLOps implementation using Kubeflow
+- Mobile CI/CD for Android and iOS with Fastlane, Flutter and Bitrise
+- Distroless and multi-stage image builds across applications
+- Writing Kubernetes CRDs for internal applications
+
 ### SDE III — Play Games24x7, Bengaluru
-*October 2020 – Present*
+*October 2020 – December 2021*
 
 One of the fastest-growing online gaming companies in India. Contributions:
 
@@ -38,7 +52,7 @@ One of the fastest-growing online gaming companies in India. Contributions:
 - Sprint planning and task distribution
 
 ### DevOps Consultant / Trainer — Bengaluru
-*January 2018 – September 2020*
+*June 2018 – September 2020*
 
 Helped organisations adopt DevOps tooling and practices, scaling strategies, and delivered training.
 
@@ -50,6 +64,15 @@ Helped organisations adopt DevOps tooling and practices, scaling strategies, and
 - Scalable, automated, deployable apps on Kubernetes clusters
 - Evaluating new cloud solutions for clients
 - Managing SQL and NoSQL databases — MySQL, MariaDB, Cassandra, MongoDB
+
+### DevOps Lead — Moveinsync Technology, Bengaluru
+*January 2018 – June 2018*
+
+India's chief employee transportation management solution.
+
+- VAPT
+- Implementing disaster recovery across multiple availability zones with Ansible
+- Securing ISO 27001 certification, which unlocked further client contracts
 
 ### Systems Engineer — Myntra Designs, Bengaluru
 *June 2016 – January 2018*
@@ -160,8 +183,8 @@ Indian IT consulting and services multinational.
 
 ## Certifications
 
-- Apache Cassandra 3.x Administrator Associate
-- Big Data, Cloud Computing & CDN Emerging Technologies
-- Blockchain for Developers
-- Interfacing with the Raspberry Pi
-- An Introduction to Interactive Programming with Python — Rice University
+- [Apache Cassandra 3.x Administrator Associate](https://academy.datastax.com/certs/lookup/2303fe2a-eecb-4db2-abd4-274e17160b6f)
+- [Big Data, Cloud Computing & CDN Emerging Technologies](https://www.coursera.org/account/accomplishments/certificate/S87NC2BJCLZ6)
+- [Blockchain for Developers](https://cert.nobleprog.com/certificate/528869/5fe84)
+- [Interfacing with the Raspberry Pi](https://www.coursera.org/account/accomplishments/verify/NS4UB74CKYTX)
+- [An Introduction to Interactive Programming with Python — Rice University](https://www.coursera.org/account/accomplishments/verify/BMXZN7BA4Y)
