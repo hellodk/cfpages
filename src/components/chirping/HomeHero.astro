@@ -13,7 +13,9 @@ const { cover = site.homeCover } = Astro.props;
   <div class="hero__inner">
     <h1 class="hero__title">{site.name}</h1>
     <p class="hero__sub">{site.description}</p>
+    <p class="hero__scale">{site.heroScale}</p>
     <p class="hero__tagline">{site.heroTagline}</p>
+    <p class="hero__journey">{site.heroJourney}</p>
   </div>
 </section>
 
@@ -62,13 +64,36 @@ const { cover = site.homeCover } = Astro.props;
   margin: 0 auto 16px;
   max-width: 38em;
 }
+/* One line of scale. Sans, so it reads as fact against the serif narrative
+   above it. 0.9 alpha on the shade clears 4.5:1 comfortably. */
+.hero__scale {
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 0.98rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 auto 14px;
+  max-width: 66ch;
+}
 .hero__tagline {
   font-family: var(--font-sans);
   font-size: clamp(0.8rem, 1.6vw, 0.95rem);
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.78);
   margin: 0;
   letter-spacing: 0.02em;
+}
+/* Closing flourish where a CTA row would normally sit. The rule above it is
+   what stops it reading as a fourth paragraph. */
+.hero__journey {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.7vw, 1.08rem);
+  color: rgba(255, 255, 255, 0.88);
+  margin: 20px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  display: inline-block;
+  letter-spacing: 0.015em;
 }
 @media (max-width: 768px) {
   .hero {

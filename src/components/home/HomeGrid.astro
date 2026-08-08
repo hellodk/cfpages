@@ -1,5 +1,6 @@
 ---
 import HomeHero from '../chirping/HomeHero.astro';
+import SelectedWork from './SelectedWork.astro';
 import PostGrid from '../PostGrid.astro';
 import Pagination from '../Pagination.astro';
 import type { PostSummary } from '../../utils/toPost';
@@ -13,5 +14,6 @@ const { posts, totalPages } = Astro.props;
 ---
 
 <HomeHero />
+<SelectedWork />
 <PostGrid posts={posts} featureFirst />
 <Pagination currentPage={1} totalPages={totalPages} />

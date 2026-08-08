@@ -1,0 +1,98 @@
+---
+import { selectedWork } from '../../data/selectedWork';
+---
+
+<section class="sw" aria-labelledby="sw-heading">
+  <h2 class="sw__heading" id="sw-heading">Selected work</h2>
+  <p class="sw__sub">Systems kept alive, and the ones that broke first. Every figure below is from the resume or from a post on this site.</p>
+
+  <ul class="sw__grid">
+    {selectedWork.map((item) => (
+      <li class="sw__card">
+        <span class="sw__kicker">{item.kicker}</span>
+        <h3 class="sw__title">
+          {item.href ? <a href={item.href}>{item.title}</a> : item.title}
+        </h3>
+        <p class="sw__blurb">{item.blurb}</p>
+        <p class="sw__note">{item.note}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+.sw {
+  margin: 0 0 32px;
+}
+.sw__heading {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4b5563;
+  margin: 0 0 4px;
+}
+.sw__sub {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: #4b5563;
+  margin: 0 0 16px;
+  max-width: 68ch;
+}
+.sw__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.sw__card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 15px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.sw__kicker {
+  font-family: var(--font-sans);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+.sw__title {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 7px 0 6px;
+  color: #111827;
+}
+.sw__title a { color: inherit; text-decoration: none; }
+.sw__title a:hover { color: #2563eb; text-decoration: underline; }
+.sw__blurb {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #4b5563;
+  margin: 0;
+}
+/* The evidence line — green because it is the checkable part, not decoration. */
+.sw__note {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #16a34a;
+  margin: 9px 0 0;
+}
+
+@media (max-width: 1100px) {
+  .sw__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .sw__grid { grid-template-columns: 1fr; }
+}
+</style>
