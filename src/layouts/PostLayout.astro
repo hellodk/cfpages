@@ -84,13 +84,26 @@ const crumb = title.length > 45 ? title.slice(0, 45) + '…' : title;
 .post-art__body :global(a) { color: #0066cc; text-decoration: underline; }
 .post-art__body :global(strong) { font-weight: 700; }
 .post-art__body :global(blockquote) { border-left: 3px solid #0066cc; padding: 0.5rem 1rem; margin: 1.5rem 0; color: #6c757d; font-style: italic; background: #f8f9fa; }
-.post-art__body :global(pre) { margin: 1.5rem 0; border-radius: 6px; overflow-x: auto; }
+.post-art__body :global(pre) { margin: 1.5rem 0; border-radius: 6px; overflow-x: auto; border: 1px solid #dee2e6; }
 .post-art__body :global(code:not(pre code)) { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #f1f3f5; color: #c0392b; border: 1px solid #dee2e6; padding: 0.1em 0.4em; border-radius: 3px; }
 .post-art__body :global(hr) { border: none; border-top: 1px solid #dee2e6; margin: 2rem 0; }
 
+/* Measure. The body inherits the full content column — 1538px at a 1854px
+   viewport, about 157 characters per line. Past roughly 80 characters the eye
+   stops reliably finding the next line's left edge on the return sweep, so
+   prose gets a cap while everything that genuinely needs the room — diagrams,
+   tables, code blocks, images — keeps the full width. */
+.post-art__body :global(p),
+.post-art__body :global(ul),
+.post-art__body :global(ol),
+.post-art__body :global(blockquote),
+.post-art__body :global(h2),
+.post-art__body :global(h3),
+.post-art__body :global(h4) { max-width: 68ch; }
+
 /* Tables: the layout never had rules for these. Several migrated posts and the
    resume skills matrix contain them; without these they render as unspaced text. */
-.post-art__body :global(table) { width: 100%; border-collapse: collapse; margin: 0 0 1.4rem; font-family: system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5; display: block; overflow-x: auto; }
+.post-art__body :global(table) { width: 100%; max-width: 900px; border-collapse: collapse; margin: 0 0 1.4rem; font-family: system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5; display: block; overflow-x: auto; }
 .post-art__body :global(th) { text-align: left; font-weight: 700; background: #f8f9fa; border: 1px solid #dee2e6; padding: 0.5rem 0.7rem; }
 .post-art__body :global(td) { border: 1px solid #dee2e6; padding: 0.5rem 0.7rem; vertical-align: top; }
 </style>

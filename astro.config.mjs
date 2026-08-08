@@ -10,7 +10,11 @@ export default defineConfig({
   },
   markdown: {
     shikiConfig: {
-      theme: 'github-dark-dimmed',
+      // Shiki writes its palette as an inline style on every <pre>, so a
+      // stylesheet override would have to fight it with !important on each
+      // rule. Changing the theme is the only clean lever, and it reaches every
+      // fenced block on the site at once.
+      theme: 'github-light',
       wrap: false,
     },
   },

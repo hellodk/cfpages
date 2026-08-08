@@ -26,7 +26,7 @@ const configured = repo && repoId && category && categoryId;
         data-reactions-enabled="1"
         data-emit-metadata="0"
         data-input-position="top"
-        data-theme="dark"
+        data-theme="light"
         data-lang="en"
         data-loading="lazy"
         crossorigin="anonymous"
@@ -34,7 +34,7 @@ const configured = repo && repoId && category && categoryId;
       ></script>
     </div>
   ) : (
-    <p style="color:#9ba3af;font-size:0.875rem;padding:0 24px 32px;">
+    <p style="color:#4B5563;font-size:0.875rem;padding:0 24px 32px;">
       Comments not configured. Set GISCUS env vars to enable.
     </p>
   )}
@@ -42,7 +42,7 @@ const configured = repo && repoId && category && categoryId;
 
 <style>
 .giscus-wrap {
-  background: #0d0d0d;
+  background: #F9FAFB;
   padding: 40px 24px;
   border-top: 1px solid var(--color-border);
 }
@@ -51,7 +51,7 @@ const configured = repo && repoId && category && categoryId;
   margin: 0 auto 24px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #9ba3af;
+  color: #4B5563;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: flex;
