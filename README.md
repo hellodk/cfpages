@@ -83,7 +83,7 @@ Git hooks (`.githooks/pre-commit`) install automatically on `npm ci` — see [SE
 ```text
 cfpages/
 ├── src/
-│   ├── content/blog/     # posts (Markdown + frontmatter)
+│   ├── content/blog/     # posts — GENERATED, see "Writing a post"
 │   ├── components/       # UI: cards, sidebars, search, chat
 │   ├── layouts/          # Chirping shell + post layout
 │   └── pages/            # routes (index, tags, search, …)
@@ -119,7 +119,18 @@ Then configure **Variables and secrets** and the **Workers AI** binding (`AI`).
 
 ## Writing a post
 
-Add a file under `src/content/blog/`:
+Posts under `src/content/blog/` are **generated** from `~/Documents/blogs` by
+`scripts/migrate-blogs.mjs`. Edits made directly to a post are overwritten on the
+next run — write the post in the blogs directory instead, add it to
+`scripts/lib/manifest.mjs`, then:
+
+```bash
+npm run migrate:blogs     # convert + mask
+npm run verify:migration  # check acceptance criteria
+npm run dev               # hot reload
+```
+
+Generated frontmatter:
 
 ```yaml
 ---
@@ -130,11 +141,15 @@ tags: [devops, kubernetes]
 draft: false
 cover: "assets/images/your-cover.jpg"
 ---
-
-Your markdown here.
 ```
 
-Run `npm run dev` — hot reload picks it up. Set `draft: true` to hide from production builds.
+Set `draft: true` in the manifest to hide a post from production builds.
+
+**Masking.** Infrastructure detail is rewritten by `scripts/lib/mask.mjs` — LAN and
+Tailscale addresses become RFC 5737 documentation addresses, internal hostnames are
+neutralised. `npm run check:secrets` fails if an unmasked address reaches
+`src/content/blog/`, and runs in the pre-commit hook. A new address in new source
+material fails the gate rather than being silently guessed at: add it to `IP_TABLE`.
 
 ## Scripts
 
@@ -144,6 +159,9 @@ Run `npm run dev` — hot reload picks it up. Set `draft: true` to hide from pro
 | `npm run build` | Production build + Pagefind |
 | `npm run cf:deploy` | Compile `functions/` + `wrangler deploy` (Workers Builds) |
 | `npm run check:secrets` | Pre-push secret scan |
+| `npm run migrate:blogs` | Regenerate `src/content/blog/` from `~/Documents/blogs` |
+| `npm run verify:migration` | Assert migrated posts meet the acceptance criteria |
+| `npm test` | Vitest unit suite → `test-reports/unit/` |
 | `npm run dev:layouts` | Compare layout B vs C locally (`:4325` / `:4326`) |
 
 ## Background

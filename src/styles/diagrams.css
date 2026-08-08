@@ -1,0 +1,40 @@
+/* Styling for inline SVG diagram blocks migrated from ~/Documents/blogs.
+   Uses the direct-child combinator so 16px icon SVGs inside captions are
+   never stretched to full width. */
+.diagram {
+  margin: 24px 0;
+  border: 1px solid var(--border, #E5E7EB);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.diagram > .bar {
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4B5563;
+  background: #F9FAFB;
+  border-bottom: 1px solid var(--border, #E5E7EB);
+}
+
+.diagram > .body {
+  padding: 16px;
+  overflow-x: auto;
+}
+
+/* `.post-art__body` is the slot wrapper in src/layouts/PostLayout.astro:43.
+   Direct-child only, so any small inline icon SVG stays its own size. */
+.diagram > .body > svg,
+.post-art__body > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.post-art__body svg text {
+  font-family: system-ui, -apple-system, sans-serif;
+}

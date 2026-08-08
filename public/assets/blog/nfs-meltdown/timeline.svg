@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 500" width="100%" height="100%">
+  <style>
+    :root {
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --text-primary: #111827;
+      --text-secondary: #4B5563;
+      --border-color: #E5E7EB;
+      --grid-color: #E5E7EB;
+      
+      --bar-success: #10B981;
+      --bar-warning: #F59E0B;
+      --bar-error: #EF4444;
+      
+      --text-inside: #FFFFFF;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #0B0F19;
+        --card-bg: #111827;
+        --text-primary: #F9FAFB;
+        --text-secondary: #CBD5E1;
+        --border-color: #374151;
+        --grid-color: #1F2937;
+        
+        --bar-success: #059669;
+        --bar-warning: #D97706;
+        --bar-error: #DC2626;
+        
+        --text-inside: #F9FAFB;
+      }
+    }
+
+    rect.bg { fill: var(--bg-color); }
+    rect.card { fill: var(--card-bg); stroke: var(--border-color); stroke-width: 2; rx: 8; }
+    
+    text { font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    .title { fill: var(--text-primary); font-size: 20px; font-weight: 600; text-anchor: middle; }
+    .section-label { fill: var(--text-primary); font-size: 14px; font-weight: 600; text-anchor: end; }
+    .time-label { fill: var(--text-secondary); font-size: 12px; text-anchor: middle; }
+    
+    .val-inside { fill: var(--text-inside); font-size: 12px; font-weight: 500; text-anchor: middle; dominant-baseline: middle; }
+    .val-above { fill: var(--text-secondary); font-size: 11px; font-weight: 600; text-anchor: middle; dominant-baseline: baseline; }
+    .val-below { fill: var(--text-secondary); font-size: 11px; font-weight: 600; text-anchor: middle; dominant-baseline: hanging; }
+    
+    .grid-line { stroke: var(--grid-color); stroke-width: 1; stroke-dasharray: 4 4; }
+    
+    .bar-success { fill: var(--bar-success); rx: 4; }
+    .bar-warning { fill: var(--bar-warning); rx: 4; }
+    .bar-error { fill: var(--bar-error); rx: 4; }
+  </style>
+
+  <rect class="bg" width="1050" height="500" />
+  
+  <text x="525" y="30" class="title">Incident Timeline - March 28, 2026</text>
+
+  <!-- Grid Lines and Time Labels -->
+  <g>
+    <!-- 14:00 -->
+    <line x1="200" y1="45" x2="200" y2="450" class="grid-line" />
+    <text x="200" y="40" class="time-label">14:00</text>
+    <text x="200" y="470" class="time-label">14:00</text>
+    
+    <!-- 14:30 -->
+    <line x1="290" y1="45" x2="290" y2="450" class="grid-line" />
+    <text x="290" y="40" class="time-label">14:30</text>
+    <text x="290" y="470" class="time-label">14:30</text>
+
+    <!-- 15:00 -->
+    <line x1="380" y1="45" x2="380" y2="450" class="grid-line" />
+    <text x="380" y="40" class="time-label">15:00</text>
+    <text x="380" y="470" class="time-label">15:00</text>
+
+    <!-- 15:30 -->
+    <line x1="470" y1="45" x2="470" y2="450" class="grid-line" />
+    <text x="470" y="40" class="time-label">15:30</text>
+    <text x="470" y="470" class="time-label">15:30</text>
+
+    <!-- 16:00 -->
+    <line x1="560" y1="45" x2="560" y2="450" class="grid-line" />
+    <text x="560" y="40" class="time-label">16:00</text>
+    <text x="560" y="470" class="time-label">16:00</text>
+
+    <!-- 16:30 -->
+    <line x1="650" y1="45" x2="650" y2="450" class="grid-line" />
+    <text x="650" y="40" class="time-label">16:30</text>
+    <text x="650" y="470" class="time-label">16:30</text>
+
+    <!-- 17:00 -->
+    <line x1="740" y1="45" x2="740" y2="450" class="grid-line" />
+    <text x="740" y="40" class="time-label">17:00</text>
+    <text x="740" y="470" class="time-label">17:00</text>
+
+    <!-- 17:30 -->
+    <line x1="830" y1="45" x2="830" y2="450" class="grid-line" />
+    <text x="830" y="40" class="time-label">17:30</text>
+    <text x="830" y="470" class="time-label">17:30</text>
+
+    <!-- 18:00 -->
+    <line x1="920" y1="45" x2="920" y2="450" class="grid-line" />
+    <text x="920" y="40" class="time-label">18:00</text>
+    <text x="920" y="470" class="time-label">18:00</text>
+
+    <!-- 18:30 -->
+    <line x1="1010" y1="45" x2="1010" y2="450" class="grid-line" />
+    <text x="1010" y="40" class="time-label">18:30</text>
+    <text x="1010" y="470" class="time-label">18:30</text>
+  </g>
+
+  <!-- Section 1: Memory (Base Y=70) -->
+  <text x="180" y="90" class="section-label" dominant-baseline="middle">Memory</text>
+  <g>
+    <rect class="bar-success" x="200" y="75" width="0" height="30"><animate attributeName="width" from="0" to="268" dur="1.8s" begin="0s" fill="freeze" /></rect>
+    <text class="val-inside" x="334" y="90" opacity="0">Stable ~54% used<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0s" fill="freeze" /></text>
+
+    <rect class="bar-warning" x="470" y="75" width="0" height="30"><animate attributeName="width" from="0" to="88" dur="0.6s" begin="1.8s" fill="freeze" /></rect>
+    <text class="val-above" x="514" y="70" opacity="0">Rising to 58-60%<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="1.8s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="560" y="75" width="0" height="30"><animate attributeName="width" from="0" to="58" dur="0.4s" begin="2.4s" fill="freeze" /></rect>
+    <text class="val-below" x="589" y="110" opacity="0">Peak 65.4% used<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.4s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="620" y="75" width="0" height="30"><animate attributeName="width" from="0" to="88" dur="0.6s" begin="2.8s" fill="freeze" /></rect>
+    <text class="val-above" x="664" y="70" opacity="0">Aggressive reclaim to 47%<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.8s" fill="freeze" /></text>
+  </g>
+
+  <!-- Section 2: Swap Activity (Base Y=150) -->
+  <text x="180" y="170" class="section-label" dominant-baseline="middle">Swap Activity</text>
+  <g>
+    <rect class="bar-success" x="200" y="155" width="0" height="30"><animate attributeName="width" from="0" to="268" dur="1.8s" begin="0s" fill="freeze" /></rect>
+    <text class="val-inside" x="334" y="170" opacity="0">Normal (&lt; 1/s)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0s" fill="freeze" /></text>
+
+    <rect class="bar-warning" x="470" y="155" width="0" height="30"><animate attributeName="width" from="0" to="88" dur="0.6s" begin="1.8s" fill="freeze" /></rect>
+    <text class="val-above" x="514" y="150" opacity="0">Light swapping<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="1.8s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="560" y="155" width="0" height="30"><animate attributeName="width" from="0" to="88" dur="0.6s" begin="2.4s" fill="freeze" /></rect>
+    <text class="val-below" x="604" y="190" opacity="0">Heavy thrashing<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.4s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="650" y="155" width="0" height="30"><animate attributeName="width" from="0" to="58" dur="0.4s" begin="3.0s" fill="freeze" /></rect>
+    <text class="val-above" x="679" y="150" opacity="0">CRITICAL: 522 pswpout/s<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="3.0s" fill="freeze" /></text>
+
+    <rect class="bar-warning" x="710" y="155" width="0" height="30"><animate attributeName="width" from="0" to="58" dur="0.4s" begin="3.4s" fill="freeze" /></rect>
+    <text class="val-below" x="739" y="190" opacity="0">Subsiding<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="3.4s" fill="freeze" /></text>
+  </g>
+
+  <!-- Section 3: NFS Server (Base Y=230) -->
+  <text x="180" y="250" class="section-label" dominant-baseline="middle">NFS Server</text>
+  <g>
+    <rect class="bar-success" x="200" y="235" width="0" height="30"><animate attributeName="width" from="0" to="328" dur="2.2s" begin="0s" fill="freeze" /></rect>
+    <text class="val-inside" x="364" y="250" opacity="0">Healthy<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0s" fill="freeze" /></text>
+
+    <rect class="bar-warning" x="530" y="235" width="0" height="30"><animate attributeName="width" from="0" to="28" dur="0.2s" begin="2.2s" fill="freeze" /></rect>
+    <text class="val-above" x="544" y="230" opacity="0">etcd slow queries (253ms)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.2s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="560" y="235" width="0" height="30"><animate attributeName="width" from="0" to="88" dur="0.6s" begin="2.4s" fill="freeze" /></rect>
+    <text class="val-below" x="604" y="270" opacity="0">etcd very slow (932ms)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.4s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="650" y="235" width="0" height="30"><animate attributeName="width" from="0" to="316" dur="2.12s" begin="3.0s" fill="freeze" /></rect>
+    <text class="val-inside" x="808" y="250" opacity="0">NFS UNRESPONSIVE<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="3.0s" fill="freeze" /></text>
+
+    <rect class="bar-success" x="968" y="235" width="0" height="30"><animate attributeName="width" from="0" to="10" dur="0.08s" begin="5.12s" fill="freeze" /></rect>
+    <text class="val-above" x="973" y="230" opacity="0">Restarted + recovered<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="5.12s" fill="freeze" /></text>
+  </g>
+
+  <!-- Section 4: System Load (Base Y=310) -->
+  <text x="180" y="330" class="section-label" dominant-baseline="middle">System Load</text>
+  <g>
+    <rect class="bar-success" x="200" y="315" width="0" height="30"><animate attributeName="width" from="0" to="118" dur="0.8s" begin="0s" fill="freeze" /></rect>
+    <text class="val-inside" x="259" y="330" opacity="0">Normal (~13)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0s" fill="freeze" /></text>
+
+    <rect class="bar-warning" x="320" y="315" width="0" height="30"><animate attributeName="width" from="0" to="238" dur="1.6s" begin="0.8s" fill="freeze" /></rect>
+    <text class="val-inside" x="439" y="330" opacity="0">Elevated (19-24)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.8s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="560" y="315" width="0" height="30"><animate attributeName="width" from="0" to="358" dur="2.4s" begin="2.4s" fill="freeze" /></rect>
+    <text class="val-inside" x="739" y="330" opacity="0">High (32-45)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.4s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="920" y="315" width="0" height="30"><animate attributeName="width" from="0" to="46" dur="0.32s" begin="4.8s" fill="freeze" /></rect>
+    <text class="val-above" x="943" y="310" opacity="0">CRITICAL (215)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="4.8s" fill="freeze" /></text>
+
+    <rect class="bar-success" x="968" y="315" width="0" height="30"><animate attributeName="width" from="0" to="25" dur="0.18s" begin="5.12s" fill="freeze" /></rect>
+    <text class="val-below" x="980" y="350" opacity="0">Recovering (8.2)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="5.12s" fill="freeze" /></text>
+  </g>
+
+  <!-- Section 5: Disk I/O (Base Y=390) -->
+  <text x="180" y="410" class="section-label" dominant-baseline="middle">Disk I/O</text>
+  <g>
+    <rect class="bar-success" x="200" y="395" width="0" height="30"><animate attributeName="width" from="0" to="358" dur="2.4s" begin="0s" fill="freeze" /></rect>
+    <text class="val-inside" x="379" y="410" opacity="0">Normal<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0s" fill="freeze" /></text>
+
+    <rect class="bar-warning" x="560" y="395" width="0" height="30"><animate attributeName="width" from="0" to="88" dur="0.6s" begin="2.4s" fill="freeze" /></rect>
+    <text class="val-above" x="604" y="390" opacity="0">High (910 tps, 64% util)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.4s" fill="freeze" /></text>
+
+    <rect class="bar-error" x="650" y="395" width="0" height="30"><animate attributeName="width" from="0" to="58" dur="0.4s" begin="3.0s" fill="freeze" /></rect>
+    <text class="val-below" x="679" y="430" opacity="0">Saturated (1923 tps)<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="3.0s" fill="freeze" /></text>
+
+    <rect class="bar-warning" x="710" y="395" width="0" height="30"><animate attributeName="width" from="0" to="256" dur="1.72s" begin="3.4s" fill="freeze" /></rect>
+    <text class="val-inside" x="838" y="410" opacity="0">Normalizing<animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="3.4s" fill="freeze" /></text>
+  </g>
+
+</svg>

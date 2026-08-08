@@ -1,13 +1,11 @@
 ---
-title: "Kubernetes Split DNS on Ubuntu 24.04"
+title: "Using Kubernetes kube-dns as a Resolver on Ubuntu 24.04 (systemd‑resolved Split DNS)"
 date: 2026-05-01
-description: "How to configure split DNS for Kubernetes on Ubuntu 24.04 so cluster and external domains both resolve cleanly."
+description: "Modern Ubuntu systems (including Ubuntu 24.04) use systemd-resolved to manage DNS resolution.\\ When working on a Kubernetes node or DevOps workstation, it is extremely useful to resolve:"
 tags: [kubernetes, dns, ubuntu]
-draft: false
 cover: "assets/images/http1.png"
+draft: false
 ---
-
-# Using Kubernetes kube-dns as a Resolver on Ubuntu 24.04 (systemd‑resolved Split DNS)
 
 ## Overview
 

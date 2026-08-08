@@ -153,5 +153,5 @@ When a node goes down, read/write requests can be served from other nodes in the
 <br/>
 2. <code>nodetool info</code>
 <br/>
-3. <code>nodetool -host 10.60.8.23 ring</code>
+3. <code>nodetool -host 203.0.113.23 ring</code>
 <br/>

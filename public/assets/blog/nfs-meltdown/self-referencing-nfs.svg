@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="100%" height="100%">
+  <style>
+    :root {
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --border-color: #E5E7EB;
+      
+      --node-k8s-bg: #DCFCE7; --node-k8s-text: #14532D; --node-k8s-stroke: #22C55E;
+      --node-server-bg: #DBEAFE; --node-server-text: #1E3A8A; --node-server-stroke: #3B82F6;
+      --node-shared-bg: #FEF3C7; --node-shared-text: #92400E; --node-shared-stroke: #F59E0B;
+      --node-disk-bg: #F3E8FF; --node-disk-text: #581C87; --node-disk-stroke: #A855F7;
+      --node-danger-bg: #FEE2E2; --node-danger-text: #991B1B; --node-danger-stroke: #EF4444;
+      
+      --text-primary: #111827;
+      --text-sub: #4B5563;
+      --path-color: #9CA3AF;
+      --error-color: #DC2626;
+      --warning-color: #D97706;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #0B0F19;
+        --card-bg: #111827;
+        --border-color: #374151;
+        
+        --node-k8s-bg: #064E3B; --node-k8s-text: #A7F3D0; --node-k8s-stroke: #10B981;
+        --node-server-bg: #1E3A8A; --node-server-text: #BFDBFE; --node-server-stroke: #3B82F6;
+        --node-shared-bg: #78350F; --node-shared-text: #FDE68A; --node-shared-stroke: #F59E0B;
+        --node-disk-bg: #4C1D95; --node-disk-text: #E9D5FF; --node-disk-stroke: #A855F7;
+        --node-danger-bg: #7F1D1D; --node-danger-text: #FECACA; --node-danger-stroke: #EF4444;
+        
+        --text-primary: #F9FAFB;
+        --text-sub: #CBD5E1;
+        --path-color: #4B5563;
+        --error-color: #EF4444;
+        --warning-color: #F59E0B;
+      }
+    }
+
+    rect.bg { fill: var(--bg-color); }
+    rect.section { fill: var(--card-bg); stroke: var(--border-color); stroke-width: 2; rx: 8; }
+    rect.node { rx: 8; stroke-width: 2; }
+    
+    .client { fill: var(--node-k8s-bg); stroke: var(--node-k8s-stroke); }
+    .server { fill: var(--node-server-bg); stroke: var(--node-server-stroke); }
+    .client-danger { fill: var(--node-danger-bg); stroke: var(--node-danger-stroke); }
+    .server-danger { fill: var(--node-danger-bg); stroke: var(--node-danger-stroke); }
+    .resource-ram { fill: var(--node-shared-bg); stroke: var(--node-shared-stroke); }
+    .resource-disk { fill: var(--node-disk-bg); stroke: var(--node-disk-stroke); }
+
+    text { font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    .title { fill: var(--text-primary); font-size: 20px; font-weight: 600; text-anchor: middle; }
+    
+    .text-k8s { fill: var(--node-k8s-text); font-size: 16px; font-weight: 600; text-anchor: middle; }
+    .text-k8s-sub { fill: var(--node-k8s-text); font-size: 12px; text-anchor: middle; opacity: 0.9; }
+    
+    .text-server { fill: var(--node-server-text); font-size: 16px; font-weight: 600; text-anchor: middle; }
+    .text-server-sub { fill: var(--node-server-text); font-size: 12px; text-anchor: middle; opacity: 0.9; }
+    
+    .text-danger { fill: var(--node-danger-text); font-size: 16px; font-weight: 600; text-anchor: middle; }
+    .text-danger-sub { fill: var(--node-danger-text); font-size: 12px; text-anchor: middle; opacity: 0.9; }
+    
+    .text-ram { fill: var(--node-shared-text); font-size: 16px; font-weight: 600; text-anchor: middle; }
+    .text-disk { fill: var(--node-disk-text); font-size: 16px; font-weight: 600; text-anchor: middle; }
+
+    .label-sub { fill: var(--text-sub); font-size: 14px; text-anchor: middle; }
+    
+    .link { fill: none; stroke: var(--path-color); stroke-width: 3; stroke-dasharray: 6 6; }
+    .link-solid { fill: none; stroke: var(--path-color); stroke-width: 3; }
+    .link-error { fill: none; stroke: var(--error-color); stroke-width: 3; stroke-dasharray: 4 4; }
+    
+    .dot { fill: var(--node-k8s-stroke); }
+    .dot-error { fill: var(--error-color); }
+    
+    /* Slowed down collision pulse */
+    .collision-pulse { animation: collision-anim 2s infinite alternate; }
+    @keyframes collision-anim {
+      0% { r: 5; opacity: 1; fill: var(--warning-color); }
+      100% { r: 15; opacity: 0; fill: var(--error-color); }
+    }
+  </style>
+
+  <rect class="bg" width="1000" height="500" />
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="var(--path-color)" />
+    </marker>
+    <marker id="arrow-error" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="var(--error-color)" />
+    </marker>
+  </defs>
+
+  <rect class="section" x="50" y="50" width="400" height="400" />
+  <text x="250" y="85" class="title">What Normal NFS Looks Like</text>
+  
+  <!-- Made boxes slightly wider (160) to fit text -->
+  <g transform="translate(65, 200)">
+    <rect class="node client" x="0" y="0" width="160" height="80" />
+    <text x="80" y="35" class="text-k8s">K8s Node</text>
+    <text x="80" y="60" class="text-k8s-sub">(NFS Client)</text>
+  </g>
+  
+  <g transform="translate(275, 200)">
+    <rect class="node server" x="0" y="0" width="160" height="80" />
+    <text x="80" y="35" class="text-server">Separate Server</text>
+    <text x="80" y="60" class="text-server-sub">(own RAM/disk)</text>
+  </g>
+
+  <path d="M225 240 L275 240" class="link-solid" marker-end="url(#arrow)" />
+  <text x="250" y="230" class="label-sub">network</text>
+  
+  <!-- Animations slowed down -->
+  <circle r="4" class="dot">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M225 240 L275 240" />
+  </circle>
+  <circle r="4" class="dot" fill="var(--node-server-stroke)">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M275 250 L225 250" />
+  </circle>
+
+  <rect class="section" x="500" y="50" width="450" height="400" />
+  <text x="725" y="85" class="title">What I Had</text>
+  
+  <g transform="translate(525, 150)">
+    <rect class="node client-danger" x="0" y="0" width="160" height="80" />
+    <text x="80" y="35" class="text-danger">K8s Pods</text>
+    <text x="80" y="60" class="text-danger-sub">(NFS Client)</text>
+  </g>
+
+  <g transform="translate(765, 150)">
+    <rect class="node server-danger" x="0" y="0" width="160" height="80" />
+    <text x="80" y="35" class="text-danger">NFS Server</text>
+    <text x="80" y="60" class="text-danger-sub">(Same Machine)</text>
+  </g>
+
+  <g transform="translate(645, 270)">
+    <rect class="node resource-ram" x="0" y="0" width="160" height="60" />
+    <text x="80" y="35" class="text-ram">64GB RAM</text>
+  </g>
+
+  <g transform="translate(645, 350)">
+    <rect class="node resource-disk" x="0" y="0" width="160" height="60" />
+    <text x="80" y="35" class="text-disk">NVMe SSD</text>
+  </g>
+
+  <path d="M685 190 L765 190" class="link-solid" marker-end="url(#arrow)" />
+  <text x="725" y="180" class="label-sub">loopback</text>
+  
+  <path d="M 605 230 C 605 250, 725 250, 725 270" class="link-error" marker-end="url(#arrow-error)" />
+  <path d="M 845 230 C 845 250, 725 250, 725 270" class="link-error" marker-end="url(#arrow-error)" />
+  
+  <path d="M 565 230 C 565 380, 600 380, 645 380" class="link-error" marker-end="url(#arrow-error)" />
+  <path d="M 885 230 C 885 380, 850 380, 805 380" class="link-error" marker-end="url(#arrow-error)" />
+
+  <text x="545" y="260" class="label-sub" fill="var(--error-color)" text-anchor="end">compete for RAM</text>
+  <text x="905" y="260" class="label-sub" fill="var(--error-color)" text-anchor="start">compete for RAM</text>
+  
+  <text x="545" y="375" class="label-sub" fill="var(--error-color)" text-anchor="end">compete for Disk</text>
+  <text x="905" y="375" class="label-sub" fill="var(--error-color)" text-anchor="start">compete for Disk</text>
+
+  <circle r="4" class="dot-error">
+    <animateMotion dur="1.5s" repeatCount="indefinite" path="M685 190 L765 190" />
+  </circle>
+
+  <circle r="4" class="dot-error">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M 605 230 C 605 250, 725 250, 725 270" />
+  </circle>
+  <circle r="4" class="dot-error">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M 845 230 C 845 250, 725 250, 725 270" />
+  </circle>
+  <circle cx="725" cy="270" r="5" class="collision-pulse" />
+
+  <circle r="4" class="dot-error">
+    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 565 230 C 565 380, 600 380, 645 380" />
+  </circle>
+  <circle r="4" class="dot-error">
+    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 885 230 C 885 380, 850 380, 805 380" />
+  </circle>
+  <circle cx="645" cy="380" r="5" class="collision-pulse" />
+  <circle cx="805" cy="380" r="5" class="collision-pulse" />
+
+</svg>

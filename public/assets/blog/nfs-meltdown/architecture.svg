@@ -1,0 +1,406 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" width="100%" height="100%">
+  <style>
+    :root {
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --text-primary: #111827;
+      --text-secondary: #4B5563;
+      --text-muted: #9CA3AF;
+      --border-color: #E5E7EB;
+      
+      --host-bg-top: #F8FAFC;
+      --host-bg-bottom: #F1F5F9;
+      --k8s-bg-top: #F0FDF4;
+      --k8s-bg-bottom: #DCFCE7;
+      --host-border: #CBD5E1;
+      --k8s-border: #BBF7D0;
+      
+      /* High Contrast Box Colors */
+      --success-bg: #DCFCE7; --success-text: #166534; --success-stroke: #22C55E;
+      --warning-bg: #FEF3C7; --warning-text: #92400E; --warning-stroke: #F59E0B;
+      --error-bg: #FEE2E2; --error-text: #991B1B; --error-stroke: #EF4444;
+      --kernel-bg: #E0E7FF; --kernel-text: #3730A3; --kernel-stroke: #6366F1;
+      
+      --path-color: #9CA3AF;
+      --path-error: #EF4444;
+      --dot-success: #16A34A;
+      --dot-warning: #D97706;
+      --dot-error: #DC2626;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #0B0F19;
+        --card-bg: #111827;
+        --text-primary: #F9FAFB;
+        --text-secondary: #CBD5E1;
+        --text-muted: #6B7280;
+        --border-color: #374151;
+        
+        --host-bg-top: #0F172A;
+        --host-bg-bottom: #020617;
+        --k8s-bg-top: #064E3B;
+        --k8s-bg-bottom: #022C22;
+        --host-border: #334155;
+        --k8s-border: #065F46;
+        
+        --success-bg: #064E3B; --success-text: #A7F3D0; --success-stroke: #10B981;
+        --warning-bg: #78350F; --warning-text: #FDE68A; --warning-stroke: #F59E0B;
+        --error-bg: #7F1D1D; --error-text: #FECACA; --error-stroke: #EF4444;
+        --kernel-bg: #312E81; --kernel-text: #C7D2FE; --kernel-stroke: #6366F1;
+        
+        --path-color: #4B5563;
+        --path-error: #B91C1C;
+        --dot-success: #22C55E;
+        --dot-warning: #F59E0B;
+        --dot-error: #EF4444;
+      }
+    }
+
+    rect.bg { fill: var(--bg-color); }
+    rect.host { fill: url(#host-grad); stroke: var(--host-border); stroke-width: 2; rx: 12; }
+    rect.k8s { fill: url(#k8s-grad); stroke: var(--k8s-border); stroke-width: 2; rx: 12; }
+    rect.card { fill: var(--card-bg); stroke: var(--border-color); stroke-width: 2; rx: 8; filter: url(#shadow); }
+    rect.stats-card { fill: var(--bg-color); stroke: var(--border-color); stroke-width: 1; rx: 8; }
+    
+    rect.box-error { fill: var(--error-bg); stroke: var(--error-stroke); stroke-width: 2; rx: 8; filter: url(#shadow); }
+    rect.box-success { fill: var(--success-bg); stroke: var(--success-stroke); stroke-width: 2; rx: 8; filter: url(#shadow); }
+    rect.box-kernel { fill: var(--kernel-bg); stroke: var(--kernel-stroke); stroke-width: 2; rx: 8; filter: url(#shadow); }
+    rect.box-warning { fill: var(--warning-bg); stroke: var(--warning-stroke); stroke-width: 2; rx: 8; filter: url(#shadow); }
+    
+    text { font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; dominant-baseline: middle; }
+    .title { fill: var(--text-primary); font-size: 32px; font-weight: 800; }
+    .subtitle { fill: var(--text-secondary); font-size: 18px; }
+    
+    .header-primary { fill: var(--text-primary); font-size: 20px; font-weight: 700; }
+    .header-group { fill: var(--success-stroke); font-size: 16px; font-weight: 700; text-anchor: middle; }
+    
+    .label-primary { fill: var(--text-primary); font-size: 16px; font-weight: 600; }
+    .label-secondary { fill: var(--text-secondary); font-size: 13px; }
+    
+    .text-error { fill: var(--error-text); font-size: 16px; font-weight: 600; }
+    .text-error-sub { fill: var(--error-text); font-size: 12px; opacity: 0.9; }
+    .text-success { fill: var(--success-text); font-size: 16px; font-weight: 600; }
+    .text-success-sub { fill: var(--success-text); font-size: 12px; opacity: 0.9; }
+    .text-kernel { fill: var(--kernel-text); font-size: 16px; font-weight: 600; }
+    .text-kernel-sub { fill: var(--kernel-text); font-size: 12px; opacity: 0.9; }
+    .text-warning { fill: var(--warning-text); font-size: 16px; font-weight: 600; }
+    .text-warning-sub { fill: var(--warning-text); font-size: 12px; opacity: 0.9; }
+
+    .link-path { fill: none; stroke: var(--path-color); stroke-width: 2; stroke-dasharray: 6 4; stroke-linecap: round; stroke-linejoin: round; }
+    .link-path-error { fill: none; stroke: var(--path-error); stroke-width: 2; stroke-dasharray: 6 4; stroke-linecap: round; stroke-linejoin: round; }
+    .link-solid { fill: none; stroke: var(--path-color); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    
+    .dot { fill: var(--dot-success); }
+    .dot-warning { fill: var(--dot-warning); }
+    .dot-error { fill: var(--dot-error); }
+
+    .icon { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.08" />
+    </filter>
+    <linearGradient id="host-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="var(--host-bg-top)" />
+      <stop offset="100%" stop-color="var(--host-bg-bottom)" />
+    </linearGradient>
+    <linearGradient id="k8s-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="var(--k8s-bg-top)" />
+      <stop offset="100%" stop-color="var(--k8s-bg-bottom)" />
+    </linearGradient>
+
+    <!-- UI Icons -->
+    <g id="icon-warning" class="icon"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></g>
+    <g id="icon-db" class="icon"><path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></g>
+    <g id="icon-cpu" class="icon"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></g>
+    <g id="icon-server" class="icon"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 12h20M6 8h.01M6 16h.01"/></g>
+    <g id="icon-sparkle"><path fill="currentColor" d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4L12 2z"/></g>
+    <g id="icon-calendar" class="icon"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01"/></g>
+    <g id="icon-fire" class="icon"><path d="M12 2c-3.3 4-5 7.5-5 10.5a5 5 0 0 0 10 0c0-3-1.7-6.5-5-10.5z"/></g>
+    <g id="icon-desktop" class="icon"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></g>
+    <g id="icon-cloud" class="icon"><path d="M6 16a4 4 0 0 1-.88-7.9A6 6 0 0 1 17 9a4 4 0 0 1 1 7.88"/></g>
+    <g id="icon-k8s"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6l5 3v6l-5 3-5-3V9l5-3z" fill="var(--bg-color)"/></g>
+    <g id="icon-linux"><path d="M12 2c-3 0-5 3-5 7 0 2-1 4-2 6-1 2 0 4 2 5h10c2-1 3-3 2-5-1-2-2-4-2-6 0-4-2-7-5-7z" class="icon"/></g>
+    <g id="icon-ram"><rect x="2" y="6" width="20" height="12" rx="2" class="icon"/><path d="M4 18v2m4-2v2m4-2v2m4-2v2M4 4v2m4-2v2m4-2v2m4-2v2" class="icon"/></g>
+    <g id="icon-user" class="icon"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></g>
+  </defs>
+
+  <rect class="bg" width="1200" height="1000" />
+  
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(40, 40)">
+    <use href="#icon-server" x="0" y="0" width="40" height="40" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" />
+    <text x="60" y="15" class="title">Single Physical Machine - cylon</text>
+    <text x="60" y="45" class="subtitle">Consolidated Hybrid Single Node Kubernetes Cluster</text>
+  </g>
+
+  <!-- Warning Box -->
+  <g transform="translate(680, 20)">
+    <rect class="card" style="fill: var(--warning-bg); stroke: var(--warning-stroke);" x="0" y="0" width="480" height="70" />
+    <use href="#icon-warning" x="15" y="15" width="40" height="40" style="color: var(--warning-stroke);" />
+    <text x="65" y="25" class="label-primary" fill="var(--warning-text)">Current Issue:</text>
+    <text x="175" y="25" class="label-secondary" fill="var(--warning-text)">Shared NFS and memory pressure</text>
+    <text x="65" y="45" class="label-secondary" fill="var(--warning-text)">causing swap thrashing under concurrent workloads.</text>
+  </g>
+
+  <!-- ==================== K0S CLUSTER ==================== -->
+  <rect class="k8s" x="40" y="110" width="820" height="540" />
+  <g transform="translate(60, 130)">
+    <use href="#icon-k8s" x="0" y="0" width="30" height="30" style="color: var(--success-stroke);" />
+    <text x="40" y="15" class="header-primary">k0s Kubernetes Cluster</text>
+  </g>
+
+  <!-- Applications Group -->
+  <text x="450" y="180" class="header-group">Applications / Workloads</text>
+  <g transform="translate(100, 200)">
+    <rect class="card" x="0" y="0" width="200" height="60" />
+    <use href="#icon-desktop" x="20" y="15" width="30" height="30" style="color: var(--success-stroke);" />
+    <text x="110" y="30" text-anchor="middle" class="label-primary">Grafana</text>
+  </g>
+  <g transform="translate(350, 200)">
+    <rect class="card" x="0" y="0" width="200" height="60" />
+    <use href="#icon-user" x="20" y="15" width="30" height="30" style="color: var(--warning-stroke);" />
+    <text x="110" y="30" text-anchor="middle" class="label-primary">Jenkins</text>
+  </g>
+  <g transform="translate(600, 200)">
+    <rect class="card" x="0" y="0" width="200" height="60" />
+    <use href="#icon-db" x="20" y="15" width="30" height="30" style="color: var(--success-stroke);" />
+    <text x="110" y="30" text-anchor="middle" class="label-primary">ClickHouse</text>
+  </g>
+
+  <!-- Storage Consumers Group -->
+  <text x="450" y="310" class="header-group">Shared Storage Consumers</text>
+  <g transform="translate(100, 330)">
+    <rect class="card" x="0" y="0" width="200" height="60" />
+    <use href="#icon-db" x="20" y="15" width="30" height="30" style="color: var(--kernel-stroke);" />
+    <text x="110" y="30" text-anchor="middle" class="label-primary">PostgreSQL</text>
+  </g>
+  <g transform="translate(350, 330)">
+    <rect class="card" x="0" y="0" width="200" height="60" />
+    <text x="100" y="22" text-anchor="middle" class="label-primary">nfs-subdir</text>
+    <text x="100" y="42" text-anchor="middle" class="label-secondary">external-provisioner</text>
+  </g>
+  <g transform="translate(600, 330)">
+    <rect class="card" x="0" y="0" width="200" height="60" />
+    <text x="100" y="22" text-anchor="middle" class="label-primary">OpenTelemetry</text>
+    <text x="100" y="42" text-anchor="middle" class="label-secondary">Collector</text>
+  </g>
+
+  <!-- Intermediate Loopback Target -->
+  <g transform="translate(250, 460)">
+    <rect class="box-error" x="0" y="0" width="400" height="60" style="opacity: 0.1;" />
+    <rect class="card" style="fill: transparent; stroke: var(--error-stroke);" x="0" y="0" width="400" height="60" />
+    <use href="#icon-db" x="30" y="15" width="30" height="30" style="color: var(--error-stroke);" />
+    <text x="215" y="22" text-anchor="middle" class="text-error">NFS Server (Loopback)</text>
+    <text x="215" y="42" text-anchor="middle" class="text-error-sub">198.51.100.27</text>
+  </g>
+
+  <!-- Infrastructure Group -->
+  <text x="450" y="560" class="header-group">Cluster Infrastructure</text>
+  <g transform="translate(150, 570)">
+    <rect class="card" x="0" y="0" width="200" height="50" />
+    <text x="100" y="25" text-anchor="middle" class="label-primary">kubelet</text>
+  </g>
+  <g transform="translate(550, 570)">
+    <rect class="card" x="0" y="0" width="200" height="50" />
+    <text x="100" y="25" text-anchor="middle" class="label-primary">etcd</text>
+  </g>
+
+  <!-- ==================== ALSO RUNNING ==================== -->
+  <rect class="card" x="880" y="110" width="280" height="540" style="fill: var(--host-bg-top);" />
+  <g transform="translate(900, 130)">
+    <use href="#icon-server" x="0" y="0" width="24" height="24" style="color: var(--kernel-stroke);" />
+    <text x="35" y="12" class="header-primary">Also Running</text>
+  </g>
+
+  <g transform="translate(900, 180)">
+    <rect class="card" x="0" y="0" width="240" height="50" />
+    <use href="#icon-sparkle" x="15" y="15" width="20" height="20" style="color: var(--warning-stroke);" />
+    <text x="55" y="25" class="label-primary">7x Claude Code</text>
+  </g>
+  <g transform="translate(900, 240)">
+    <rect class="card" x="0" y="0" width="240" height="50" />
+    <use href="#icon-calendar" x="15" y="15" width="20" height="20" style="color: var(--kernel-stroke);" />
+    <text x="55" y="18" class="label-primary">Cron Jobs</text>
+    <text x="55" y="38" class="label-secondary">(noip-duc)</text>
+  </g>
+  <g transform="translate(900, 300)">
+    <rect class="card" x="0" y="0" width="240" height="50" />
+    <use href="#icon-fire" x="15" y="15" width="20" height="20" style="color: var(--error-stroke);" />
+    <text x="55" y="25" class="label-primary">Prometheus</text>
+  </g>
+  <g transform="translate(900, 360)">
+    <rect class="card" x="0" y="0" width="240" height="50" />
+    <use href="#icon-desktop" x="15" y="15" width="20" height="20" style="color: var(--text-secondary);" />
+    <text x="55" y="25" class="label-primary">GNOME Desktop</text>
+  </g>
+  <g transform="translate(900, 420)">
+    <rect class="card" x="0" y="0" width="240" height="50" />
+    <use href="#icon-cloud" x="15" y="15" width="20" height="20" style="color: var(--kernel-stroke);" />
+    <text x="55" y="25" class="label-primary">tailscaled</text>
+  </g>
+  <g transform="translate(900, 480)">
+    <rect class="card" x="0" y="0" width="240" height="50" />
+    <use href="#icon-cloud" x="15" y="15" width="20" height="20" style="color: var(--warning-stroke);" />
+    <text x="55" y="25" class="label-primary">cloudflared</text>
+  </g>
+
+  <!-- ==================== HOST OS LAYER ==================== -->
+  <rect class="host" x="40" y="670" width="1120" height="165" />
+  <g transform="translate(60, 690)">
+    <use href="#icon-linux" x="0" y="-10" width="30" height="30" style="color: var(--text-primary);" />
+    <text x="40" y="5" class="header-primary">Host OS – Ubuntu | 20 Cores | 64GB RAM</text>
+  </g>
+
+  <g transform="translate(60, 730)">
+    <rect class="box-error" x="0" y="0" width="230" height="70" />
+    <use href="#icon-db" x="15" y="20" width="30" height="30" style="color: var(--error-stroke);" />
+    <text x="125" y="20" text-anchor="middle" class="text-error">NFS Server</text>
+    <text x="125" y="40" text-anchor="middle" class="text-error-sub">/mnt/k0s-cluster</text>
+    <text x="125" y="55" text-anchor="middle" class="text-error-sub">Serving to 198.51.100.27</text>
+  </g>
+
+  <g transform="translate(340, 730)">
+    <rect class="box-kernel" x="0" y="0" width="230" height="70" />
+    <use href="#icon-cpu" x="15" y="20" width="30" height="30" style="color: var(--kernel-stroke);" />
+    <text x="125" y="25" text-anchor="middle" class="text-kernel">Linux Kernel</text>
+    <text x="125" y="45" text-anchor="middle" class="text-kernel-sub">Page Cache + VM</text>
+  </g>
+
+  <g transform="translate(620, 730)">
+    <rect class="box-success" x="0" y="0" width="230" height="70" />
+    <rect x="20" y="25" width="20" height="20" rx="2" style="fill:none; stroke:var(--success-stroke); stroke-width:2;" />
+    <text x="125" y="25" text-anchor="middle" class="text-success">NVMe SSD</text>
+    <text x="125" y="45" text-anchor="middle" class="text-success-sub">937 GB</text>
+  </g>
+
+  <g transform="translate(900, 730)">
+    <rect class="box-warning" x="0" y="0" width="200" height="70" />
+    <use href="#icon-warning" x="15" y="20" width="30" height="30" style="color: var(--warning-stroke);" />
+    <text x="115" y="25" text-anchor="middle" class="text-warning">Swap: 8GB</text>
+    <text x="115" y="45" text-anchor="middle" class="text-warning-sub" fill="var(--error-text)">Heavy Thrashing
+      <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite" />
+    </text>
+  </g>
+
+  <!-- ==================== PATHS & ANIMATIONS ==================== -->
+  
+  <!-- Pods to Loopback Box -->
+  <path d="M 200 260 C 200 360, 450 360, 450 460" class="link-path" />
+  <path d="M 450 260 L 450 460" class="link-path" />
+  <path d="M 700 260 C 700 360, 450 360, 450 460" class="link-path" />
+  
+  <path d="M 200 390 C 200 425, 450 425, 450 460" class="link-path" />
+  <path d="M 700 390 C 700 425, 450 425, 450 460" class="link-path" />
+
+  <!-- Loopback to Host NFS -->
+  <path d="M 450 520 C 450 550, 500 540, 500 570 L 500 705 Q 500 715, 490 715 L 185 715 Q 175 715, 175 725 L 175 730" class="link-path" />
+
+  <!-- Host Internal Connections -->
+  <!-- NFS to Kernel -->
+  <path d="M 290 765 L 340 765" class="link-solid" />
+  <circle cx="315" cy="765" r="5" fill="var(--success-stroke)" />
+
+  <!-- Kernel to NVMe -->
+  <path d="M 570 765 L 620 765" class="link-solid" />
+  <circle cx="595" cy="765" r="5" fill="var(--warning-stroke)" />
+
+  <!-- Memory Pressure Path (NFS -> Swap) -->
+  <path id="path-memory-pressure" d="M 175 800 L 175 810 L 1000 810 L 1000 800" class="link-path-error" />
+  <text x="580" y="825" text-anchor="middle" class="label-primary" style="fill: var(--error-text);">Memory Pressure Path</text>
+
+  <!-- Animated Dots -->
+  <circle r="4" class="dot">
+    <animateMotion dur="3s" repeatCount="indefinite" path="M 200 260 C 200 360, 450 360, 450 460 L 450 520 C 450 550, 500 540, 500 570 L 500 705 Q 500 715, 490 715 L 185 715 Q 175 715, 175 725 L 175 730" />
+  </circle>
+  <circle r="4" class="dot">
+    <animateMotion dur="3.5s" repeatCount="indefinite" path="M 450 260 L 450 460 L 450 520 C 450 550, 500 540, 500 570 L 500 705 Q 500 715, 490 715 L 185 715 Q 175 715, 175 725 L 175 730" />
+  </circle>
+  <circle r="4" class="dot">
+    <animateMotion dur="4s" repeatCount="indefinite" path="M 700 260 C 700 360, 450 360, 450 460 L 450 520 C 450 550, 500 540, 500 570 L 500 705 Q 500 715, 490 715 L 185 715 Q 175 715, 175 725 L 175 730" />
+  </circle>
+  <circle r="4" class="dot">
+    <animateMotion dur="2.7s" repeatCount="indefinite" path="M 200 390 C 200 425, 450 425, 450 460 L 450 520 C 450 550, 500 540, 500 570 L 500 705 Q 500 715, 490 715 L 185 715 Q 175 715, 175 725 L 175 730" />
+  </circle>
+  <circle r="4" class="dot">
+    <animateMotion dur="3.2s" repeatCount="indefinite" path="M 700 390 C 700 425, 450 425, 450 460 L 450 520 C 450 550, 500 540, 500 570 L 500 705 Q 500 715, 490 715 L 185 715 Q 175 715, 175 725 L 175 730" />
+  </circle>
+
+  <!-- Host NFS to Kernel Data flow -->
+  <circle r="5" class="dot">
+    <animateMotion dur="1s" repeatCount="indefinite" path="M 290 765 L 340 765" />
+  </circle>
+
+  <!-- Kernel to NVMe Data flow -->
+  <circle r="5" class="dot-warning">
+    <animateMotion dur="1.5s" repeatCount="indefinite" path="M 570 765 L 620 765" />
+  </circle>
+
+  <!-- Memory Pressure Path Dots -->
+  <circle r="6" class="dot-error">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M 175 800 L 175 815 L 1000 815 L 1000 800" />
+  </circle>
+  <circle r="6" class="dot-error">
+    <animateMotion dur="2s" begin="0.5s" repeatCount="indefinite" path="M 175 800 L 175 815 L 1000 815 L 1000 800" />
+  </circle>
+  <circle r="6" class="dot-error">
+    <animateMotion dur="2s" begin="1s" repeatCount="indefinite" path="M 175 800 L 175 815 L 1000 815 L 1000 800" />
+  </circle>
+  <circle r="6" class="dot-error">
+    <animateMotion dur="2s" begin="1.5s" repeatCount="indefinite" path="M 175 800 L 175 815 L 1000 815 L 1000 800" />
+  </circle>
+
+  <!-- ==================== STATS BOTTOM ROW ==================== -->
+  <g transform="translate(40, 840)">
+    <rect class="stats-card" x="0" y="0" width="180" height="60" />
+    <use href="#icon-cpu" x="15" y="15" width="30" height="30" style="color: var(--success-stroke);" />
+    <text x="60" y="22" class="label-primary">20</text>
+    <text x="60" y="42" class="label-secondary">CPU Cores</text>
+
+    <rect class="stats-card" x="188" y="0" width="180" height="60" />
+    <use href="#icon-ram" x="203" y="15" width="30" height="30" style="color: var(--kernel-stroke);" />
+    <text x="248" y="22" class="label-primary">64 GB</text>
+    <text x="248" y="42" class="label-secondary">RAM</text>
+
+    <rect class="stats-card" x="376" y="0" width="180" height="60" />
+    <rect x="391" y="20" width="30" height="20" rx="2" style="fill:none; stroke:var(--success-stroke); stroke-width:2;" />
+    <text x="436" y="22" class="label-primary">937 GB</text>
+    <text x="436" y="42" class="label-secondary">NVMe SSD</text>
+
+    <rect class="stats-card" x="564" y="0" width="180" height="60" />
+    <use href="#icon-warning" x="579" y="15" width="30" height="30" style="color: var(--warning-stroke);" />
+    <text x="624" y="22" class="label-primary">8 GB</text>
+    <text x="624" y="42" class="label-secondary">Swap</text>
+
+    <rect class="stats-card" x="752" y="0" width="180" height="60" />
+    <use href="#icon-user" x="767" y="15" width="30" height="30" style="color: var(--error-stroke);" />
+    <text x="812" y="22" class="label-primary">7</text>
+    <text x="812" y="42" class="label-secondary">Claude Sessions</text>
+
+    <rect class="stats-card" x="940" y="0" width="180" height="60" />
+    <use href="#icon-server" x="955" y="15" width="30" height="30" style="color: var(--text-primary);" />
+    <text x="1000" y="22" class="label-primary">Multiple</text>
+    <text x="1000" y="42" class="label-secondary">Infra Services</text>
+  </g>
+
+  <!-- Recommendation Box -->
+  <g transform="translate(40, 920)">
+    <rect class="card" style="fill: var(--warning-bg); opacity: 0.5;" x="0" y="0" width="1120" height="50" />
+    <use href="#icon-sparkle" x="200" y="15" width="20" height="20" style="color: var(--warning-stroke);" />
+    <text x="230" y="25" class="label-primary" fill="var(--warning-text)">Recommendation:</text>
+    <text x="380" y="25" class="label-secondary" fill="var(--warning-text)">Distribute workloads, externalize storage, and increase memory to eliminate swap thrashing and improve stability.</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(1000, 685)">
+    <circle cx="0" cy="0" r="5" fill="var(--success-stroke)" />
+    <text x="15" y="0" class="label-secondary">Healthy</text>
+    <circle cx="0" cy="20" r="5" fill="var(--warning-stroke)" />
+    <text x="15" y="20" class="label-secondary">Under Pressure</text>
+    <circle cx="0" cy="40" r="5" fill="var(--error-stroke)" />
+    <text x="15" y="40" class="label-secondary">Critical / Bottleneck</text>
+  </g>
+
+</svg>

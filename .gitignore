@@ -18,6 +18,10 @@ public/knowledge-index.json
 credentials.json
 secrets.json
 
+# Real -> masked address tables for blog content masking. hellodk/cfpages is
+# public; committing this would make the masking on all 42 posts reversible.
+scripts/lib/mask.local.mjs
+
 .playwright-mcp/
 
 # Source images live in assets/ — synced to public/ on build (not committed)
@@ -26,3 +30,12 @@ assets/images/
 # Built/synced assets and OG image are committed
 !public/assets/**
 !public/images/**
+
+# graphify knowledge graph output
+graphify-out/
+
+# subagent-driven-development scratch
+.superpowers/
+
+# test output
+test-reports/

@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1300" width="100%" height="100%">
+  <style>
+    :root {
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --border-color: #E5E7EB;
+      
+      --node-neutral-bg: #F1F5F9; --node-neutral-text: #0F172A; --node-neutral-stroke: #94A3B8;
+      --node-warning-bg: #FEF3C7; --node-warning-text: #92400E; --node-warning-stroke: #F59E0B;
+      --node-error-bg: #FEE2E2; --node-error-text: #991B1B; --node-error-stroke: #EF4444;
+      --node-critical-bg: #FECACA; --node-critical-text: #7F1D1D; --node-critical-stroke: #DC2626;
+      --node-k8s-bg: #F3E8FF; --node-k8s-text: #581C87; --node-k8s-stroke: #A855F7;
+      
+      --path-color: #9CA3AF;
+      --error-color: #EF4444;
+      --text-sub: #4B5563;
+      
+      --dot-color: #3B82F6;
+      --dot-error: #EF4444;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #0B0F19;
+        --card-bg: #111827;
+        --border-color: #374151;
+        
+        --node-neutral-bg: #1E293B; --node-neutral-text: #F8FAFC; --node-neutral-stroke: #475569;
+        --node-warning-bg: #78350F; --node-warning-text: #FDE68A; --node-warning-stroke: #F59E0B;
+        --node-error-bg: #7F1D1D; --node-error-text: #FECACA; --node-error-stroke: #EF4444;
+        --node-critical-bg: #450A0A; --node-critical-text: #FECACA; --node-critical-stroke: #DC2626;
+        --node-k8s-bg: #3B0764; --node-k8s-text: #E9D5FF; --node-k8s-stroke: #A855F7;
+        
+        --path-color: #4B5563;
+        --error-color: #EF4444;
+        --text-sub: #CBD5E1;
+      }
+    }
+
+    rect.bg { fill: var(--bg-color); }
+    rect.node { stroke-width: 2; rx: 8; filter: url(#shadow); }
+    
+    .node-neutral { fill: var(--node-neutral-bg); stroke: var(--node-neutral-stroke); }
+    .node-warning { fill: var(--node-warning-bg); stroke: var(--node-warning-stroke); }
+    .node-error { fill: var(--node-error-bg); stroke: var(--node-error-stroke); }
+    .node-critical { fill: var(--node-critical-bg); stroke: var(--node-critical-stroke); }
+    .node-k8s { fill: var(--node-k8s-bg); stroke: var(--node-k8s-stroke); }
+
+    text { font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    
+    .title-text { font-size: 16px; font-weight: 700; fill: currentColor; }
+    .sub-text { font-size: 14px; font-weight: 400; opacity: 0.85; fill: currentColor; }
+    
+    /* Using text-anchor: start and paint-order to create a crisp stroke halo cutting through lines */
+    .link-label { fill: var(--text-sub); font-size: 14px; text-anchor: start; font-weight: 600; paint-order: stroke fill; stroke: var(--bg-color); stroke-width: 6px; }
+    .link-label-mid { fill: var(--text-sub); font-size: 14px; text-anchor: middle; font-weight: 600; paint-order: stroke fill; stroke: var(--bg-color); stroke-width: 6px; }
+    
+    .link { fill: none; stroke: var(--path-color); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .link-error { fill: none; stroke: var(--error-color); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .link-dashed { fill: none; stroke: var(--path-color); stroke-width: 3; stroke-dasharray: 6 6; stroke-linecap: round; }
+    .link-error-dashed { fill: none; stroke: var(--error-color); stroke-width: 3; stroke-dasharray: 6 6; stroke-linecap: round; }
+    
+    .icon { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    
+    /* Data dot particles */
+    .dot { fill: var(--dot-color); }
+    .dot-error { fill: var(--dot-error); }
+  </style>
+
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.08" />
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="var(--path-color)" />
+    </marker>
+    <marker id="arrowhead-error" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="var(--error-color)" />
+    </marker>
+
+    <!-- Icons -->
+    <g id="icon-warning" class="icon"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></g>
+    <g id="icon-error" class="icon"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></g>
+    <g id="icon-db" class="icon"><path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></g>
+    <g id="icon-cpu" class="icon"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></g>
+    <g id="icon-k8s"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6l5 3v6l-5 3-5-3V9l5-3z" fill="var(--bg-color)"/></g>
+    <g id="icon-ram"><rect x="2" y="6" width="20" height="12" rx="2" class="icon"/><path d="M4 18v2m4-2v2m4-2v2m4-2v2M4 4v2m4-2v2m4-2v2m4-2v2" class="icon"/></g>
+    <g id="icon-server" class="icon"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 12h20M6 8h.01M6 16h.01"/></g>
+  </defs>
+
+  <rect class="bg" width="800" height="1300" />
+  
+  <!-- ==================== BACKGROUND PATHS ==================== -->
+  
+  <path id="path-main" d="M 400 100 L 400 570" class="link-error-dashed" />
+  <path id="path-pods" d="M 400 620 C 400 690, 205 690, 205 730" class="link-error-dashed" />
+  <path id="path-etcd" d="M 400 620 C 400 690, 595 690, 595 730" class="link-error-dashed" />
+  <path id="path-pods-back" d="M 205 810 C 205 835, 400 835, 400 860" class="link-dashed" />
+  <path id="path-bottom" d="M 400 940 L 400 1200" class="link-dashed" />
+  
+  <path d="M 430 770 L 390 770" class="link" marker-end="url(#arrowhead)" />
+  <text x="410" y="760" class="link-label-mid">amplifies</text>
+
+  <path d="M 650 1160 L 720 1160 L 720 1030 L 660 1030" class="link-error-dashed" marker-end="url(#arrowhead-error)" />
+  <text x="735" y="1100" class="link-label" style="fill: var(--error-color)">feeds back / amplifies</text>
+
+  <!-- Animated Dots on Background Paths -->
+  <!-- Top Cascade -->
+  <circle r="5" class="dot-error">
+    <animateMotion dur="4s" repeatCount="indefinite" path="M 400 100 L 400 570" />
+  </circle>
+  <circle r="5" class="dot-error">
+    <animateMotion dur="4s" begin="2s" repeatCount="indefinite" path="M 400 100 L 400 570" />
+  </circle>
+  
+  <!-- Pods Branch -->
+  <circle r="5" class="dot-error">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M 400 620 C 400 690, 205 690, 205 730" />
+  </circle>
+  <!-- etcd Branch -->
+  <circle r="5" class="dot-error">
+    <animateMotion dur="2s" begin="1s" repeatCount="indefinite" path="M 400 620 C 400 690, 595 690, 595 730" />
+  </circle>
+  
+  <!-- Pods Merge -->
+  <circle r="5" class="dot">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M 205 810 C 205 835, 400 835, 400 860" />
+  </circle>
+  
+  <!-- Bottom Flow -->
+  <circle r="5" class="dot">
+    <animateMotion dur="3s" repeatCount="indefinite" path="M 400 940 L 400 1200" />
+  </circle>
+  <circle r="5" class="dot">
+    <animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M 400 940 L 400 1200" />
+  </circle>
+  
+  <!-- Loopback Dot -->
+  <circle r="5" class="dot-error">
+    <animateMotion dur="3s" repeatCount="indefinite" path="M 650 1160 L 720 1160 L 720 1030 L 660 1030" />
+  </circle>
+
+  <!-- ==================== FOREGROUND NODES ==================== -->
+
+  <g transform="translate(150, 50)">
+    <rect class="node node-warning" x="0" y="0" width="500" height="80" />
+    <use href="#icon-ram" x="25" y="25" width="30" height="30" style="color: var(--node-warning-text);" />
+    <text x="75" y="32" class="title-text" style="color: var(--node-warning-text);">K8s workloads + 7 Claude instances</text>
+    <text x="75" y="55" class="sub-text" style="color: var(--node-warning-text);">1172 cron zombies unexpectedly consume available memory</text>
+  </g>
+  
+  <text x="420" y="155" class="link-label">triggers</text>
+  <path d="M400 130 L400 170" class="link" marker-end="url(#arrowhead)" />
+  
+  <g transform="translate(150, 180)">
+    <rect class="node node-error" x="0" y="0" width="500" height="80" />
+    <use href="#icon-cpu" x="25" y="25" width="30" height="30" style="color: var(--node-error-text);" />
+    <text x="75" y="32" class="title-text" style="color: var(--node-error-text);">Memory commit ratio hits 260%</text>
+    <text x="75" y="55" class="sub-text" style="color: var(--node-error-text);">Kernel starts aggressive page reclaim process</text>
+  </g>
+
+  <text x="420" y="285" class="link-label" fill="var(--error-color)">causes</text>
+  <path d="M400 260 L400 300" class="link link-error" marker-end="url(#arrowhead-error)" />
+
+  <g transform="translate(150, 310)">
+    <rect class="node node-error" x="0" y="0" width="500" height="80" />
+    <use href="#icon-warning" x="25" y="25" width="30" height="30" style="color: var(--node-error-text);" />
+    <text x="75" y="32" class="title-text" style="color: var(--node-error-text);">Swap thrashing: 522 pages/sec out</text>
+    <text x="75" y="55" class="sub-text" style="color: var(--node-error-text);">NVMe disk becomes fully saturated at 1,923 IOPS</text>
+  </g>
+
+  <text x="420" y="415" class="link-label" fill="var(--error-color)">starves</text>
+  <path d="M400 390 L400 430" class="link link-error" marker-end="url(#arrowhead-error)" />
+
+  <g transform="translate(150, 440)">
+    <rect class="node node-critical" x="0" y="0" width="500" height="80" />
+    <use href="#icon-db" x="25" y="25" width="30" height="30" style="color: var(--node-critical-text);" />
+    <text x="75" y="32" class="title-text" style="color: var(--node-critical-text);">NFS server's page cache evicted</text>
+    <text x="75" y="55" class="sub-text" style="color: var(--node-critical-text);">Critical NFS daemon pages are forcibly swapped out</text>
+  </g>
+
+  <text x="420" y="545" class="link-label" fill="var(--error-color)">breaks</text>
+  <path d="M400 520 L400 560" class="link link-error" marker-end="url(#arrowhead-error)" />
+
+  <g transform="translate(150, 570)">
+    <rect class="node node-critical" x="0" y="0" width="500" height="80" />
+    <use href="#icon-error" x="25" y="25" width="30" height="30" style="color: var(--node-critical-text);" />
+    <text x="75" y="32" class="title-text" style="color: var(--node-critical-text);">NFS server becomes unresponsive</text>
+    <text x="75" y="55" class="sub-text" style="color: var(--node-critical-text);">Fails to serve mount, read, or write network requests</text>
+  </g>
+
+  <text x="215" y="690" class="link-label" fill="var(--error-color)">causes</text>
+  <text x="500" y="690" class="link-label" fill="var(--error-color)">impacts</text>
+  
+  <path d="M 400 650 C 400 690, 205 690, 205 720" class="link link-error" marker-end="url(#arrowhead-error)" />
+  <path d="M 400 650 C 400 690, 595 690, 595 720" class="link link-error" marker-end="url(#arrowhead-error)" />
+
+  <g transform="translate(430, 730)">
+    <rect class="node node-k8s" x="0" y="0" width="330" height="80" />
+    <use href="#icon-k8s" x="20" y="25" width="30" height="30" style="color: var(--node-k8s-stroke);" />
+    <text x="65" y="32" class="title-text" style="color: var(--node-k8s-text);">etcd slows down</text>
+    <text x="65" y="55" class="sub-text" style="color: var(--node-k8s-text);">K8s API becomes sluggish</text>
+  </g>
+
+  <g transform="translate(40, 730)">
+    <rect class="node node-k8s" x="0" y="0" width="330" height="80" />
+    <use href="#icon-k8s" x="20" y="25" width="30" height="30" style="color: var(--node-k8s-stroke);" />
+    <text x="65" y="32" class="title-text" style="color: var(--node-k8s-text);">K8s pods fail health checks</text>
+    <text x="65" y="55" class="sub-text" style="color: var(--node-k8s-text);">kubelet kills and reschedules them</text>
+  </g>
+
+  <text x="220" y="840" class="link-label">triggers</text>
+  <path d="M 205 810 C 205 835, 400 835, 400 850" class="link" marker-end="url(#arrowhead)" />
+
+  <g transform="translate(150, 860)">
+    <rect class="node node-k8s" x="0" y="0" width="500" height="80" />
+    <use href="#icon-server" x="25" y="25" width="30" height="30" style="color: var(--node-k8s-text);" />
+    <text x="75" y="32" class="title-text" style="color: var(--node-k8s-text);">New pods demand NFS PVC mounts</text>
+    <text x="75" y="55" class="sub-text" style="color: var(--node-k8s-text);">mount.nfs processes hang indefinitely in D-state</text>
+  </g>
+
+  <text x="420" y="965" class="link-label">creates</text>
+  <path d="M400 940 L400 980" class="link" marker-end="url(#arrowhead)" />
+
+  <g transform="translate(150, 990)">
+    <rect class="node node-neutral" x="0" y="0" width="500" height="80" />
+    <use href="#icon-warning" x="25" y="25" width="30" height="30" style="color: var(--node-neutral-text);" />
+    <text x="75" y="32" class="title-text" style="color: var(--node-neutral-text);">30+ Uninterruptible D-state processes</text>
+    <text x="75" y="55" class="sub-text" style="color: var(--node-neutral-text);">System load average skyrockets artificially</text>
+  </g>
+
+  <text x="420" y="1095" class="link-label">cascades</text>
+  <path d="M400 1070 L400 1110" class="link" marker-end="url(#arrowhead)" />
+
+  <g transform="translate(150, 1120)">
+    <rect class="node node-neutral" x="0" y="0" width="500" height="80" />
+    <use href="#icon-error" x="25" y="25" width="30" height="30" style="color: var(--node-neutral-text);" />
+    <text x="75" y="32" class="title-text" style="color: var(--node-neutral-text);">More pod churn, more mount attempts</text>
+    <text x="75" y="55" class="sub-text" style="color: var(--node-neutral-text);">Exponential growth of hung D-state processes</text>
+  </g>
+
+</svg>

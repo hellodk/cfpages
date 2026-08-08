@@ -57,9 +57,9 @@ EOF</li>
 
 <li>Set DNS entries in /etc/hosts</li>
 <ul>
-	<li style="color: #4233ff">192.168.10.60 kubem</li>
-	<li style="color: #4233ff">192.168.10.61 worker1</li>
-	<li style="color: #4233ff">192.168.10.62 worker2</li>
+	<li style="color: #4233ff">192.0.2.60 kubem</li>
+	<li style="color: #4233ff">192.0.2.61 worker1</li>
+	<li style="color: #4233ff">192.0.2.62 worker2</li>
 </ul>
 
 <li>Docker Installation</li>
@@ -97,7 +97,7 @@ EOF
 
 <li>Initialize the kubernetes cluster</li>
 <ul>
-	<li style="color: #4233ff">kubeadm init --apiserver-advertise-address=172.31.19.193 --pod-network-cidr=10.244.0.0/16 --service-cidr=10.244.0.0/12</li>
+	<li style="color: #4233ff">kubeadm init --apiserver-advertise-address=198.51.100.193 --pod-network-cidr=10.244.0.0/16 --service-cidr=10.244.0.0/12</li>
 </ul>
 
 <li>Become Non-root user</li>

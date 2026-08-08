@@ -1,13 +1,11 @@
 ---
-title: "Kubernetes Monitoring"
+title: "Production-Ready Kubernetes Monitoring with kube-prometheus-stack"
 date: 2026-05-01
-description: "Complete guide to setting up kube-prometheus-stack — Prometheus, Grafana dashboards, AlertManager, and the PromQL queries that actually matter in production."
+description: "A comprehensive guide to implementing enterprise-grade monitoring in Kubernetes"
 tags: [kubernetes, monitoring, prometheus]
-draft: false
 cover: "assets/images/screen6.png"
+draft: false
 ---
-
-# Production-Ready Kubernetes Monitoring with kube-prometheus-stack
 
 *A comprehensive guide to implementing enterprise-grade monitoring in Kubernetes*
 

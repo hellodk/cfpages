@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 400" width="100%" height="100%">
+  <style>
+    :root {
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --border-color: #E5E7EB;
+      --text-primary: #111827;
+      --text-secondary: #4B5563;
+      
+      --color-idle: #94A3B8;    /* Muted Slate */
+      --color-iowait: #EF4444;  /* Critical Red */
+      --color-user: #F59E0B;    /* Warning Amber */
+      --color-system: #8B5CF6;  /* System Purple */
+      
+      --glow-iowait: rgba(239, 68, 68, 0.4);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #0B0F19;
+        --card-bg: #111827;
+        --border-color: #374151;
+        --text-primary: #F9FAFB;
+        --text-secondary: #CBD5E1;
+        
+        --color-idle: #475569;
+        --color-iowait: #EF4444;
+        --color-user: #F59E0B;
+        --color-system: #A78BFA;
+        
+        --glow-iowait: rgba(239, 68, 68, 0.6);
+      }
+    }
+
+    rect.bg { fill: var(--bg-color); }
+    rect.card { fill: var(--card-bg); stroke: var(--border-color); stroke-width: 2; rx: 12; filter: url(#shadow); }
+    
+    text { font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; dominant-baseline: middle; }
+    .title { fill: var(--text-primary); font-size: 24px; font-weight: 800; text-anchor: middle; }
+    
+    .legend-title { fill: var(--text-primary); font-size: 16px; font-weight: 700; }
+    .legend-val { fill: var(--text-primary); font-size: 16px; font-weight: 800; text-anchor: end; }
+    
+    .center-val { fill: var(--color-iowait); font-size: 48px; font-weight: 800; text-anchor: middle; }
+    .center-label { fill: var(--text-secondary); font-size: 16px; font-weight: 600; text-anchor: middle; }
+    .center-sub { fill: var(--color-iowait); font-size: 12px; font-weight: 700; text-anchor: middle; letter-spacing: 1px; }
+
+    .donut-segment {
+      fill: transparent;
+      stroke-width: 25;
+      stroke-linecap: butt; /* Keep butt to avoid overlapping exact percentages */
+      transform-origin: 200px 200px;
+    }
+    
+    .donut-idle { stroke: var(--color-idle); }
+    .donut-iowait { stroke: var(--color-iowait); }
+    .donut-user { stroke: var(--color-user); }
+    .donut-system { stroke: var(--color-system); }
+  </style>
+
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect class="bg" width="650" height="400" />
+
+  <!-- Main Title -->
+  <text x="325" y="40" class="title">CPU Time Distribution During Meltdown</text>
+
+  <!-- Donut Chart Group -->
+  <g transform="translate(0, 20)" filter="url(#shadow)">
+    <!-- Idle: 70.9% | Offset: 25 -->
+    <circle cx="200" cy="180" r="100" pathLength="100" class="donut-segment donut-idle" stroke-dasharray="0 100" stroke-dashoffset="25">
+      <animate attributeName="stroke-dasharray" from="0 100" to="70.9 100" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1" />
+    </circle>
+    
+    <!-- I/O Wait: 24.8% | Offset: 25 - 70.9 = -45.9 -->
+    <circle cx="200" cy="180" r="100" pathLength="100" class="donut-segment donut-iowait" stroke-dasharray="0 100" stroke-dashoffset="-45.9">
+      <animate attributeName="stroke-dasharray" from="0 100" to="24.8 100" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1" />
+    </circle>
+    
+    <!-- User: 2.3% | Offset: -45.9 - 24.8 = -70.7 -->
+    <circle cx="200" cy="180" r="100" pathLength="100" class="donut-segment donut-user" stroke-dasharray="0 100" stroke-dashoffset="-70.7">
+      <animate attributeName="stroke-dasharray" from="0 100" to="2.3 100" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1" />
+    </circle>
+    
+    <!-- System: 2.0% | Offset: -70.7 - 2.3 = -73.0 -->
+    <circle cx="200" cy="180" r="100" pathLength="100" class="donut-segment donut-system" stroke-dasharray="0 100" stroke-dashoffset="-73.0">
+      <animate attributeName="stroke-dasharray" from="0 100" to="2.0 100" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1" />
+    </circle>
+  </g>
+
+  <!-- Center Text -->
+  <g transform="translate(0, 0)">
+    <text x="200" y="190" class="center-val">24.8%</text>
+    <text x="200" y="225" class="center-label">I/O WAIT</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(400, 90)">
+    <rect class="card" x="0" y="0" width="220" height="220" />
+    
+    <!-- Idle -->
+    <g transform="translate(20, 40)">
+      <circle cx="0" cy="0" r="8" fill="var(--color-idle)" />
+      <text x="20" y="1" class="legend-title">Idle</text>
+      <text x="180" y="1" class="legend-val">70.9%</text>
+    </g>
+    
+    <!-- I/O Wait -->
+    <g transform="translate(20, 90)">
+      <circle cx="0" cy="0" r="8" fill="var(--color-iowait)" />
+      <text x="20" y="1" class="legend-title" fill="var(--color-iowait)">I/O Wait</text>
+      <text x="180" y="1" class="legend-val" fill="var(--color-iowait)">24.8%</text>
+    </g>
+    
+    <!-- User -->
+    <g transform="translate(20, 140)">
+      <circle cx="0" cy="0" r="8" fill="var(--color-user)" />
+      <text x="20" y="1" class="legend-title">User</text>
+      <text x="180" y="1" class="legend-val">2.3%</text>
+    </g>
+    
+    <!-- System -->
+    <g transform="translate(20, 190)">
+      <circle cx="0" cy="0" r="8" fill="var(--color-system)" />
+      <text x="20" y="1" class="legend-title">System</text>
+      <text x="180" y="1" class="legend-val">2.0%</text>
+    </g>
+  </g>
+
+</svg>

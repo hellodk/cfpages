@@ -1,13 +1,11 @@
 ---
 title: "Browser-Based Ubuntu Desktop with 3-Factor Auth and Zero Open Ports"
 date: 2026-04-25
-description: "Access your home lab from anywhere — 3-factor auth, zero open ports, $0/month. Apache Guacamole + Cloudflare Tunnel + xrdp + Ubuntu GNOME."
+description: "Working remotely from a home lab usually means one of three bad options:"
 tags: [kubernetes, networking, rdp]
-draft: false
 cover: "assets/images/unix_time_sharing/unix-wallpaper.png"
+draft: false
 ---
-
-# Browser-Based Ubuntu Desktop with 3-Factor Auth and Zero Open Ports
 
 > Access your home lab from anywhere — Google OTP, Guacamole password, TOTP — then land directly on your Ubuntu desktop. No VPN client. No open ports. Free.
 ---
@@ -36,7 +34,7 @@ flowchart TD
     CT["cloudflared pod\nnamespace: tunnel\n2 replicas — outbound only\nZero inbound ports on router"]
     GUA["Apache Guacamole\nnamespace: guacamole\nFactor 2: Username + Password\nFactor 3: TOTP (6-digit code)"]
     GUACD["guacd\nProtocol daemon\nRDP · SSH · VNC"]
-    LAPTOP["Ubuntu Desktop\nxrdp on port 3389\n100.89.50.27 (Tailscale IP)"]
+    LAPTOP["Ubuntu Desktop\nxrdp on port 3389\n198.51.100.27 (Tailscale IP)"]
     DB["PostgreSQL\nUsers · Connections\nAudit log"]
 
     Browser -->|"HTTPS guac.thecylon.org"| CF
@@ -45,7 +43,7 @@ flowchart TD
     CT -->|"NetworkPolicy: tunnel ns only\nport 8080"| GUA
     GUA -->|"Auth: password + TOTP"| DB
     GUA -->|"NetworkPolicy: port 4822 only"| GUACD
-    GUACD -->|"RDP — locked to 100.89.50.27:3389\nguacd-egress NetworkPolicy"| LAPTOP
+    GUACD -->|"RDP — locked to 198.51.100.27:3389\nguacd-egress NetworkPolicy"| LAPTOP
 
     style CF fill:#1a1200,stroke:#f39c12,color:#f5f5f5
     style CFA fill:#1a0808,stroke:#c0392b,color:#f5f5f5
@@ -71,7 +69,7 @@ sequenceDiagram
 
     B->>CF: GET https://guac.thecylon.org
     CF->>B: Enter your email address
-    B->>CF: you@example.com
+    B->>CF: 
     CF->>OL: One-time PIN email
     OL-->>B: PIN code (e.g. 847291)
     B->>CF: Submit PIN → ✅ Factor 1 complete
@@ -503,7 +501,7 @@ graph TD
     CF2 -->|"ALLOW: from namespace:tunnel → port 8080 only\n❌ direct access without CF JWT blocked"| GUA2
     GUA2 -->|"ALLOW: guacamole → guacd port 4822 only"| GUACD2
     GUA2 -->|"ALLOW: guacamole → postgres port 5432 only"| PG
-    GUACD2 -->|"ALLOW: 100.89.50.27:22 + :3389 only\n❌ cannot reach rest of LAN"| Desktop["Ubuntu Desktop"]
+    GUACD2 -->|"ALLOW: 198.51.100.27:22 + :3389 only\n❌ cannot reach rest of LAN"| Desktop["Ubuntu Desktop"]
 
     style guac_ns fill:#1a0808,stroke:#c0392b,color:#f5f5f5
     style tunnel_ns fill:#001a12,stroke:#00b894,color:#f5f5f5
@@ -526,7 +524,7 @@ spec:
   egress:
     - to:
         - ipBlock:
-            cidr: 100.89.50.27/32    # your machine's IP only
+            cidr: 198.51.100.27/32    # your machine's IP only
       ports:
         - port: 22
           protocol: TCP
@@ -732,7 +730,7 @@ kubectl logs -n tunnel deployment/cloudflared --tail=20
 
 # Test guacd can reach the laptop
 GUACD=$(kubectl get pod -n guacamole -l app=guacd -o jsonpath='{.items[0].metadata.name}')
-kubectl exec -n guacamole $GUACD -- wget -qO- --timeout=3 http://100.89.50.27:22 2>&1 | head -1
+kubectl exec -n guacamole $GUACD -- wget -qO- --timeout=3 http://198.51.100.27:22 2>&1 | head -1
 # Expected: SSH-2.0-OpenSSH_...
 
 # Check audio profile

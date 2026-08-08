@@ -18,7 +18,11 @@
     "cf:deploy": "bash scripts/cf-deploy.sh",
     "preview": "astro preview",
     "preview:all": "ASTRO_TELEMETRY_DISABLED=1 ./scripts/preview-all.sh",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "migrate:blogs": "node scripts/migrate-blogs.mjs",
+    "verify:migration": "node scripts/verify-migration.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
@@ -31,7 +35,10 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250614.0",
+    "node-html-parser": "^6.1.13",
     "pagefind": "^1.5.2",
+    "turndown": "^7.2.0",
+    "vitest": "^3.0.5",
     "wrangler": "^4.22.0"
   }
 }
