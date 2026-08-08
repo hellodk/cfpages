@@ -1,7 +1,7 @@
 ---
 title: "Resume"
 date: 2021-06-06
-description: "Deepak Gupta — Lead DevSecOps Engineer at HDFC Bank. Fifteen years across banking, gaming, e-commerce and telecom: secure CI/CD, Kubernetes, MLOps and observability."
+description: "Deepak Gupta — Lead DevSecOps Engineer. Fifteen years across banking, gaming, e-commerce and telecom: secure CI/CD, Kubernetes, MLOps and observability."
 tags: [resume]
 draft: false
 ---

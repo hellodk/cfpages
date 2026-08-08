@@ -32,6 +32,24 @@ const BLOCKED_PATHS = [
   /^secrets\.json$/,
 ];
 
+/**
+ * Employer names are fine on the resume and nowhere else. The resume lives in
+ * the blog collection, so its `description` frontmatter is syndicated into
+ * feed.xml, the paginated listing cards and tag pages — naming an employer
+ * there publishes it across the blog, which is a compliance problem even
+ * though the resume page itself may name them freely.
+ */
+const EMPLOYER_TERMS = [/\bHDFC\b/i];
+const EMPLOYER_ALLOWED = new Set([
+  'src/content/blog/resume.md',
+  'tests/unit/check-secrets.test.mjs',
+]);
+
+export function scanForEmployerNames(text, rel) {
+  if (EMPLOYER_ALLOWED.has(rel)) return [];
+  return EMPLOYER_TERMS.filter(re => re.test(text)).map(re => String(re));
+}
+
 const ALLOWLIST_PATHS = [
   /^\.env\.example$/,
   /^docs\//,
@@ -111,6 +129,12 @@ function main() {
         console.error(`✗ ${name} pattern in ${stagedOnly ? 'staged' : 'tracked'} file: ${rel}`);
         failed = true;
       }
+    }
+
+    const employers = scanForEmployerNames(text, rel);
+    if (employers.length) {
+      console.error(`✗ Employer name outside the resume in ${rel}: ${employers.join(', ')}`);
+      failed = true;
     }
 
     if (rel.startsWith('src/content/blog/') || rel.startsWith('public/assets/blog/')) {
