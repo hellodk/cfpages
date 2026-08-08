@@ -1,6 +1,6 @@
 ---
 import NavIcon from '../icons/NavIcon.astro';
-import { topicNav, llmNav, siteNav, isNavActive } from '../../data/navigation';
+import { topicNav, siteNav, isNavActive } from '../../data/navigation';
 
 const currentPath = Astro.url.pathname;
 ---
@@ -26,20 +26,6 @@ const currentPath = Astro.url.pathname;
       ))}
     </ul>
 
-    <h3 class="lsb__section-title">LLM</h3>
-    <ul class="lsb__group">
-      {llmNav.map((link) => (
-        <li>
-          <a
-            href={link.href}
-            class:list={['lsb__link', isNavActive(link.href, currentPath) && 'active']}
-          >
-            <span class="icon"><NavIcon name={link.icon} size={18} /></span>
-            <span class="label">{link.label}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
 
     <ul class="lsb__group lsb__group--site">
       {siteNav.map((link) => (

@@ -8,25 +8,21 @@ export type NavItem = {
 
 /** Primary content categories */
 export const topicNav: NavItem[] = [
-  { href: '/tag/databases', label: 'Databases', icon: 'databases' },
-  { href: '/tag/devops', label: 'DevOps', icon: 'devops' },
+  { href: '/tag/devops', label: 'DevOps / Platform Engineering', icon: 'devops' },
   { href: '/tag/fiction', label: 'Fiction', icon: 'fiction' },
-  { href: '/tag/mlops', label: 'ML Ops', icon: 'mlops' },
   { href: '/tag/travel', label: 'Travel', icon: 'travel' },
   { href: '/resume', label: 'Resume', icon: 'resume' },
   { href: '/tag/photography', label: 'Photography', icon: 'photography' },
+  { href: '/tag/llm', label: 'LLM', icon: 'mlx' },
 ];
 
-/** AI / LLM tooling and write-ups */
-export const llmNav: NavItem[] = [
-  { href: '/tag/mlx', label: 'MLX', icon: 'mlx' },
-  { href: '/tag/graphify', label: 'Graphify', icon: 'graphify' },
-  { href: '/tag/machine-learning', label: 'Machine Learning', icon: 'machine-learning' },
-  { href: '/tag/ai-agents', label: 'AI Agents', icon: 'ai-agents' },
-  { href: '/tag/claude-code', label: 'Claude Code', icon: 'claude-code' },
-  { href: '/tag/cursor', label: 'Cursor', icon: 'cursor' },
-  { href: '/tag/antigravity', label: 'Antigravity', icon: 'antigravity' },
-];
+/**
+ * Previously a seven-item LLM section. Collapsed into a single `LLM` entry in
+ * topicNav: `llm` carries 7 live posts, while ai-agents, claude-code, cursor
+ * and antigravity had none, and mlx/graphify/machine-learning had 1-3 each.
+ * Kept as an empty export so navTagSlugs and any stale import still resolve.
+ */
+export const llmNav: NavItem[] = [];
 
 /** Site pages — after topic + LLM sections */
 export const siteNav: NavItem[] = [

@@ -38,3 +38,21 @@
 .post-art__body svg text {
   font-family: system-ui, -apple-system, sans-serif;
 }
+
+/* Inline icon SVGs.
+   Migrated posts carry small decorative icons inside paragraphs (viewBox
+   "0 0 24 24", no width/height attributes). An SVG with a viewBox and no
+   intrinsic size fills its container, so these rendered at the full column
+   width — 1523px squares on a 1440px viewport.
+   The diagram rules above use `> svg` deliberately (per ui.md) so they never
+   touch these; this rule sizes them to the surrounding text instead. */
+.post-art__body p > svg,
+.post-art__body li > svg,
+.post-art__body h2 > svg,
+.post-art__body h3 > svg {
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.18em;
+  display: inline-block;
+  flex-shrink: 0;
+}
