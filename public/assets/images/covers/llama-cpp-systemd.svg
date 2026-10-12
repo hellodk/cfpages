@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Supervised terminal that stays running">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8FAFC"/><stop offset="1" stop-color="#DDE3EC"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="150" fill="#CBD5E1" opacity="0.5"/>
+  <circle cx="1420" cy="860" r="180" fill="#94A3B8" opacity="0.35"/>
+  <ellipse cx="800" cy="890" rx="560" ry="58" fill="#C2C9D6"/>
+  <rect x="420" y="360" width="620" height="420" rx="24" fill="#FFFFFF" stroke="#475569" stroke-width="8"/>
+  <circle cx="464" cy="404" r="13" fill="#F87171"/>
+  <circle cx="500" cy="404" r="13" fill="#FBBF24"/>
+  <circle cx="536" cy="404" r="13" fill="#34D399"/>
+  <rect x="464" y="460" width="220" height="24" rx="12" fill="#34D399"/>
+  <rect x="464" y="510" width="340" height="24" rx="12" fill="#CBD5E1"/>
+  <rect x="464" y="560" width="280" height="24" rx="12" fill="#CBD5E1"/>
+  <rect x="464" y="610" width="420" height="24" rx="12" fill="#94A3B8"/>
+  <rect x="464" y="660" width="180" height="24" rx="12" fill="#34D399"/>
+  <rect x="464" y="710" width="60" height="28" fill="#34D399"/>
+  <circle cx="1180" cy="590" r="120" fill="#FFFFFF" stroke="#475569" stroke-width="10"/>
+  <path d="M1180 500 A90 90 0 1 1 1090 590" fill="none" stroke="#475569" stroke-width="22" stroke-linecap="round"/>
+  <polygon points="1090,540 1090,600 1040,570" fill="#475569"/>
+  <polyline points="1150,590 1172,612 1204,576" fill="none" stroke="#16A34A" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

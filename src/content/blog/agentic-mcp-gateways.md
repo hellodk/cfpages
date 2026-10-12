@@ -146,7 +146,7 @@ while True:
     messages += [reply, result]             # 3 · observe
 ```
 
-**Key insight:** the model proposes, the harness disposes. An LLM cannot touch your filesystem or network — every real-world effect goes through tool execution code you control. That separation is exactly where permissions, sandboxing, and (later) gateways attach.
+<aside class="callout"><strong class="callout__title">Key insight:</strong><div class="callout__body">the model proposes, the harness disposes. An LLM cannot touch your filesystem or network — every real-world effect goes through tool execution code you control. That separation is exactly where permissions, sandboxing, and (later) gateways attach.</div></aside>
 
 * * *
 
@@ -196,7 +196,7 @@ One call generates, another critiques against criteria, loop until accepted. The
 | Debugging | Step-by-step, deterministic | Trace-driven (hence observability) |
 | Best For | Pipelines: classify, extract, transform | Open problems: coding, research, ops |
 
-**Rule of thumb:** find the simplest pattern that works and stop there. Reach for a full agent only when you cannot enumerate the steps in advance.
+<aside class="callout"><strong class="callout__title">Rule of thumb:</strong><div class="callout__body">find the simplest pattern that works and stop there. Reach for a full agent only when you cannot enumerate the steps in advance.</div></aside>
 
 ## Multi-Agent Patterns
 
@@ -218,7 +218,7 @@ Many agents attack independent slices simultaneously — review dimensions, file
 
 Throughput
 
-**More agents is not automatically better.** Every agent boundary loses context and adds a failure mode. Multi-agent pays off for exactly two reasons: context isolation (a subagent burns its own window, not yours) and parallelism. If neither applies, one agent with good tools beats five with a committee.
+<aside class="callout"><strong class="callout__title">More agents is not automatically better.</strong><div class="callout__body">Every agent boundary loses context and adds a failure mode. Multi-agent pays off for exactly two reasons: context isolation (a subagent burns its own window, not yours) and parallelism. If neither applies, one agent with good tools beats five with a committee.</div></aside>
 
 ## MCP — Model Context Protocol
 
@@ -382,7 +382,7 @@ Elicitation
 
 Mid-operation, a server can ask the user for structured input ("which environment?") through the host UI. Added in the 2025-06-18 revision.
 
-Capabilities are **negotiated at initialize** — each side declares what it supports, and only negotiated features may be used during the session.
+<aside class="callout"><strong class="callout__title">negotiated at initialize</strong><div class="callout__body">Capabilities are  — each side declares what it supports, and only negotiated features may be used during the session.</div></aside>
 
 ## Transports
 
@@ -467,7 +467,7 @@ Transport closes; stdio servers exit with the host.
 
 Governance moved from Anthropic alone to open stewardship under the Linux Foundation (announced December 2025), alongside an official **MCP Registry** for discovering published servers.
 
-**Security reality check:** every MCP server you connect is code that feeds text straight into your model's context. That enables **prompt injection** via tool results, **tool poisoning** (malicious instructions hidden in tool descriptions), and **rug pulls** (a server silently changing a tool's behaviour after you approved it). One laptop with three servers is manageable by inspection. Fifty agents and two hundred servers is not — that is the problem the next tab exists to solve.
+<aside class="callout"><strong class="callout__title">Security reality check:</strong><div class="callout__body">every MCP server you connect is code that feeds text straight into your model's context. That enables <strong>prompt injection</strong> via tool results, <strong>tool poisoning</strong> (malicious instructions hidden in tool descriptions), and <strong>rug pulls</strong> (a server silently changing a tool's behaviour after you approved it). One laptop with three servers is manageable by inspection. Fifty agents and two hundred servers is not — that is the problem the next tab exists to solve.</div></aside>
 
 ## Gateways · A2A · Glossary
 
@@ -661,7 +661,7 @@ MCP gateway — agents see one server, operators govern hundreds
 | Governs | Routes, keys, rate limits | Model choice, cost, caching, fallback | Which tools exist and who may call them | End-to-end agent traffic policy |
 | Examples | Traefik, Kong, Envoy | LiteLLM, Portkey, OpenRouter, Envoy AI Gateway | Docker MCP Gateway, IBM ContextForge | agentgateway |
 
-**They compose, not compete.** A realistic stack runs an agent gateway as the front door, an LLM gateway function for model routing, and an MCP gateway function for tool federation — sometimes three products, increasingly one.
+<aside class="callout"><strong class="callout__title">They compose, not compete.</strong><div class="callout__body">A realistic stack runs an agent gateway as the front door, an LLM gateway function for model routing, and an MCP gateway function for tool federation — sometimes three products, increasingly one.</div></aside>
 
 ## A2A — Agent2Agent Protocol
 
@@ -701,7 +701,7 @@ Results come back as artifacts — text, files, structured data. The remote agen
 | Discovery | Config / registry of servers | Agent Cards at well-known URLs |
 | Mental Model | "Plug in a capability" | "Delegate to a colleague" |
 
-A useful test: if you can fully describe the remote thing with a JSON Schema, it's a tool — use MCP. If you'd brief it like a coworker, it's an agent — use A2A.
+<aside class="callout"><div class="callout__body">A useful test: if you can fully describe the remote thing with a JSON Schema, it's a tool — use MCP. If you'd brief it like a coworker, it's an agent — use A2A.</div></aside>
 
 ## Glossary — The Rest Of The Vocabulary
 
@@ -725,4 +725,4 @@ A useful test: if you can fully describe the remote thing with a JSON Schema, it
 | Confused Deputy | Attack: tricking a privileged agent into using its authority for the attacker's request — why per-user, per-tool authorization beats one god-token |
 | Rug Pull | Attack: an MCP server changes a tool's behaviour after the user approved the original — mitigated by version pinning and gateway policy |
 
-**How it all composes:** a model becomes an **agent** when a harness runs it in a tool loop · **MCP** standardises how that loop reaches tools and data · **A2A** standardises how agents delegate to each other · and **gateways** put identity, policy, and observability on every one of those wires. Four layers — reasoning, tooling, collaboration, governance.
+<aside class="callout"><strong class="callout__title">How it all composes:</strong><div class="callout__body">a model becomes an <strong>agent</strong> when a harness runs it in a tool loop · <strong>MCP</strong> standardises how that loop reaches tools and data · <strong>A2A</strong> standardises how agents delegate to each other · and <strong>gateways</strong> put identity, policy, and observability on every one of those wires. Four layers — reasoning, tooling, collaboration, governance.</div></aside>

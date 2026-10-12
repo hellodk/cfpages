@@ -253,7 +253,21 @@ export function buildTurndown() {
       if (!rows.length) return '';
       const [head, ...rest] = rows;
       const line = (cells) => `| ${cells.join(' | ')} |`;
-      const sep = `| ${head.map(() => '---').join(' | ')} |`;
+      // GFM column alignment is header-driven: propagate each header cell's
+      // align attribute (right/center) into the separator row. Body cells
+      // inherit the column alignment at render time. Unknown or missing
+      // values keep the plain separator so unannotated tables are untouched.
+      const headRow = node.querySelectorAll('tr')[0];
+      const aligns = headRow
+        ? Array.from(headRow.querySelectorAll('th,td')).map((c) =>
+            String(c.getAttribute ? c.getAttribute('align') ?? '' : '').toLowerCase())
+        : [];
+      const sep = `| ${head.map((_, i) => {
+        const a = aligns[i];
+        if (a === 'right') return '---:';
+        if (a === 'center') return ':---:';
+        return '---';
+      }).join(' | ')} |`;
       return `\n\n${[line(head), sep, ...rest.map(line)].join('\n')}\n\n`;
     },
   });
@@ -305,6 +319,60 @@ export function convertHtml(html) {
     root.querySelectorAll(sel).forEach((el) => el.remove());
   }
 
+  // 4b. Style 2 components (issue #14): `.stats` stat cards and
+  // `.note`/`.alert` callouts are pulled out before Turndown — which would
+  // otherwise flatten them into bare paragraphs — and re-injected afterwards
+  // as structured blocks the post layout styles. Same placeholder discipline
+  // as the SVG pass below: no underscores, or Turndown escapes them.
+  //
+  // Malformed-input guard: extraction uses innerHTML, so an UNCLOSED wrapper
+  // (homelab-secret-rescue §1 shipped `<div class="alert">…</p>` with no
+  // `</div>`) would swallow the rest of the document into one callout. Nodes
+  // whose content holds block-level structure are left for Turndown instead.
+  const BLOCKY = /<(section|svg|pre|table|h[1-6]|ul|ol|blockquote|aside)[\s>]/i;
+  const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const variantOf = (el, ...names) => {
+    const classes = (el.getAttribute('class') || '').split(/\s+/);
+    const found = names.find((n) => classes.includes(n));
+    if (found === 'good') return 'ok';
+    if (found === 'bad') return 'err';
+    return found || '';
+  };
+  const htmlBlocks = [];
+  root.querySelectorAll('.stats').forEach((stats) => {
+    if (BLOCKY.test(stats.innerHTML)) return;
+    const cards = stats.querySelectorAll('.stat').map((stat) => {
+      const v = variantOf(stat, 'ok', 'err', 'warn', 'good', 'bad');
+      const n = esc(stat.querySelector('.n')?.textContent?.trim());
+      // Label class differs by source vintage: homelab uses .l, the 297
+      // reference uses .k (its stylesheet has no .l at all).
+      const l = esc(stat.querySelector('.l, .k')?.textContent?.trim());
+      if (!n && !l) return '';
+      const cls = v ? 'stat-card stat-card--' + v : 'stat-card';
+      return '<div class="' + cls + '"><span class="stat-card__n">' + n + '</span><span class="stat-card__l">' + l + '</span></div>';
+    }).filter(Boolean);
+    if (!cards.length) { stats.remove(); return; }
+    htmlBlocks.push(`<div class="stat-cards">\n${cards.join('\n')}\n</div>`);
+    stats.replaceWith(`<p>%%HTML${htmlBlocks.length - 1}%%</p>`);
+  });
+  root.querySelectorAll('.note, .alert').forEach((note) => {
+    if (BLOCKY.test(note.innerHTML)) return;
+    const v = variantOf(note, 'ok', 'err', 'warn', 'good', 'bad');
+    const titleEl = note.querySelector('b, strong, .t');
+    const title = esc(titleEl?.textContent?.trim());
+    titleEl?.remove();
+    const inner = note.innerHTML.trim();
+    if (!title && !inner) { note.remove(); return; }
+    const cls = v ? 'callout callout--' + v : 'callout';
+    htmlBlocks.push(
+      '<aside class="' + cls + '">' +
+      (title ? '<strong class="callout__title">' + title + '</strong>' : '') +
+      (inner ? '<div class="callout__body">' + inner + '</div>' : '') +
+      '</aside>',
+    );
+    note.replaceWith(`<p>%%HTML${htmlBlocks.length - 1}%%</p>`);
+  });
+
   // 5. The layout renders the title, so drop the leading h1.
   root.querySelector('h1')?.remove();
 
@@ -345,6 +413,9 @@ export function convertHtml(html) {
 
   // 8. Re-inject the SVGs verbatim.
   body = body.replace(/%%SVG(\d+)%%/g, (_m, i) => `\n\n${svgs[Number(i)]}\n\n`);
+
+  // 8b. Re-inject the Style 2 component blocks verbatim.
+  body = body.replace(/%%HTML(\d+)%%/g, (_m, i) => `\n\n${htmlBlocks[Number(i)]}\n\n`);
 
   body = body.replace(/\n{3,}/g, '\n\n').trim();
   body = stripNavigation(body);

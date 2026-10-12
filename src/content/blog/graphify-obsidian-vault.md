@@ -49,7 +49,10 @@ This is the actual graphify output for the kri codebase. Each colour is a commun
 
 kri · graphify-out/graph.html · 920 nodes · 2767 edges [Open full screen ↗](graph.html)
 
-**Reading the graph:** zoom into the dense centre to see god nodes. Pan to the periphery to find isolated communities (_Prometheus Metrics_, _Package Init_) with 0 edges — loaded but not directly referenced. Each colour cluster is a community of files that call each other.
+<aside class="callout"><strong class="callout__title">Reading the graph:</strong><div class="callout__body">zoom into the dense centre to see god nodes.
+          Pan to the periphery to find isolated communities (<em>Prometheus Metrics</em>,
+          <em>Package Init</em>) with 0 edges — loaded but not directly referenced. Each colour
+          cluster is a community of files that call each other.</div></aside>
 
 ## 2 God nodes — the 10 core abstractions
 

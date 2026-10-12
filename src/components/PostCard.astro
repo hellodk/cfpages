@@ -10,6 +10,10 @@ interface Props {
   cover?: string;
   readingTime?: number;
   featured?: boolean;
+  /* Heading level for the card title. Related-posts cards sit under the
+     section's own h2, so they render h3 to keep the outline clean; grids
+     keep the default h2. Class-based styling is tag-agnostic. */
+  headingLevel?: 2 | 3;
 }
 
 const {
@@ -21,6 +25,7 @@ const {
   cover = '/assets/images/utilities/IMG_75751.JPG',
   readingTime = 1,
   featured = false,
+  headingLevel = 2,
 } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-GB', {
@@ -31,6 +36,7 @@ const formattedDate = date.toLocaleDateString('en-GB', {
 
 const primaryTag = tags[0] ?? 'blog';
 const accent = tagAccent(primaryTag);
+const TitleTag = headingLevel === 3 ? 'h3' : 'h2';
 ---
 
 <article class:list={['card', { 'card--featured': featured }]} style={`--tag-accent: ${accent}`}>
@@ -40,7 +46,7 @@ const accent = tagAccent(primaryTag);
     {featured && (
       <div class="card__overlay">
         <span class="card__pill">{primaryTag}</span>
-        <h2 class="card__overlay-title">{title}</h2>
+        <TitleTag class="card__overlay-title">{title}</TitleTag>
       </div>
     )}
     {!featured && tags[0] && (
@@ -49,9 +55,9 @@ const accent = tagAccent(primaryTag);
   </a>
   <div class="card__body">
     {!featured && (
-      <h2 class="card__title">
+      <TitleTag class="card__title">
         <a href={`/${slug}`}>{title}</a>
-      </h2>
+      </TitleTag>
     )}
     <p class="card__excerpt">{description}</p>
     <footer class="card__foot">

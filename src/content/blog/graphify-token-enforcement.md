@@ -194,7 +194,10 @@ The 5-minute window is deliberate: it allows parallel agent dispatch (two agents
 
 **Parallel dispatch works correctly:** When two agents are dispatched in the same message, both PreToolUse hooks fire within milliseconds of each other. Both read the same timestamp file, both see age < 5 minutes, both are allowed. No race condition, no false blocks.
 
-**Session boundary reset:** The sentinel lives in `/tmp/`, which is cleared on reboot. Each new Claude Code session therefore starts with no sentinel — the first Agent dispatch of every session requires a graphify query. This is the correct behaviour: a new session means new context, and the graph should be consulted fresh.
+<aside class="callout"><strong class="callout__title">Session boundary reset:</strong><div class="callout__body">The sentinel lives in <code>/tmp/</code>, which
+          is cleared on reboot. Each new Claude Code session therefore starts with no sentinel —
+          the first Agent dispatch of every session requires a graphify query. This is the correct
+          behaviour: a new session means new context, and the graph should be consulted fresh.</div></aside>
 
 ## 7 The hook code
 

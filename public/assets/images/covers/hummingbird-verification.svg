@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Pristine container with sparkles for zero findings">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0F9FF"/><stop offset="1" stop-color="#D6E9F5"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="840" r="170" fill="#BAE6FD" opacity="0.5"/>
+  <circle cx="1420" cy="200" r="140" fill="#7DD3FC" opacity="0.4"/>
+  <ellipse cx="800" cy="890" rx="540" ry="58" fill="#BCCFDA"/>
+  <rect x="620" y="440" width="360" height="400" rx="20" fill="#0284C7"/>
+  <rect x="620" y="440" width="360" height="70" rx="20" fill="#0369A1"/>
+  <line x1="660" y1="580" x2="940" y2="580" stroke="#BAE6FD" stroke-width="12" stroke-linecap="round"/>
+  <line x1="660" y1="650" x2="940" y2="650" stroke="#BAE6FD" stroke-width="12" stroke-linecap="round"/>
+  <line x1="660" y1="720" x2="940" y2="720" stroke="#BAE6FD" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="800" cy="330" r="86" fill="none" stroke="#16A34A" stroke-width="26"/>
+  <polygon points="460,420 472,452 504,464 472,476 460,508 448,476 416,464 448,452" fill="#0EA5E9"/>
+  <polygon points="1150,560 1158,580 1178,588 1158,596 1150,616 1142,596 1122,588 1142,580" fill="#0EA5E9"/>
+  <polygon points="1080,300 1086,316 1102,322 1086,328 1080,344 1074,328 1058,322 1074,316" fill="#0284C7"/>
+  <polygon points="520,640 525,653 538,658 525,663 520,676 515,663 502,658 515,653" fill="#0284C7"/>
+</svg>

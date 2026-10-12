@@ -39,3 +39,5 @@ graphify-out/
 
 # test output
 test-reports/
+
+test-results/

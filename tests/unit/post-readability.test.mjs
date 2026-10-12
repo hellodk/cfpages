@@ -94,12 +94,15 @@ describe('prose measure', () => {
     }
   });
 
-  it('lands the cap inside the readable 60-80 character band', () => {
+  // Band widened 80 -> 200 on explicit owner request (issue #14): prose
+  // fills the content column. Past ~80ch readability degrades — accepted
+  // as a deliberate trade-off, recorded here so nobody "fixes" it back.
+  it('lands the cap inside the 60-200 character band', () => {
     const widths = [...LAYOUT.matchAll(/max-width\s*:\s*([\d.]+)ch/g)].map(m => parseFloat(m[1]));
     expect(widths.length).toBeGreaterThan(0);
     for (const w of widths) {
-      expect(w, `${w}ch is outside the 60-80 band`).toBeGreaterThanOrEqual(60);
-      expect(w, `${w}ch is outside the 60-80 band`).toBeLessThanOrEqual(80);
+      expect(w, `${w}ch is outside the 60-200 band`).toBeGreaterThanOrEqual(60);
+      expect(w, `${w}ch is outside the 60-200 band`).toBeLessThanOrEqual(200);
     }
   });
 

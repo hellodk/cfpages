@@ -278,6 +278,23 @@ describe('convertHtml — structure', () => {
     expect(body).toContain('| Layer | Zone |');
     expect(body).toContain('| DB | UTC |');
   });
+
+  it('propagates th align attributes into GFM column alignment', () => {
+    const { body } = convertHtml(
+      '<html><body><table><tr><th>Name</th><th align="right">Count</th><th align="center">Verdict</th></tr>'
+      + '<tr><td>a</td><td>3</td><td>x</td></tr></table></body></html>',
+    );
+    expect(body).toContain('| Name | Count | Verdict |');
+    expect(body).toContain('| --- | ---: | :---: |');
+  });
+
+  it('leaves unannotated tables with plain separators', () => {
+    const { body } = convertHtml(
+      '<html><body><table><tr><th>A</th><th>B</th></tr>'
+      + '<tr><td>1</td><td>2</td></tr></table></body></html>',
+    );
+    expect(body).toContain('| --- | --- |');
+  });
 });
 
 describe('convertHtml — chrome removal', () => {
@@ -410,5 +427,93 @@ describe('decodeEntities', () => {
   it('does not throw on an out-of-range numeric entity', () => {
     expect(() => decodeEntities('&#1200000;')).not.toThrow();
     expect(decodeEntities('&#1200000;')).toBe('&#1200000;');
+  });
+});
+
+// Style 2 post layout (issue #14): `.stats` stat cards and `.note`/`.alert`
+// callouts must survive migration as structured blocks the layout styles,
+// instead of flattening into bare paragraphs.
+const STYLE2 = `<!doctype html><html><head><title>Post</title></head><body><main>
+<div class="stats">
+  <div class="stat err"><div class="n">15 × 20B</div><div class="l">nightly backups</div></div>
+  <div class="stat ok"><div class="n">2</div><div class="l">passwords rotated</div></div>
+  <div class="stat"><div class="n">4</div><div class="l">PRs opened</div></div>
+</div>
+<div class="note warn"><b>The trap:</b> deleting a secret from the <code>tree</code> does nothing.</div>
+<div class="alert err"><b>Then the backups.</b> Every dump was <a href="https://example.com/x">exactly 20 bytes</a>.</div>
+<div class="note"><div class="t">A quiet win</div><p>No Secret object ever exists.</p></div>
+<p>It started with four words and ended four PRs later having rescued the database.</p>
+</main></body></html>`;
+
+describe('convertHtml — style 2 components', () => {
+  it('preserves .stats as a stat-cards block with variants', () => {
+    const { body } = convertHtml(STYLE2);
+    expect(body).toContain('<div class="stat-cards">');
+    expect(body).toContain('stat-card--err');
+    expect(body).toContain('stat-card--ok');
+    expect(body).toContain('15 × 20B');
+    expect(body).toContain('nightly backups');
+  });
+
+  it('preserves .note warn as a callout with its title', () => {
+    const { body } = convertHtml(STYLE2);
+    expect(body).toContain('<aside class="callout callout--warn">');
+    expect(body).toContain('The trap:');
+    expect(body).toContain('deleting a secret');
+  });
+
+  it('maps .alert err onto the same callout shape', () => {
+    const { body } = convertHtml(STYLE2);
+    expect(body).toContain('<aside class="callout callout--err">');
+    expect(body).toContain('Then the backups.');
+  });
+
+  it('takes the callout title from a .t child too', () => {
+    const { body } = convertHtml(STYLE2);
+    expect(body).toContain('A quiet win');
+    expect(body).toContain('No Secret object ever exists.');
+  });
+
+  it('keeps inline code and links inside callouts', () => {
+    const { body } = convertHtml(STYLE2);
+    expect(body).toContain('<code>tree</code>');
+    expect(body).toContain('https://example.com/x');
+  });
+
+  it('never picks a stat or callout as the description fallback', () => {
+    const html = `<html><head><title>Post</title></head><body><main>
+      <div class="stats"><div class="stat"><div class="n">15 × 20B</div><div class="l">backups</div></div></div>
+      <p>It started with four words and ended four PRs later having rescued the database.</p>
+    </main></body></html>`;
+    expect(convertHtml(html).description).toContain('It started with four words');
+  });
+
+  // homelab-secret-rescue shipped an unclosed <div class="alert"> (…</p> with
+  // no </div>), which would swallow the rest of the document into one callout
+  // via innerHTML. Malformed wrappers must degrade to flat paragraphs instead.
+  it('leaves a malformed wrapper for Turndown instead of swallowing the document', () => {
+    const html = `<html><head><title>Post</title></head><body><main>
+      <div class="alert"><b>The trap:</b> deleting does nothing to a full-history scan.</p>
+      <p>It started with four words and ended four PRs later having rescued the database.</p>
+      <h2>Next section</h2>
+      <pre>kubectl get pods</pre>
+    </main></body></html>`;
+    const { body } = convertHtml(html);
+    expect(body).not.toContain('callout');
+    expect(body).toContain('## Next section');
+    expect(body).toContain('```');
+    expect(body).toContain('It started with four words');
+  });
+
+  // Label class differs by source vintage: homelab uses .l, the 297
+  // reference uses .k (its stylesheet has no .l at all).
+  it('reads stat labels from .k too (297 reference vintage)', () => {
+    const html = `<html><head><title>Post</title></head><body><main>
+      <div class="stats"><div class="stat err"><div class="n">U+2019</div><div class="k">The final blocker</div></div></div>
+      <p>It started with four words and ended four PRs later having rescued the database.</p>
+    </main></body></html>`;
+    const { body } = convertHtml(html);
+    expect(body).toContain('U+2019');
+    expect(body).toContain('The final blocker');
   });
 });

@@ -220,7 +220,7 @@ Writing the plist file is not enough — launchd must be told to pick it up. The
 
 The same sequence applies to `com.saltstack.salt.api`. The role waits for port 4505 (master) and port 4507 (api) to open before continuing, so Ansible fails fast if the daemon doesn't come up.
 
-**Important:** On macOS 13+ (Ventura+), prefer `launchctl kickstart -k system/com.saltstack.salt.master` for restarting rather than stop+start. It is atomic and avoids the window where the service is stopped but not yet restarted.
+<aside class="callout"><strong class="callout__title">Important:</strong><div class="callout__body">On macOS 13+ (Ventura+), prefer <code>launchctl kickstart -k system/com.saltstack.salt.master</code> for restarting rather than stop+start. It is atomic and avoids the window where the service is stopped but not yet restarted.</div></aside>
 
 Boot → Salt Ready — Service Start Flow
 
@@ -303,7 +303,7 @@ log_file: /var/log/salt/minion
 encryption_algorithm: OAEP-SHA1  # required by salt 3006+
 ```
 
-**No /etc/hosts entry needed.** The master address is a LAN IP (e.g. `192.0.2.64`). The minion resolves it via normal unicast routing — no DNS, no host file. This is intentional: adding a hostname-based entry would require DNS infrastructure that may not exist. IP addresses are stable for fixed Mac Minis.
+<aside class="callout"><strong class="callout__title">No /etc/hosts entry needed.</strong><div class="callout__body">The master address is a LAN IP (e.g. <code>192.0.2.64</code>). The minion resolves it via normal unicast routing — no DNS, no host file. This is intentional: adding a hostname-based entry would require DNS infrastructure that may not exist. IP addresses are stable for fixed Mac Minis.</div></aside>
 
 Minion → Master Authentication Flow (First Contact)
 
@@ -399,7 +399,7 @@ When `master_type: failover` is set with a list of masters, the minion:
 
     master\_tries: -1 means infinite retry — good for reboots
 
-**Note:** `master_shuffle: True` was renamed to `random_master: True` in Salt 3006. Always use `random_master` with 3007.
+<aside class="callout"><strong class="callout__title">Note:</strong><div class="callout__body"><code>master_shuffle: True</code> was renamed to <code>random_master: True</code> in Salt 3006. Always use <code>random_master</code> with 3007.</div></aside>
 
 ## How Ansible Builds the Master List
 
@@ -438,7 +438,7 @@ Salt's native transport (ZeroMQ) is not accessible from Python code running in a
 
 kri uses the `rest_cherrypy` backend (salt's built-in WSGI server). It handles auth, dispatches to the salt bus, and returns JSON.
 
-**Salt 3006+ Breaking Change:** All netapi clients (`local`, `local_async`, `runner`, `wheel`) are _disabled by default_. Every client kri uses must be explicitly enabled in master config. Without this, salt-api returns `400 Client disabled` even with valid credentials.
+<aside class="callout"><strong class="callout__title">Salt 3006+ Breaking Change:</strong><div class="callout__body">All netapi clients (<code>local</code>, <code>local_async</code>, <code>runner</code>, <code>wheel</code>) are <em>disabled by default</em>. Every client kri uses must be explicitly enabled in master config. Without this, salt-api returns <code>400 Client disabled</code> even with valid credentials.</div></aside>
 
 ## salt-api.conf
 
@@ -614,7 +614,7 @@ kri runs a structured probe (`SaltMasterProbe`) whenever "Test connection" is cl
 
     `manage.versions` and `manage.up` — reports fleet version consistency and live minion count
 
-**All 7 checks must pass** for the master to show as `healthy` in kri. A single fail makes it `unreachable`; a warning makes it `degraded`.
+<aside class="callout"><strong class="callout__title">All 7 checks must pass</strong><div class="callout__body">for the master to show as <code>healthy</code> in kri. A single fail makes it <code>unreachable</code>; a warning makes it <code>degraded</code>.</div></aside>
 
 ## Common Failure Modes and Fixes
 
@@ -669,7 +669,7 @@ curl -sk -X POST https://192.0.2.64:4507/run \
 }
 ```
 
-**Token lifetime:** The default CherryPy token expires after 12 hours. kri re-authenticates automatically on each probe cycle — it never caches tokens across requests to avoid stale-auth failures.
+<aside class="callout"><strong class="callout__title">Token lifetime:</strong><div class="callout__body">The default CherryPy token expires after 12 hours. kri re-authenticates automatically on each probe cycle — it never caches tokens across requests to avoid stale-auth failures.</div></aside>
 
 ## Probe Checks → Exact salt-api Calls
 
@@ -685,14 +685,12 @@ Every check in `SaltMasterProbe` maps to a concrete socket operation or salt-api
 | version | HTTP POST | client=runner, fun=manage.versions | Consistent Salt version across master and connected minions |
 | minions_up | HTTP POST | client=runner, fun=manage.up | At least one minion is currently connected and responsive |
 
-**Security Model — Defense in Depth**  
-
-Four independent layers protect the salt-api surface:  
-
-**1\. PAM password check** — krisalt's OS password must match. No token is issued without a valid PAM session.  
-**2\. external\_auth ACL** — Even with a valid token, every function call is checked against the per-user allowlist in `kri.conf`. Calling anything not listed returns 403.  
-**3\. TLS at rest\_cherrypy** — All traffic is encrypted via the self-signed cert on port 4507. Credentials are never sent in plaintext.  
-**4\. LAN-only, not Tailscale** — salt-api binds to the LAN interface (192.168.x.x). Traffic never traverses DERP relays. The attack surface is physically bounded to the local network.
+<aside class="callout"><strong class="callout__title">Security Model — Defense in Depth</strong><div class="callout__body"><br><br>
+    Four independent layers protect the salt-api surface:<br><br>
+    <strong>1. PAM password check</strong> — krisalt's OS password must match. No token is issued without a valid PAM session.<br>
+    <strong>2. external_auth ACL</strong> — Even with a valid token, every function call is checked against the per-user allowlist in <code>kri.conf</code>. Calling anything not listed returns 403.<br>
+    <strong>3. TLS at rest_cherrypy</strong> — All traffic is encrypted via the self-signed cert on port 4507. Credentials are never sent in plaintext.<br>
+    <strong>4. LAN-only, not Tailscale</strong> — salt-api binds to the LAN interface (192.168.x.x). Traffic never traverses DERP relays. The attack surface is physically bounded to the local network.</div></aside>
 
 ## TL;DR — How It All Fits Together
 
@@ -739,7 +737,7 @@ The single most important operational insight: **launchd guarantees process live
 | Process Liveness | salt-minion / salt-master / salt-api process is running | launchd — RunAtLoad starts on boot; KeepAlive respawns on crash with a 5 s throttle |
 | Data Freshness | kri refreshed last_seen_at for this node recently | the presence-refresh chain (pull path via Celery beat + push path via grain_report) |
 
-**Key insight:** kri's node status is computed purely as `now − last_seen_at`. Nothing about the badge inspects whether any process is alive. The thresholds (from `node_status.classify_status`): **≤ 15 min = online**, **15 min–4 h = stale**, **\> 4 h = offline**.
+<aside class="callout"><strong class="callout__title">Key insight:</strong><div class="callout__body">kri's node status is computed purely as <code>now &#8722; last_seen_at</code>. Nothing about the badge inspects whether any process is alive. The thresholds (from <code>node_status.classify_status</code>): <strong>&#8804; 15 min = online</strong>, <strong>15 min&#8211;4 h = stale</strong>, <strong>&gt; 4 h = offline</strong>.</div></aside>
 
 ## Two Paths That Refresh `last_seen_at`
 
@@ -785,7 +783,7 @@ A node stays online only while at least one of the two paths keeps firing. Miss 
 
     `ingest.py:242` — ingest handler writes the timestamp directly
 
-**mark\_stale\_nodes** runs every **5 min** and applies the thresholds: online → stale (gap > 15 min), stale → offline (gap > 4 h). A node goes stale only when _both_ refresh paths stop updating it for 15 minutes.
+<aside class="callout"><strong class="callout__title">mark_stale_nodes</strong><div class="callout__body">runs every <strong>5 min</strong> and applies the thresholds: online &#8594; stale (gap &gt; 15 min), stale &#8594; offline (gap &gt; 4 h). A node goes stale only when <em>both</em> refresh paths stop updating it for 15 minutes.</div></aside>
 
 Presence Refresh Paths — Pull + Push → last\_seen\_at → Status Badge
 
@@ -930,13 +928,11 @@ Presence Refresh Paths — Pull + Push → last\_seen\_at → Status Badge
 
     Freshness is computed as `now − last_seen_at`. A skewed clock on the minion host or the kri server distorts this calculation — a node can appear stale even though `last_seen_at` was just written.
 
-**On "they don’t start automatically":** The master and salt-api plists ARE configured to auto-start (`RunAtLoad`) and respawn (`KeepAlive`) — verified in the kri repo templates. If they genuinely do not come up at boot, the usual macOS causes are: a crash-loop (check `sudo launchctl print system/com.saltstack.salt.master` and `/var/log/salt/master-error`), wrong plist location or permissions (must be `/Library/LaunchDaemons/`, owned `root:wheel`, mode `0644`), or the Mac sleeping. The throttle is 5 s, so a crash-looping daemon retries every 5 s.
+<aside class="callout"><strong class="callout__title">On "they don’t start automatically":</strong><div class="callout__body">The master and salt-api plists ARE configured to auto-start (<code>RunAtLoad</code>) and respawn (<code>KeepAlive</code>) — verified in the kri repo templates. If they genuinely do not come up at boot, the usual macOS causes are: a crash-loop (check <code>sudo launchctl print system/com.saltstack.salt.master</code> and <code>/var/log/salt/master-error</code>), wrong plist location or permissions (must be <code>/Library/LaunchDaemons/</code>, owned <code>root:wheel</code>, mode <code>0644</code>), or the Mac sleeping. The throttle is 5 s, so a crash-looping daemon retries every 5 s.</div></aside>
 
-**Honesty caveats — what is NOT verified here:**  
-
-The **minion** launchd plist is installed by the Salt PKG installer, NOT the kri repo — verify its `RunAtLoad`/`KeepAlive` keys on the host with `sudo launchctl print system/com.saltstack.salt.minion`.  
-
-Which master each minion is currently attached to is runtime state — check on the master with `sudo /opt/salt/salt-run manage.up` and on the minion with `salt-call --local grains.get master`.
+<aside class="callout"><strong class="callout__title">Honesty caveats — what is NOT verified here:</strong><div class="callout__body"><br><br>
+    The <strong>minion</strong> launchd plist is installed by the Salt PKG installer, NOT the kri repo — verify its <code>RunAtLoad</code>/<code>KeepAlive</code> keys on the host with <code>sudo launchctl print system/com.saltstack.salt.minion</code>.<br><br>
+    Which master each minion is currently attached to is runtime state — check on the master with <code>sudo /opt/salt/salt-run manage.up</code> and on the minion with <code>salt-call --local grains.get master</code>.</div></aside>
 
 ## Operator’s Triage Checklist — Node Shows Stale
 
@@ -976,4 +972,4 @@ Which master each minion is currently attached to is runtime state — check on 
 
     `sudo /opt/salt/salt-key -L` on the default master — the minion ID must appear under _Accepted Keys_, not _Unaccepted_ or _Rejected_.
 
-**TL;DR:** “Stale” is a freshness alarm, not a crash alarm. launchd keeps the processes up; staleness means the refresh chain — minion → ingest, or kri → default-master `manage.up` — was broken for 15 minutes. In a multi-master fleet the **#1 cause** is a minion attached to a non-default master that kri never polls. Fleet-wide staleness almost always means the default master’s salt-api is down.
+<aside class="callout"><strong class="callout__title">TL;DR:</strong><div class="callout__body">&#8220;Stale&#8221; is a freshness alarm, not a crash alarm. launchd keeps the processes up; staleness means the refresh chain — minion &#8594; ingest, or kri &#8594; default-master <code>manage.up</code> — was broken for 15 minutes. In a multi-master fleet the <strong>#1 cause</strong> is a minion attached to a non-default master that kri never polls. Fleet-wide staleness almost always means the default master&#8217;s salt-api is down.</div></aside>

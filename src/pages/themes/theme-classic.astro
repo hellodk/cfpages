@@ -1,0 +1,207 @@
+---
+import { getCollection } from 'astro:content';
+import { toPost } from '../../utils/toPost';
+import ThemeCard from '../../components/theme/ThemeCard.astro';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const featured = toPost(allPosts[0]);
+const gridPosts = allPosts.slice(1, 5).map(toPost);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Classic Jasper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ================= THEME: Classic Jasper ================= */
+    .theme-showcase--classic {
+      --ts-bg: #ffffff; --ts-text: #3a4145; --ts-muted: #9eabb3;
+      --ts-inverted: #15171a; --ts-accent: #e5645e; --ts-border: #e7eef2;
+      --ts-nav-bg: #15171a; --ts-radius: 8px;
+      --ts-font-body: 'Merriweather', Georgia, serif;
+      --ts-font-head: 'Open Sans', -apple-system, sans-serif;
+      background: var(--ts-bg); color: var(--ts-text);
+      font-family: var(--ts-font-body); line-height: 1.75;
+    }
+    .theme-showcase--classic * { box-sizing: border-box; }
+    .theme-showcase--classic .ts-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 56px; background: var(--ts-nav-bg);
+      border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 50;
+    }
+    .theme-showcase--classic .ts-nav__logo {
+      font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700;
+      color: #fff; text-decoration: none; letter-spacing: -0.5px;
+    }
+    .theme-showcase--classic .ts-nav__logo em { color: var(--ts-accent); font-style: normal; }
+    .theme-showcase--classic .ts-nav__links { display: flex; gap: 18px; align-items: center; }
+    .theme-showcase--classic .ts-nav__links a, .theme-showcase--classic .ts-nav__icon {
+      color: rgba(255,255,255,0.75); text-decoration: none; font-family: var(--ts-font-head);
+      font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px;
+      transition: color 0.15s;
+    }
+    .theme-showcase--classic .ts-nav__icon { color: rgba(255,255,255,0.75); }
+    .theme-showcase--classic .ts-nav a:hover { color: #fff; }
+    .theme-showcase--classic .ts-hero {
+      position: relative; margin: -24px -24px 28px; min-height: 48vh;
+      background-size: cover; background-position: center;
+      background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop');
+      display: flex; align-items: center; justify-content: center; padding: 60px 24px;
+      border-bottom: 1px solid var(--ts-border); text-align: center;
+    }
+    .theme-showcase--classic .ts-shade {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.42);
+    }
+    .theme-showcase--classic .ts-hero-inner { position: relative; z-index: 1; max-width: 720px; }
+    .theme-showcase--classic .ts-hero-inner h1 {
+      font-family: var(--ts-font-body); font-size: clamp(1.7rem, 4.5vw, 2.75rem);
+      font-weight: 400; font-style: italic; color: #fff; line-height: 1.2; margin: 0 0 14px;
+      letter-spacing: 0.01em;
+    }
+    .theme-showcase--classic .ts-sub {
+      font-family: var(--ts-font-head); font-size: clamp(1rem, 2.2vw, 1.35rem);
+      font-weight: 400; color: rgba(255,255,255,0.9); margin: 0 auto 12px;
+      max-width: 40em; line-height: 1.5;
+    }
+    .theme-showcase--classic .ts-scale {
+      font-family: var(--ts-font-head); font-size: 0.95rem; color: rgba(255,255,255,0.9);
+      margin: 0 auto 16px; max-width: 68ch; line-height: 1.6;
+    }
+    .theme-showcase--classic .ts-cta {
+      display: inline-block; font-family: var(--ts-font-head); font-size: 0.9rem;
+      font-weight: 700; color: #fff; background: var(--ts-accent);
+      padding: 10px 20px; text-decoration: none; border-radius: 999px;
+      transition: opacity 0.15s;
+    }
+    .theme-showcase--classic .ts-cta:hover { opacity: 0.9; }
+    .theme-showcase--classic .ts-featured { max-width: 1120px; margin: 0 auto 40px; padding: 0 24px; }
+    .theme-showcase--classic .ts-feat-card {
+      display: grid; grid-template-columns: 52% 48%; gap: 28px; background: #fff;
+      border-radius: var(--ts-radius); overflow: hidden; border: 1px solid var(--ts-border);
+      transition: box-shadow 0.25s;
+    }
+    .theme-showcase--classic .ts-feat-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
+    .theme-showcase--classic .ts-feat-img {
+      width: 100%; height: 100%; min-height: 320px; object-fit: cover; display: block;
+    }
+    .theme-showcase--classic .ts-feat-text { padding: 28px 26px; display: flex; flex-direction: column; }
+    .theme-showcase--classic .ts-feat-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .theme-showcase--classic .ts-tag {
+      font-family: var(--ts-font-head); font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; color: #fff; background: var(--ts-tag);
+      padding: 2px 8px; border-radius: 3px; text-decoration: none;
+    }
+    .theme-showcase--classic .ts-feat-text h2 {
+      font-family: var(--ts-font-head); font-size: 1.35rem; font-weight: 700;
+      line-height: 1.3; color: var(--ts-inverted); margin: 0 0 10px;
+    }
+    .theme-showcase--classic .ts-feat-text h2 a { color: inherit; text-decoration: none; }
+    .theme-showcase--classic .ts-feat-text h2 a:hover { color: var(--ts-accent); }
+    .theme-showcase--classic .ts-feat-text p {
+      font-family: var(--ts-font-body); font-size: 0.92rem; color: #5d6d76;
+      line-height: 1.65; margin: 0 0 14px; flex: 1; display: -webkit-box;
+      -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .theme-showcase--classic .ts-feat-meta {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      font-family: var(--ts-font-head); font-size: 0.75rem; color: var(--ts-muted);
+      text-transform: uppercase; letter-spacing: 0.02em;
+    }
+    .theme-showcase--classic .ts-feat-meta img { border-radius: 50%; width: 18px; height: 18px; object-fit: cover; }
+    .theme-showcase--classic .ts-dot { color: var(--ts-border); }
+    .theme-showcase--classic .ts-grid { max-width: 1120px; margin: 0 auto 32px; padding: 0 24px; }
+    .theme-showcase--classic .ts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+    @media (min-width: 900px) {
+      .theme-showcase--classic .ts-grid .ts-card:nth-child(1) { grid-column: span 2; }
+    }
+    @media (max-width: 600px) { .theme-showcase--classic .ts-grid { grid-template-columns: 1fr; } }
+    .theme-showcase--classic .ts-card { background: #fff; border-radius: var(--ts-radius); overflow: hidden; border: 1px solid var(--ts-border);
+      box-shadow: 8px 14px 38px rgba(39,44,49,0.05), 1px 3px 8px rgba(39,44,49,0.03);
+      transition: transform 0.25s, box-shadow 0.25s; display: flex; flex-direction: column;
+    }
+    .theme-showcase--classic .ts-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(39,44,49,0.1); }
+    .theme-showcase--classic .ts-card:nth-child(1):hover { transform: none; }
+    .theme-showcase--classic .ts-card__media { position: relative; display: block; overflow: hidden; flex-shrink: 0; }
+    .theme-showcase--classic .ts-card__media img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; transition: transform 0.4s; }
+    .theme-showcase--classic .ts-card:hover .ts-card__img { transform: scale(1.04); }
+    .theme-showcase--classic .ts-card__media::after {
+      content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(9,10,11,0.55) 100%); opacity: 0.85;
+    }
+    .theme-showcase--classic .ts-card__pill {
+      position: absolute; top: 12px; left: 12px; z-index: 1;
+      font-family: var(--ts-font-head); font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #fff; padding: 3px 10px; border-radius: 3px; background: var(--ts-tag);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .theme-showcase--classic .ts-card__body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+    .theme-showcase--classic .ts-card__title { font-family: var(--ts-font-head); font-size: 1.05rem; font-weight: 700; line-height: 1.35; margin: 0; }
+    .theme-showcase--classic .ts-card__title a { color: var(--ts-inverted); text-decoration: none; }
+    .theme-showcase--classic .ts-card__title a:hover { color: var(--ts-accent); }
+    .theme-showcase--classic .ts-card__excerpt { font-family: var(--ts-font-body); font-size: 0.88rem; color: #5d6d76; line-height: 1.6; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .theme-showcase--classic .ts-card__foot { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+    .theme-showcase--classic .ts-card__meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-family: var(--ts-font-head); font-size: 0.72rem; color: var(--ts-muted); text-transform: uppercase; }
+    .theme-showcase--classic .ts-card__avatar { border-radius: 50%; width: 20px; height: 20px; object-fit: cover; }
+    .theme-showcase--classic .ts-card__tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .theme-showcase--classic .ts-footer { max-width: 1120px; margin: 0 auto 48px; padding: 0 24px; text-align: center; font-size: 0.85rem; color: var(--ts-muted); }
+    .theme-showcase--classic .ts-footer a { color: var(--ts-accent); text-decoration: none; }
+    .theme-showcase--classic .ts-card--featured .ts-card__media > img { width: 52%; height: 320px; }
+    .theme-showcase--classic .ts-card--featured .ts-card__body { padding: 28px 26px; justify-content: center; }
+    .theme-showcase--classic .ts-card--featured .ts-card__media > .ts-card__pill { display: none; }
+    .theme-showcase--classic .ts-card--featured .ts-card__overlay-title { font-family: var(--ts-font-head); font-size: 1.45rem; font-weight: 700; color: #15171a; margin-top: 8px; }
+    .theme-showcase--classic .ts-card--featured .ts-card__overlay-title::after { display: none; }
+    @media (max-width: 899px) {
+      .theme-showcase--classic .ts-card--featured .ts-card__media > img { width: 100%; height: 240px; }
+      .theme-showcase--classic .ts-card--featured { flex-direction: column; }
+      .theme-showcase--classic .ts-card--featured .ts-card__body { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div style="background:#f1f5f9; padding:16px; border-bottom:1px solid #cbd5e1; margin-bottom:20px;">
+    <h2 style="margin:0 0 8px;">Classic Jasper</h2>
+    <p style="margin:0; color:#475569;">Validating standalone theme layout — this section renders alone.</p>
+  </div>
+<section class="theme-showcase theme-showcase--classic" data-theme="classic" data-name="Classic Jasper">
+      <nav class="ts-nav">
+        <a href="/" class="ts-nav__logo">hello<em>dk</em></a>
+        <div class="ts-nav__links">
+          <a href="/">Blog</a>
+          <a href="/tag/devops">DevOps</a>
+          <a href="/tag/kubernetes">Kubernetes</a>
+          <a href="/about">About</a>
+          <a href="/newsletter">Newsletter</a>
+          <a href="/search" class="ts-nav__icon" aria-label="Search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </a>
+        </div>
+      </nav>
+      <header class="ts-hero"><div class="ts-shade"></div>
+        <div class="ts-hero-inner">
+          <h1>{featured.title}</h1>
+          <p class="ts-sub">Deepak Gupta · DevOps · SRE · Homelab</p>
+          <p class="ts-scale">Platform Engineering. Securing and running production systems across banking, gaming and e-commerce since 2011.</p>
+          <a href={`/${featured.slug}`} class="ts-cta">Read the story →</a>
+        </div>
+      </header>
+      <div class="ts-featured">
+        <ThemeCard slug={featured.slug} title={featured.title} description={featured.description} date={featured.date} tags={featured.tags} cover={featured.cover} readingTime={featured.readingTime} featured={true} />
+      </div>
+      <div class="ts-grid">
+        {gridPosts.map(p => <ThemeCard slug={p.slug} title={p.title} description={p.description} date={p.date} tags={p.tags} cover={p.cover} readingTime={p.readingTime} />)}
+      </div>
+      <footer class="ts-footer">© 2026 Deepak Gupta · <a href="/feed.xml">RSS</a> · <a href="/about">About</a></footer>
+    </section>
+
+    <!-- Theme 2: Modern Dark -------------------------------------------------- -->
+</body>
+</html>

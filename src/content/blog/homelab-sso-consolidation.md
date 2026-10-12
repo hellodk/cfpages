@@ -166,7 +166,9 @@ level=info msg="Callback: /auth/callback?state=...&code=..."
 
 Grafana's cause was blunter: an unrelated VictoriaMetrics migration had rewritten its SSO overlay file, carrying over `client_id`, `auth_url`, `token_url`, and `api_url` — and dropping `client_secret` on the floor entirely. Not wrong, not blank — simply never mentioned again, in the ConfigMap or as an env var. Grafana had been sending Keycloak no secret at all.
 
-**The actual lesson:** "OAuth is failing" is a symptom with more causes than the error message suggests. Chasing the exact same log line on a second app on the assumption it's the same bug wastes exactly as much time as assuming it isn't.
+<aside class="callout"><strong class="callout__title">The actual lesson:</strong><div class="callout__body">"OAuth is failing" is a symptom with more causes than
+          the error message suggests. Chasing the exact same log line on a second app on the
+          assumption it's the same bug wastes exactly as much time as assuming it isn't.</div></aside>
 
 ## 5 The Grafana outage: three bugs, not one
 

@@ -64,7 +64,7 @@ graphify install            # writes ~/.claude/skills/graphify/SKILL.md
 /graphify fleet_platform/
 ```
 
-**No API key required.** graphify's SKILL.md explicitly states it falls through to Claude Code subagent dispatch when no `GEMINI_API_KEY` or `GOOGLE_API_KEY` is set. The host session is the LLM. This means it works with any Claude Code subscription, including plans that don't expose API keys.
+<aside class="callout"><strong class="callout__title">No API key required.</strong><div class="callout__body">graphify's SKILL.md explicitly states it falls through to Claude Code subagent dispatch when no <code>GEMINI_API_KEY</code> or <code>GOOGLE_API_KEY</code> is set. The host session is the LLM. This means it works with any Claude Code subscription, including plans that don't expose API keys.</div></aside>
 
 For kri I scoped the run to `fleet_platform/` (the Python backend). The full project is 551 files when you include Salt playbooks, frontend, and tests — but 199 of those are YAML/SLS config files with limited semantic value. The backend at 122 files is the richest target for a knowledge graph.
 
@@ -312,7 +312,7 @@ graphify's betweenness centrality identifies which nodes act as bridges between 
             <line x1="465" y1="152" x2="605" y2="80" stroke="#93C5FD" stroke-width="1.5" stroke-dasharray="4,3"></line>
           </svg>
 
-**Node (betweenness 0.243)** connects Auth & Access Control, Audit, Ansible, SBOM, Platform Config, Baselines, JWT Auth, Alerting, iOS Tracking, Group Management, and Fleet Health. It is the single most dangerous node to change carelessly — graph theory quantifies what code review intuition suspects.
+<aside class="callout"><strong class="callout__title">Node (betweenness 0.243)</strong><div class="callout__body">connects Auth &amp; Access Control, Audit, Ansible, SBOM, Platform Config, Baselines, JWT Auth, Alerting, iOS Tracking, Group Management, and Fleet Health. It is the single most dangerous node to change carelessly — graph theory quantifies what code review intuition suspects.</div></aside>
 
 FastAPI (betweenness 0.083) is the second bridge — it wires the App Bootstrap community to all 14 feature communities through the router registration in `api/main.py`. This is expected and healthy; FastAPI's middleware and lifespan hooks intentionally cross feature boundaries.
 
@@ -379,7 +379,7 @@ The graph is a diagnostic, not a solution. Here's the concrete action list from 
 | Platform Config community cohesion 0.06 — lowest | platform_settings_svc has 15 importers. Document the public API clearly; consider a typed settings façade to reduce ad-hoc access | P2 |
 | Services raising HTTPException directly | Move HTTP-layer errors to route handlers; services should raise domain exceptions, routes convert them | P3 |
 
-**Open the interactive graph:** `graphify-out/graph.html` in the kri repo. It's a 1MB self-contained HTML file — no server needed, open directly in any browser. Filter by community, click nodes to trace edges, zoom to the clusters that matter.
+<aside class="callout"><strong class="callout__title">Open the interactive graph:</strong><div class="callout__body"><code>graphify-out/graph.html</code> in the kri repo. It's a 1MB self-contained HTML file — no server needed, open directly in any browser. Filter by community, click nodes to trace edges, zoom to the clusters that matter.</div></aside>
 
 The graph file is at `/home/dk/Documents/git/kri/graphify-out/graph.html`. Community filtering, edge weighting by confidence, and node search are all built into the visualization. It runs entirely client-side using vis.js — no backend required.
 

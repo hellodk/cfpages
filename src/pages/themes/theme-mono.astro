@@ -1,0 +1,174 @@
+---
+import { getCollection } from 'astro:content';
+import { toPost } from '../../utils/toPost';
+import ThemeCard from '../../components/theme/ThemeCard.astro';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const featured = toPost(allPosts[0]);
+const gridPosts = allPosts.slice(1, 5).map(toPost);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Monochrome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ================= THEME: Monochrome ================= */
+    .theme-showcase--mono {
+      --ts-bg: #09090b; --ts-text: #e4e4e7; --ts-muted: #a1a1aa;
+      --ts-inverted: #f4f4f5; --ts-accent: #ef4444; --ts-border: #27272a;
+      --ts-nav-bg: #09090b; --ts-radius: 4px;
+      --ts-font-body: -apple-system, 'Inter', sans-serif;
+      --ts-font-head: 'JetBrains Mono', monospace;
+      background: var(--ts-bg); color: var(--ts-text);
+      font-family: var(--ts-font-body); line-height: 1.6;
+    }
+    .theme-showcase--mono * { box-sizing: border-box; }
+    .theme-showcase--mono .ts-nav {
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--ts-border); position: sticky; top: 0; z-index: 50;
+    }
+    .theme-showcase--mono .ts-nav__center { display: flex; align-items: center; gap: 34px; }
+    .theme-showcase--mono .ts-nav__logo {
+      font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 700;
+      color: var(--ts-inverted); text-decoration: none; letter-spacing: -0.5px;
+    }
+    .theme-showcase--mono .ts-nav__logo em { color: var(--ts-accent); font-style: normal; }
+    .theme-showcase--mono .ts-nav__links { display: flex; gap: 24px; align-items: center; }
+    .theme-showcase--mono .ts-nav__links a {
+      font-family: var(--ts-font-head); font-size: 0.85rem; font-weight: 500;
+      color: var(--ts-muted); text-decoration: none; letter-spacing: 0.03em;
+      transition: all 0.15s;
+    }
+    .theme-showcase--mono .ts-nav__links a:hover { color: var(--ts-inverted); letter-spacing: 0.05em; }
+    .theme-showcase--mono .ts-nav__icon { color: var(--ts-muted); transition: color 0.15s; }
+    .theme-showcase--mono .ts-nav__icon:hover { color: var(--ts-accent); }
+    .theme-showcase--mono .ts-hero {
+      position: relative; margin: -24px -24px 32px; min-height: 48vh;
+      background: var(--ts-bg);
+      display: flex; align-items: center; justify-content: center;
+      padding: 70px 24px; text-align: center; border-bottom: 1px solid var(--ts-border);
+    }
+    .theme-showcase--mono .ts-shade { position: absolute; inset: 0; background: rgba(255,255,255,0.015); pointer-events: none; }
+    .theme-showcase--mono .ts-hero-inner { position: relative; z-index: 1; max-width: 800px; }
+    .theme-showcase--mono .ts-mono-title {
+      font-family: var(--ts-font-head); font-size: clamp(1.5rem, 4.5vw, 2.4rem);
+      font-weight: 700; color: var(--ts-inverted); line-height: 1.3; margin: 0 0 10px;
+      letter-spacing: -0.03em;
+    }
+    .theme-showcase--mono .ts-mono-title::after {
+      content: ''; display: block; width: 40px; height: 2px; background: var(--ts-accent);
+      margin: 14px auto 0;
+    }
+    .theme-showcase--mono .ts-sub {
+      font-family: var(--ts-font-body); font-size: clamp(1rem, 2.2vw, 1.3rem);
+      color: var(--ts-accent); margin: 0 auto 12px; max-width: 44em; line-height: 1.4;
+    }
+    .theme-showcase--mono .ts-scale {
+      font-family: var(--ts-font-body); font-size: 0.98rem; color: var(--ts-muted);
+      margin: 0 auto 18px; max-width: 72ch; line-height: 1.65;
+    }
+    .theme-showcase--mono .ts-cta {
+      display: inline-block; font-family: var(--ts-font-head); font-size: 0.88rem;
+      font-weight: 700; color: var(--ts-bg); background: var(--ts-accent);
+      padding: 10px 20px; text-decoration: none; letter-spacing: 0.02em;
+      transition: transform 0.15s;
+    }
+    .theme-showcase--mono .ts-cta:hover { transform: translateY(-2px); }
+    .theme-showcase--mono .ts-featured { max-width: 1120px; margin: 0 auto 42px; padding: 0 24px; }
+    .theme-showcase--mono .ts-grid { max-width: 1120px; margin: 0 auto 36px; padding: 0 24px; }
+    .theme-showcase--mono .ts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    .theme-showcase--mono .ts-card { background: var(--ts-bg); border-radius: var(--ts-radius); overflow: hidden; border: 1px solid var(--ts-border);
+      transition: box-shadow 0.25s; display: flex; flex-direction: column;
+    }
+    .theme-showcase--mono .ts-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+    .theme-showcase--mono .ts-card:nth-child(1):hover { transform: none; }
+    .theme-showcase--mono .ts-card__media { position: relative; display: block; overflow: hidden; flex-shrink: 0; }
+    .theme-showcase--mono .ts-card__media img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: transform 0.4s; }
+    .theme-showcase--mono .ts-card:hover .ts-card__img { transform: scale(1.03); }
+    .theme-showcase--mono .ts-card__media::after {
+      content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(9,10,11,0.85) 100%); opacity: 0.85;
+    }
+    .theme-showcase--mono .ts-card__pill {
+      position: absolute; top: 12px; left: 12px; z-index: 1;
+      font-family: var(--ts-font-head); font-size: 0.66rem; font-weight: 600;
+      color: var(--ts-inverted); background: transparent; padding: 2px 8px;
+      border: 1px solid var(--ts-accent); border-radius: 3px; text-decoration: none;
+    }
+    .theme-showcase--mono .ts-card__body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+    .theme-showcase--mono .ts-card__title { font-family: var(--ts-font-head); font-size: 1.05rem; font-weight: 700; line-height: 1.3; margin: 0; letter-spacing: -0.02em; }
+    .theme-showcase--mono .ts-card__title a { color: var(--ts-inverted); text-decoration: none; }
+    .theme-showcase--mono .ts-card__title a:hover { color: var(--ts-accent); }
+    .theme-showcase--mono .ts-card__excerpt { font-family: var(--ts-font-body); font-size: 0.88rem; color: var(--ts-muted); line-height: 1.6; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .theme-showcase--mono .ts-card__foot { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+    .theme-showcase--mono .ts-card__meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-family: var(--ts-font-head); font-size: 0.72rem; color: var(--ts-muted); }
+    .theme-showcase--mono .ts-card__avatar { border-radius: 50%; width: 20px; height: 20px; object-fit: cover; }
+    .theme-showcase--mono .ts-card__tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .theme-showcase--mono .ts-card__tags .ts-tag { color: var(--ts-inverted); border: 1px solid var(--ts-accent); }
+    .theme-showcase--mono .ts-footer { max-width: 1120px; margin: 0 auto 48px; padding: 0 24px; text-align: center; font-size: 0.85rem; color: var(--ts-muted); }
+    .theme-showcase--mono .ts-footer a { color: var(--ts-accent); text-decoration: none; }
+
+    /* ---- featured card (text-first, mono) ---- */
+    .theme-showcase--mono .ts-card--featured {
+      display: grid; grid-template-columns: 52% 48%; gap: 28px;
+    }
+    .theme-showcase--mono .ts-card--featured .ts-card__media {
+      display: none;
+    }
+    .theme-showcase--mono .ts-card--featured .ts-card__media::after { display: none; }
+    .theme-showcase--mono .ts-card--featured .ts-card__media img { display: none; }
+    .theme-showcase--mono .ts-card--featured .ts-card__body {
+      padding: 30px 26px; display: flex; flex-direction: column;
+    }
+    .theme-showcase--mono .ts-card--featured .ts-card__title {
+      font-size: 1.3rem;
+    }
+  </style>
+</head>
+<body>
+  <div style="background:#f1f5f9; padding:16px; border-bottom:1px solid #cbd5e1; margin-bottom:20px;">
+    <h2 style="margin:0 0 8px;">Monochrome</h2>
+    <p style="margin:0; color:#475569;">Validating standalone theme layout — this section renders alone.</p>
+  </div>
+<section class="theme-showcase theme-showcase--mono" data-theme="mono" data-name="Monochrome">
+      <nav class="ts-nav"><div class="ts-nav__center">
+        <a href="/" class="ts-nav__logo">hello<em>dk</em></a>
+        <div class="ts-nav__links">
+          <a href="/">Blog</a>
+          <a href="/tag/devops">DevOps</a>
+          <a href="/tag/kubernetes">Kubernetes</a>
+          <a href="/about">About</a>
+          <a href="/newsletter">Newsletter</a>
+        </div>
+        <a href="/search" class="ts-nav__icon" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </a>
+      </div></nav>
+      <header class="ts-hero"><div class="ts-shade"></div>
+        <div class="ts-hero-inner">
+          <h1 class="ts-mono-title">{featured.title}</h1>
+          <p class="ts-sub">Deepak Gupta · DevOps · SRE · Homelab</p>
+          <p class="ts-scale">Securing and running production systems across banking, gaming and e-commerce since 2011.</p>
+          <a href={`/${featured.slug}`} class="ts-cta">Read the story →</a>
+        </div>
+      </header>
+      <div class="ts-featured">
+        <ThemeCard slug={featured.slug} title={featured.title} description={featured.description} date={featured.date} tags={featured.tags} cover={featured.cover} readingTime={featured.readingTime} featured={true} />
+      </div>
+      <div class="ts-grid">
+        {gridPosts.map(p => <ThemeCard slug={p.slug} title={p.title} description={p.description} date={p.date} tags={p.tags} cover={p.cover} readingTime={p.readingTime} />)}
+      </div>
+      <footer class="ts-footer">© 2026 Deepak Gupta · <a href="/feed.xml">RSS</a> · <a href="/about">About</a></footer>
+    </section>
+</body>
+</html>

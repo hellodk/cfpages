@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Distroless Base Image Findings: 8 published, 0 findings">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1F5F9"/><stop offset="1" stop-color="#D7DFEA"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="180" cy="160" r="120" fill="#CBD5E1" opacity="0.5"/>
+  <circle cx="1420" cy="897" r="150" fill="#94A3B8" opacity="0.35"/>
+  <ellipse cx="800" cy="977" rx="560" ry="50" fill="#C2C9D6"/>
+  <rect x="160" y="220" width="600" height="150" rx="24" fill="#FFFFFF" stroke="#64748B" stroke-width="8"/>
+  <text x="220" y="310" font-family="system-ui, -apple-system, sans-serif" font-size="46" font-weight="800" fill="#0f172a">Distroless Base Image Findings</text>
+  <text x="220" y="358" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#5b6b80">8 published · 0 findings on every one</text>
+  <rect x="160" y="460" width="340" height="160" rx="18" fill="#FFFFFF" stroke="#64748B" stroke-width="8"/>
+  <text text-anchor="middle" x="330" y="555" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" fill="#16A34A">8</text>
+  <text text-anchor="middle" x="330" y="602" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#64748B">Images Published</text>
+  <rect x="520" y="460" width="340" height="160" rx="18" fill="#FFFFFF" stroke="#64748B" stroke-width="8"/>
+  <text text-anchor="middle" x="690" y="555" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" fill="#16A34A">0</text>
+  <text text-anchor="middle" x="690" y="602" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#64748B">Findings On Set</text>
+  <rect x="880" y="460" width="340" height="160" rx="18" fill="#FFFFFF" stroke="#64748B" stroke-width="8"/>
+  <text text-anchor="middle" x="1050" y="555" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" fill="#D97706">14</text>
+  <text text-anchor="middle" x="1050" y="602" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#64748B">App Layer Fixes</text>
+  <rect x="200" y="520" width="400" height="22" rx="11" fill="#CBD5E1"/>
+  <rect x="200" y="520" width="400" height="22" rx="11" fill="#16A34A" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="200" y="560" width="400" height="22" rx="11" fill="#CBD5E1"/>
+  <rect x="200" y="560" width="400" height="22" rx="11" fill="#16A34A" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="200" y="600" width="400" height="22" rx="11" fill="#CBD5E1"/>
+  <rect x="200" y="600" width="400" height="22" rx="11" fill="#16A34A" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="200" y="640" width="400" height="22" rx="11" fill="#CBD5E1"/>
+  <rect x="200" y="640" width="400" height="22" rx="11" fill="#16A34A" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="200" y="680" width="400" height="22" rx="11" fill="#CBD5E1"/>
+  <rect x="200" y="680" width="400" height="22" rx="11" fill="#16A34A" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="200" y="720" width="400" height="22" rx="11" fill="#CBD5E1"/>
+  <rect x="200" y="720" width="400" height="22" rx="11" fill="#16A34A" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="200" y="760" width="400" height="22" rx="11" fill="#CBD5E1"/>
+  <rect x="200" y="760" width="400" height="22" rx="11" fill="#16A34A" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="200" y="800" width="400" height="22" rx="11" fill="#CBD5E1"/>
+  <rect x="200" y="800" width="400" height="22" rx="11" fill="#16A34A" stroke="#FFFFFF" stroke-width="4"/>
+  <rect x="660" y="880" width="120" height="38" rx="19" fill="#16A34A"/>
+  <text x="670" y="904" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">0 findings</text>
+</svg>

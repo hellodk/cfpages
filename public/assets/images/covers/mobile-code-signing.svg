@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Phone with key and verified badge">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEF2FF"/><stop offset="1" stop-color="#D9E2F5"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="150" fill="#C7D2FE" opacity="0.5"/>
+  <circle cx="1420" cy="860" r="180" fill="#A5B4FC" opacity="0.4"/>
+  <ellipse cx="800" cy="890" rx="540" ry="58" fill="#C6CFE6"/>
+  <rect x="600" y="300" width="300" height="540" rx="48" fill="#FFFFFF" stroke="#6366F1" stroke-width="8"/>
+  <rect x="622" y="360" width="256" height="400" rx="16" fill="#E0E7FF"/>
+  <rect x="722" y="322" width="56" height="18" rx="9" fill="#C7D2FE"/>
+  <rect x="660" y="420" width="180" height="24" rx="12" fill="#A5B4FC"/>
+  <rect x="660" y="464" width="130" height="24" rx="12" fill="#C7D2FE"/>
+  <rect x="660" y="560" width="180" height="120" rx="16" fill="#FFFFFF" stroke="#A5B4FC" stroke-width="5"/>
+  <polyline points="716,620 748,652 796,596" fill="none" stroke="#16A34A" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="1000" cy="660" r="56" fill="none" stroke="#F59E0B" stroke-width="26"/>
+  <rect x="1052" y="647" width="130" height="26" rx="13" fill="#F59E0B"/>
+  <rect x="1140" y="673" width="24" height="40" rx="10" fill="#F59E0B"/>
+  <rect x="1100" y="673" width="24" height="30" rx="10" fill="#F59E0B"/>
+  <path d="M1000 420 L1070 448 V510 C1070 556 1038 584 1000 598 C962 584 930 556 930 510 V448 Z" fill="#10B981"/>
+  <polyline points="972,510 994,532 1030,494" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

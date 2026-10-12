@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Model shards split across two chips">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ECFDF5"/><stop offset="1" stop-color="#CFE9DC"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="840" r="170" fill="#A7F3D0" opacity="0.45"/>
+  <circle cx="1420" cy="200" r="140" fill="#6EE7B7" opacity="0.4"/>
+  <ellipse cx="800" cy="890" rx="560" ry="58" fill="#BFD6C9"/>
+  <rect x="430" y="420" width="280" height="120" rx="18" fill="#059669"/>
+  <rect x="430" y="570" width="280" height="120" rx="18" fill="#10B981"/>
+  <rect x="430" y="720" width="280" height="120" rx="18" fill="#34D399"/>
+  <rect x="890" y="420" width="280" height="120" rx="18" fill="#34D399"/>
+  <rect x="890" y="570" width="280" height="120" rx="18" fill="#059669"/>
+  <rect x="890" y="720" width="280" height="120" rx="18" fill="#10B981"/>
+  <rect x="380" y="300" width="140" height="60" rx="14" fill="#059669"/>
+  <rect x="1080" y="300" width="140" height="60" rx="14" fill="#059669"/>
+  <rect x="540" y="880" width="220" height="40" rx="10" fill="#059669"/>
+  <rect x="840" y="880" width="220" height="40" rx="10" fill="#059669"/>
+  <circle cx="800" cy="630" r="56" fill="#FFFFFF" stroke="#059669" stroke-width="8"/>
+  <polyline points="778,630 794,646 824,612" fill="none" stroke="#059669" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

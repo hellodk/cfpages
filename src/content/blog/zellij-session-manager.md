@@ -46,7 +46,7 @@ Laptop restarts — both terminals gone, no idea what was running
 
 SSH from Guwahati — can't reach any sessions, start over
 
-**The core issue:** Terminal sessions are anonymous, ephemeral, and local. No naming, no persistence, no remote access.
+<aside class="callout"><strong class="callout__title">The core issue:</strong><div class="callout__body">Terminal sessions are anonymous, ephemeral, and local. No naming, no persistence, no remote access.</div></aside>
 
 ### Why Zellij (not tmux)
 
@@ -70,7 +70,7 @@ Zellij gives us session resurrection without plugins, discoverable keybindings w
 | Community | 15+ years of guides |
 | Memory | ~4MB vs ~22MB |
 
-**The decision:** Zellij for local dev (better UX, built-in resurrection). tmux stays on remote servers (pre-installed everywhere). The shell hook + Tailscale bridge the gap.
+<aside class="callout"><strong class="callout__title">The decision:</strong><div class="callout__body">Zellij for local dev (better UX, built-in resurrection). tmux stays on remote servers (pre-installed everywhere). The shell hook + Tailscale bridge the gap.</div></aside>
 
 ### Architecture
 
@@ -257,7 +257,7 @@ How sessions survive a laptop restart.
 
 **Zellij restores** — layout + scrollback back, empty shells in right positions
 
-**Important:** Zellij restores the _layout_ (panes, tabs, positions) and scrollback. It does **not** restore running processes. A `python server.py` that was running will need to be re-started. This is true for every multiplexer — no tool survives a reboot and brings back live processes.
+<aside class="callout"><strong class="callout__title">Important:</strong><div class="callout__body">Zellij restores the <em>layout</em> (panes, tabs, positions) and scrollback. It does <strong>not</strong> restore running processes. A <code>python server.py</code> that was running will need to be re-started. This is true for every multiplexer — no tool survives a reboot and brings back live processes.</div></aside>
 
 ### config.kdl
 
@@ -318,7 +318,7 @@ $ zj -a kri
 
 `zj` creates a new Zellij session with the same `$PWD`. Your current shell continues until you type `exit`. On the **next** new terminal, the shell hook auto-attaches to this session.
 
-**Inside Zellij already?** `zj` creates a new tab instead of a new session. This is how you expand your workspace without leaving Zellij.
+<aside class="callout"><strong class="callout__title">Inside Zellij already?</strong><div class="callout__body"><code>zj</code> creates a new tab instead of a new session. This is how you expand your workspace without leaving Zellij.</div></aside>
 
 ### sess — Fuzzy Session Picker
 
@@ -389,7 +389,7 @@ Attach:         zellij attach <session>
 Fuzzy picker:   sess
 ```
 
-**What it scans:** All bash/zsh/fish processes, all terminal emulator processes (gnome-terminal, kitty, alacritty, wezterm). Derives session names from their current working directories. Skips duplicates and Zellij-managed panes.
+<aside class="callout"><strong class="callout__title">What it scans:</strong><div class="callout__body">All bash/zsh/fish processes, all terminal emulator processes (gnome-terminal, kitty, alacritty, wezterm). Derives session names from their current working directories. Skips duplicates and Zellij-managed panes.</div></aside>
 
 ### Shell Hook
 
@@ -412,7 +412,7 @@ if [[ -z "$ZELLIJ" ]]; then
 fi
 ```
 
-**How it works:** On every shell startup, check if we're inside Zellij. If not, derive a session name from `$PWD`. If the session exists → attach. If not → create. The `exec` replaces the shell process so Zellij takes over cleanly.
+<aside class="callout"><strong class="callout__title">How it works:</strong><div class="callout__body">On every shell startup, check if we're inside Zellij. If not, derive a session name from <code>$PWD</code>. If the session exists → attach. If not → create. The <code>exec</code> replaces the shell process so Zellij takes over cleanly.</div></aside>
 
 ## Edge cases handled
 
@@ -507,7 +507,7 @@ $ zellij attach kri
 # Pane layouts, scrollback, tab names — all preserved
 ```
 
-**Tailscale advantage:** Stable IP (198.51.100.27) that survives network changes. Auto-connects on boot. WireGuard encryption. No port forwarding, no DNS setup.
+<aside class="callout"><strong class="callout__title">Tailscale advantage:</strong><div class="callout__body">Stable IP (198.51.100.27) that survives network changes. Auto-connects on boot. WireGuard encryption. No port forwarding, no DNS setup.</div></aside>
 
 ### Cheat Sheet
 

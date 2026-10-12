@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Slim container with shrinking findings bars">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1F5F9"/><stop offset="1" stop-color="#D7DFEA"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="150" fill="#CBD5E1" opacity="0.5"/>
+  <circle cx="1420" cy="860" r="180" fill="#94A3B8" opacity="0.35"/>
+  <ellipse cx="800" cy="890" rx="540" ry="58" fill="#C2C9D6"/>
+  <rect x="560" y="420" width="280" height="400" rx="18" fill="#FFFFFF" stroke="#64748B" stroke-width="8"/>
+  <rect x="560" y="420" width="280" height="64" rx="18" fill="#94A3B8"/>
+  <line x1="590" y1="560" x2="810" y2="560" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/>
+  <line x1="590" y1="630" x2="810" y2="630" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/>
+  <line x1="590" y1="700" x2="810" y2="700" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/>
+  <rect x="920" y="660" width="180" height="46" rx="12" fill="#DC2626"/>
+  <rect x="920" y="590" width="130" height="46" rx="12" fill="#D97706"/>
+  <rect x="920" y="520" width="80" height="46" rx="12" fill="#16A34A"/>
+  <path d="M940 420 L1020 448 V510 C1020 556 988 584 940 598 C892 584 860 556 860 510 V448 Z" fill="#10B981"/>
+  <polyline points="912,510 934,532 968,494" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -3,12 +3,12 @@ import { POSTS } from '../../scripts/lib/manifest.mjs';
 import { maskSlug } from '../../scripts/lib/mask.mjs';
 
 describe('POSTS manifest', () => {
-  it('has 42 entries', () => {
-    expect(POSTS).toHaveLength(42);
+  it('has 66 entries', () => {
+    expect(POSTS).toHaveLength(66);
   });
 
-  it('has 34 live and 8 draft', () => {
-    expect(POSTS.filter((p) => !p.draft)).toHaveLength(34);
+  it('has 58 live and 8 draft', () => {
+    expect(POSTS.filter((p) => !p.draft)).toHaveLength(58);
     expect(POSTS.filter((p) => p.draft)).toHaveLength(8);
   });
 
@@ -26,10 +26,12 @@ describe('POSTS manifest', () => {
     for (const p of POSTS) expect(p.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
-  it('gives every post between 1 and 4 lowercase tags', () => {
+  // Cap raised 4 -> 5 for the Bucket D taxonomy (issue #14): series posts
+  // carry one brand tag (opensre/mlx) plus the topic tags. Lowercase rule stays.
+  it('gives every post between 1 and 5 lowercase tags', () => {
     for (const p of POSTS) {
       expect(p.tags.length).toBeGreaterThan(0);
-      expect(p.tags.length).toBeLessThanOrEqual(4);
+      expect(p.tags.length).toBeLessThanOrEqual(5);
       for (const t of p.tags) expect(t).toMatch(/^[a-z0-9-]+$/);
     }
   });

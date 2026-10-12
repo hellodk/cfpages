@@ -1,14 +1,16 @@
 /**
- * The 42 posts migrated from ~/Documents/blogs.
+ * The 66 posts migrated from ~/Documents/blogs.
  *
  * Static reviewed data. `src` is relative to the blogs root. Rebuild entries
  * keep the date already published, so URLs and ordering do not shift.
  *
  * Excluded by design: nfs-meltdown (Copy)/ (duplicate), linux_hacks.md
  * (222 bytes) and nginx_tutorials.md (81 bytes) (near-empty stubs, not posts),
- * docs/ (superpowers internals), and the five build artifacts
- * (redesign-mockup, animation-preview, traffic-animations,
- * token-consumption-24h, token-consumption.svg).
+ * docs/ (superpowers internals), omlx-blog-mocks-v2.html (build mock, not a
+ * post), the five build artifacts (redesign-mockup, animation-preview,
+ * traffic-animations, token-consumption-24h, token-consumption.svg), and two
+ * held stubs pending expansion: 2026-10-02-gemma-4-e2b-mm1-mlx/ (12K) and
+ * 2026-10-03-gemma-4-mlx-kaggle-mirror/ (6K).
  */
 export const POSTS = [
   // ---- Rebuilt: post already exists, date preserved from its frontmatter ----
@@ -60,4 +62,30 @@ export const POSTS = [
   { src: 'avika_deep_analysis.md.resolved', slug: 'atlas-deep-analysis', date: '2026-03-03', tags: ['analysis', 'observability'], draft: true },
   { src: 'blog-network-spike-investigation.md', slug: 'network-spike-investigation', date: '2026-04-08', tags: ['networking', 'incident', 'debugging'], draft: true },
   { src: 'kube-system-priority-classes.md', slug: 'kube-system-priority-classes', date: '2026-05-11', tags: ['kubernetes', 'scheduling'], draft: true },
+
+  // ---- Bucket D: 2026-08-09 onward, date from the directory name ----
+  { src: '2026-08-09-homelab-secret-rescue/2026-08-09-homelab-secret-rescue.html', slug: 'homelab-secret-rescue', date: '2026-08-09', tags: ['homelab', 'gitops', 'kubernetes', 'postgres', 'openbao'], draft: false },
+  { src: '2026-08-09-opensre-homelab-integration/2026-08-09-opensre-homelab-integration.html', slug: 'opensre-homelab-integration', date: '2026-08-09', tags: ['opensre', 'homelab', 'kubernetes', 'sre'], draft: false },
+  { src: '2026-08-15-local-tool-calling-models/2026-08-15-local-tool-calling-models.html', slug: 'local-tool-calling-models', date: '2026-08-15', tags: ['llm', 'agents', 'local-llm', 'inference', 'tool-calling'], draft: false },
+  { src: '2026-08-16-297-probe-failures-mlx-cluster/2026-08-16-297-probe-failures-mlx-cluster.html', slug: '297-probe-failures-mlx-cluster', date: '2026-08-16', tags: ['mlx', 'macos', 'apple-silicon', 'debugging'], draft: false },
+  { src: '2026-08-16-mlx-jaccl-silent-hang/2026-08-16-mlx-jaccl-silent-hang.html', slug: 'mlx-jaccl-silent-hang', date: '2026-08-16', tags: ['mlx', 'macos', 'apple-silicon', 'debugging', 'distributed-systems'], draft: false },
+  { src: '2026-08-16-two-lenses-cluster-estimates/2026-08-16-two-lenses-cluster-estimates.html', slug: 'two-lenses-cluster-estimates', date: '2026-08-16', tags: ['mlx', 'ai', 'debugging', 'engineering'], draft: false },
+  { src: '2026-08-21-deploying-qwen-tensor-parallelism/2026-08-21-deploying-qwen-tensor-parallelism.html', slug: 'deploying-qwen-tensor-parallelism', date: '2026-08-21', tags: ['llm', 'tensor-parallelism', 'mlx', 'inference', 'qwen'], draft: false },
+  { src: '2026-08-21-tensor-parallelism-omlx/2026-08-21-tensor-parallelism-omlx.html', slug: 'tensor-parallelism-omlx', date: '2026-08-21', tags: ['mlx', 'llm', 'tensor-parallelism', 'inference'], draft: false },
+  { src: '2026-08-22-omlx-stack-teardown/2026-08-22-omlx-stack-teardown.html', slug: 'omlx-stack-teardown', date: '2026-08-22', tags: ['mlx', 'llm', 'apple-silicon', 'inference'], draft: false },
+  { src: '2026-08-23-yugabyte-aerospike-connectors-opensre/2026-08-23-yugabyte-aerospike-connectors-opensre.html', slug: 'yugabyte-aerospike-connectors-opensre', date: '2026-08-23', tags: ['opensre', 'yugabydb', 'aerospike', 'kubernetes', 'testing'], draft: false },
+  { src: '2026-08-24-prefix-cache-economics/2026-08-24-prefix-cache-economics.html', slug: 'prefix-cache-economics', date: '2026-08-24', tags: ['llm', 'inference', 'caching', 'agents', 'apple-silicon'], draft: false },
+  { src: '2026-08-25-mobile-code-signing/2026-08-25-mobile-code-signing.html', slug: 'mobile-code-signing', date: '2026-08-25', tags: ['ios', 'android', 'mobile', 'ci', 'security'], draft: false },
+  { src: '2026-08-25-opensre-connectors-e2e-gauntlet/2026-08-25-opensre-connectors-e2e-gauntlet.html', slug: 'opensre-connectors-e2e-gauntlet', date: '2026-08-25', tags: ['opensre', 'testing', 'e2e', 'kubernetes', 'reliability'], draft: false },
+  { src: '2026-09-09-jenkins-macos-gui-session-agent/2026-09-09-jenkins-macos-gui-session-agent.html', slug: 'jenkins-macos-gui-session-agent', date: '2026-09-09', tags: ['jenkins', 'macos', 'ci', 'devops'], draft: false },
+  { src: '2026-09-09-opensre-workshop-plan/2026-09-09-opensre-workshop-plan.html', slug: 'opensre-workshop-plan', date: '2026-09-09', tags: ['opensre', 'sre', 'observability', 'devops', 'workshop'], draft: false },
+  { src: '2026-09-22-llama-cpp-systemd/2026-09-22-llama-cpp-systemd.html', slug: 'llama-cpp-systemd', date: '2026-09-22', tags: ['llm', 'inference', 'llama-cpp', 'systemd', 'linux'], draft: false },
+  { src: '2026-10-02-java-distroless-cve-hunt/2026-10-02-java-distroless-cve-hunt.html', slug: 'java-distroless-cve-hunt', date: '2026-10-02', tags: ['java', 'docker', 'container-security', 'cve', 'distroless'], draft: false },
+  { src: '2026-10-03-google-distroless-remediation/2026-10-03-google-distroless-remediation.html', slug: 'google-distroless-remediation', date: '2026-10-03', tags: ['docker', 'distroless', 'container-security', 'cve'], draft: false },
+  { src: '2026-10-04-distroless-base-image-findings/2026-10-04-distroless-base-image-findings.html', slug: 'distroless-base-image-findings', date: '2026-10-04', tags: ['docker', 'distroless', 'container-security', 'cve', 'trivy'], draft: false },
+  { src: '2026-10-03-hummingbird-verification/2026-10-03-hummingbird-verification.html', slug: 'hummingbird-verification', date: '2026-10-03', tags: ['docker', 'container-security', 'cve', 'dotnet'], draft: false },
+  { src: '2026-10-03-java21-libpng-cve-fix/2026-10-03-java21-libpng-cve-fix.html', slug: 'java21-libpng-cve-fix', date: '2026-10-03', tags: ['java', 'docker', 'cve', 'container-security', 'distroless'], draft: false },
+  { src: '2026-10-03-ubi9-full-remediation/2026-10-03-ubi9-full-remediation.html', slug: 'ubi9-full-remediation', date: '2026-10-03', tags: ['rhel', 'ubi', 'docker', 'container-security', 'cve'], draft: false },
+  { src: '2026-10-03-ubi-micro-remediation/2026-10-03-ubi-micro-remediation.html', slug: 'ubi-micro-remediation', date: '2026-10-03', tags: ['rhel', 'ubi', 'docker', 'container-security', 'cve'], draft: false },
+  { src: '2026-10-03-java21-remediation-plan.md', slug: 'java21-remediation-plan', date: '2026-10-03', tags: ['java', 'docker', 'container-security', 'cve'], draft: false },
 ];

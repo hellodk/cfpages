@@ -22,7 +22,9 @@ Node Memory16%5.2 / 31 GiB used
 
 Pods stuck11ContainerCreating / Init
 
-**The paradox:** the metrics said the node was almost completely idle, yet eleven pods were wedged in `ContainerCreating` and `Init`, and any workload "spiked" CPU immediately. Idle nodes don't behave like that — unless something is artificially throttling them.
+<aside class="callout"><strong class="callout__title">The paradox:</strong><div class="callout__body">the metrics said the node was almost completely idle, yet eleven pods were wedged in
+    <code>ContainerCreating</code> and <code>Init</code>, and any workload "spiked" CPU immediately. Idle nodes don't behave
+    like that — unless something is artificially throttling them.</div></aside>
 
 ## What we actually saw
 
@@ -76,7 +78,9 @@ enp3s0   DOWN            # wired NIC — unplugged
 wlp5s0   UP   192.0.2.52  # cluster traffic rides WiFi
 ```
 
-**First domino:** the wired NIC `enp3s0` is down. Every byte of cluster traffic — including Calico's synchronous API calls during pod setup — goes over `wlp5s0`, a **WiFi** adapter.
+<aside class="callout"><strong class="callout__title">First domino:</strong><div class="callout__body">the wired NIC <code>enp3s0</code> is down. Every byte
+    of cluster traffic — including Calico's synchronous API calls during pod setup — goes over <code>wlp5s0</code>, a
+    <strong>WiFi</strong> adapter.</div></aside>
 
 ## Step 3 — Measure the WiFi, and check the clock
 
@@ -200,7 +204,9 @@ Same workload, two governors
       </g>
     </svg>
 
-**The mechanism:** at 800 MHz a single core has ~¼ the throughput it does at 3.4 GHz. A trivial task that should sit at ~25% utilization instead saturates the slow core to 100% almost instantly — so every dashboard shows CPU "spiking too soon." The governor was lying to the metrics.
+<aside class="callout"><strong class="callout__title">The mechanism:</strong><div class="callout__body">at 800&nbsp;MHz a single core has ~&frac14; the throughput it does at 3.4&nbsp;GHz.
+    A trivial task that should sit at ~25% utilization instead saturates the slow core to 100% almost instantly — so
+    every dashboard shows CPU "spiking too soon." The governor was lying to the metrics.</div></aside>
 
 ## Why was it on `powersave`?
 
@@ -256,7 +262,9 @@ kubectl -n kube-system delete pod \
   --grace-period=0 --force
 ```
 
-**Why systemd units, not just sysfs writes?** A bare `echo > scaling_governor` evaporates on reboot, and NetworkManager can re-enable WiFi power-save when a connection re-activates. The units make both fixes stick.
+<aside class="callout"><strong class="callout__title">Why systemd units, not just sysfs writes?</strong><div class="callout__body">A bare <code>echo &gt; scaling_governor</code>
+  evaporates on reboot, and NetworkManager can re-enable WiFi power-save when a connection re-activates. The units make
+  both fixes stick.</div></aside>
 
 ## Verification
 
@@ -303,7 +311,11 @@ calico-node-4ntcg  # events, post-fix
   Pulling  calico-node:v3.32.0-0    # just downloading, not erroring
 ```
 
-**One honest caveat.** The node was on k0s `v1.36.1` but only had _older_ system images cached (calico-node `v3.29.7`, kube-proxy `v1.34/35`). Every system image now has to be pulled _fresh_ — and watching containerd live, throughput to `quay.io`/`docker.io` is only ~1.6 Mbps. That's the _internet→registry_ leg over WiFi+WAN, not the node config. Pre-fix those pulls timed out entirely; now they complete, just slowly.
+<aside class="callout"><strong class="callout__title">One honest caveat.</strong><div class="callout__body">The node was on k0s <code>v1.36.1</code> but only had <em>older</em> system
+      images cached (calico-node <code>v3.29.7</code>, kube-proxy <code>v1.34/35</code>). Every system image now has to be
+      pulled <em>fresh</em> — and watching containerd live, throughput to <code>quay.io</code>/<code>docker.io</code> is
+      only ~1.6 Mbps. That's the <em>internet&rarr;registry</em> leg over WiFi+WAN, not the node config. Pre-fix those
+      pulls timed out entirely; now they complete, just slowly.</div></aside>
 
 ## Raw evidence — watching containerd crawl
 
@@ -326,7 +338,10 @@ layer-sha256:5c7dc6a3...  20.97MB   # parked, not finalizing
 layer-sha256:38b81130...  0B      # still queued
 ```
 
-**~1.05 MB / 5s ≈ 1.6 Mbps** on a link advertising 433 Mb/s. The radio is healthy (signal `-48 dBm`); the ceiling is the WAN→registry path. After **22 minutes** `calico-node` still hadn't finished a ~50 MB image. This is why the next step isn't "wait" — it's to stop pulling heavy bytes over the air entirely.
+<aside class="callout"><strong class="callout__title">~1.05 MB / 5s ≈ 1.6 Mbps</strong><div class="callout__body">on a link advertising 433 Mb/s. The radio is healthy
+      (signal <code>-48 dBm</code>); the ceiling is the WAN&rarr;registry path. After <strong>22 minutes</strong>
+      <code>calico-node</code> still hadn't finished a ~50&nbsp;MB image. This is why the next step isn't "wait" — it's
+      to stop pulling heavy bytes over the air entirely.</div></aside>
 
 ## The actual remedy applied — side-load over the LAN
 
@@ -351,7 +366,11 @@ LAN RTT is 1–4 ms with real throughput, so a transfer that crawled for 20+ mi
 | Image pulls (side-load via LAN) | — | 6 sys images in ~80s |
 | kube-system pods on typhoon | stuck 22+ min | all 1/1 Running |
 
-**Outcome.** Side-loading the six `quay.io/k0sproject/*` system images from cylon over the LAN took **~80 seconds total** (vs. 22+ minutes of non-converging WiFi pulls). After a pod restart, `calico-node`, `kube-proxy`, `coredns`, `konnectivity-agent` and `calico-kube-controllers` all went `1/1 Running` — the node is fully healthy. Workload images (node-exporter, kube-state-metrics, grafana, traefik) were side-loaded the same way.
+<aside class="callout"><strong class="callout__title">Outcome.</strong><div class="callout__body">Side-loading the six <code>quay.io/k0sproject/*</code> system images from cylon over the
+    LAN took <strong>~80 seconds total</strong> (vs. 22+ minutes of non-converging WiFi pulls). After a pod restart,
+    <code>calico-node</code>, <code>kube-proxy</code>, <code>coredns</code>, <code>konnectivity-agent</code> and
+    <code>calico-kube-controllers</code> all went <code>1/1 Running</code> — the node is fully healthy. Workload images
+    (node-exporter, kube-state-metrics, grafana, traefik) were side-loaded the same way.</div></aside>
 
 ## Lessons
 
@@ -377,4 +396,6 @@ APs deprioritize ICMP, so ping can lie. Measure the protocol your workload actua
 
 The only remaining slowness is fresh image pulls over the WAN. Standing up a pull-through cache on the wired control plane removes the WiFi from the heavy-bytes path entirely.
 
-**Net result:** CPU throttle removed, WiFi power-save eliminated, the CNI sandbox retry-storm broken, and pods recovering — all from a single reboot-safe script. No hardware changes, no ethernet required.
+<aside class="callout"><strong class="callout__title">Net result:</strong><div class="callout__body">CPU throttle removed, WiFi power-save eliminated, the
+  CNI sandbox retry-storm broken, and pods recovering — all from a single reboot-safe script. No hardware changes, no
+  ethernet required.</div></aside>

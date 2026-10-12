@@ -1,0 +1,57 @@
+---
+import { tagAccent } from '../../utils/tagAccent';
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+  cover?: string;
+  readingTime?: number;
+  featured?: boolean;
+}
+
+const { slug, title, description, date, tags, cover, readingTime, featured = false } = Astro.props;
+const authorImg = '/assets/images/resume/dk.jpg';
+const formattedDate = date.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+const primaryTag = tags[0] ?? 'blog';
+const rt = readingTime ?? 1;
+---
+
+<article class:list={['ts-card', featured && 'ts-card--featured']}>
+  <a href={`/${slug}`} class="ts-card__media">
+    <img src={cover || ''} alt="" class="ts-card__img" loading={featured ? 'eager' : 'lazy'} />
+    {featured ? (
+      <>
+        <span class="ts-card__pill">{primaryTag}</span>
+        <h2 class="ts-card__overlay-title">{title}</h2>
+      </>
+    ) : (
+      <span class="ts-card__pill card__pill--corner">{primaryTag}</span>
+    )}
+  </a>
+  <div class="ts-card__body">
+    {!featured && (
+      <h3 class="ts-card__title">
+        <a href={`/${slug}`}>{title}</a>
+      </h3>
+    )}
+    <p class="ts-card__excerpt">{description}</p>
+    <footer class="ts-card__foot">
+      <div class="ts-card__meta">
+        <img src={authorImg} class="ts-card__avatar" width="20" height="20" alt="" />
+        <span>Deepak Gupta</span>
+        <span class="ts-dot">·</span>
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        <span class="ts-dot">·</span>
+        <span>{rt} min</span>
+      </div>
+      <div class="ts-card__tags">
+        {tags.slice(0, featured ? 4 : 3).map(tag => (
+          <a href={`/tag/${tag}`} class="ts-tag" style={`--ts-tag: ${tagAccent(tag)}`}>${tag}</a>
+        ))}
+      </div>
+    </footer>
+  </div>
+</article>

@@ -22,7 +22,9 @@ Host B192.0.2.64Mac mini M2 · 8GB · 2× TB4
 
 SymptomFrozenevery login, both hosts, a few seconds
 
-**The trap:** one symptom, described identically for two machines, invites one diagnosis. Treating it as a single bug would have meant fixing whichever cause was found first and declaring victory — while the other host kept freezing for a completely unrelated reason.
+<aside class="callout"><strong class="callout__title">The trap:</strong><div class="callout__body">one symptom, described identically for two machines, invites one diagnosis.
+    Treating it as a single bug would have meant fixing whichever cause was found first and declaring
+    victory — while the other host kept freezing for a completely unrelated reason.</div></aside>
 
 ## Why it mattered beyond SSH comfort
 
@@ -55,7 +57,9 @@ attempt 3: ok                        real 0m0.461s
 
 No shell-level hang at all. The very first TCP connection attempt got **no response whatsoever**; every attempt after it was instant.
 
-Two completely different failure signatures at two completely different layers: `.5` hangs _after_ authentication, inside a resolver call. `.64` never even completes the TCP handshake on a cold connection. Confirmed early: this needed two separate root causes, not one.
+<aside class="callout"><div class="callout__body">Two completely different failure signatures at two completely different layers: <code>.5</code> hangs
+    <em>after</em> authentication, inside a resolver call. <code>.64</code> never even completes the TCP
+    handshake on a cold connection. Confirmed early: this needed two separate root causes, not one.</div></aside>
 
 ## RCA A · DNS Stall
 
@@ -124,9 +128,20 @@ $ dig -x 192.0.2.10 +time=5 +tries=1   # straight to the nameserver
 
 A direct query got a fast, correct `NXDOMAIN` in 15 milliseconds. The network path was never the problem — it was specifically macOS's resolver chain, which tries the (unreachable) mDNS path first and only falls back to the public IPv6 resolvers after the mDNS timeout, and those public resolvers have no idea what `192.0.2.0/24` is either.
 
-**Honest caveat:** this stall is cache-sensitive. Re-running the same lookup moments later returns instantly because mDNSResponder caches the miss — which is exactly why it reads as "sometimes it freezes" rather than "always." The fix (route LAN reverse lookups to the gateway, `192.0.2.254`, ahead of the public resolvers) was handed off as a `networksetup -setdnsservers` command rather than applied directly.
+<aside class="callout"><strong class="callout__title">Honest caveat:</strong><div class="callout__body">this stall is cache-sensitive.
+    Re-running the same lookup moments later returns instantly because mDNSResponder caches the miss —
+    which is exactly why it reads as "sometimes it freezes" rather than "always." The fix (route LAN
+    reverse lookups to the gateway, <code>192.0.2.254</code>, ahead of the public resolvers) was handed
+    off as a <code>networksetup -setdnsservers</code> command rather than applied directly.</div></aside>
 
-**Revised, after the deeper pass in Tab 5:** this DNS stall on `.5` was real and reproducible, but it turns out not to be the dominant explanation. A later round of packet-level and kernel-level testing found the same host also carries Apple's `MAGICWAKE` Wi-Fi power-save assertion and produces a near-identical decaying-latency signature on plain ICMP and raw TCP connects that never touch a resolver at all. The mDNS reverse-lookup stall looks like a real, secondary/compounding factor — the resolver genuinely is slow when it has nowhere to answer from — but the common root cause across _both_ hosts turned out to be Wi-Fi client power-save, not DNS. See **Tab 5 · Latency Deep-Dive** for the evidence.
+<aside class="callout"><strong class="callout__title">Revised, after the deeper pass in Tab 5:</strong><div class="callout__body">this DNS stall on <code>.5</code> was real
+    and reproducible, but it turns out not to be the dominant explanation. A later round of packet-level
+    and kernel-level testing found the same host also carries Apple's <code>MAGICWAKE</code> Wi-Fi
+    power-save assertion and produces a near-identical decaying-latency signature on plain ICMP and raw
+    TCP connects that never touch a resolver at all. The mDNS reverse-lookup stall looks like a real,
+    secondary/compounding factor — the resolver genuinely is slow when it has nowhere to answer from —
+    but the common root cause across <em>both</em> hosts turned out to be Wi-Fi client power-save, not
+    DNS. See <strong>Tab 5 &middot; Latency Deep-Dive</strong> for the evidence.</div></aside>
 
 ## RCA B · WiFi Wake
 
@@ -193,7 +208,20 @@ Kernel Assertions: 0x100=MAGICWAKE
 
 Wake-on-Wireless standby, needing a multi-second radio wake before the first packet after idle gets answered — matching the "fails once, then works" pattern exactly.
 
-**Updated: the root cause is now fully proven, not just plausible.** `sudo pmset -a displaysleep 0; sudo pmset -a powernap 0` was applied and verified — `pmset -g` confirmed both settings took. But re-checking `pmset -g assertions` afterward showed the exact same `MAGICWAKE` assertions on `en0`/`en1`, unchanged, and the freeze persisted. At the time this read as "confirmed root cause, incomplete fix, left open." A much deeper pass since (Tab 5) settled it: `.5` was independently found to _already_ have `displaysleep 0`, `powernap 0`, and even `SleepDisabled 1` set, and still produced a clean, measured 1.4-second wake stall with the same `MAGICWAKE` assertion — direct proof that `pmset` display/system-sleep settings never controlled this behavior at all. It lives entirely in the Wi-Fi driver's 802.11 client power-save state (`MAGICWAKE`/Wake-on-Wireless), independent of macOS system power management, and it's the same mechanism on _both_ hosts. No software fix exists on this macOS build, but a mitigation (a keepalive ping every 30s) is now deployed on both machines. Full evidence in **Tab 5 · Latency Deep-Dive**.
+<aside class="callout"><strong class="callout__title">Updated: the root cause is now fully proven, not just plausible.</strong><div class="callout__body"><code>sudo pmset -a
+    displaysleep 0; sudo pmset -a powernap 0</code> was applied and verified &mdash; <code>pmset -g</code>
+    confirmed both settings took. But re-checking <code>pmset -g assertions</code> afterward showed the
+    exact same <code>MAGICWAKE</code> assertions on <code>en0</code>/<code>en1</code>, unchanged, and the
+    freeze persisted. At the time this read as "confirmed root cause, incomplete fix, left open." A much
+    deeper pass since (Tab 5) settled it: <code>.5</code> was independently found to <em>already</em> have
+    <code>displaysleep 0</code>, <code>powernap 0</code>, and even <code>SleepDisabled 1</code> set, and
+    still produced a clean, measured 1.4-second wake stall with the same <code>MAGICWAKE</code>
+    assertion &mdash; direct proof that <code>pmset</code> display/system-sleep settings never controlled
+    this behavior at all. It lives entirely in the Wi-Fi driver's 802.11 client power-save state
+    (<code>MAGICWAKE</code>/Wake-on-Wireless), independent of macOS system power management, and it's the
+    same mechanism on <em>both</em> hosts. No software fix exists on this macOS build, but a mitigation
+    (a keepalive ping every 30s) is now deployed on both machines. Full evidence in
+    <strong>Tab 5 &middot; Latency Deep-Dive</strong>.</div></aside>
 
 ## Latency Deep-Dive
 
@@ -314,13 +342,27 @@ $ pmset -g assertions   # en1 on each host
 
 Both Wi-Fi interfaces carry the same Wake-on-Wireless kernel assertion — not a coincidence, the same mechanism on both machines.
 
-**The pmset falsification.** `.5` was checked for the first time in this pass and turns out to _already_ have `displaysleep 0`, `powernap 0`, and even `SleepDisabled 1` (system sleep permanently disabled) — the exact settings applied to `.64` earlier as an attempted fix (Tab 4). Yet `.5` still carries the `MAGICWAKE` assertion and still produced the measured 1.4s wake stall above. Clean proof that `pmset` display/system-sleep settings never controlled this behavior at all — it lives in the Wi-Fi driver's 802.11 client power-save state, entirely independent of macOS system power management.
+<aside class="callout"><strong class="callout__title">The pmset falsification.</strong><div class="callout__body"><code>.5</code> was checked for the first time in this pass
+    and turns out to <em>already</em> have <code>displaysleep 0</code>, <code>powernap 0</code>, and even
+    <code>SleepDisabled 1</code> (system sleep permanently disabled) &mdash; the exact settings applied to
+    <code>.64</code> earlier as an attempted fix (Tab 4). Yet <code>.5</code> still carries the
+    <code>MAGICWAKE</code> assertion and still produced the measured 1.4s wake stall above. Clean proof
+    that <code>pmset</code> display/system-sleep settings never controlled this behavior at all &mdash;
+    it lives in the Wi-Fi driver's 802.11 client power-save state, entirely independent of macOS system
+    power management.</div></aside>
 
 ## `wdutil info` — no fix found, and a useful reframe
 
 Run by the user directly, on both hosts (`sudo`, so not run by the assistant — strict no-sudo policy). Neither host's output contains a "Power Save" field at all — this macOS build (26.5.1) doesn't expose a controllable PSM toggle through this tool. `sudo wdutil dump` produced no stdout on either host and wasn't pursued further.
 
-Both hosts report **WIFI FAULTS LAST HOUR: None**, **RECOVERIES: None**, **LINK TESTS: None** — despite `.5` having just produced a real, measured 1.3s wake stall inside that same hour. macOS's own Wi-Fi diagnostics don't classify this as a fault. It's standard, expected 802.11 client power-save behavior, working as designed from Apple's perspective — not a hidden bug with an undiscovered off-switch, just standard behavior two always-on compute nodes don't want. The old `airport` CLI that used to allow disabling this was removed by Apple on Apple Silicon; `wdutil` needs sudo and doesn't expose the control anyway.
+<aside class="callout"><strong class="callout__title">WIFI FAULTS LAST HOUR: None</strong><div class="callout__body">Both hosts report ,
+    <strong>RECOVERIES: None</strong>, <strong>LINK TESTS: None</strong> &mdash; despite <code>.5</code>
+    having just produced a real, measured 1.3s wake stall inside that same hour. macOS's own Wi-Fi
+    diagnostics don't classify this as a fault. It's standard, expected 802.11 client power-save behavior,
+    working as designed from Apple's perspective &mdash; not a hidden bug with an undiscovered off-switch,
+    just standard behavior two always-on compute nodes don't want. The old <code>airport</code> CLI that
+    used to allow disabling this was removed by Apple on Apple Silicon; <code>wdutil</code> needs sudo and
+    doesn't expose the control anyway.</div></aside>
 
 ## Checked and ruled out: leftover limactl / socket\_vmnet / tailscale config
 
@@ -332,7 +374,12 @@ The user's own hypothesis, investigated directly: could a stray bridge or route 
 -   `net.inet.ip.forwarding` is `0` on both — never left enabled.
 -   `scutil --proxy` shows only default macOS proxy exceptions, nothing injected by lima.
 
-**One genuine unresolved leftover:** `com.apple.vmnet.plist` — Apple's own Vmnet framework state file, not `socket_vmnet`'s own file, so `brew uninstall socket_vmnet` never touches it — still exists, root-owned, on both hosts (13KB on .5, 18KB on .64). Couldn't be read without sudo, so its content and relevance are unverified. There's no established mechanism connecting VM NAT/DHCP lease bookkeeping to physical Wi-Fi radio power management, so this is reported as an honest gap, not a claimed cause.
+<aside class="callout"><strong class="callout__title">One genuine unresolved leftover:</strong><div class="callout__body"><code>com.apple.vmnet.plist</code> &mdash; Apple's own Vmnet framework state file, not
+    <code>socket_vmnet</code>'s own file, so <code>brew uninstall socket_vmnet</code> never touches it
+    &mdash; still exists, root-owned, on both hosts (13KB on .5, 18KB on .64). Couldn't be read without
+    sudo, so its content and relevance are unverified. There's no established mechanism connecting VM
+    NAT/DHCP lease bookkeeping to physical Wi-Fi radio power management, so this is reported as an honest
+    gap, not a claimed cause.</div></aside>
 
 **Verdict:** not supported by available evidence. `MAGICWAKE`/802.11 client power-save is standard, built-in Wi-Fi driver behavior on every Mac's `en1` — not something an app installs — and almost certainly predates the vmnet/lima/tailscale tools. The more likely (but unprovable — no historical logs reach back to February) explanation for "it used to work fine" is a change in usage pattern: these minis used to be touched more continuously, so the Wi-Fi interface rarely idled long enough to re-arm power-save. Becoming sparsely-touched headless compute nodes made the idle windows long enough for always-present behavior to start being noticed.
 
@@ -357,7 +404,12 @@ $ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dk.wifi-keepalive.
 
 Two levers not yet pursued: shortening the AP's DTIM interval would reduce (not eliminate) the wake penalty at the source, if the user ever gets admin access to the router. Wired Ethernet isn't available for these specific machines right now — though both already have Ethernet as network-service priority #1, so it would take over automatically with zero config if ever connected.
 
-**Final verdict.** One common root cause across both hosts, proven with packet-level and kernel-level evidence: macOS Wi-Fi client power-save (`MAGICWAKE`). Not two unrelated bugs. No confirmed software fix exists on this macOS build — the old `airport` toggle is gone on Apple Silicon and `wdutil` doesn't expose one. A keepalive mitigation is deployed and running on both machines today. The DNS stall on `.5` (Tab 3) was real but secondary; the leftover-vmnet-config hypothesis was checked and ruled out, bar one unread, unverified plist.
+<aside class="callout"><strong class="callout__title">Final verdict.</strong><div class="callout__body">One common root cause across both hosts, proven with packet-level and
+    kernel-level evidence: macOS Wi-Fi client power-save (<code>MAGICWAKE</code>). Not two unrelated bugs.
+    No confirmed software fix exists on this macOS build &mdash; the old <code>airport</code> toggle is
+    gone on Apple Silicon and <code>wdutil</code> doesn't expose one. A keepalive mitigation is deployed
+    and running on both machines today. The DNS stall on <code>.5</code> (Tab 3) was real but secondary;
+    the leftover-vmnet-config hypothesis was checked and ruled out, bar one unread, unverified plist.</div></aside>
 
 ## Thunderbolt Detour
 
@@ -372,7 +424,11 @@ Mid-investigation, the actual point of these two machines came up: run Apple MLX
 | Unified memory | 16 GB | 8 GB |
 | Thunderbolt/USB4 | 3× ports, 40 Gb/s each | 2× ports, 40 Gb/s each |
 
-**No, Thunderbolt Bridge is not RDMA.** macOS exposes it to the OS as a plain virtual Ethernet adapter — regular TCP/IP sockets ride on top, just at 40 Gb/s instead of shared WiFi bandwidth. There's no RoCE, no InfiniBand verbs, no kernel-bypass DMA exposed to userspace on macOS. MLX's `ring` distributed backend — built specifically for multi-Mac setups — uses exactly this: fast IP over a direct Thunderbolt link, not RDMA semantics.
+<aside class="callout"><strong class="callout__title">No, Thunderbolt Bridge is not RDMA.</strong><div class="callout__body">macOS exposes it to the OS as a plain virtual
+    Ethernet adapter &mdash; regular TCP/IP sockets ride on top, just at 40 Gb/s instead of shared WiFi
+    bandwidth. There's no RoCE, no InfiniBand verbs, no kernel-bypass DMA exposed to userspace on macOS.
+    MLX's <code>ring</code> distributed backend &mdash; built specifically for multi-Mac setups &mdash;
+    uses exactly this: fast IP over a direct Thunderbolt link, not RDMA semantics.</div></aside>
 
 Where MLX ring traffic runs, before and after
 
@@ -463,7 +519,12 @@ vllm-mlx serve embeddinggemma-300m-6bit  --host 0.0.0.0 --port 8080
 vllm-mlx serve Qwen3.5-4B-MLX-8bit       --host 0.0.0.0 --port 8081 --continuous-batching
 ```
 
-**Port collision.** The new `mlx_lm.server` was launched with `--port 8080` — the exact port a pre-existing, launchd-managed `vllm-mlx` embedding server was already `LISTEN`ing on, confirmed live via `lsof`. Two servers on the same port means the kernel arbitrates which one answers each incoming connection — a direct mechanism for "works, then a request goes to the wrong server, then works again."
+<aside class="callout"><strong class="callout__title">Port collision.</strong><div class="callout__body">The new <code>mlx_lm.server</code> was launched with
+    <code>--port 8080</code> &mdash; the exact port a pre-existing, launchd-managed
+    <code>vllm-mlx</code> embedding server was already <code>LISTEN</code>ing on, confirmed live via
+    <code>lsof</code>. Two servers on the same port means the kernel arbitrates which one answers each
+    incoming connection &mdash; a direct mechanism for "works, then a request goes to the wrong server,
+    then works again."</div></aside>
 
 16GB, three models, one port fought over twiceopen before fix
 
@@ -531,7 +592,10 @@ $ lsof -iTCP -sTCP:LISTEN | grep -E "8080|8081"   (empty)
 | Port 8081 | held by Qwen3.5 4B | free |
 | Plist location | ~/Library/LaunchAgents (auto-loads) | ~/Documents (archived, inert) |
 
-**Recommended next step, not yet applied:** point the MLX `device.json` hostfile at the Thunderbolt Bridge addresses (`192.0.2.201` / `.2`) instead of the WiFi IPs. That takes ring traffic off the still-unresolved flaky radio entirely, regardless of how the WiFi wake-latency bug eventually gets fixed.
+<aside class="callout"><strong class="callout__title">Recommended next step, not yet applied:</strong><div class="callout__body">point the MLX <code>device.json</code>
+    hostfile at the Thunderbolt Bridge addresses (<code>192.0.2.201</code> / <code>.2</code>) instead of
+    the WiFi IPs. That takes ring traffic off the still-unresolved flaky radio entirely, regardless of how
+    the WiFi wake-latency bug eventually gets fixed.</div></aside>
 
 ## Lessons
 
@@ -561,4 +625,11 @@ MLX's ring backend needs a stable, low-latency link for tensor sync. Rather than
 
 A resolver stall on `.5` and a dropped cold connection on `.64` read as two unrelated bugs, and Tab 2's parallel-diagnostics discipline correctly kept them separate at first. But a deeper cross-host pass (Tab 5) found the same `MAGICWAKE` kernel assertion and the same decaying-latency signature on both machines. Don't stop at the first plausible per-host explanation when a common-cause explanation fits the evidence better across hosts — run the same deep test against every affected host before closing the investigation.
 
-**Current state: mitigated, not fixed.** The WiFi wake-latency root cause is now fully proven on both hosts — packet-level and kernel-level evidence, and `.5` independently falsifies the earlier pmset-based explanation (Tab 5). No confirmed software toggle exists on this macOS build to disable 802.11 client power-save; the old `airport` CLI is gone on Apple Silicon and `wdutil` doesn't expose one. A non-sudo keepalive LaunchAgent, pinging the gateway every 30 seconds, is deployed and running on both machines as a workaround. Wired Ethernet isn't an option for these specific machines right now. The MLX path has its own way around it via Thunderbolt Bridge (Tab 6), independent of whether the underlying Wi-Fi issue ever gets a real fix.
+<aside class="callout"><strong class="callout__title">Current state: mitigated, not fixed.</strong><div class="callout__body">The WiFi wake-latency root cause is now fully
+    proven on both hosts &mdash; packet-level and kernel-level evidence, and <code>.5</code> independently
+    falsifies the earlier pmset-based explanation (Tab 5). No confirmed software toggle exists on this
+    macOS build to disable 802.11 client power-save; the old <code>airport</code> CLI is gone on Apple
+    Silicon and <code>wdutil</code> doesn't expose one. A non-sudo keepalive LaunchAgent, pinging the
+    gateway every 30 seconds, is deployed and running on both machines as a workaround. Wired Ethernet
+    isn't an option for these specific machines right now. The MLX path has its own way around it via
+    Thunderbolt Bridge (Tab 6), independent of whether the underlying Wi-Fi issue ever gets a real fix.</div></aside>

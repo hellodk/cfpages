@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Small container with wrench and shield">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF7ED"/><stop offset="1" stop-color="#F0DFCB"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="150" fill="#FED7AA" opacity="0.5"/>
+  <circle cx="1420" cy="860" r="180" fill="#FDBA74" opacity="0.4"/>
+  <ellipse cx="800" cy="890" rx="540" ry="58" fill="#DCC9B2"/>
+  <rect x="560" y="480" width="300" height="350" rx="20" fill="#C2410C"/>
+  <rect x="560" y="480" width="300" height="64" rx="20" fill="#9A3412"/>
+  <line x1="592" y1="610" x2="828" y2="610" stroke="#FED7AA" stroke-width="12" stroke-linecap="round"/>
+  <line x1="592" y1="680" x2="828" y2="680" stroke="#FED7AA" stroke-width="12" stroke-linecap="round"/>
+  <line x1="592" y1="750" x2="750" y2="750" stroke="#FED7AA" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="1000" cy="560" r="60" fill="none" stroke="#9A3412" stroke-width="28"/>
+  <rect x="1040" y="600" width="150" height="30" rx="15" fill="#9A3412"/>
+  <rect x="1150" y="630" width="28" height="46" rx="12" fill="#9A3412"/>
+  <path d="M1010 740 L1090 768 V830 C1090 876 1058 904 1010 918 C962 904 930 876 930 830 V768 Z" fill="#10B981"/>
+  <polyline points="982,830 1004,852 1038,814" fill="none" stroke="#FFFFFF" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

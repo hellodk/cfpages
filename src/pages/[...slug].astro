@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { post, allPosts } = Astro.props;
-const { Content } = await renderEntry(post);
+const { Content, headings } = await renderEntry(post);
 
 const rt = readingTime(post.body ?? '');
 const cover = resolvePostCover(post.id, post.data.cover, post.data.tags, post.body);
@@ -39,6 +39,8 @@ const related = allPosts
   tags={post.data.tags}
   {cover}
   readingTime={rt}
+  slug={post.id}
+  {headings}
 >
   <Content />
 

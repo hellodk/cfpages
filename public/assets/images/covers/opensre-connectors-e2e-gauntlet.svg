@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Shield beside a fault-injection checklist">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FEF2F2"/><stop offset="1" stop-color="#F3DCDC"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="840" r="170" fill="#FECACA" opacity="0.5"/>
+  <circle cx="1420" cy="200" r="140" fill="#FCA5A5" opacity="0.4"/>
+  <ellipse cx="800" cy="890" rx="560" ry="58" fill="#DEC9C9"/>
+  <path d="M520 400 L640 444 V540 C640 610 584 654 520 678 C456 654 400 610 400 540 V444 Z" fill="#DC2626"/>
+  <path d="M520 400 L640 444 V540 C640 610 584 654 520 678 C456 654 400 610 400 540 V444 Z" fill="none" stroke="#7F1D1D" stroke-width="8"/>
+  <polyline points="472,540 512,580 572,506" fill="none" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="740" y="400" width="440" height="440" rx="24" fill="#FFFFFF" stroke="#FCA5A5" stroke-width="6"/>
+  <rect x="780" y="450" width="52" height="52" rx="12" fill="#DCFCE7" stroke="#16A34A" stroke-width="5"/>
+  <polyline points="792,476 802,486 818,468" fill="none" stroke="#16A34A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="850" y="462" width="280" height="24" rx="12" fill="#E5E7EB"/>
+  <rect x="780" y="530" width="52" height="52" rx="12" fill="#DCFCE7" stroke="#16A34A" stroke-width="5"/>
+  <polyline points="792,556 802,566 818,548" fill="none" stroke="#16A34A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="850" y="542" width="220" height="24" rx="12" fill="#E5E7EB"/>
+  <rect x="780" y="610" width="52" height="52" rx="12" fill="#FEF2F2" stroke="#DC2626" stroke-width="5"/>
+  <circle cx="806" cy="636" r="12" fill="#DC2626"/>
+  <rect x="850" y="622" width="250" height="24" rx="12" fill="#E5E7EB"/>
+  <rect x="780" y="690" width="52" height="52" rx="12" fill="#DCFCE7" stroke="#16A34A" stroke-width="5"/>
+  <polyline points="792,716 802,726 818,708" fill="none" stroke="#16A34A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="850" y="702" width="280" height="24" rx="12" fill="#E5E7EB"/>
+</svg>

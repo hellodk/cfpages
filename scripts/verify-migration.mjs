@@ -14,7 +14,7 @@ const CHROME = ['On This Page', 'min read', 'hellodk.io · Deepak'];
 /**
  * Cover images live in src/data/post-covers.ts as a SLUG_COVERS map. It is a
  * .ts file, so it cannot be imported from this .mjs script — parse the literal
- * instead. Only 9 of the 42 managed slugs are mapped; the rest ship without a
+ * instead. Only 9 of the 66 managed slugs are mapped; the rest ship without a
  * cover until images are chosen for them.
  */
 function loadCovers() {
@@ -93,8 +93,8 @@ for (const post of POSTS) {
 // ---- totals, asserted rather than echoed ----
 const live = POSTS.filter((p) => !p.draft).length;
 const draft = POSTS.filter((p) => p.draft).length;
-if (POSTS.length !== 42) fail.push(`manifest has ${POSTS.length} posts, expected 42`);
-if (live !== 34) fail.push(`manifest has ${live} live posts, expected 34`);
+if (POSTS.length !== 66) fail.push(`manifest has ${POSTS.length} posts, expected 66`);
+if (live !== 58) fail.push(`manifest has ${live} live posts, expected 58`);
 if (draft !== 8) fail.push(`manifest has ${draft} draft posts, expected 8`);
 
 // ---- masking: idempotence, injectivity, and no survivor ----
@@ -172,15 +172,20 @@ const EXCLUDED = new Set([
   'nfs-meltdown (Copy)', 'linux_hacks.md', 'nginx_tutorials.md', 'docs',
   'redesign-mockup.html', 'animation-preview.html', 'traffic-animations.html',
   'token-consumption-24h.html', 'token-consumption.svg', '.superpowers',
+  'omlx-blog-mocks-v2.html',
+  '2026-10-02-gemma-4-e2b-mm1-mlx', '2026-10-03-gemma-4-mlx-kaggle-mirror',
+  // Owner decision: personal photos dropped in the blogs root, not posts.
+  'WhatsApp Image 2026-03-01 at 10.14.02 AM (1).jpeg',
+  'WhatsApp Image 2026-03-01 at 10.14.02 AM.jpeg',
 ]);
 const known = new Set(POSTS.map((p) => p.src.split('/')[0]));
 const stray = fs.readdirSync(BLOGS)
   .filter((n) => !n.startsWith('.') && !known.has(n) && !EXCLUDED.has(n));
 if (stray.length) fail.push(`unaccounted for in ~/Documents/blogs: ${stray.join(', ')}`);
 
-// ---- summary: 42 managed posts, distinct from the directory total ----
+// ---- summary: 66 managed posts, distinct from the directory total ----
 const total = fs.readdirSync(OUT).filter((f) => f.endsWith('.md')).length;
-console.log(`migrated: ${POSTS.length}/42  (${live} live, ${draft} draft)`);
+console.log(`migrated: ${POSTS.length}/66  (${live} live, ${draft} draft)`);
 console.log(`src/content/blog/ total: ${total}  (${total - POSTS.length} pre-existing, untouched)`);
 
 if (fail.length) {

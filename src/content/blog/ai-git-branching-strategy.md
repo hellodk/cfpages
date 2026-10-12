@@ -223,7 +223,7 @@ Spikes and prototypes — e.g. `experiment/langgraph`, `experiment/new-cache`, `
 
 **Rule:**No guarantees. Never merged directly. Cherry-pick only.
 
-**Never allowed:** direct commits to `main`, `release/*`, or `integration` — under any circumstances, by any human or agent. Every change enters through a pull request.
+<aside class="callout"><strong class="callout__title">Never allowed:</strong><div class="callout__body">direct commits to <code>main</code>, <code>release/*</code>, or <code>integration</code> — under any circumstances, by any human or agent. Every change enters through a pull request.</div></aside>
 
 ### Repository Layout
 
@@ -264,7 +264,7 @@ The layout above is a monorepo — `ui/`, `backend/`, `frontend/`, and `mobile/`
 
 **Costs:** a cross-surface change becomes N coordinated PRs across N repos, each needing its own review and its own security pipeline run. For a small set of AI agents already producing a high PR volume, that multiplies the exact review load this branch model exists to control — and CODEOWNERS, OTel config, and policy rules must be kept in sync by hand across every repo.
 
-**Why monorepo wins here:** the AI-guardrail and security-gate machinery in this guide has to be configured and kept current exactly once. Polyrepo would mean replicating branch protection, CODEOWNERS, the security pipeline, and the OTel requirements across every surface's repo — more places for the gate to silently drift out of sync, which is the one failure mode Integration-Gate Flow is built to prevent.
+<aside class="callout"><strong class="callout__title">Why monorepo wins here:</strong><div class="callout__body">the AI-guardrail and security-gate machinery in this guide has to be configured and kept current exactly once. Polyrepo would mean replicating branch protection, CODEOWNERS, the security pipeline, and the OTel requirements across every surface's repo — more places for the gate to silently drift out of sync, which is the one failure mode Integration-Gate Flow is built to prevent.</div></aside>
 
 ### Branch Naming & Commit Convention
 
@@ -356,7 +356,7 @@ The `helm-ci` check in Tab 3 lints the chart at PR time. Helm's own **release ho
 
 **Failure policy:** if a `pre-*` hook Job fails, Helm halts before touching any release resources — the same fail-closed guarantee the rest of this pipeline relies on. Hook ordering within a phase is controlled by `helm.sh/hook-weight`; cleanup of one-shot hook Jobs is controlled by `helm.sh/hook-delete-policy`.
 
-**Working chart, not just a table:** [helm/example-service](https://github.com/hellodk/github-ci-cd/tree/main/helm/example-service) implements all 5 hook points above with the annotations that matter in production (`hook-weight`, `hook-delete-policy`, `restartPolicy: Never`, `backoffLimit`/`activeDeadlineSeconds`) — `helm lint` and `helm template` clean. Its [README](https://github.com/hellodk/github-ci-cd/tree/main/helm/example-service#edge-cases-the-part-the-annotations-alone-dont-tell-you) covers 11 edge cases the table above can't: post-hook failures don't roll back an already-live release (`--atomic` fixes this), `test` never runs automatically, why the delete policy is deliberately not `hook-failed`, idempotency requirements, and more.
+<aside class="callout"><strong class="callout__title">Working chart, not just a table:</strong><div class="callout__body"><a href="https://github.com/hellodk/github-ci-cd/tree/main/helm/example-service" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">helm/example-service</a> implements all 5 hook points above with the annotations that matter in production (<code>hook-weight</code>, <code>hook-delete-policy</code>, <code>restartPolicy: Never</code>, <code>backoffLimit</code>/<code>activeDeadlineSeconds</code>) — <code>helm lint</code> and <code>helm template</code> clean. Its <a href="https://github.com/hellodk/github-ci-cd/tree/main/helm/example-service#edge-cases-the-part-the-annotations-alone-dont-tell-you" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">README</a> covers 11 edge cases the table above can't: post-hook failures don't roll back an already-live release (<code>--atomic</code> fixes this), <code>test</code> never runs automatically, why the delete policy is deliberately not <code>hook-failed</code>, idempotency requirements, and more.</div></aside>
 
 ### 4 · Mobile Release Pipeline — Android & iOS
 
@@ -383,7 +383,7 @@ Merge to app store, with real-device testing and in-app protection — animated
 
 The version number and the changelog are both _computed_, not written by hand. Both are derived from the same input the `commit-msg` hook already enforces: Conventional Commits.
 
-**Semver does not roll over at 99.** MAJOR, MINOR, and PATCH are each an independent, uncapped integer — there is no odometer digit limit. `1.1.99` followed by another `fix:` commit is `1.1.100`, not `1.2.0`. A segment only resets to zero when a _higher_ segment increments: a `feat:` resets PATCH; a breaking change resets MINOR and PATCH.
+<aside class="callout"><strong class="callout__title">Semver does not roll over at 99.</strong><div class="callout__body">MAJOR, MINOR, and PATCH are each an independent, uncapped integer — there is no odometer digit limit. <code>1.1.99</code> followed by another <code>fix:</code> commit is <code>1.1.100</code>, not <code>1.2.0</code>. A segment only resets to zero when a <em>higher</em> segment increments: a <code>feat:</code> resets PATCH; a breaking change resets MINOR and PATCH.</div></aside>
 
 ## Bump Rule — Highest-Precedence Commit Since the Last Tag Wins
 
@@ -420,7 +420,7 @@ Only `feat`, `fix`, and `perf` exist in the default Angular commit preset most r
 | otel: | Observability |
 | refactor: / docs: / build: / ci: / test: | Hidden from notes (internal only) |
 
-**Enforcement lever:** there is no separate release-notes check to pass or fail — `commit-msg` is the enforcement point. A commit that doesn't match Conventional Commits never lands, so a malformed or missing changelog entry is structurally impossible, not just discouraged.
+<aside class="callout"><strong class="callout__title">Enforcement lever:</strong><div class="callout__body">there is no separate release-notes check to pass or fail — <code>commit-msg</code> is the enforcement point. A commit that doesn't match Conventional Commits never lands, so a malformed or missing changelog entry is structurally impossible, not just discouraged.</div></aside>
 
 ### 6 · Recommended End-to-End Flow
 
@@ -428,7 +428,7 @@ Every pipeline above, in one path — from a developer or an AI agent opening a 
 
 Developer / AI agent to production — animated
 
-Integration-Gate Flow scales across UI, backend, frontend, mobile, and AI-assisted development while enforcing security, observability, provenance, and release governance at every stage — the same nine PR-pipeline stages and eleven security gates apply regardless of which surface the change touches.
+<aside class="callout"><div class="callout__body">Integration-Gate Flow scales across UI, backend, frontend, mobile, and AI-assisted development while enforcing security, observability, provenance, and release governance at every stage — the same nine PR-pipeline stages and eleven security gates apply regardless of which surface the change touches.</div></aside>
 
 ## Hooks · Webhooks · Governance
 
@@ -436,9 +436,9 @@ Integration-Gate Flow scales across UI, backend, frontend, mobile, and AI-assist
 
 Two groups: hooks that run on the laptop or agent sandbox before code ever leaves it, and hooks that run server-side in CI once a PR is open. `git commit` runs `pre-commit` → `prepare-commit-msg` → `commit-msg` → `post-commit` in that order; `git push` is a separate command that later runs `pre-push`.
 
-**This isn't just documentation — it's running.** Every hook below is a real, tested script in [github.com/hellodk/github-ci-cd](https://github.com/hellodk/github-ci-cd): `.pre-commit-config.yaml` + `scripts/` for the client-side hooks, `.github/workflows/` for their CI-side twins. `pip install pre-commit && pre-commit install` activates them in a clone.
+<aside class="callout"><strong class="callout__title">This isn't just documentation — it's running.</strong><div class="callout__body">Every hook below is a real, tested script in <a href="https://github.com/hellodk/github-ci-cd" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">github.com/hellodk/github-ci-cd</a>: <code>.pre-commit-config.yaml</code> + <code>scripts/</code> for the client-side hooks, <code>.github/workflows/</code> for their CI-side twins. <code>pip install pre-commit && pre-commit install</code> activates them in a clone.</div></aside>
 
-**Local hooks are fast feedback, not the enforcement boundary.** Every local check below has a required-status-check twin in CI. Skipping a local hook — deliberately with `--no-verify`, or because a tool isn't installed — just means finding out at the PR instead of on the laptop. Nothing reaches `main` without the CI-side check passing regardless of what ran locally.
+<aside class="callout"><strong class="callout__title">Local hooks are fast feedback, not the enforcement boundary.</strong><div class="callout__body">Every local check below has a required-status-check twin in CI. Skipping a local hook — deliberately with <code>--no-verify</code>, or because a tool isn't installed — just means finding out at the PR instead of on the laptop. Nothing reaches <code>main</code> without the CI-side check passing regardless of what ran locally.</div></aside>
 
 Client-Side Hooks — Run Locally
 
@@ -510,9 +510,9 @@ Server-Side Hooks — Run in CI
 
 **Bypass reporting:**Same — logged as a GitHub check run, nothing hidden or silently absent.
 
-**`--no-verify` cannot be blocked from a hook — by any repo, not just this one.** When that flag is passed, git skips invoking the hook script entirely; there's no code path for a hook to detect or refuse it. Anything claiming to "prevent" a local bypass from inside `pre-commit`/`commit-msg`/`pre-push` itself is describing something that can't work. The one detection layer that's still useful: `pre-commit` and `pre-push` emit a heartbeat to the OTel Collector when they _do_ run — a push whose commit SHA never sent one gets a non-blocking "likely bypassed locally" PR comment. Informational only.
+<aside class="callout"><strong class="callout__title">--no-verify cannot be blocked from a hook — by any repo, not just this one.</strong><div class="callout__body">When that flag is passed, git skips invoking the hook script entirely; there's no code path for a hook to detect or refuse it. Anything claiming to "prevent" a local bypass from inside <code>pre-commit</code>/<code>commit-msg</code>/<code>pre-push</code> itself is describing something that can't work. The one detection layer that's still useful: <code>pre-commit</code> and <code>pre-push</code> emit a heartbeat to the OTel Collector when they <em>do</em> run — a push whose commit SHA never sent one gets a non-blocking "likely bypassed locally" PR comment. Informational only.</div></aside>
 
-**What actually prevents a bypass from reaching `main`: server-side branch protection** — live on this repo's `main`, not just documented. Direct pushes are rejected by GitHub itself before any hook question even arises; 6 required status checks (branch naming, every commit message, PR title, `pre-commit` re-run, `terraform-ci`, `helm-ci`) must pass; `enforce_admins` is on, so the repo owner isn't exempt either. Verify it yourself: `gh api repos/hellodk/github-ci-cd/branches/main/protection`.
+<aside class="callout"><strong class="callout__title">What actually prevents a bypass from reaching main: server-side branch protection</strong><div class="callout__body">— live on this repo's <code>main</code>, not just documented. Direct pushes are rejected by GitHub itself before any hook question even arises; 6 required status checks (branch naming, every commit message, PR title, <code>pre-commit</code> re-run, <code>terraform-ci</code>, <code>helm-ci</code>) must pass; <code>enforce_admins</code> is on, so the repo owner isn't exempt either. Verify it yourself: <code>gh api repos/hellodk/github-ci-cd/branches/main/protection</code>.</div></aside>
 
 ### GitHub Webhooks
 
@@ -776,4 +776,4 @@ This is the real question, and it has a real answer — but not the one "add a h
 | Genuinely external (vendor, OSS dependency) | You cannot touch their repo at all. Move enforcement to a boundary you control instead: the artifact registry (refuse unsigned/unscanned images), cluster admission (Kyverno/Gatekeeper reject non-compliant manifests regardless of origin), or a deployment gateway that verifies SLSA provenance/attestation before promoting anything. |
 | Vendor relationship, contractual leverage exists | Not a technical control at all — security requirements written into the procurement contract (SOC2 evidence, scan reports, signed artifacts as a delivery condition) is the actual enforcement mechanism when there's no git access to lean on. |
 
-**The pattern underneath all three:** when you can't push a hook upstream into someone else's process, you verify the output at the boundary where their work meets yours — a registry pull, a cluster admission, a deployment gate. Same principle as Tab 3's "local hooks aren't the enforcement boundary," just with the boundary moved from "your laptop vs. CI" to "their repo vs. your cluster."
+<aside class="callout"><strong class="callout__title">The pattern underneath all three:</strong><div class="callout__body">when you can't push a hook upstream into someone else's process, you verify the output at the boundary where their work meets yours — a registry pull, a cluster admission, a deployment gate. Same principle as Tab 3's "local hooks aren't the enforcement boundary," just with the boundary moved from "your laptop vs. CI" to "their repo vs. your cluster."</div></aside>

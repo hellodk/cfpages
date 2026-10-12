@@ -131,7 +131,7 @@ git clone --depth 1 $REPO_URL
 git submodule update --init --recursive
 ```
 
-⚠ Shallow clones (`--depth 1`) break `git describe` for version bumping. Use `--unshallow` before tagging.
+<aside class="callout"><div class="callout__body">⚠ Shallow clones (<code>--depth 1</code>) break <code>git describe</code> for version bumping. Use <code>--unshallow</code> before tagging.</div></aside>
 
 ## Stage 2 — pod install
 
@@ -147,7 +147,7 @@ pod install --repo-update --deployment
 # source and does not require a repo update.
 ```
 
-ℹ The generated `Pods/` directory should be **gitignored**. Only `Podfile.lock` is committed.
+<aside class="callout"><strong class="callout__title">gitignored</strong><div class="callout__body">ℹ The generated <code>Pods/</code> directory should be . Only <code>Podfile.lock</code> is committed.</div></aside>
 
 [→ See Tab 3 for CocoaPods deep-dive](#)
 
@@ -214,7 +214,7 @@ The `ExportOptions.plist` controls the distribution method: app-store enterprise
 
 Upload via the App Store Connect API. `altool` was deprecated in 2023 and fully removed in Xcode 16. Use `xcrun notarytool` for notarization and the App Store Connect API or Fastlane deliver for distribution. TestFlight processes the build asynchronously (~10 min).
 
-⚠ **altool removed in Xcode 16.** Use `xcrun notarytool` or `fastlane deliver` instead.
+<aside class="callout"><strong class="callout__title">altool removed in Xcode 16.</strong><div class="callout__body">⚠  Use <code>xcrun notarytool</code> or <code>fastlane deliver</code> instead.</div></aside>
 
 ```bash
 # App Store Connect API (current — altool removed in Xcode 16)
@@ -404,7 +404,7 @@ AAPT2 (Android Asset Packaging Tool) compiles all resources (layouts, drawables,
 
 Two-phase: **Compile** (per-file → `.flat` intermediate) then **Link** (all intermediates → `resources.arsc` + final APK base).
 
-✓ AAPT2 supports incremental builds: only changed resources are recompiled, not the whole resource set.
+<aside class="callout"><div class="callout__body">✓ AAPT2 supports incremental builds: only changed resources are recompiled, not the whole resource set.</div></aside>
 
 ## APK vs AAB
 
@@ -453,9 +453,7 @@ buildTypes {
 }
 ```
 
-⚠ Never commit the keystore to source control. If lost, you cannot update your app on Play Store — the signing key is permanent and irreplaceable.  
-
-**Warning:** Never commit the keystore to source control — even if the file path looks local. For CI pipelines, inject the keystore as a base64-encoded environment variable and decode it to a temp file.
+<aside class="callout"><strong class="callout__title">Warning:</strong><div class="callout__body">⚠ Never commit the keystore to source control. If lost, you cannot update your app on Play Store — the signing key is permanent and irreplaceable.<br><br> Never commit the keystore to source control — even if the file path looks local. For CI pipelines, inject the keystore as a base64-encoded environment variable and decode it to a temp file.</div></aside>
 
 ```bash
 # CI-safe keystore injection — inject KEYSTORE_BASE64 as a secret env var
@@ -771,7 +769,7 @@ sentry-cli upload-dif --org my-org --project my-app \
 datadog-ci dsyms upload build/MyApp.xcarchive/dSYMs/
 ```
 
-ℹ CI best practice: Archive the entire `.dSYM` bundle as a build artifact alongside the IPA. Never distribute an IPA without preserving its matching dSYMs — they are identified by UUID and cannot be regenerated.
+<aside class="callout"><div class="callout__body">ℹ CI best practice: Archive the entire <code>.dSYM</code> bundle as a build artifact alongside the IPA. Never distribute an IPA without preserving its matching dSYMs — they are identified by UUID and cannot be regenerated.</div></aside>
 
 ## Build Cache Strategy
 
@@ -933,7 +931,7 @@ xcodebuild ... | xcbeautify
 # Use Xcode → Reports navigator for GUI log
 ```
 
-💡 In Jenkins, save the raw `xcodebuild` output to a file and archive it as a build artifact. xcodebuild exit codes: 0 = success, 65 = test failures, 70 = build error.
+<aside class="callout"><div class="callout__body">💡 In Jenkins, save the raw <code>xcodebuild</code> output to a file and archive it as a build artifact. xcodebuild exit codes: 0 = success, 65 = test failures, 70 = build error.</div></aside>
 
 ## Jenkins Pipeline Example — iOS
 
@@ -1101,7 +1099,7 @@ What Is Inside a .mobileprovision
 | App Store | Dist Cert | Submission to App Store | No device limit (managed by App Store) |
 | Enterprise | Dist Cert (Enterprise account) | Internal MDM / web install | All devices (no UDID list) |
 
-⚠ Enterprise distribution is for **employees only**. Distributing an Enterprise-signed app to the public violates Apple's Developer Enterprise Program License and can result in certificate revocation.
+<aside class="callout"><strong class="callout__title">employees only</strong><div class="callout__body">⚠ Enterprise distribution is for . Distributing an Enterprise-signed app to the public violates Apple's Developer Enterprise Program License and can result in certificate revocation.</div></aside>
 
 ## Common Signing Errors
 
@@ -1188,7 +1186,7 @@ How Your App Gets Signed & Verified — Animated
 
 ### CI / Jenkins Setup — Dedicated Keychain
 
-⚠ **Never unlock the login keychain on a shared Mac agent** — it exposes every private key on the machine to concurrent builds. Always create a dedicated per-pipeline keychain and delete it after the build.
+<aside class="callout"><strong class="callout__title">Never unlock the login keychain on a shared Mac agent</strong><div class="callout__body">⚠  — it exposes every private key on the machine to concurrent builds. Always create a dedicated per-pipeline keychain and delete it after the build.</div></aside>
 
 ```bash
 # Create a dedicated per-pipeline keychain (never use the login keychain on shared agents)
@@ -1361,9 +1359,9 @@ CI Keychain 7-Step Lifecycle — Animated Flow
         <circle r="5" fill="#16A34A" opacity=".8"><animateMotion dur="5s" repeatCount="indefinite" begin="3.33s"><mpath href="#kc-main-path"></mpath></animateMotion></circle>
       </svg>
 
-**⑤ The single most common headless CI signing failure:** omitting `security set-key-partition-list`. Without it, `codesign` silently fails with _"User interaction is not allowed"_ on every macOS 12+ agent. This call grants `apple-tool:` and `codesign:` partition access so the private key can be used without triggering a UI passphrase dialog.
+<aside class="callout"><strong class="callout__title">⑤ The single most common headless CI signing failure:</strong><div class="callout__body">omitting <code>security set-key-partition-list</code>. Without it, <code>codesign</code> silently fails with <em>"User interaction is not allowed"</em> on every macOS 12+ agent. This call grants <code>apple-tool:</code> and <code>codesign:</code> partition access so the private key can be used without triggering a UI passphrase dialog.</div></aside>
 
-**⑦ Always delete the keychain in post { always { } }:** if the build crashes mid-sign, a leaked keychain stays on disk unlocked until it times out (3600s). A `security delete-keychain` in the post block removes it immediately regardless of build outcome.
+<aside class="callout"><strong class="callout__title">⑦ Always delete the keychain in post { always { } }:</strong><div class="callout__body">if the build crashes mid-sign, a leaked keychain stays on disk unlocked until it times out (3600s). A <code>security delete-keychain</code> in the post block removes it immediately regardless of build outcome.</div></aside>
 
 ## Inspecting & Verifying Signatures
 
@@ -1413,7 +1411,7 @@ echo "Certificate expires in $DAYS days"
 [ $DAYS -lt 30 ] && echo "WARNING: cert expires soon" && exit 1
 ```
 
-⚠ **Recommended:** Add a scheduled Jenkins/CI job that runs this check daily and alerts at 30 days and 7 days before expiry. Treat a cert expiry like an on-call alert — it will block your release pipeline without warning.
+<aside class="callout"><strong class="callout__title">Recommended:</strong><div class="callout__body">⚠  Add a scheduled Jenkins/CI job that runs this check daily and alerts at 30 days and 7 days before expiry. Treat a cert expiry like an on-call alert — it will block your release pipeline without warning.</div></aside>
 
 ## Document Notes & Known Limitations
 

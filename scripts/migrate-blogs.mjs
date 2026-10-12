@@ -26,7 +26,7 @@ const yaml = (s) => JSON.stringify(String(s));
 /**
  * Cover images live in src/data/post-covers.ts as a SLUG_COVERS map. It is a
  * .ts file, so it cannot be imported from this .mjs script — parse the literal
- * instead. Only 9 of the 42 managed slugs are mapped; the rest ship without a
+ * instead. Only 9 of the 65 managed slugs are mapped; the rest ship without a
  * cover until images are chosen for them.
  */
 function loadCovers() {

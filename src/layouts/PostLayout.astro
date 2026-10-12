@@ -9,11 +9,17 @@ interface Props {
   tags: string[];
   cover?: string;
   readingTime?: number;
+  slug?: string;
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { title, description, date, updated, tags, cover, readingTime } = Astro.props;
+const { title, description, date, updated, tags, cover, readingTime, slug = '', headings = [] } = Astro.props;
 const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 const crumb = title.length > 45 ? title.slice(0, 45) + '…' : title;
+const pageUrl = `https://hellodk.io/${slug}`;
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const tweetText = encodeURIComponent(title);
+const shareUrl = encodeURIComponent(pageUrl);
 ---
 
 <ChirpingLayout
@@ -26,30 +32,100 @@ const crumb = title.length > 45 ? title.slice(0, 45) + '…' : title;
   breadcrumb={crumb}
 >
   <article class="post-art" data-pagefind-body>
+    <div class="post-grid">
+      <div class="post-main">
     <header class="post-art__hd">
       <div class="post-art__tags">
         {tags.slice(0,4).map(t => <a href={`/tag/${t}`} class="post-art__tag">{t}</a>)}
       </div>
       <h1 class="post-art__title">{title}</h1>
-      <div class="post-art__byline">
-        <span>Deepak Gupta</span>
-        <span class="s">·</span>
-        <time datetime={date.toISOString()}>{formattedDate}</time>
-        {readingTime && <><span class="s">·</span><span>{readingTime} min read</span></>}
+      <div class="post-art__meta">
+        <div class="post-art__byline">
+          <span>Deepak Gupta</span>
+          <span class="s">·</span>
+          <time datetime={date.toISOString()}>{formattedDate}</time>
+          {readingTime && <><span class="s">·</span><span>{readingTime} min read</span></>}
+        </div>
+        <div class="post-share" aria-label="Share this post">
+          <span class="post-share__lbl">Share</span>
+          <a class="post-share__btn" href={`https://twitter.com/intent/tweet?text=${tweetText}&url=${shareUrl}`} target="_blank" rel="noopener" aria-label="Share on X" title="Share on X">X</a>
+          <a class="post-share__btn" href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`} target="_blank" rel="noopener" aria-label="Share on LinkedIn" title="Share on LinkedIn">in</a>
+          <button class="post-share__btn" type="button" aria-label="Copy link" title="Copy link" onclick={`navigator.clipboard.writeText('${pageUrl}')`}>&#128279;</button>
+        </div>
       </div>
       {cover && <img src={cover} alt={title} class="post-art__cover" />}
     </header>
+
+    <aside class="post-tldr" data-pagefind-ignore aria-label="TL;DR summary">
+      <div class="post-tldr__head">
+        <span class="post-tldr__label">TL;DR</span>
+        <span class="post-tldr__meta">3 takeaways</span>
+      </div>
+      <p class="post-tldr__summary">A Java 21 Alpine base image appeared stuck at one UNKNOWN CVE. It was not unpatchable — the image was built on an Alpine package snapshot old enough to predate the fix. One `RUN apk upgrade` in the Dockerfile cleared it for 3.1 MB.</p>
+      <ul class="post-tldr__points">
+        <li><span class="post-tldr__k">The culprit</span><span>Stale package snapshot, not an unfixable CVE</span></li>
+        <li><span class="post-tldr__k">The field that settled it</span><span>FixedVersion was populated — it is a to-do, not a dead end</span></li>
+        <li><span class="post-tldr__k">The fix</span><span>One `apk upgrade`, 3.1 MB, cleared the remaining finding</span></li>
+      </ul>
+    </aside>
+
+    {toc.length > 0 && (
+      <aside class="post-toc-inline" aria-label="On this page">
+        <div class="post-toc-inline__head">On this page</div>
+        <nav>
+          {toc.map((h) => (
+            <a href={`#${h.slug}`} class:list={['post-toc-inline__link', h.depth === 3 && 'post-toc-inline__link--sub']}>{h.text}</a>
+          ))}
+        </nav>
+      </aside>
+    )}
 
     <div class="post-art__body">
       <slot />
     </div>
 
+    <footer class="post-art__ft">
+      <div class="post-share post-share--ft" aria-label="Share this post">
+        <span class="post-share__lbl">Share this post</span>
+        <a class="post-share__btn" href={`https://twitter.com/intent/tweet?text=${tweetText}&url=${shareUrl}`} target="_blank" rel="noopener" aria-label="Share on X" title="Share on X">X</a>
+        <a class="post-share__btn" href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`} target="_blank" rel="noopener" aria-label="Share on LinkedIn" title="Share on LinkedIn">in</a>
+        <button class="post-share__btn" type="button" aria-label="Copy link" title="Copy link" onclick={`navigator.clipboard.writeText('${pageUrl}')`}>&#128279;</button>
+      </div>
+    </footer>
+
     <slot name="after-prose" />
+      </div>
+    </div>
   </article>
 </ChirpingLayout>
 
 <style>
 .post-art { width: 100%; max-width: none; }
+
+/* Single content column: the TOC moved inline and Share moved into the
+   header/footer, so the old 230px rail is gone and the body reclaims it. */
+.post-grid { display: block; }
+.post-main { min-width: 0; }
+.post-share { display: flex; align-items: center; gap: 10px; }
+.post-share__lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #9ca3af; margin-right: 2px; }
+html[data-theme="dark"] .post-share__lbl { color: #6b7280; }
+.post-share__btn { width: 32px; height: 32px; border: 1px solid #dee2e6; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #6c757d; font-size: 0.8rem; font-weight: 700; text-decoration: none; background: #fff; cursor: pointer; font-family: system-ui, sans-serif; }
+.post-share__btn:hover { border-color: #d95f59; color: #d95f59; }
+html[data-theme="dark"] .post-share__btn { background: #242322; border-color: #38352f; color: #9d978e; }
+html[data-theme="dark"] .post-share__btn:hover { border-color: #ef8a84; color: #ef8a84; }
+
+/* Inline table of contents, part of the article flow. */
+.post-toc-inline__head { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #d95f59; margin-bottom: 10px; }
+html[data-theme="dark"] .post-toc-inline__head { color: #ef8a84; }
+.post-toc-inline nav { display: flex; flex-wrap: wrap; gap: 10px; font-family: system-ui, sans-serif; }
+.post-toc-inline__link { display: block; font-size: 0.86rem; color: #44403c; text-decoration: none; line-height: 1.4; padding: 4px 10px; border: 1px solid #e8e3da; border-radius: 999px; background: #fbfaf7; transition: background .15s, border-color .15s, color .15s; }
+html[data-theme="dark"] .post-toc-inline__link { color: #ece8e1; border-color: #38352f; background: #242322; }
+.post-toc-inline__link:hover { background: #f9e9e7; border-color: #d95f59; color: #d95f59; }
+html[data-theme="dark"] .post-toc-inline__link:hover { background: #3a2a28; border-color: #ef8a84; color: #ef8a84; }
+.post-toc-inline__link--sub { padding-left: 14px; font-size: 0.82rem; }
+@media (max-width: 900px) {
+  .post-main { padding-left: 0; }
+}
 
 .post-art__hd { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid #dee2e6; }
 
@@ -57,10 +133,17 @@ const crumb = title.length > 45 ? title.slice(0, 45) + '…' : title;
 .post-art__tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #0066cc; background: #e7f1ff; padding: 2px 8px; border-radius: 3px; text-decoration: none; }
 .post-art__tag:hover { background: #0066cc; color: #fff; }
 
-.post-art__title { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; line-height: 1.2; color: #1a1a1a; margin-bottom: 12px; letter-spacing: -0.3px; }
+.post-art__title { font-family: 'Merriweather', Georgia, serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 900; line-height: 1.22; color: #1a1a1a; margin-bottom: 14px; letter-spacing: -0.4px; }
 
 .post-art__byline { font-size: 0.8rem; color: #6c757d; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .s { color: #dee2e6; }
+
+/* Header meta row: byline on the left, Share on the right. */
+.post-art__meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* Footer share bar after the body. */
+.post-art__ft { margin-top: 34px; padding-top: 18px; border-top: 1px solid #dee2e6; }
+html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
 
 .post-art__cover { width: 100%; max-height: 360px; object-fit: cover; border-radius: 8px; margin-top: 20px; display: block; }
 
@@ -72,38 +155,82 @@ const crumb = title.length > 45 ? title.slice(0, 45) + '…' : title;
    dead on every post. :global() on the descendant keeps the rule anchored to
    .post-art__body while letting it reach markdown elements.
    Values are unchanged; only the table rules are new. */
-.post-art__body { font-family: 'Merriweather', Georgia, serif; font-size: 1rem; line-height: 1.8; color: #212529; }
-.post-art__body :global(h2) { font-family: system-ui, sans-serif; font-size: 1.3rem; font-weight: 700; margin: 2rem 0 0.75rem; color: #1a1a1a; }
-.post-art__body :global(h3) { font-family: system-ui, sans-serif; font-size: 1.1rem; font-weight: 700; margin: 1.75rem 0 0.5rem; }
-.post-art__body :global(h4) { font-family: system-ui, sans-serif; font-size: 1rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }
-.post-art__body :global(p) { margin-bottom: 1.4rem; }
-.post-art__body :global(ul), .post-art__body :global(ol) { margin: 0 0 1.4rem 1.5rem; padding-left: 0.5rem; }
+.post-art__body { font-family: 'Merriweather', Georgia, serif; font-size: 1.0625rem; line-height: 1.85; color: #2b2b2b; font-weight: 400; }
+.post-art__body :global(h2) { font-family: 'Merriweather', Georgia, serif; font-size: 1.5rem; font-weight: 700; margin: 2.2rem 0 0.8rem; color: #1a1a1a; letter-spacing: -0.01em; }
+.post-art__body :global(h3) { font-family: 'Merriweather', Georgia, serif; font-size: 1.22rem; font-weight: 700; margin: 1.9rem 0 0.6rem; color: #1a1a1a; }
+.post-art__body :global(h4) { font-family: 'Merriweather', Georgia, serif; font-size: 1.05rem; font-weight: 700; margin: 1.6rem 0 0.5rem; color: #1a1a1a; }
+.post-art__body :global(p) { margin-bottom: 1.5rem; }
+.post-art__body :global(ul), .post-art__body :global(ol) { margin: 0 0 1.5rem 0; padding-left: 1.5rem; }
 .post-art__body :global(ul) { list-style: disc; }
 .post-art__body :global(ol) { list-style: decimal; }
-.post-art__body :global(li) { margin-bottom: 0.4rem; }
-.post-art__body :global(a) { color: #0066cc; text-decoration: underline; }
+.post-art__body :global(li) { margin-bottom: 0.45rem; padding-left: 0.25rem; }
+.post-art__body :global(li > ul), .post-art__body :global(li > ol) { margin-top: 0.45rem; }
+.post-art__body :global(a) { color: #0066cc; text-decoration: underline; text-underline-offset: 2px; }
 .post-art__body :global(strong) { font-weight: 700; }
-.post-art__body :global(blockquote) { border-left: 3px solid #0066cc; padding: 0.5rem 1rem; margin: 1.5rem 0; color: #6c757d; font-style: italic; background: #f8f9fa; }
-.post-art__body :global(pre) { margin: 1.5rem 0; border-radius: 6px; overflow-x: auto; border: 1px solid #dee2e6; }
-.post-art__body :global(code:not(pre code)) { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #f1f3f5; color: #c0392b; border: 1px solid #dee2e6; padding: 0.1em 0.4em; border-radius: 3px; }
-.post-art__body :global(hr) { border: none; border-top: 1px solid #dee2e6; margin: 2rem 0; }
+.post-art__body :global(blockquote) { border-left: 3px solid #d95f59; padding: 0.6rem 1.2rem; margin: 1.6rem 0; color: #6c757d; font-style: italic; background: #fbfaf7; }
+.post-art__body :global(pre) { margin: 1.5rem 0; border-radius: 8px; overflow-x: auto; border: 1px solid #dee2e6; font-size: 0.875rem; line-height: 1.7; }
+.post-art__body :global(code:not(pre code)) { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #f1f3f5; color: #ad3b2b; border: 1px solid #e5e6e7; padding: 0.1em 0.4em; border-radius: 3px; }
+.post-art__body :global(hr) { border: none; border-top: 1px solid #e8e3da; margin: 2.2rem 0; }
 
-/* Measure. The body inherits the full content column — 1538px at a 1854px
-   viewport, about 157 characters per line. Past roughly 80 characters the eye
-   stops reliably finding the next line's left edge on the return sweep, so
-   prose gets a cap while everything that genuinely needs the room — diagrams,
-   tables, code blocks, images — keeps the full width. */
+/* Measure. Prose uses the full content column (200ch ≈ uncapped at real
+   viewports) on explicit owner request (issue #14): readability best practice
+   tops out near 80ch, and the longer lines this produces were accepted as a
+   deliberate trade-off for full-width prose. */
 .post-art__body :global(p),
 .post-art__body :global(ul),
 .post-art__body :global(ol),
 .post-art__body :global(blockquote),
 .post-art__body :global(h2),
 .post-art__body :global(h3),
-.post-art__body :global(h4) { max-width: 68ch; }
+.post-art__body :global(h4) { max-width: 200ch; }
 
 /* Tables: the layout never had rules for these. Several migrated posts and the
    resume skills matrix contain them; without these they render as unspaced text. */
-.post-art__body :global(table) { width: 100%; max-width: 900px; border-collapse: collapse; margin: 0 0 1.4rem; font-family: system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5; display: block; overflow-x: auto; }
-.post-art__body :global(th) { text-align: left; font-weight: 700; background: #f8f9fa; border: 1px solid #dee2e6; padding: 0.5rem 0.7rem; }
+.post-art__body :global(table) { width: 100%; max-width: 900px; border-collapse: collapse; margin: 0 0 1.4rem; font-family: system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5; display: block; overflow-x: auto; font-variant-numeric: tabular-nums; }
+.post-art__body :global(th) { font-weight: 700; background: #f8f9fa; border: 1px solid #dee2e6; padding: 0.5rem 0.7rem; text-align: left; }
+/* GFM column alignment (---: / :---:) arrives as align attributes from the
+   migration converter; these override the default-left above (higher
+   specificity + later order) so numeric columns right-align per data-table UX. */
+.post-art__body :global(th[align="right"]), .post-art__body :global(td[align="right"]) { text-align: right; }
+.post-art__body :global(th[align="center"]), .post-art__body :global(td[align="center"]) { text-align: center; }
 .post-art__body :global(td) { border: 1px solid #dee2e6; padding: 0.5rem 0.7rem; vertical-align: top; }
+
+/* Style 2 components (issue #14): stat cards and callouts emitted by the
+   migration converter (scripts/lib/html-to-md.mjs) as raw HTML. :global() for
+   the same scoping reason as every rule above — markdown carries no cid. */
+.post-art__body :global(.stat-cards) { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 1.5rem 0; font-family: system-ui, sans-serif; }
+.post-art__body :global(.stat-card) { border: 1px solid #dee2e6; border-radius: 10px; padding: 14px; background: #fff; }
+.post-art__body :global(.stat-card__n) { display: block; font-size: 1.3rem; font-weight: 800; color: #1a1a1a; }
+.post-art__body :global(.stat-card__l) { display: block; font-size: 0.78rem; color: #6c757d; margin-top: 2px; }
+.post-art__body :global(.stat-card--ok .stat-card__n) { color: #16a34a; }
+.post-art__body :global(.stat-card--err .stat-card__n) { color: #dc2626; }
+.post-art__body :global(.stat-card--warn .stat-card__n) { color: #d97706; }
+.post-art__body :global(.callout) { border-left: 4px solid #0066cc; background: #eff6ff; border-radius: 8px; padding: 14px 16px; margin: 1.5rem 0; font-family: system-ui, sans-serif; max-width: 200ch; }
+.post-art__body :global(.callout__title) { display: block; margin-bottom: 2px; }
+.post-art__body :global(.callout__body p:last-child) { margin-bottom: 0; }
+.post-art__body :global(.callout--ok) { border-color: #16a34a; background: #f0fdf4; }
+.post-art__body :global(.callout--err) { border-color: #dc2626; background: #fef2f2; }
+.post-art__body :global(.callout--warn) { border-color: #d97706; background: #fffbeb; }
+@media (max-width: 700px) {
+  .post-art__body :global(.stat-cards) { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* TL;DR summary panel at the top of the post (ledger-style). */
+.post-tldr { background: #fbfaF7; border: 1px solid #e8e3da; border-left: 3px solid #d95f59; border-radius: 8px; padding: 18px 20px; margin: -28px -24px 28px; max-width: 200ch; }
+html[data-theme="dark"] .post-tldr { background: #242322; border-color: #38352f; }
+.post-tldr__head { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+.post-tldr__label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.16em; color: #d95f59; border: 1px solid #d95f59; border-radius: 3px; padding: 2px 9px; background: #f9e9e7; }
+html[data-theme="dark"] .post-tldr__label { color: #ef8a84; border-color: #ef8a84; background: #3a2a28; }
+.post-tldr__meta { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #8b857e; }
+html[data-theme="dark"] .post-tldr__meta { color: #9d978e; }
+.post-tldr__summary { font-family: 'Merriweather', Georgia, serif; font-size: 1rem; line-height: 1.75; color: #242220; margin: 0 0 12px; }
+html[data-theme="dark"] .post-tldr__summary { color: #ece8e1; }
+.post-tldr__points { list-style: none; margin: 0; padding: 0; }
+.post-tldr__points li { display: flex; gap: 14px; padding: 10px 0; border-top: 1px solid #e8e3da; }
+html[data-theme="dark"] .post-tldr__points li { border-top-color: #38352f; }
+.post-tldr__points li:first-of-type { padding-top: 8px; border-top: none; }
+.post-tldr__k { font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; color: #d95f59; white-space: nowrap; align-self: flex-start; line-height: 1.4; }
+html[data-theme="dark"] .post-tldr__k { color: #ef8a84; }
+.post-tldr__points li span:last-child { color: #242220; font-size: 0.94rem; line-height: 1.5; }
+html[data-theme="dark"] .post-tldr__points li span:last-child { color: #ece8e1; }
 </style>

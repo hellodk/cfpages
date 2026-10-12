@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Two computers paused by an hourglass">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8FAFC"/><stop offset="1" stop-color="#E2E4EC"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="840" r="170" fill="#CBD5E1" opacity="0.5"/>
+  <circle cx="1420" cy="200" r="140" fill="#CBD5E1" opacity="0.5"/>
+  <ellipse cx="800" cy="880" rx="560" ry="58" fill="#CBD0DC"/>
+  <rect x="360" y="600" width="260" height="110" rx="22" fill="#F1F5F9" stroke="#94A3B8" stroke-width="6"/>
+  <rect x="360" y="600" width="260" height="34" rx="17" fill="#CBD5E1"/>
+  <circle cx="590" cy="676" r="10" fill="#F59E0B"/>
+  <rect x="390" y="664" width="150" height="20" rx="10" fill="#D7DEEB"/>
+  <rect x="980" y="600" width="260" height="110" rx="22" fill="#F1F5F9" stroke="#94A3B8" stroke-width="6"/>
+  <rect x="980" y="600" width="260" height="34" rx="17" fill="#CBD5E1"/>
+  <circle cx="1210" cy="676" r="10" fill="#F59E0B"/>
+  <rect x="1010" y="664" width="150" height="20" rx="10" fill="#D7DEEB"/>
+  <rect x="700" y="330" width="200" height="26" rx="13" fill="#64748B"/>
+  <rect x="700" y="704" width="200" height="26" rx="13" fill="#64748B"/>
+  <polygon points="710,356 890,356 800,530" fill="#F59E0B" opacity="0.85"/>
+  <polygon points="710,704 890,704 800,530" fill="#F59E0B" opacity="0.55"/>
+  <circle cx="800" cy="560" r="16" fill="#92400E"/>
+  <rect x="776" y="600" width="48" height="70" rx="10" fill="#92400E" opacity="0.6"/>
+</svg>

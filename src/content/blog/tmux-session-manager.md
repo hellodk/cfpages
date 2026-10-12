@@ -32,7 +32,7 @@ Every developer who uses tmux hits the same wall: sessions pile up, names get fo
 
 **Give up, open a new terminal**
 
-**The core issue:** tmux gives you sessions but no good way to navigate them. `tmux ls` is a list, not an interface.
+<aside class="callout"><strong class="callout__title">The core issue:</strong><div class="callout__body">tmux gives you sessions but no good way to navigate them. <code>tmux ls</code> is a list, not an interface.</div></aside>
 
 ### The Solution: 3 Scripts
 
@@ -56,7 +56,7 @@ Ctrl-a
 
 Sane prefix + splits
 
-**Why fzf?** It gives you fuzzy filtering, live preview, and keyboard-only navigation. Type a few letters, hit enter, you're in. No scrolling through output.
+<aside class="callout"><strong class="callout__title">Why fzf?</strong><div class="callout__body">It gives you fuzzy filtering, live preview, and keyboard-only navigation. Type a few letters, hit enter, you're in. No scrolling through output.</div></aside>
 
 ### Before & After
 
@@ -187,7 +187,7 @@ kri: 3 windows (created Thu Jul 17 10:00:00 2026)
 atlas: 5 windows (created Thu Jul 17 09:30:00 2026)
 ```
 
-**The magic:** `tm` auto-detects your current directory and uses it as the session name. `cd ~/Documents/git/kri && tm` creates session "kri" — no typing required.
+<aside class="callout"><strong class="callout__title">The magic:</strong><div class="callout__body"><code>tm</code> auto-detects your current directory and uses it as the session name. <code>cd ~/Documents/git/kri && tm</code> creates session "kri" — no typing required.</div></aside>
 
 ### tmux.conf — Sane Defaults
 

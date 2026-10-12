@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Large red container with reduction gauge">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FEF2F2"/><stop offset="1" stop-color="#EFD9D9"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="840" r="170" fill="#FECACA" opacity="0.5"/>
+  <circle cx="1420" cy="200" r="140" fill="#FCA5A5" opacity="0.4"/>
+  <ellipse cx="800" cy="890" rx="560" ry="58" fill="#DEC5C5"/>
+  <rect x="420" y="400" width="420" height="430" rx="20" fill="#B91C1C"/>
+  <rect x="420" y="400" width="420" height="76" rx="20" fill="#991B1B"/>
+  <line x1="460" y1="540" x2="800" y2="540" stroke="#FECACA" stroke-width="14" stroke-linecap="round"/>
+  <line x1="460" y1="620" x2="800" y2="620" stroke="#FECACA" stroke-width="14" stroke-linecap="round"/>
+  <line x1="460" y1="700" x2="800" y2="700" stroke="#FECACA" stroke-width="14" stroke-linecap="round"/>
+  <line x1="460" y1="780" x2="680" y2="780" stroke="#FECACA" stroke-width="14" stroke-linecap="round"/>
+  <rect x="920" y="480" width="90" height="350" rx="16" fill="#DC2626"/>
+  <rect x="1030" y="580" width="90" height="250" rx="16" fill="#D97706"/>
+  <rect x="1140" y="680" width="90" height="150" rx="16" fill="#16A34A"/>
+  <circle cx="975" cy="430" r="44" fill="#FFFFFF" stroke="#DC2626" stroke-width="8"/>
+  <line x1="975" y1="412" x2="975" y2="448" stroke="#DC2626" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="1185" cy="630" r="44" fill="#FFFFFF" stroke="#16A34A" stroke-width="8"/>
+  <polyline points="1169,630 1181,642 1203,616" fill="none" stroke="#16A34A" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

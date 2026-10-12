@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Two databases joined by a connector bridge">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFF6FF"/><stop offset="1" stop-color="#D5E2F7"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="840" r="170" fill="#BFDBFE" opacity="0.5"/>
+  <circle cx="1420" cy="200" r="140" fill="#93C5FD" opacity="0.45"/>
+  <ellipse cx="800" cy="890" rx="560" ry="58" fill="#C3CFE6"/>
+  <ellipse cx="480" cy="560" rx="130" ry="44" fill="#1D4ED8"/>
+  <rect x="350" y="560" width="260" height="240" fill="#2563EB"/>
+  <ellipse cx="480" cy="800" rx="130" ry="44" fill="#3B82F6"/>
+  <ellipse cx="480" cy="560" rx="130" ry="44" fill="none" stroke="#DBEAFE" stroke-width="6"/>
+  <line x1="380" y1="650" x2="580" y2="650" stroke="#BFDBFE" stroke-width="8" stroke-linecap="round"/>
+  <line x1="380" y1="700" x2="580" y2="700" stroke="#BFDBFE" stroke-width="8" stroke-linecap="round"/>
+  <ellipse cx="1120" cy="560" rx="130" ry="44" fill="#7C3AED"/>
+  <rect x="990" y="560" width="260" height="240" fill="#8B5CF6"/>
+  <ellipse cx="1120" cy="800" rx="130" ry="44" fill="#8B5CF6"/>
+  <ellipse cx="1120" cy="560" rx="130" ry="44" fill="none" stroke="#DDD6FE" stroke-width="6"/>
+  <line x1="1020" y1="650" x2="1220" y2="650" stroke="#DDD6FE" stroke-width="8" stroke-linecap="round"/>
+  <line x1="1020" y1="700" x2="1220" y2="700" stroke="#DDD6FE" stroke-width="8" stroke-linecap="round"/>
+  <rect x="660" y="600" width="280" height="110" rx="24" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="8"/>
+  <rect x="700" y="560" width="26" height="60" rx="10" fill="#93C5FD"/>
+  <rect x="760" y="560" width="26" height="60" rx="10" fill="#93C5FD"/>
+  <rect x="856" y="560" width="26" height="60" rx="10" fill="#93C5FD"/>
+  <rect x="916" y="560" width="26" height="60" rx="10" fill="#93C5FD"/>
+  <circle cx="800" cy="655" r="26" fill="#10B981"/>
+  <polyline points="788,655 798,665 814,647" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

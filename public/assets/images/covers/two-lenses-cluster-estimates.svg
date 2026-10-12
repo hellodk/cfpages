@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Two lenses over estimate bars">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5F3FF"/><stop offset="1" stop-color="#E3DEF9"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="150" fill="#DDD6FE" opacity="0.55"/>
+  <circle cx="1420" cy="860" r="180" fill="#C4B5FD" opacity="0.4"/>
+  <ellipse cx="800" cy="890" rx="560" ry="58" fill="#CFC9E8"/>
+  <rect x="520" y="640" width="120" height="210" rx="14" fill="#8B5CF6"/>
+  <rect x="670" y="560" width="120" height="290" rx="14" fill="#7C3AED"/>
+  <rect x="820" y="690" width="120" height="160" rx="14" fill="#A78BFA"/>
+  <rect x="970" y="600" width="120" height="250" rx="14" fill="#8B5CF6"/>
+  <circle cx="620" cy="400" r="130" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="620" cy="400" r="130" fill="none" stroke="#5B21B6" stroke-width="24"/>
+  <circle cx="620" cy="400" r="60" fill="none" stroke="#8B5CF6" stroke-width="10" opacity="0.6"/>
+  <circle cx="980" cy="400" r="130" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="980" cy="400" r="130" fill="none" stroke="#5B21B6" stroke-width="24"/>
+  <rect x="603" y="510" width="34" height="140" rx="17" fill="#5B21B6"/>
+  <rect x="963" y="510" width="34" height="140" rx="17" fill="#5B21B6"/>
+</svg>

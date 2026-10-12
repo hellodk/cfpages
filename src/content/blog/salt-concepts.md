@@ -164,7 +164,7 @@ Events fire
 
 Every job, return, state run, and minion start/stop fires an event on the master's event bus. Reactor subscriptions trigger on matching patterns.
 
-**Key insight:** Salt never polls minions. All communication is push-based from the master, and minions maintain persistent TCP connections to :4505. This scales to thousands of minions on a single master.
+<aside class="callout"><strong class="callout__title">Key insight:</strong><div class="callout__body">Salt never polls minions. All communication is push-based from the master, and minions maintain persistent TCP connections to :4505. This scales to thousands of minions on a single master.</div></aside>
 
 * * *
 
@@ -301,8 +301,8 @@ Mark stale / offline
 
 Celery beat runs `mark_stale_nodes` every 5 min. Nodes stale >15 min, offline >4 hours. Node remains stale/offline until next grain report.
 
-**Install salt-master on mm1:** `ansible-playbook playbooks/setup_salt_master.yml -i playbooks/inventory/hosts.ini -e "kri_salt_api_password=yourpassword"`  
-Then update `.env.docker` with SALT\_API\_URL, SALT\_API\_USER, SALT\_API\_PASSWORD.
+<aside class="callout"><strong class="callout__title">Install salt-master on mm1:</strong><div class="callout__body"><code>ansible-playbook playbooks/setup_salt_master.yml -i playbooks/inventory/hosts.ini -e "kri_salt_api_password=yourpassword"</code>
+    <br>Then update <code>.env.docker</code> with SALT_API_URL, SALT_API_USER, SALT_API_PASSWORD.</div></aside>
 
 * * *
 
@@ -366,7 +366,7 @@ salt mm2 saltutil.refresh_grains
 salt -G 'cpuarch:arm64' state.apply
 ```
 
-In kri: `kri_heartbeat.py` runs `salt-call --local grains.items` then POSTs to `/api/v1/ingest/grains` every 5 minutes.
+<aside class="callout"><div class="callout__body">In kri: <code>kri_heartbeat.py</code> runs <code>salt-call --local grains.items</code> then POSTs to <code>/api/v1/ingest/grains</code> every 5 minutes.</div></aside>
 
 ## 🔒 Pillar
 
@@ -415,7 +415,7 @@ salt mm2 mine.get 'mm3' network.ip_addrs
 {% set ips = salt['mine.get']('web*','network.ip_addrs') %}
 ```
 
-kri does not currently use Mine — nodes report grains directly via HTTP. Mine is useful if you need minions to discover each other.
+<aside class="callout"><div class="callout__body">kri does not currently use Mine — nodes report grains directly via HTTP. Mine is useful if you need minions to discover each other.</div></aside>
 
 ## States · Events · Reactor · Thorium
 
@@ -544,7 +544,7 @@ production:    # saltenv
 
 State modules are called in SLS files and enforce desired state. Execution modules are called ad-hoc via `salt minion module.function`. Some share the same name but have different semantics.
 
-**Rule:** States = idempotent desired state. Execution = one-time imperative action.
+<aside class="callout"><strong class="callout__title">Rule:</strong><div class="callout__body">States = idempotent desired state. Execution = one-time imperative action.</div></aside>
 
 ## Common State Modules
 
@@ -783,7 +783,7 @@ fire_grain_report:
       - base.grain_report
 ```
 
-The reactor runs on the master and is event-driven. It can trigger local commands, state applies, runner modules, or wheel functions.
+<aside class="callout"><div class="callout__body">The reactor runs on the master and is event-driven. It can trigger local commands, state applies, runner modules, or wheel functions.</div></aside>
 
 ## 📅 Schedule
 
@@ -809,7 +809,7 @@ salt-run schedule.add nightly_backup \
   hours=24
 ```
 
-**schedule.present** (state module) writes to volatile `/var/cache/salt/minion/schedule.p`. kri writes to `/etc/salt/minion.d/` for persistence.
+<aside class="callout"><strong class="callout__title">schedule.present</strong><div class="callout__body">(state module) writes to volatile <code>/var/cache/salt/minion/schedule.p</code>. kri writes to <code>/etc/salt/minion.d/</code> for persistence.</div></aside>
 
 ## 🔦 Beacons
 
@@ -857,7 +857,7 @@ elasticsearch.index: "salt"
 # sentry, slack, hipchat
 ```
 
-kri acts as a custom returner — the ingest API receives grain data pushed via HTTP POST from the minion's heartbeat script.
+<aside class="callout"><div class="callout__body">kri acts as a custom returner — the ingest API receives grain data pushed via HTTP POST from the minion's heartbeat script.</div></aside>
 
 * * *
 
@@ -973,7 +973,7 @@ thorium_roots:
     - /srv/salt/thorium
 ```
 
-**kri note:** kri uses the simpler Reactor for immediate on-connect events. Thorium would be used for complex fleet-wide condition detection (e.g., cascade failures).
+<aside class="callout"><strong class="callout__title">kri note:</strong><div class="callout__body">kri uses the simpler Reactor for immediate on-connect events. Thorium would be used for complex fleet-wide condition detection (e.g., cascade failures).</div></aside>
 
 ## 📊 Salt Versions — Release Codenames
 
@@ -1236,7 +1236,7 @@ Full key lifecycle — from first boot to trusted minion
 | salt-key -F | Show all fingerprints |
 | salt-key --gen-keys=test | Generate a key pair (for testing) |
 
-In kri: use Settings → Minion Keys to accept/reject. Never use `-A -y` in production — always inspect fingerprints first.
+<aside class="callout"><div class="callout__body">In kri: use Settings → Minion Keys to accept/reject. Never use <code>-A -y</code> in production — always inspect fingerprints first.</div></aside>
 
 ## External Authentication (salt-api)
 
@@ -1519,7 +1519,7 @@ salt-key --gen-keys=test --gen-keys-dir=/tmp/
 | 5432 | PostgreSQL | internal | TimescaleDB. Only accessible inside Docker network. | Docker container |
 | 6379 | Redis | internal | Celery broker + rate limiting. Internal only. | Docker container |
 
-**Firewall:** Only 4505, 4506, and 8080 need to be reachable on mm1 from other Mac Minis. In kri these are protected by Tailscale — no public exposure.
+<aside class="callout"><strong class="callout__title">Firewall:</strong><div class="callout__body">Only 4505, 4506, and 8080 need to be reachable on mm1 from other Mac Minis. In kri these are protected by Tailscale — no public exposure.</div></aside>
 
 ## 📄 Configuration Files
 

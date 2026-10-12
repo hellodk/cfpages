@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Gauge at full with stacked coins">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0FDF4"/><stop offset="1" stop-color="#D2E9D8"/></linearGradient></defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="1420" cy="200" r="150" fill="#BBF7D0" opacity="0.5"/>
+  <circle cx="200" cy="860" r="170" fill="#86EFAC" opacity="0.4"/>
+  <ellipse cx="800" cy="890" rx="560" ry="58" fill="#BCD2C2"/>
+  <path d="M500 700 A300 300 0 0 1 1100 700" fill="none" stroke="#D1D5DB" stroke-width="60" stroke-linecap="round"/>
+  <path d="M1012 488 A300 300 0 0 1 1100 700" fill="none" stroke="#16A34A" stroke-width="60" stroke-linecap="round"/>
+  <line x1="800" y1="700" x2="1000" y2="500" stroke="#4B5563" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="800" cy="700" r="44" fill="#4B5563"/>
+  <rect x="560" y="650" width="60" height="150" rx="14" fill="#16A34A"/>
+  <rect x="640" y="600" width="60" height="200" rx="14" fill="#16A34A" opacity="0.75"/>
+  <rect x="720" y="660" width="60" height="140" rx="14" fill="#16A34A" opacity="0.5"/>
+  <ellipse cx="1180" cy="800" rx="90" ry="30" fill="#F59E0B"/>
+  <ellipse cx="1180" cy="770" rx="90" ry="30" fill="#FBBF24"/>
+  <ellipse cx="1180" cy="740" rx="90" ry="30" fill="#F59E0B"/>
+  <ellipse cx="1180" cy="710" rx="90" ry="30" fill="#FBBF24"/>
+</svg>

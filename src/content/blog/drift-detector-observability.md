@@ -246,7 +246,9 @@ scripts/harness — diffbash
 + DRIFT_IMG="${'$'}{REGISTRY}/drift-detector:${'$'}{VERSION}"
 ```
 
-**Why it mattered here specifically:** a mutable tag on the one service whose entire job is proving prod and dr are running the same thing would have been an odd hole to leave open.
+<aside class="callout"><strong class="callout__title">Why it mattered here specifically:</strong><div class="callout__body">a mutable tag on the one service
+          whose entire job is proving prod and dr are running the same thing would have been an odd
+          hole to leave open.</div></aside>
 
 ## 9 Where it landed
 

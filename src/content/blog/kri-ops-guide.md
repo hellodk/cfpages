@@ -43,9 +43,13 @@ Everything goes through `./scripts/kri.sh`. It handles startup order, PID files,
    API     →  http://localhost:8000/docs
 ```
 
-ℹ
-
-The script waits up to 20 seconds for both Docker containers to report `healthy` before starting the application services. If they stay unhealthy, run `docker compose -f deploy/docker-compose.yml ps` to investigate.
+<aside class="callout"><div class="callout__body"><span class="alert-icon">ℹ</span>
+      <div>
+        The script waits up to 20 seconds for both Docker containers to report
+        <code>healthy</code> before starting the application services. If they stay
+        unhealthy, run <code>docker compose -f deploy/docker-compose.yml ps</code>
+        to investigate.
+      </div></div></aside>
 
 ### Under the hood — PID tracking
 
@@ -306,9 +310,11 @@ ANSIBLE_VERBOSITY=2
 ./scripts/kri.sh restart
 ```
 
-⚠
-
-Verbosity 2 and above will log SSH credentials and host details to `.kri-logs/worker.log`. Rotate or delete the log after debugging.
+<aside class="callout"><div class="callout__body"><span class="alert-icon">⚠</span>
+      <div>
+        Verbosity 2 and above will log SSH credentials and host details to
+        <code>.kri-logs/worker.log</code>. Rotate or delete the log after debugging.
+      </div></div></aside>
 
 ### Querying audit events directly
 
