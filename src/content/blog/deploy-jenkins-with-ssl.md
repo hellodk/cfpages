@@ -39,7 +39,7 @@ Follow the below steps to install Jenkins on your server
     ls -ltr ~/.ssh
     ```
     
-    ![](/assets/images/jenkins/jenkins_ssh_keys_verification.png "ssh keys verification")
+    ![ssh keys verification](/assets/images/jenkins/jenkins_ssh_keys_verification.png "ssh keys verification")
     
 -   Now that the ssh keys have been validated we can go ahead and install Jenkins alons with it’s dependencies using the below commands
     
@@ -51,7 +51,7 @@ Follow the below steps to install Jenkins on your server
     systemctl status jenkins
     ```
     
--   Verify the Jenkins Installation by going to the browser on port 8080 ![](/assets/images/jenkins/jenkins_verify_installation.png "Jenkins Installation verification")
+-   Verify the Jenkins Installation by going to the browser on port 8080 ![Jenkins Installation verification](/assets/images/jenkins/jenkins_verify_installation.png "Jenkins Installation verification")
     
 -   Create the private and public ssl keys using the openssl tool
     
@@ -59,7 +59,7 @@ Follow the below steps to install Jenkins on your server
     openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out cert.pem
     ```
     
-    ![](/assets/images/jenkins/jenkins_open_ssl.png "open ssl certificate creation")
+    ![open ssl certificate creation](/assets/images/jenkins/jenkins_open_ssl.png "open ssl certificate creation")
     
 -   Convert the generated keys into a .p12 keystore, it will ask for a password. For the sake of convenience I will be setting them as Jenkins123
     
@@ -67,7 +67,7 @@ Follow the below steps to install Jenkins on your server
     openssl pkcs12 -inkey key.pem -in cert.pem -export -out cert.p12
     ```
     
-    ![](/assets/images/jenkins/jenkins_pkcs12.png "jenkins pkcs12")
+    ![jenkins pkcs12](/assets/images/jenkins/jenkins_pkcs12.png "jenkins pkcs12")
     
 -   Importing the .p12 using the keytool utility to a destination keystore with the name jenkins.jks with the destination store type as JKS
     
@@ -96,7 +96,7 @@ Follow the below steps to install Jenkins on your server
     Environment="JENKINS_HTTPS_KEYSTORE_PASSWORD=Jenkins123"
     ```
     
-    ![](/assets/images/jenkins/jenkins_service_file.png "jenkins service file")
+    ![jenkins service file](/assets/images/jenkins/jenkins_service_file.png "jenkins service file")
     
 -   Reload the systemctl daemon as there has been a change in the service file
     

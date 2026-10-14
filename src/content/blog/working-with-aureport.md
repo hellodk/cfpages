@@ -18,19 +18,19 @@ It is an easy-to-use utility; simply pass an option for a specific kind of repor
 Create Report Concerning Audit Rule Keys
 The aurepot command will produce a report about all keys you specified in audit rules, using the -k flag.
 
-# aureport -k 
+## aureport -k 
 Report Audit Rule Keys
 Report Audit Rule Keys
 
 You can enable interpreting of numeric entities into text (for example convert UID to account name) using the -i option.
 
-# aureport -k -i
+## aureport -k -i
 Create Report About Attempted Authentications
 If you need a report about all events relating to attempted authentications for all users, use the -au option.
 
-# aureport -au 
+## aureport -au 
 OR
-# aureport -au -i
+## aureport -au -i
 Summary of Login Authentication
 Summary of Login Authentication
 
@@ -43,16 +43,16 @@ Check Login Authentications
 Report Failed Events on the System
 The following command shows how to report all failed events.
 
-# aureport --failed
+## aureport --failed
 Report Failed Events
 Report Failed Events
 
 Generate Summary Report for a Given Time Period
 It is also possible to generate reports for a specified period of time; the -ts defines the start date/time and -te sets a end date/time. You can also use words like now, recent, today, yesterday, this-week, week-ago, this-month, this-year instead of actual time formats.
 
-# aureport -ts 09/19/2017 15:20:00 -te now --summary -i 
+## aureport -ts 09/19/2017 15:20:00 -te now --summary -i 
 OR
-# aureport -ts yesterday -te now --summary -i 
+## aureport -ts yesterday -te now --summary -i 
 Generate a Summary Report
 Generate a Summary Report
 
@@ -61,7 +61,7 @@ If you want to create a report from a different file other than the default log 
 
 This command reports all logins recorded in /var/log/tecmint/hosts/node1.log.
 
-# aureport -l -if /var/log/tecmint/hosts/node1.log 
+## aureport -l -if /var/log/tecmint/hosts/node1.log 
 You can find all options and more information in the aureport man page.
 
-# man aureport
+## man aureport
