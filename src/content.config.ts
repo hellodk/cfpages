@@ -11,6 +11,12 @@ const blog = defineCollection({
     tags: z.array(z.coerce.string()).default([]),
     cover: z.string().optional(),
     draft: z.boolean().default(false),
+    // Per-post TL;DR panel. Absent on most posts — the layout renders the
+    // panel only when present, so no post ever shows another post's summary.
+    tldr: z.object({
+      summary: z.string(),
+      points: z.array(z.object({ k: z.string(), v: z.string() })).max(4),
+    }).optional(),
   }),
 });
 

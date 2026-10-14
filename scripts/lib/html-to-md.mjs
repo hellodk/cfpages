@@ -246,9 +246,36 @@ export function buildTurndown() {
       // @mixmark-io/domino, whose NodeList has `length` and indexed access but
       // no Symbol.iterator — `[...nodeList]` throws "not iterable". These
       // nodes are domino's, not node-html-parser's, so the rest of this module
-      // can spread freely but this rule cannot.
+      // can spread freely but this rule cannot. Same for childNodes below:
+      // index with .length, never spread. tagName is UPPERCASE per DOM.
+      //
+      // Serialize a cell's inline content instead of reading textContent.
+      // textContent silently drops every inner tag — 74 <code> and 20
+      // <strong> elements across the corpus never reached readers — so code
+      // spans, emphasis and links are converted to their markdown forms and
+      // only genuinely structural wrappers (span etc.) are flattened.
+      const inline = (el) => {
+        let out = '';
+        const kids = el.childNodes;
+        for (let k = 0; k < kids.length; k++) {
+          const n = kids[k];
+          if (n.nodeType === 3) { out += n.textContent; continue; }
+          if (n.nodeType !== 1) continue;
+          const tag = String(n.tagName || '').toLowerCase();
+          if (tag === 'br') { out += ' '; continue; }
+          const inner = inline(n);
+          if (tag === 'code') out += '`' + inner + '`';
+          else if (tag === 'strong' || tag === 'b') out += '**' + inner + '**';
+          else if (tag === 'em' || tag === 'i') out += '*' + inner + '*';
+          else if (tag === 'a') {
+            const href = n.getAttribute ? (n.getAttribute('href') || '') : '';
+            out += href ? `[${inner}](${href})` : inner;
+          } else out += inner;
+        }
+        return out;
+      };
       const rows = Array.from(node.querySelectorAll('tr')).map((tr) =>
-        Array.from(tr.querySelectorAll('th,td')).map((c) => c.textContent.trim().replace(/\|/g, '\\|')),
+        Array.from(tr.querySelectorAll('th,td')).map((c) => inline(c).trim().replace(/\|/g, '\\|')),
       );
       if (!rows.length) return '';
       const [head, ...rest] = rows;
@@ -297,7 +324,10 @@ export function convertHtml(html) {
   // 2. Tab labels become H2 headings on their panels, before the bar is removed.
   // Selector coverage across the corpus: `.tab-panel` 10 files, `.tab` 8,
   // `.tab-btn` 4, `.tabbar .tab` and `section.panel` 1 each — so all the
-  // variants are needed, not just the Concept Guide pair.
+  // variants are needed, not just the Concept Guide pair. `.tabpane` (no
+  // hyphen) is the mlx-oc series convention: same tablist/buttons shape, so
+  // the labels land on the panes instead of the panes shipping unlabeled
+  // once the bar is stripped as chrome.
   const bar = root.querySelector('.tabbar, .tabs, .tab-nav');
   const tabLabels = bar
     ? bar.querySelectorAll('.tab-btn, .tab, button').map((tab) => {
@@ -305,7 +335,7 @@ export function convertHtml(html) {
         return tab.textContent.replace(/\s+/g, ' ').trim();
       }).filter(Boolean)
     : [];
-  root.querySelectorAll('.tab-panel, section.panel, .panel').forEach((panel, i) => {
+  root.querySelectorAll('.tab-panel, section.panel, .panel, .tabpane').forEach((panel, i) => {
     if (tabLabels[i]) panel.insertAdjacentHTML('afterbegin', `<h2>${tabLabels[i]}</h2>`);
   });
 
@@ -318,6 +348,18 @@ export function convertHtml(html) {
   for (const sel of CHROME_SELECTORS) {
     root.querySelectorAll(sel).forEach((el) => el.remove());
   }
+
+  // 4a. Foreign series navs: a bare <nav> whose every link is a relative
+  // filesystem path (sibling .html, ../ traversals) points at another site's
+  // URL space — on this site every one of those links 404s. Same-page-anchor
+  // TOCs (#...), absolute site paths (/...) and real http(s) links never
+  // match, so TOC-shape filtering and content navs are untouched. Verified:
+  // the 22 mlx-oc navs match; no other corpus source has such a nav.
+  root.querySelectorAll('nav').forEach((el) => {
+    const hrefs = el.querySelectorAll('a').map((a) => a.getAttribute('href') || '');
+    const foreign = (h) => /^(?!https?:\/\/|mailto:|#|\/)[\w.\-/]+$/.test(h);
+    if (hrefs.length >= 2 && hrefs.every(foreign)) el.remove();
+  });
 
   // 4b. Style 2 components (issue #14): `.stats` stat cards and
   // `.note`/`.alert` callouts are pulled out before Turndown — which would

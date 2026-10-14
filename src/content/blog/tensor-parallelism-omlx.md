@@ -299,15 +299,15 @@ Only models with a native MLX shard() implementation support distributed tensor 
 
 | Model Family | Examples | Tensor TP Support | Key Dimensions |
 | --- | --- | --- | --- |
-| Qwen3 | qwen3-32b, qwen3-27b | ✓ Yes | num_attention_heads, num_key_value_heads |
-| Qwen3-Next | qwen3-next-32b, qwen3-next-7b | ✓ Yes | num_attention_heads, num_key_value_heads, linear_num_key_heads, linear_num_value_heads |
-| Qwen3.5 | qwen3.5-32b, qwen3.5-7b | ✓ Yes | num_attention_heads, num_key_value_heads, linear_num_key_heads, linear_num_value_heads |
-| Qwen3-MoE | qwen3-moe-128b | ✓ Yes | num_attention_heads, num_key_value_heads |
-| Nemotron-H | nemotron-h-405b | ✓ Yes | num_attention_heads, mamba_num_heads, n_groups |
-| Llama | llama-3-70b, llama-2-7b | ✓ Yes | num_attention_heads, num_key_value_heads |
-| Phi | phi-3-mini, phi-4 | No | _supports_tensor_parallel returns False (phi3, phi3small, phimoe) |
-| Gemma | gemma-2-27b | No | _supports_tensor_parallel returns False (gemma2, gemma3) |
-| Mistral | mistral-7b | No | _supports_tensor_parallel returns False (mistral, mixtral) |
+| **Qwen3** | qwen3-32b, qwen3-27b | ✓ Yes | num_attention_heads, num_key_value_heads |
+| **Qwen3-Next** | qwen3-next-32b, qwen3-next-7b | ✓ Yes | num_attention_heads, num_key_value_heads, linear_num_key_heads, linear_num_value_heads |
+| **Qwen3.5** | qwen3.5-32b, qwen3.5-7b | ✓ Yes | num_attention_heads, num_key_value_heads, linear_num_key_heads, linear_num_value_heads |
+| **Qwen3-MoE** | qwen3-moe-128b | ✓ Yes | num_attention_heads, num_key_value_heads |
+| **Nemotron-H** | nemotron-h-405b | ✓ Yes | num_attention_heads, mamba_num_heads, n_groups |
+| **Llama** | llama-3-70b, llama-2-7b | ✓ Yes | num_attention_heads, num_key_value_heads |
+| **Phi** | phi-3-mini, phi-4 | No | _supports_tensor_parallel returns False (phi3, phi3small, phimoe) |
+| **Gemma** | gemma-2-27b | No | _supports_tensor_parallel returns False (gemma2, gemma3) |
+| **Mistral** | mistral-7b | No | _supports_tensor_parallel returns False (mistral, mixtral) |
 
 **Important:** Just because a model isn't in the "full support" list doesn't mean it won't work. MLX can dynamically detect if a model has a `shard()` method. Check the oMLX dashboard — it will tell you if a specific model supports tensor parallelism when you try to load it.
 

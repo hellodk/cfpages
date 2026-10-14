@@ -195,8 +195,8 @@ With both of the above fixed, the exact same `"Datasource provisioning error: da
 | Layer | What looked broken | What actually was |
 | --- | --- | --- |
 | Plugins | datasource provisioning error | init image never updated for the migration |
-| Storage | SQLITE_BUSY, random crashes | RollingUpdate + RWO volume, two pods, one file |
-| Database | same provisioning error, after both fixes | a leftover row and a case-mismatched uid |
+| Storage | `SQLITE_BUSY`, random crashes | `RollingUpdate` + RWO volume, two pods, one file |
+| Database | same provisioning error, after both fixes | a leftover row and a case-mismatched `uid` |
 
 **The pattern worth keeping:** when the same log line survives two real fixes, stop patching the process around it and go look at the actual state it's failing against — in this case, three tables in a SQLite file nobody had opened directly in months.
 
@@ -227,12 +227,12 @@ Wiring that in meant reading the live Deployment's actual environment and compar
 
 | Assumed | Actually running | Would have broken |
 | --- | --- | --- |
-| Service guacamole | guacamole-svc | the public tunnel route, silently |
-| Service guac-postgres | postgres | the app's own DB connection |
-| Secret guac-db-secret | guacamole-db-creds | DB credentials lookup |
+| Service `guacamole` | `guacamole-svc` | the public tunnel route, silently |
+| Service `guac-postgres` | `postgres` | the app's own DB connection |
+| Secret `guac-db-secret` | `guacamole-db-creds` | DB credentials lookup |
 | Deployment + standalone PVC | StatefulSet + volumeClaimTemplate | first sync, wrong resource kind |
-| Env prefix POSTGRES_* | POSTGRESQL_* | the image ignores the wrong prefix entirely |
-| Health check path /guacamole/ | / (WEBAPP_CONTEXT=ROOT) | both liveness and readiness probes |
+| Env prefix `POSTGRES_*` | `POSTGRESQL_*` | the image ignores the wrong prefix entirely |
+| Health check path `/guacamole/` | `/` (`WEBAPP_CONTEXT=ROOT`) | both liveness and readiness probes |
 
 **None of this showed up in `helm lint` or `helm template`.** Every one of the six is semantically wrong, not syntactically — a chart can render perfectly clean YAML that still points at a Service, Secret, or path that doesn't exist. The only way to catch it was `kubectl get` against the thing actually running, before trusting what the chart assumed.
 

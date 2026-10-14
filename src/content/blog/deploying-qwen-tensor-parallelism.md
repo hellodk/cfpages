@@ -50,9 +50,9 @@ A — Cluster Topology & Capacity
 
 | Machine | RAM | CPU | Qwen3.5-7B TP Fit | Note |
 | --- | --- | --- | --- | --- |
-| mm (M2) | 8 GB | 8c | ✓ Yes (3.5 GB/node) | Tight, but functional with TP split |
-| abhisheks (M4) | 16 GB | 10c | ✓ Yes (3.5 GB/node) | Comfortable margin, no swap |
-| Total | 24 GB | 18c | ✓ Full 7B model | With tensor parallelism across both nodes |
+| **mm** (M2) | 8 GB | 8c | ✓ Yes (3.5 GB/node) | Tight, but functional with TP split |
+| **abhisheks** (M4) | 16 GB | 10c | ✓ Yes (3.5 GB/node) | Comfortable margin, no swap |
+| **Total** | 24 GB | 18c | ✓ Full 7B model | With tensor parallelism across both nodes |
 
 ### 2\. Memory Reclamation
 

@@ -383,13 +383,13 @@ pnpm install
 
 | npm / Yarn | pnpm equivalent | Notes |
 | --- | --- | --- |
-| npm install | pnpm install | Reads pnpm-lock.yaml |
-| npm install react | pnpm add react | Adds to dependencies |
-| npm install -D eslint | pnpm add -D eslint | Adds to devDependencies |
-| npm run build | pnpm run build or pnpm build | Scripts work identically |
-| npx create-next-app | pnpm dlx create-next-app | dlx = one-time exec without install |
-| npm update | pnpm update | Respects semver ranges |
-| npm outdated | pnpm outdated | Shows what can be updated |
+| `npm install` | `pnpm install` | Reads pnpm-lock.yaml |
+| `npm install react` | `pnpm add react` | Adds to dependencies |
+| `npm install -D eslint` | `pnpm add -D eslint` | Adds to devDependencies |
+| `npm run build` | `pnpm run build` or `pnpm build` | Scripts work identically |
+| `npx create-next-app` | `pnpm dlx create-next-app` | dlx = one-time exec without install |
+| `npm update` | `pnpm update` | Respects semver ranges |
+| `npm outdated` | `pnpm outdated` | Shows what can be updated |
 
 ### Pro Commands Worth Knowing
 
@@ -417,13 +417,13 @@ pnpm update --interactive
 
 | Feature | npm | Yarn Berry | pnpm |
 | --- | --- | --- | --- |
-| Disk efficiency | Copies per project | Cache, no hard links | Hard links, 1 copy |
-| Re-install speed | Re-copies all files | Copies from cache | Links in ms |
-| Phantom deps | Allowed (flat) | Blocked (PnP) | Blocked (symlinks) |
-| Workspace support | Workspaces (basic) | Workspaces + PnP | workspace:* protocol |
-| Node.js compat | Universal | Needs .yarnrc.yml | Drop-in compatible |
-| lockfile format | package-lock.json | yarn.lock | pnpm-lock.yaml (readable) |
-| Learning curve | None | High (PnP mode) | Very low |
+| **Disk efficiency** | Copies per project | Cache, no hard links | Hard links, 1 copy |
+| **Re-install speed** | Re-copies all files | Copies from cache | Links in ms |
+| **Phantom deps** | Allowed (flat) | Blocked (PnP) | Blocked (symlinks) |
+| **Workspace support** | Workspaces (basic) | Workspaces + PnP | workspace:* protocol |
+| **Node.js compat** | Universal | Needs .yarnrc.yml | Drop-in compatible |
+| **lockfile format** | package-lock.json | yarn.lock | pnpm-lock.yaml (readable) |
+| **Learning curve** | None | High (PnP mode) | Very low |
 
 ## Try It Right Now
 

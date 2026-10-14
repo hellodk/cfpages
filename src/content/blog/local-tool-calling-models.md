@@ -134,7 +134,7 @@ Today's local test compared two general-purpose instruct models on one task. The
 | Kimi K2.6 | 58.6% SWE-bench Pro / 66.7% Terminal-Bench 2.0 | — | — | Sustained 4,000+ tool calls over a 13-hour autonomous session |
 | Kimi K3 | LiveBench Coding Avg 81.45 / Agentic Coding Avg 57.58 | — | — | Newer, larger generation; current LiveBench leader on both metrics |
 | GLM-5.2 | Leads single-node-fitting models | — | — | Ahead of MiniMax M3, DeepSeek V4 Pro, MiMo-V2.5-Pro |
-| Claude 4 Sonnet (reference) | 70.4% SWE-bench Verified | — | — | Chinese open models are within 5–6 points of this |
+| Claude 4 Sonnet *(reference)* | 70.4% SWE-bench Verified | — | — | Chinese open models are within 5–6 points of this |
 
 sources 2–4
 

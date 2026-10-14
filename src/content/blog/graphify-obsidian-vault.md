@@ -225,8 +225,8 @@ Open any community note and Obsidian shows every note that links to it. This is 
 
 | Tool | Use for | Command |
 | --- | --- | --- |
-| graphify query | Subagent briefs, quick lookups | graphify query "..." |
-| graphify explain | Deep dive on one symbol | graphify explain "PlatformSetting" |
-| graphify path | Trace dependency chains | graphify path "Node" "SBOMScan" |
+| `graphify query` | Subagent briefs, quick lookups | `graphify query "..."` |
+| `graphify explain` | Deep dive on one symbol | `graphify explain "PlatformSetting"` |
+| `graphify path` | Trace dependency chains | `graphify path "Node" "SBOMScan"` |
 | Obsidian Graph View | Exploration, onboarding | Open vault → Cmd+G |
 | Obsidian Backlinks | Find all callers of X | Open note → Backlinks panel |

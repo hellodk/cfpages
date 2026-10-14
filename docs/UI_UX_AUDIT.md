@@ -32,29 +32,29 @@ all, and 307 label/backdrop pairs fall under the 4.5:1 contrast floor.
 
 | Metric | Value |
 |---|---|
-| publishedPosts | 56 |
-| postsWithSvg | 27 |
-| svgs | 121 |
-| diagrams | 102 |
+| publishedPosts | 103 |
+| postsWithSvg | 62 |
+| svgs | 208 |
+| diagrams | 189 |
 | icons | 19 |
-| cleanSvgs | 4 |
-| coversOnDefault | 27 |
-| distinctCovers | 28 |
+| cleanSvgs | 41 |
+| coversOnDefault | 44 |
+| distinctCovers | 57 |
 | missingCovers | 0 |
 | missingBodyImages | 0 |
-| oversizedCovers | 10 |
-| narrowCovers | 13 |
-| distinctAspects | 13 |
+| oversizedCovers | 14 |
+| narrowCovers | 14 |
+| distinctAspects | 15 |
 
 | SVG defect | Occurrences | SVGs | Posts |
 |---|---|---|---|
-| tiny-font | 1047 | 80 | 22 |
-| low-contrast | 307 | 63 | 21 |
-| dark-panel | 13 | 11 | 5 |
-| no-role | 93 | 93 | 23 |
-| no-aria-label | 91 | 91 | 21 |
-| diagonal | 20 | 20 | 12 |
-| text-past-viewbox | 17 | 12 | 11 |
+| tiny-font | 1459 | 113 | 38 |
+| low-contrast | 354 | 86 | 32 |
+| dark-panel | 19 | 17 | 10 |
+| no-role | 118 | 118 | 30 |
+| no-aria-label | 116 | 116 | 28 |
+| diagonal | 33 | 33 | 20 |
+| text-past-viewbox | 20 | 15 | 13 |
 | blank-line | 0 | 0 | 0 |
 | no-viewbox | 0 | 0 | 0 |
 
@@ -108,9 +108,9 @@ declared size.
 
 ---
 
-## S2 — 1,047 labels below the 12px floor
+## S2 — 1,459 labels below the 12px floor
 
-**Severity: critical. 80 SVGs, 22 posts.**
+**Severity: critical. 113 SVGs, 38 posts.**
 
 ui.md sets 12px as the minimum for any label that carries meaning, and 11px
 only for genuinely decorative micro-text. Distribution of what is actually
@@ -131,19 +131,23 @@ These are attribute values, before the S1 scale factor is applied. A 7px label
 in a 900-wide viewBox renders at 8.6px on a 1440px desktop and **2.5px on a
 phone**.
 
-Worst offenders by count: `salt-concepts`, `ios-android-build-guide`,
-`git-concepts`, `zellij-session-manager`, `rag-embeddings-vector-db`.
+Worst offenders by count: `salt-concepts`, `tensor-parallelism-omlx`, `ios-android-build-guide`, `git-concepts`, `kri-salt-deployment`.
 
-Full list (22 posts): `agentic-mcp-gateways`, `ai-git-branching-strategy`,
-`auth-concepts`, `e2e-testing-token-efficiency`,
-`engineering-reliability-testing-strategy`, `git-concepts`,
-`gnome-thumbnails-broke`, `ios-android-build-guide`,
-`kri-agentic-fleet-assistant`, `kri-fleet-management`,
-`kri-knowledge-graph-graphify`, `kri-ops-guide`, `kri-salt-deployment`,
-`kri-testing-strategy`, `macos-vms-tart-salt`, `pnpm-smarter-package-manager`,
-`rag-embeddings-vector-db`, `salt-concepts`, `tmux-session-manager`,
+Full list (38 posts): `agentic-mcp-gateways`, `ai-git-branching-strategy`, `alerting`,
+`auth-concepts`, `dashboards`, `deploying-qwen-tensor-parallelism`,
+`e2e-testing-token-efficiency`, `engineering-reliability-testing-strategy`,
+`git-concepts`, `gnome-thumbnails-broke`, `google-distroless-remediation`,
+`hardware-telemetry`, `hydra-vs-mlx-oc`, `ios-android-build-guide`,
+`jenkins-macos-gui-session-agent`, `kri-agentic-fleet-assistant`,
+`kri-fleet-management`, `kri-knowledge-graph-graphify`, `kri-ops-guide`,
+`kri-salt-deployment`, `kri-testing-strategy`, `macos-vms-tart-salt`,
+`mlx-inference-performance`, `mobile-code-signing`, `observability-audit`,
+`opik-feedback-loop`, `opik-llm-tracing`, `pnpm-smarter-package-manager`,
+`rag-embeddings-vector-db`, `salt-concepts`, `sglang-on-two-mac-minis`,
+`tensor-parallelism-omlx`, `tmux-session-manager`,
 `two-mac-minis-mlx-debugging`, `typhoon-wifi-cpu-powersave`,
-`zellij-session-manager`.
+`ubi-micro-remediation`, `yugabyte-aerospike-connectors-opensre`,
+`zellij-session-manager`..
 
 **Remediation.** Raise every meaningful label to ≥12 and re-lay-out the nodes
 that no longer fit. Diagrams that only fit their content at font-size 8 are
@@ -152,7 +156,7 @@ shrunk further.
 
 ---
 
-## S3 — 307 labels below the 4.5:1 contrast floor
+## S3 — 354 labels below the 4.5:1 contrast floor
 
 **Severity: high. 63 SVGs, 21 posts.**
 
@@ -192,16 +196,22 @@ The `#6B7280 on #F3F4F6` row is the subtle one: that colour passes at 4.83:1
 on white, which is presumably how it was chosen, and drops to 4.39:1 the
 moment it is placed on a grey card.
 
-All 21 posts, by number of failing labels: `gnome-thumbnails-broke` (49),
-`ios-android-build-guide` (46), `salt-concepts` (41), `kri-fleet-management`
-(26), `zellij-session-manager` (25), `tmux-session-manager` (18),
-`kri-ops-guide` (17), `git-concepts` (13), `auth-concepts` (12),
+All 32 posts, by number of failing labels: `gnome-thumbnails-broke` (49), `ios-android-build-guide` (46),
+`salt-concepts` (41), `kri-fleet-management` (26),
+`zellij-session-manager` (25), `tensor-parallelism-omlx` (19),
+`tmux-session-manager` (18), `kri-ops-guide` (17), `git-concepts` (13),
+`auth-concepts` (12), `deploying-qwen-tensor-parallelism` (8),
 `e2e-testing-token-efficiency` (8), `pnpm-smarter-package-manager` (8),
-`kri-testing-strategy` (6), `macos-vms-tart-salt` (6), `perils-of-timezone`
-(6), `rag-embeddings-vector-db` (6), `kri-knowledge-graph-graphify` (4),
-`kri-salt-deployment` (4), `two-mac-minis-mlx-debugging` (4),
-`typhoon-wifi-cpu-powersave` (4), `engineering-reliability-testing-strategy`
-(3), `hellodk-jekyll-to-astro-cloudflare-migration` (1).
+`kri-testing-strategy` (6), `macos-vms-tart-salt` (6),
+`perils-of-timezone` (6), `rag-embeddings-vector-db` (6),
+`jenkins-macos-gui-session-agent` (5), `kri-knowledge-graph-graphify` (4),
+`kri-salt-deployment` (4), `llama-cpp-systemd` (4),
+`two-mac-minis-mlx-debugging` (4), `typhoon-wifi-cpu-powersave` (4),
+`engineering-reliability-testing-strategy` (3), `homelab-secret-rescue` (3),
+`sglang-on-two-mac-minis` (3), `297-probe-failures-mlx-cluster` (1),
+`google-distroless-remediation` (1), `hardware-telemetry` (1),
+`hellodk-jekyll-to-astro-cloudflare-migration` (1),
+`local-tool-calling-models` (1), `mlx-jaccl-silent-hang` (1)..
 
 **Remediation.** Darken status text to `#15803D` / `#B45309` / `#B91C1C`, or
 keep the bright token as a fill and put `#111827` on top of it. Replace every
@@ -212,7 +222,7 @@ against tinted cards specifically.
 
 ## S4 — Dark panels still present inside diagrams
 
-**Severity: high. 11 SVGs, 5 posts.**
+**Severity: high. 17 SVGs, 10 posts.**
 
 Code blocks went light in #6. The same dark treatment survives inside the
 diagrams, where `#1a1a3e` and `#111827` are used as "main actor" emphasis
@@ -238,9 +248,11 @@ The first Salt diagram is the clearest case: the dark master panel occupies
 the left third and dominates a page that is otherwise white. Beside a light
 code block on the same page, it reads as a different site.
 
-The token appears in 9 posts in total; the 5 above are where it forms a panel
+The token appears in 10 posts in total; the 5 above are where it forms a panel
 of 10% of the canvas or more. The rest use it for small chips and strokes,
-which is defensible.
+which is defensible — `java-distroless-cve-hunt`, `java21-libpng-cve-fix`,
+`opensre-connectors-e2e-gauntlet`, `prefix-cache-economics`, and
+`tensor-parallelism-omlx`.
 
 **Remediation.** Replace the dark emphasis panel with a white card carrying a
 2px accent border and an accent-tinted title bar. Where a label is currently
@@ -252,14 +264,14 @@ from S3 live.
 
 ## S5 — Diagrams are invisible to screen readers
 
-**Severity: high. 93 of 121 SVGs, 23 posts.**
+**Severity: high. 118 of 192 SVGs, 30 posts.**
 
-93 SVGs have no `role="img"` and 91 have no `aria-label`. An inline `<svg>`
+118 SVGs have no `role="img"` and 116 have no `aria-label`. An inline `<svg>`
 with neither is announced as a meaningless group of text fragments, read out
 label by label in document order — which for a diagram is close to random.
 
-19 of the 121 are decorative 24×24 icons where the correct answer is
-`aria-hidden="true"`, not a label. The remaining ~74 are real diagrams that
+19 of the 192 are decorative 24×24 icons where the correct answer is
+`aria-hidden="true"`, not a label. The remaining ~99 are real diagrams that
 need a one-sentence description of what the diagram shows.
 
 **Remediation.** `role="img"` plus a full-sentence `aria-label` on every
@@ -269,9 +281,9 @@ pattern to copy.
 
 ---
 
-## S6 — 17 labels are painted outside their own canvas
+## S6 — 20 labels are painted outside their own canvas
 
-**Severity: medium. 12 SVGs, 11 posts.**
+**Severity: medium. 15 SVGs, 13 posts.**
 
 A `<text>` whose baseline sits below the viewBox floor is not clipped with a
 warning — it is simply never painted. Nothing errors and the diagram looks
@@ -281,6 +293,7 @@ Affected: `agentic-mcp-gateways`, `e2e-testing-token-efficiency`,
 `engineering-reliability-testing-strategy`, `gnome-thumbnails-broke`,
 `ios-android-build-guide`, `kri-agentic-fleet-assistant`,
 `kri-testing-strategy`, `macos-vms-tart-salt`, `salt-concepts`,
+`tensor-parallelism-omlx`, `two-lenses-cluster-estimates`,
 `two-mac-minis-mlx-debugging`, `typhoon-wifi-cpu-powersave`.
 
 `macos-vms-tart-salt` has a label at `y=328` in a 320-high viewBox — 8px past
@@ -291,19 +304,22 @@ ui.md padding rule. Cheaper and safer than moving the labels.
 
 ---
 
-## S7 — 20 diagonal connectors
+## S7 — 33 diagonal connectors
 
-**Severity: low. 20 SVGs, 12 posts.**
+**Severity: low. 33 SVGs, 20 posts.**
 
 ui.md requires connectors to be strictly horizontal or vertical, with L-bends
 for off-axis links. 20 `<line>` elements have neither endpoint pair aligned.
 
-Affected: `auth-concepts` (8), `kri-fleet-management` (12 across two
-diagrams), `kri-knowledge-graph-graphify` (10 in one), `git-concepts`,
-`gnome-thumbnails-broke`, `ios-android-build-guide`,
-`kri-agentic-fleet-assistant`, `local-llm-inference-architecture`,
-`macos-vms-tart-salt`, `pnpm-smarter-package-manager`,
-`rag-embeddings-vector-db`, `zellij-session-manager`.
+Affected: `jenkins-macos-gui-session-agent` (4), `git-concepts` (3),
+`ios-android-build-guide` (3), `mobile-code-signing` (3),
+`auth-concepts` (2), `kri-fleet-management` (2),
+`local-llm-inference-architecture` (2), `zellij-session-manager` (2),
+`alerting` (1), `gnome-thumbnails-broke` (1), `hardware-telemetry` (1),
+`kri-agentic-fleet-assistant` (1), `kri-knowledge-graph-graphify` (1),
+`macos-vms-tart-salt` (1), `mlx-inference-performance` (1),
+`observability-audit` (1), `opik-feedback-loop` (1), `opik-llm-tracing` (1),
+`pnpm-smarter-package-manager` (1), `rag-embeddings-vector-db` (1).
 
 This is a consistency issue rather than a readability one, and it is the
 lowest-value item on this page. Worth doing when a diagram is already open for
@@ -317,18 +333,19 @@ S2 or S3.
 
 `.post-art__cover` at `src/layouts/PostLayout.astro:65` is a fixed slot:
 `width: 100%; max-height: 360px; object-fit: cover`. At a 1440px viewport that
-is 1109×360, an aspect ratio of 3.08. Source images range across 13 distinct
-ratios:
+is 1109×360, an aspect ratio of 3.08. Source images range across 15 distinct
+raster ratios (24 further covers are vector SVGs, which carry no raster dimensions):
 
 | Ratio | Posts |
 |---|---|
-| 1.5 | 33 |
-| 1.78 | 7 |
-| 1.03 | 2 |
+| 1.5 | 50 |
+| 1.78 | 8 |
+| 1.42 | 4 |
+| 1.03 | 3 |
 | 1.49 | 2 |
 | 1.62 | 2 |
 | 1.67 | 2 |
-| 1.0, 1.33, 1.53, 1.6, 1.87, 3.11, 14.26 | 1 each |
+| 0.46, 1.0, 1.33, 1.53, 1.6, 1.87, 3.11, 14.26 | 1 each |
 
 `object-fit: cover` crops whatever does not fit, so the further a source is
 from 3.08 the more of it is thrown away. `drift-detector-observability` and
@@ -336,7 +353,7 @@ from 3.08 the more of it is thrown away. `drift-detector-observability` and
 thirds of the image is cropped out, leaving a horizontal band through the
 middle of a logo.
 
-**Remediation.** Fix one source ratio — 1.5 already covers 33 posts — and set
+**Remediation.** Fix one source ratio — 1.5 already covers 50 posts — and set
 the slot to `aspect-ratio: 3 / 1` so the crop is predictable and identical
 everywhere. Specified in `docs/COVER_IMAGE_BRIEF.md`.
 
@@ -367,7 +384,7 @@ across the four posts that use them. The PNG screenshots are PNGs of
 photographic content, which is the wrong container; `unix-wallpaper.png` at
 1.97MB is the single heaviest asset on the site.
 
-Thirteen covers go the other way and are **narrower than the slot**, so they
+Fourteen covers go the other way and are **narrower than the slot**, so they
 are upscaled and soft:
 
 ```
@@ -377,6 +394,7 @@ are upscaled and soft:
 560x315    http.jpg, http1.png
 572x322    main-qimg-…-c.jpeg
 800x427    unix_time_sharing/unix.png
+738x1600   blog/network-spike-investigation/network-spike-1.jpeg
 800x500    rethinkdb/rethinkdb1.jpg
 1000x667   travel/manali/IMG_75751.JPG
 1003x657   screen6.png
@@ -392,12 +410,12 @@ are upscaled and soft:
 
 ---
 
-## S10 — Half the site shares one cover image
+## S10 — 44 posts share one cover image
 
-**Severity: high. 27 of 56 posts.**
+**Severity: high. 44 of 103 posts.**
 
-27 posts resolve to `assets/images/cover1.jpg` and only 28 distinct images
-serve 56 posts. Tracked separately in
+44 posts resolve to `assets/images/cover1.jpg` and only 57 distinct images
+serve 103 posts. Tracked separately in
 [#9](https://github.com/hellodk/cfpages/issues/9) with the full per-post brief
 in `docs/COVER_IMAGE_BRIEF.md`.
 
@@ -408,7 +426,7 @@ Contributing causes in `src/utils/postCover.ts`:
 - `extractFirstImage` matches `![]()` and `<img>` only. Posts illustrated with
   inline `<svg>` — which is most of the recent writing — have no raster image
   to find, so they fall through to the default.
-- `SLUG_COVERS` in `src/data/post-covers.ts` is **dead code**: all 23 slugs in
+- `SLUG_COVERS` in `src/data/post-covers.ts` is **dead code**: all 47 slugs in
   it now also carry `cover:` in their own frontmatter, so step 1 always wins
   and step 2 is unreachable.
 

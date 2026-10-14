@@ -67,9 +67,9 @@ Decode 5.11 tok/s. Prefill 14.3 tok/s. VRAM 2,765/4,096 MiB. The working config.
 
 | Config | Prompt eval | Decode | Outcome |
 | --- | --- | --- | --- |
-| -ngl 30 -c 32768 --parallel 4 | — | — | OOM, 11 GB buffer on 4 GB card |
-| -ngl 0, 20 threads | 12.5 t/s | 1.53 t/s | serves, unusably slow |
-| --fit on -fa on -c 16384 | 14.3 t/s | 5.11 t/s | best measured config |
+| `-ngl 30 -c 32768 --parallel 4` | — | — | OOM, 11 GB buffer on 4 GB card |
+| `-ngl 0`, 20 threads | 12.5 t/s | 1.53 t/s | serves, unusably slow |
+| `--fit on -fa on -c 16384` | 14.3 t/s | **5.11 t/s** | best measured config |
 
 Why did `--fit` help so much? It treats VRAM as a budget: it shrinks the KV buffer to fit the card, then auto-picks how many _attention_ layers live on the GPU while the MoE expert matmuls stay on CPU. Attention offload is exactly what decode-bound work wants on a hybrid setup — FlashAttention wins on the Ampere tensor cores, the 3 B active-parameter experts keep the CPU saturated. One flag bought 3.3× decode throughput, because the earlier failure was a memory-layout problem, not a compute problem.
 
@@ -154,12 +154,12 @@ That is six automation strategies in one file — each one chosen in response to
 
 | Directive | Failure it answers |
 | --- | --- |
-| Restart=on-failure | crash, OOM-kill or segfault → back up in 5 s |
-| StartLimitIntervalSec/Burst | crash-loop: 10 starts in 300 s, then give up and stop failing loudly |
-| ExecStartPre checks | fail with a clear message before running, not a confusing runtime stack |
-| Nice=10 + IOSchedulingClass=idle | decode is CPU-greedy; keep the desktop usable while generating |
-| OOMScoreAdjust=500 | if memory runs out, kill the model first — never the desktop |
-| StandardOutput append + parseable tags | single log sink, no reinvented logging |
+| `Restart=on-failure` | crash, OOM-kill or segfault → back up in 5 s |
+| `StartLimitIntervalSec/Burst` | crash-loop: 10 starts in 300 s, then give up and stop failing loudly |
+| `ExecStartPre` checks | fail with a clear message before running, not a confusing runtime stack |
+| `Nice=10` + `IOSchedulingClass=idle` | decode is CPU-greedy; keep the desktop usable while generating |
+| `OOMScoreAdjust=500` | if memory runs out, kill the model first — never the desktop |
+| `StandardOutput append + parseable tags` | single log sink, no reinvented logging |
 
 Readiness deserves a note. `systemctl is-active` returned `active` while the model was still loading — llama.cpp answers `/health` with `503` until it's warm. So the status check is not "is the unit active" but "does `/health` return 200". Active is "the process obeyed systemd"; ready is "I can serve a request". On a cold boot that gap is several seconds.
 

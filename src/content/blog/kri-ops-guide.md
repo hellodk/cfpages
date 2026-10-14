@@ -20,12 +20,12 @@ Everything goes through `./scripts/kri.sh`. It handles startup order, PID files,
 
 | Command | What it does |
 | --- | --- |
-| ./scripts/kri.sh start | Brings up postgres + redis (Docker), waits for healthy, then starts API, Celery worker, and Vite frontend in that order |
-| ./scripts/kri.sh stop | Kills frontend, worker, API (reverse order), then calls docker compose stop |
-| ./scripts/kri.sh restart | stop + start |
-| ./scripts/kri.sh status | Reads each PID file, checks if the process is alive, and prints Docker container health |
-| ./scripts/kri.sh logs api\|worker\|frontend | tail -f on the requested log file — Ctrl-C to exit |
-| ./scripts/kri.sh test [grep] | Runs the Playwright E2E suite; pass an optional grep pattern to filter specs |
+| `./scripts/kri.sh start` | Brings up postgres + redis (Docker), waits for healthy, then starts API, Celery worker, and Vite frontend in that order |
+| `./scripts/kri.sh stop` | Kills frontend, worker, API (reverse order), then calls `docker compose stop` |
+| `./scripts/kri.sh restart` | stop + start |
+| `./scripts/kri.sh status` | Reads each PID file, checks if the process is alive, and prints Docker container health |
+| `./scripts/kri.sh logs api\|worker\|frontend` | `tail -f` on the requested log file — Ctrl-C to exit |
+| `./scripts/kri.sh test [grep]` | Runs the Playwright E2E suite; pass an optional grep pattern to filter specs |
 
 ```bash
 # Normal startup sequence
@@ -59,9 +59,9 @@ Each process writes its PID to `.kri-pids/<name>.pid`. The `status` command read
 
 | Service | Log path | What to look for |
 | --- | --- | --- |
-| API | .kri-logs/api.log | HTTP requests, SQL queries, auth events, FastAPI startup errors |
-| Worker | .kri-logs/worker.log | Bootstrap task lifecycle, Ansible stdout lines, drift computation, SBOM tasks |
-| Frontend | .kri-logs/frontend.log | Vite dev server output, HMR reload events, TypeScript compile errors |
+| API | `.kri-logs/api.log` | HTTP requests, SQL queries, auth events, FastAPI startup errors |
+| Worker | `.kri-logs/worker.log` | Bootstrap task lifecycle, Ansible stdout lines, drift computation, SBOM tasks |
+| Frontend | `.kri-logs/frontend.log` | Vite dev server output, HMR reload events, TypeScript compile errors |
 
 ### Useful log commands
 
@@ -219,11 +219,11 @@ A bootstrap runs as a Celery task that SSHs into the target Mac Mini via Ansible
 
 | Symptom | Likely cause | Fix |
 | --- | --- | --- |
-| UNREACHABLE | Wrong IP or Mac Mini is off | Verify IP; test with ping <ip> |
+| UNREACHABLE | Wrong IP or Mac Mini is off | Verify IP; test with `ping <ip>` |
 | Authentication failure | Wrong SSH credentials | Settings → Bootstrap — update SSH username / password |
 | Timeout at 20 min | Salt minion installed but cannot reach master | Check network path; verify Salt master address in Settings |
-| no hosts matched | minion_id contains illegal characters | Only [a-zA-Z0-9._-] allowed, max 128 chars |
-| ansible.posix not found | Missing Ansible collection | ansible-galaxy collection install ansible.posix |
+| no hosts matched | minion_id contains illegal characters | Only `[a-zA-Z0-9._-]` allowed, max 128 chars |
+| ansible.posix not found | Missing Ansible collection | `ansible-galaxy collection install ansible.posix` |
 | Stuck in bootstrapping | Celery worker crashed mid-task | Cancel via API then retry (see below) |
 
 ### Step-by-step debug procedure
@@ -267,11 +267,11 @@ kri stores fine-grained telemetry for every bootstrap attempt. You don't need to
 
 | Data | DB column | Notes |
 | --- | --- | --- |
-| Current status | nodes.bootstrap_status | pending → bootstrapping → completed or failed |
-| Target IP | nodes.bootstrap_ip | IP used for the Ansible SSH connection |
-| Error / last task | nodes.bootstrap_error | Human-readable failure reason, or [blocked at: TASK <name>] while running |
-| Full Ansible stdout | nodes.bootstrap_logs | Stored after the run ends (success or failure); exposed by the /logs endpoint |
-| User actions | audit_events table | Every bootstrap trigger, cancel, and Settings change is recorded with actor + timestamp |
+| Current status | `nodes.bootstrap_status` | `pending` → `bootstrapping` → `completed` or `failed` |
+| Target IP | `nodes.bootstrap_ip` | IP used for the Ansible SSH connection |
+| Error / last task | `nodes.bootstrap_error` | Human-readable failure reason, or `[blocked at: TASK <name>]` while running |
+| Full Ansible stdout | `nodes.bootstrap_logs` | Stored after the run ends (success or failure); exposed by the `/logs` endpoint |
+| User actions | `audit_events` table | Every bootstrap trigger, cancel, and Settings change is recorded with actor + timestamp |
 
 ### API endpoints
 

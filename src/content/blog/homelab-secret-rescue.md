@@ -235,14 +235,14 @@ Seal what's real, adopt in place
 
 | Signal | Lesson |
 | --- | --- |
-| Empty placeholder secret | An encryptedData: {} that "deployed fine" is a pod that never started. Check the workload, not just the sync status. |
+| Empty placeholder secret | An `encryptedData: {}` that "deployed fine" is a pod that never started. Check the workload, not just the sync status. |
 | 20-byte backups | A backup job that never fails is not the same as a backup that works. Assert on dump size. |
-| Probe killed initdb | First-init on slow storage needs a startupProbe. An aggressive liveness probe is a data-corruption risk, not just a restart. |
-| Named ports | A Service targetPort by name needs a matching named container port, or endpoints stay silently empty. |
+| Probe killed `initdb` | First-init on slow storage needs a `startupProbe`. An aggressive liveness probe is a data-corruption risk, not just a restart. |
+| Named ports | A Service `targetPort` by name needs a matching *named* container port, or endpoints stay silently empty. |
 | CSRF host vs URL | Read the tool's own sample config. One scheme prefix was the whole bug. |
 | Where secrets live | GitHub secrets reach workflows; pods need Vault/OpenBao or SealedSecrets. Match the store to the consumer. |
-| Placeholder SealedSecrets | An encryptedData: {} "TODO: seal before first sync" is a live landmine — it can empty the very Secret it's meant to protect. Seal the real values or don't ship the resource. |
-| Adopt, don't delete | For crown-jewel Secrets, the sealedsecrets.bitnami.com/managed annotation adopts in place — no delete window where the keys are gone. |
+| Placeholder SealedSecrets | An `encryptedData: {}` "TODO: seal before first sync" is a live landmine — it can empty the very Secret it's meant to protect. Seal the real values or don't ship the resource. |
+| Adopt, don't delete | For crown-jewel Secrets, the `sealedsecrets.bitnami.com/managed` annotation adopts in place — no delete window where the keys are gone. |
 | Pause before you seal | Changing a Secret live while GitOps still holds the old value invites a self-heal to overwrite it. Pause auto-sync until git and reality agree. |
 
 The four-word request was real: the merge conflict got fixed. Everything after it was the repo telling us, one failure at a time, what it had been hiding. Four words in, four PRs out — and a homelab that finally tells the truth about itself. That's the job.

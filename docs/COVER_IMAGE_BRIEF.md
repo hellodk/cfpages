@@ -226,6 +226,53 @@ that is what keeps the set grounded.
 |---|---|
 | `hellodk-jekyll-to-astro-cloudflare-migration` | Taped removal boxes stacked in an empty room with bare floorboards, one window throwing a long light patch across them. |
 | `hellodk-content-migration-guide` | A clipboard on a workbench holding a checklist with hand-drawn tick boxes, some ticked, handwriting out of focus. |
+| `hardware-telemetry` | A compact desktop machine with its top cover slid aside, heatsink fins and fan exposed, dust in the slats. |
+| `alerting` | A wall-mounted brass bell above a workbench, pull cord frayed, shavings and screws scattered beneath. |
+| `dashboards` | A darkened control room corner with empty swivel chairs facing a blank dark monitor, cable conduits overhead. |
+| `observability-audit` | A clipboard holding blank paper sheets, a pencil resting across the top, more blank stock stacked beneath. |
+| `opik-llm-tracing` | A spool of thread trailing across a workbench through a row of small brass eyelets, loose end curling off the edge. |
+| `opik-feedback-loop` | A kitchen scale with a chipped enamel bowl, needle resting left of zero, flour dust on the base. |
+| `mlx-inference-performance` | Two stacked wooden crates with paint marks worn past reading, straw poking from between the slats. |
+| `hydra-vs-mlx-oc` | Two mismatched table lamps side by side on a long bench, only the left one lit, cords tangled behind. |
+| `model-serving-resilience` | A night-shift workshop bench with a single caged work lamp burning, tools laid in a straight row. |
+| `opik-log-streaming` | A rain gutter downspout pouring into a galvanized bucket, waterline stained, leaves plastered near the mouth. |
+| `agentic-edge-cases` | A tackle box with every compartment open, one lure missing from its slot, lake water beading on the lid. |
+| `fault-error-restart-analysis` | A wall clock with its glass cracked across the face, both hands stopped, dust on the rim. |
+| `agentic-forensics` | A row of dominoes frozen mid-topple on a scarred tabletop, the lead tile face-down past the rest. |
+| `recommendations-decision` | A balance scale with brass pans holding river stones of uneven size, pointer settled off-centre. |
+| `sglang-on-two-mac-minis` | Two sawhorses holding an unfinished plank walkway over muddy ground, tool belt hanging from one end. |
+| `mlx-distributed-options-tuning` | A control panel of chunky toggle switches set in a steel plate, half thrown, paint worn smooth. |
+| `opik-dashboards` | A greenhouse window fogged from inside, a wiped arc revealing seedling trays beyond the glass. |
+| `token-confidence-logprobs` | A handful of dice mid-roll above green felt, pips blurred, one die already settled. |
+| `observability-telemetry-and-testing` | A long workbench with open tins of sorted screws, each tin dented, a magnet sweeper leaning nearby. |
+| `k8s-grafana-data-path` | A freight pallet stacked with strapped crates beside railway tracks, rope frayed, tarpaulin half-slipped. |
+| `thunderbolt-ring-launchdaemons` | A suspension bridge cable close-up with rain beading on steel strands, one frayed wire tucked back. |
+| `observability-dashboard-reference` | A wall of small wooden pigeonholes holding coiled cables and corked vials, one drawer pulled open. |
+| `network-spike-investigation` | A garden hose burst at its coupling, water arcing across a patio, a coiled spare hose untouched nearby. |
+| `java21-libpng-cve-fix` | A single open Alpine package carton on a workbench beside a sealed one, packing tape half-pulled, dust in a shaft of window light. |
+| `homelab-secret-rescue` | An open desk drawer of tangled backup drives and server keys, one drive pulled halfway out, rubber bands and dust on scarred wood. |
+| `ubi-micro-remediation` | A stripped workbench holding only a sealed metal tin and a bare wrench, paint worn off the edges, everything else cleared away. |
+| `opensre-workshop-plan` | A whiteboard covered edge to edge in marker diagrams, a stool pushed back mid-session, eraser dust on the tray below. |
+| `hummingbird-verification` | A freshly washed glass jar standing empty on a sunny sill, water spots drying on the rim, nothing inside but light. |
+| `jenkins-macos-gui-session-agent` | A Mac Mini tucked beneath a sleeping monitor, cable slack coiled on the desk, power brick warm with dust. |
+| `prefix-cache-economics` | A library returns cart stacked with identical worn volumes, one pulled out and left face-down open on top. |
+| `opensre-homelab-integration` | A closet rack of blinking small servers laced with cables, one patch lead unplugged and dangling, dust on the fan grilles. |
+| `297-probe-failures-mlx-cluster` | Two compact desktop machines back to back on a workbench, linked by a single braided cable, a coiled spare cable and scattered screws beside them. |
+| `yugabyte-aerospike-connectors-opensre` | Two mismatched storage jars joined by a short copper pipe, one filled with dark beans, the other with pale lentils. |
+| `java-distroless-cve-hunt` | Seven identical glass bottles in a row on a shelf, six capped, one left open, dust lines marking how long each stood. |
+| `distroless-base-image-findings` | Eight sealed preserving jars lined on a pantry shelf, lids vacuumed flat, paper tags blank from age. |
+| `mlx-jaccl-silent-hang` | A ceiling fan frozen mid-spin in a dusty workshop, pull chain swaying slightly, light through slatted blinds. |
+| `opensre-connectors-e2e-gauntlet` | A workbench vise gripping a chipped ceramic mug, hairline crack lit from one side, shavings scattered around. |
+| `java21-remediation-plan` | A corkboard of blank pinned cards in three columns, the first column cleared, spare pins lined below. |
+| `deploying-qwen-tensor-parallelism` | Two compact desktops side by side sharing one monitor cable through a switch box, vents dusty. |
+| `tensor-parallelism-omlx` | A sliced layer cake with offset strata on a chipped plate, one thin slice laid flat beside it. |
+| `local-tool-calling-models` | A small workshop radio with its back panel off, vacuum tubes warm, a folded cloth beneath it. |
+| `llama-cpp-systemd` | A battered thin laptop running on a kitchen table, fan vent propped on bottle caps, screen dark. |
+| `google-distroless-remediation` | A smooth river stone beside a rusted padlock with no keyhole, both half-buried in pale gravel. |
+| `omlx-stack-teardown` | A dismantled wooden crate with its slats laid in order on sawdust, nails sorted in a tin lid. |
+| `two-lenses-cluster-estimates` | A pair of worn binoculars on a fence post at dusk, one lens cap on, the other hanging by its strap. |
+| `ubi9-full-remediation` | An overstuffed toolbox with its lid sprung open, sockets spilling onto an oil-stained rag. |
+| `mobile-code-signing` | A wax seal stamp beside a brass key on a dark desk blotter, sealing wax pooled and cooled. |
 
 ---
 

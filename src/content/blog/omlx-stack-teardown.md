@@ -213,17 +213,17 @@ Layer Ownership, Summarised
 
 | Concern | MLX | mlx-lm | oMLX |
 | --- | --- | --- | --- |
-| Tensor Math & Metal Kernels | Owns | — | Adds 3,145 Lines Of Custom Kernels |
-| Model Architectures | — | Owns | Patches 49 Modules |
-| Batched Decode Loop | — | Owns | Consumes It |
-| Queue & Admission Policy | — | Minimal | Owns |
-| KV Cache Across Requests | — | — | Owns |
-| Cache Persisted To Disk | — | — | Owns |
-| Multi-Model In One Process | — | — | Owns |
-| OpenAI HTTP Surface | — | Basic | Owns |
-| Anthropic / Embeddings / Rerank / Audio / MCP | — | — | Owns |
-| Distributed Collectives | Owns | Uses Them | Orchestrates |
-| Serving On A Cluster Rank | — | Owns | Launches It |
+| **Tensor Math & Metal Kernels** | Owns | — | Adds 3,145 Lines Of Custom Kernels |
+| **Model Architectures** | — | Owns | Patches 49 Modules |
+| **Batched Decode Loop** | — | Owns | Consumes It |
+| **Queue & Admission Policy** | — | Minimal | Owns |
+| **KV Cache Across Requests** | — | — | Owns |
+| **Cache Persisted To Disk** | — | — | Owns |
+| **Multi-Model In One Process** | — | — | Owns |
+| **OpenAI HTTP Surface** | — | Basic | Owns |
+| **Anthropic / Embeddings / Rerank / Audio / MCP** | — | — | Owns |
+| **Distributed Collectives** | Owns | Uses Them | Orchestrates |
+| **Serving On A Cluster Rank** | — | Owns | Launches It |
 
 <aside class="callout"><strong class="callout__title">Where this is heading.</strong><div class="callout__body">Of everything in the oMLX column, exactly one entry has no equivalent anywhere
     below it and no cheap substitute above it: <em>KV cache across requests, persisted to disk</em>. Tab 2 is about that row.
@@ -903,14 +903,14 @@ The data model confirms it. `SubKeyEntry` at `settings.py:549` carries only `key
 
 | Capability | Present? | Evidence |
 | --- | --- | --- |
-| Shared secret auth | Yes | Constant-time compare, SHA-256 fingerprint on rejection |
-| Multiple keys | Yes | sub_keys list, API-only |
-| Per-request principal | No | verify_api_key returns bool |
-| Roles or scopes | No | SubKeyEntry has three fields |
-| Per-key model allowlist | No | Nowhere to store it |
-| Quotas or budgets | No | No principal to meter |
-| OIDC / Keycloak / AD / LDAP / SAML | No | Zero repo-wide hits outside vendored JavaScript |
-| Auth on by default | No | server.py:312 — no key configured means every request passes |
+| **Shared secret auth** | Yes | Constant-time compare, SHA-256 fingerprint on rejection |
+| **Multiple keys** | Yes | `sub_keys` list, API-only |
+| **Per-request principal** | No | `verify_api_key` returns `bool` |
+| **Roles or scopes** | No | `SubKeyEntry` has three fields |
+| **Per-key model allowlist** | No | Nowhere to store it |
+| **Quotas or budgets** | No | No principal to meter |
+| **OIDC / Keycloak / AD / LDAP / SAML** | No | Zero repo-wide hits outside vendored JavaScript |
+| **Auth on by default** | No | `server.py:312` — no key configured means every request passes |
 
 <aside class="callout"><strong class="callout__title">The right shape for a fix is not roles in oMLX.</strong><div class="callout__body">It is a proxy in front of it — Traefik ForwardAuth into
     oauth2-proxy into the Keycloak that is already running, or LiteLLM if you want per-user virtual keys with budgets and model

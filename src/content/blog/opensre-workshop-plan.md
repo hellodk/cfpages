@@ -29,12 +29,12 @@ IntroAct 1Act 2Act 3Act 4Close
 
 | When | Act | Fault → question it answers |
 | --- | --- | --- |
-| 0:00 | Intro · 10 min | Map, LLM check, safety contract |
-| 0:10 | Act 1 · The page fires · 25 min | Pod kill + flood → k8s · alertmanager · grafana · victoria |
-| 0:35 | Act 2 · Blast radius · 25 min | Edge 503 + NATS flood → nginx · tempo · nats |
-| 1:00 | Act 3 · Data + identity · 25 min | Slow query + login storm → yugabyte · aerospike · keycloak |
-| 1:25 | Act 4 · Fix, ship, close · 25 min | Red build → green → jenkins · github · verify |
-| 1:50 | Close · 10 min | 12-integration scorecard + backlog |
+| 0:00 | **Intro** · 10 min | Map, LLM check, safety contract |
+| 0:10 | **Act 1 · The page fires** · 25 min | Pod kill + flood → k8s · alertmanager · grafana · victoria |
+| 0:35 | **Act 2 · Blast radius** · 25 min | Edge 503 + NATS flood → nginx · tempo · nats |
+| 1:00 | **Act 3 · Data + identity** · 25 min | Slow query + login storm → yugabyte · aerospike · keycloak |
+| 1:25 | **Act 4 · Fix, ship, close** · 25 min | Red build → green → jenkins · github · verify |
+| 1:50 | **Close** · 10 min | 12-integration scorecard + backlog |
 
 Everyone leaves with: the 4-beat loop, a green 12-integration matrix, and the chaos kit on its branch.
 

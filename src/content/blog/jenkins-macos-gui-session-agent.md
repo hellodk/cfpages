@@ -386,7 +386,7 @@ The whole guide distilled into the parts that actually break production CI.
 | codesign-ls-nopartition #1 | pipeline | skipped | not reachable | errSecInternalComponent rc=1, ~0.3s |
 | codesign-ls-nopartition #2 | pipeline | skipped | reachable | HANG 15-min timeout → ABORTED |
 | codesign-freestyle-ls-nopartition #1 | freestyle | skipped | reachable | HANG watchdog kill rc=137 |
-| codesign-freestyle-ls-partition #1 | freestyle | applied | — | SUCCESS 13.3s, sig size 3699 |
+| codesign-freestyle-ls-partition #1 | freestyle | **applied** | — | SUCCESS 13.3s, sig size 3699 |
 
 <aside class="callout"><strong class="callout__title">Interpretation trap.</strong><div class="callout__body"><span class="a-icon">!</span><div> A missing <span class="inline-code">errSecInternalComponent</span> in your logs does <b>not</b> mean signing worked — it may simply mean the Mac had a GUI session, so codesign <i>hung</i> instead of failing. Any pre-fix no-partition run not returning rc=1 within a second is a hang, never a pass.</div></div></aside>
 
@@ -450,12 +450,12 @@ Diagnostics printed by the signing script immediately before codesign, in both c
 | --- | --- | --- |
 | whoami / id | hellodk · uid=502(hellodk) gid=20(staff) | hellodk · uid=502(hellodk) gid=20(staff) |
 | $HOME | /Users/hellodk | /Users/hellodk |
-| list-keychains -d user | codesign-…-PARTITION-dblogin.keychain-db | codesign-…-PARTITION-dblogin.keychain-db |
+| list-keychains -d user | codesign-…-PARTITION-db login.keychain-db | codesign-…-PARTITION-db login.keychain-db |
 | find-identity -v -p codesigning | 1 valid identity · 77E0EB9D…DCF8 | 1 valid identity · 77E0EB9D…DCF8 |
 | set-key-partition-list | applied, rc=0 | applied, rc=0 |
 | codesign --force --sign … --keychain … | rc=0 Signature size=4784 | rc=1 errSecInternalComponent |
-| codesign stderr | not captured (mistake — see below) | Warning: unable to build chain to self-signed root for signer "Apple Distribution: …"./ls-binary-test: errSecInternalComponent |
-| Jenkins build result | — | Finished: SUCCESS — the script printed VERDICT: SIGNING FAILED but never exit 1 |
+| codesign stderr | not captured (mistake — see below) | Warning: unable to build chain to self-signed root for signer "Apple Distribution: …" ./ls-binary-test: errSecInternalComponent |
+| Jenkins build result | — | Finished: SUCCESS — the script printed *VERDICT: SIGNING FAILED* but never exit 1 |
 
 <aside class="callout"><strong class="callout__title">Two separate bugs in one log.</strong><div class="callout__body"><span class="a-icon">!</span><div> The signing failure is the interesting one, but <span class="inline-code">Finished: SUCCESS</span> under a <i>SIGNING FAILED</i> verdict is the dangerous one — a downstream job would happily ship an unsigned binary. Diagnostic scripts must <span class="inline-code">exit "$RC_SIGN"</span>, not just print a verdict.</div></div></aside>
 

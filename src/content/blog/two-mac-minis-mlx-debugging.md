@@ -587,7 +587,7 @@ $ lsof -iTCP -sTCP:LISTEN | grep -E "8080|8081"   (empty)
 
 | Check | Before | After |
 | --- | --- | --- |
-| launchctl list | 2 hetu.vllm-mlx entries | none |
+| `launchctl list` | 2 hetu.vllm-mlx entries | none |
 | Port 8080 | held by embedding server | free |
 | Port 8081 | held by Qwen3.5 4B | free |
 | Plist location | ~/Library/LaunchAgents (auto-loads) | ~/Documents (archived, inert) |

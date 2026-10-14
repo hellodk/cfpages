@@ -1,5 +1,5 @@
 /**
- * The 66 posts migrated from ~/Documents/blogs.
+ * The 88 posts migrated from ~/Documents/blogs.
  *
  * Static reviewed data. `src` is relative to the blogs root. Rebuild entries
  * keep the date already published, so URLs and ordering do not shift.
@@ -60,7 +60,7 @@ export const POSTS = [
   { src: 'linkedin-post-network-spike.md', slug: 'linkedin-post-network-spike', date: '2026-03-01', tags: ['networking', 'incident'], draft: true },
   { src: 'grafana-screenshot-guide.md', slug: 'grafana-screenshot-guide', date: '2026-03-01', tags: ['grafana', 'monitoring'], draft: true },
   { src: 'avika_deep_analysis.md.resolved', slug: 'atlas-deep-analysis', date: '2026-03-03', tags: ['analysis', 'observability'], draft: true },
-  { src: 'blog-network-spike-investigation.md', slug: 'network-spike-investigation', date: '2026-04-08', tags: ['networking', 'incident', 'debugging'], draft: true },
+  { src: 'blog-network-spike-investigation.md', slug: 'network-spike-investigation', date: '2026-04-08', tags: ['networking', 'incident', 'debugging'], draft: false },
   { src: 'kube-system-priority-classes.md', slug: 'kube-system-priority-classes', date: '2026-05-11', tags: ['kubernetes', 'scheduling'], draft: true },
 
   // ---- Bucket D: 2026-08-09 onward, date from the directory name ----
@@ -84,8 +84,39 @@ export const POSTS = [
   { src: '2026-10-03-google-distroless-remediation/2026-10-03-google-distroless-remediation.html', slug: 'google-distroless-remediation', date: '2026-10-03', tags: ['docker', 'distroless', 'container-security', 'cve'], draft: false },
   { src: '2026-10-04-distroless-base-image-findings/2026-10-04-distroless-base-image-findings.html', slug: 'distroless-base-image-findings', date: '2026-10-04', tags: ['docker', 'distroless', 'container-security', 'cve', 'trivy'], draft: false },
   { src: '2026-10-03-hummingbird-verification/2026-10-03-hummingbird-verification.html', slug: 'hummingbird-verification', date: '2026-10-03', tags: ['docker', 'container-security', 'cve', 'dotnet'], draft: false },
-  { src: '2026-10-03-java21-libpng-cve-fix/2026-10-03-java21-libpng-cve-fix.html', slug: 'java21-libpng-cve-fix', date: '2026-10-03', tags: ['java', 'docker', 'cve', 'container-security', 'distroless'], draft: false },
+  { src: '2026-10-03-java21-libpng-cve-fix/2026-10-03-java21-libpng-cve-fix.html', slug: 'java21-libpng-cve-fix', date: '2026-10-03', tags: ['java', 'docker', 'cve', 'container-security', 'distroless'], draft: false,
+    tldr: {
+      summary: 'A Java 21 Alpine base image appeared stuck at one UNKNOWN CVE. It was not unpatchable — the image was built on an Alpine package snapshot old enough to predate the fix. One `RUN apk upgrade` in the Dockerfile cleared it for 3.1 MB.',
+      points: [
+        { k: 'The culprit', v: 'Stale package snapshot, not an unfixable CVE' },
+        { k: 'The field that settled it', v: 'FixedVersion was populated — it is a to-do, not a dead end' },
+        { k: 'The fix', v: 'One `apk upgrade`, 3.1 MB, cleared the remaining finding' },
+      ],
+    } },
   { src: '2026-10-03-ubi9-full-remediation/2026-10-03-ubi9-full-remediation.html', slug: 'ubi9-full-remediation', date: '2026-10-03', tags: ['rhel', 'ubi', 'docker', 'container-security', 'cve'], draft: false },
   { src: '2026-10-03-ubi-micro-remediation/2026-10-03-ubi-micro-remediation.html', slug: 'ubi-micro-remediation', date: '2026-10-03', tags: ['rhel', 'ubi', 'docker', 'container-security', 'cve'], draft: false },
   { src: '2026-10-03-java21-remediation-plan.md', slug: 'java21-remediation-plan', date: '2026-10-03', tags: ['java', 'docker', 'container-security', 'cve'], draft: false },
+  // ---- mlx-oc series: mirrored from the mlx-oc repo blog/ (slugs strip the series number) ----
+  { src: 'mlx-oc/15-sglang-on-two-mac-minis.html', slug: 'sglang-on-two-mac-minis', date: '2026-08-04', tags: ['sglang', 'llm', 'macos'], draft: false },
+  { src: 'mlx-oc/1-hardware-telemetry.html', slug: 'hardware-telemetry', date: '2026-08-08', tags: ['macos', 'mlx', 'observability'], draft: false },
+  { src: 'mlx-oc/2-alerting.html', slug: 'alerting', date: '2026-08-08', tags: ['observability', 'prometheus'], draft: false },
+  { src: 'mlx-oc/3-dashboards.html', slug: 'dashboards', date: '2026-08-08', tags: ['observability', 'grafana'], draft: false },
+  { src: 'mlx-oc/4-observability-audit.html', slug: 'observability-audit', date: '2026-08-08', tags: ['observability', 'audit'], draft: false },
+  { src: 'mlx-oc/5-opik-llm-tracing.html', slug: 'opik-llm-tracing', date: '2026-08-08', tags: ['opik', 'llm', 'observability'], draft: false },
+  { src: 'mlx-oc/6-opik-feedback-loop.html', slug: 'opik-feedback-loop', date: '2026-08-08', tags: ['opik', 'llm'], draft: false },
+  { src: 'mlx-oc/7-mlx-inference-performance.html', slug: 'mlx-inference-performance', date: '2026-08-08', tags: ['mlx', 'llm', 'observability'], draft: false },
+  { src: 'mlx-oc/8-hydra-vs-mlx-oc.html', slug: 'hydra-vs-mlx-oc', date: '2026-08-08', tags: ['observability', 'mlx'], draft: false },
+  { src: 'mlx-oc/9-model-serving-resilience.html', slug: 'model-serving-resilience', date: '2026-08-08', tags: ['llm', 'mlx', 'observability'], draft: false },
+  { src: 'mlx-oc/10-opik-log-streaming.html', slug: 'opik-log-streaming', date: '2026-08-08', tags: ['opik', 'observability'], draft: false },
+  { src: 'mlx-oc/11-agentic-edge-cases.html', slug: 'agentic-edge-cases', date: '2026-08-08', tags: ['agents', 'llm'], draft: false },
+  { src: 'mlx-oc/12-fault-error-restart-analysis.html', slug: 'fault-error-restart-analysis', date: '2026-08-08', tags: ['observability', 'grafana'], draft: false },
+  { src: 'mlx-oc/13-agentic-forensics.html', slug: 'agentic-forensics', date: '2026-08-08', tags: ['agents', 'debugging'], draft: false },
+  { src: 'mlx-oc/14-recommendations-decision.html', slug: 'recommendations-decision', date: '2026-08-08', tags: ['mlx', 'observability'], draft: false },
+  { src: 'mlx-oc/16-mlx-distributed-options-tuning.html', slug: 'mlx-distributed-options-tuning', date: '2026-08-08', tags: ['mlx', 'observability'], draft: false },
+  { src: 'mlx-oc/17-opik-dashboards.html', slug: 'opik-dashboards', date: '2026-08-08', tags: ['opik', 'observability'], draft: false },
+  { src: 'mlx-oc/18-token-confidence-logprobs.html', slug: 'token-confidence-logprobs', date: '2026-08-08', tags: ['llm', 'mlx'], draft: false },
+  { src: 'mlx-oc/19-observability-telemetry-and-testing.html', slug: 'observability-telemetry-and-testing', date: '2026-08-08', tags: ['observability', 'testing'], draft: false },
+  { src: 'mlx-oc/20-k8s-grafana-data-path.html', slug: 'k8s-grafana-data-path', date: '2026-08-09', tags: ['kubernetes', 'grafana', 'observability'], draft: false },
+  { src: 'mlx-oc/21-thunderbolt-ring-launchdaemons.html', slug: 'thunderbolt-ring-launchdaemons', date: '2026-08-09', tags: ['macos', 'networking'], draft: false },
+  { src: 'mlx-oc/22-observability-dashboard-reference.html', slug: 'observability-dashboard-reference', date: '2026-08-09', tags: ['observability', 'grafana'], draft: false },
 ];

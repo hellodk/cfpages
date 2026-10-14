@@ -363,8 +363,8 @@ $ which sess tm
 
 | Tool | Required | Install |
 | --- | --- | --- |
-| tmux | Yes | apt install tmux |
-| fzf | Yes | apt install fzf |
+| tmux | Yes | `apt install tmux` |
+| fzf | Yes | `apt install fzf` |
 | xclip/pbcopy | Optional | For clipboard integration |
 
 ### Cheat Sheet

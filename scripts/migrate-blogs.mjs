@@ -73,13 +73,15 @@ function fromMarkdown(raw) {
 const problems = [];
 
 /**
- * Copy any sibling .svg the body references as `./name.svg` into
+ * Copy any sibling asset the body references as `./name.ext` into
  * public/assets/blog/<slug>/ and rewrite the reference. Driven by what the
  * body actually cites, so no post is special-cased. Today only nfs-meltdown
- * has such references (6 files).
+ * has such references (6 files). Raster formats (png/jpeg/webp/gif/avif)
+ * ride the same path as SVG: text formats get masked, binaries copy byte
+ * for byte (e.g. the network-spike phone screenshots).
  */
 function copyAssets(post, body) {
-  const referenced = [...body.matchAll(/\.\/([\w.-]+\.svg)/g)].map((m) => m[1]);
+  const referenced = [...body.matchAll(/\.\/([\w.-]+\.(svg|png|jpe?g|webp|gif|avif))/gi)].map((m) => m[1]);
   if (!referenced.length) return body;
 
   const srcDir = path.dirname(path.join(BLOGS, post.src));
@@ -136,7 +138,7 @@ for (const post of POSTS) {
   description = maskText(description);
   body = maskText(body);
 
-  const leaked = findUnmasked(`${title}\n${description}\n${body}`);
+  const leaked = findUnmasked(`${title}\n${description}\n${body}\n${post.tldr?.summary ?? ''}\n${(post.tldr?.points ?? []).map((p) => `${p.k} ${p.v}`).join('\n')}`);
   if (leaked.length) problems.push(`${post.slug}: unmasked ${leaked.join(', ')}`);
 
   const frontmatter = [
@@ -147,6 +149,14 @@ for (const post of POSTS) {
     `tags: [${post.tags.join(', ')}]`,
     ...(COVERS[post.slug] ? [`cover: ${yaml(COVERS[post.slug])}`] : []),
     `draft: ${post.draft}`,
+    // Per-post TL;DR panel (see PostLayout): emitted only when the manifest
+    // entry carries one, so no post ever shows another post's summary.
+    ...(post.tldr ? [
+      'tldr:',
+      `  summary: ${yaml(post.tldr.summary)}`,
+      '  points:',
+      ...post.tldr.points.map((p) => `    - { k: ${yaml(p.k)}, v: ${yaml(p.v)} }`),
+    ] : []),
     '---',
     '',
   ].join('\n');

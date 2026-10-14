@@ -241,10 +241,10 @@ Fair question, and the answer is visible in the build files rather than in anyon
 
 | Constraint | Evidence In Repo | Effect |
 | --- | --- | --- |
-| Metal has no Apple-supplied Go/Rust binding | CMakeLists.txt:229 fetches metal-cpp;device.h:5 includes <Metal/Metal.hpp> | Apple's official C++ interface is the GPU surface. Zero .mm files in the tree. |
-| libibverbs is a C API | rdma.h:5 includes<infiniband/verbs.h> | C++ calls it with zero marshalling; JACCL dlopens the symbols at runtime. |
-| Python is the product | python/src/CMakeLists.txt:1nanobind_add_module | nanobind is a C++ library. Arrays are zero-copy shared with NumPy's buffer protocol. |
-| Sub-50 µs latency target | mesh_impl.h — tightibv_poll_cq spin | Go's cgo transition per call plus GC pauses make this its worst case. |
+| Metal has no Apple-supplied Go/Rust binding | CMakeLists.txt:229 fetches metal-cpp; device.h:5 includes <Metal/Metal.hpp> | Apple's official C++ interface *is* the GPU surface. Zero `.mm` files in the tree. |
+| libibverbs is a C API | rdma.h:5 includes <infiniband/verbs.h> | C++ calls it with zero marshalling; JACCL dlopens the symbols at runtime. |
+| Python is the product | python/src/CMakeLists.txt:1 nanobind_add_module | nanobind is a C++ library. Arrays are zero-copy shared with NumPy's buffer protocol. |
+| Sub-50 µs latency target | mesh_impl.h — tight ibv_poll_cq spin | Go's cgo transition per call plus GC pauses make this its worst case. |
 
 Go is disqualified by the poll loop specifically. A tight loop calling into C thousands of times a second, on a latency budget measured in microseconds, is the scenario cgo handles worst.
 
@@ -260,11 +260,11 @@ This is a source read, not a reproduction. Being explicit about the boundary:
 
 | Claim | Status |
 | --- | --- |
-| Six unbounded loops in mesh_impl.h | Verified read directly from source |
-| poll() is a bare ibv_poll_cq passthrough | Verified rdma.h:217 |
-| Negative n is unchecked at rdma.h:243 | Verified read directly from source |
+| Six unbounded loops in `mesh_impl.h` | Verified read directly from source |
+| `poll()` is a bare `ibv_poll_cq` passthrough | Verified rdma.h:217 |
+| Negative `n` is unchecked at rdma.h:243 | Verified read directly from source |
 | Verbs reports nothing on peer loss | Reported by a contributor's hardware repro, not by me |
-| Whether a throw on StreamThread reaches Python | Unknown needs a real run |
+| Whether a throw on `StreamThread` reaches Python | Unknown needs a real run |
 | That a deadline fix actually resolves the hang | Untested needs two Macs with Thunderbolt RDMA |
 
 <aside class="callout"><div class="callout__body">JACCL is gated to Darwin in <code class="inl">mlx/distributed/jaccl/CMakeLists.txt:2</code>. On a Linux

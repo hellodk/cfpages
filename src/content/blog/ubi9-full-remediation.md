@@ -19,9 +19,9 @@ That was the right call at the time, but it left one thing unexplored. Of the si
 
 | Layer | Critical | High | Medium | Low | Total |
 | --- | --- | --- | --- | --- | --- |
-| OS — ubi9/ubi 9.5 | 0 | 95 | 458 | 341 | 894 |
-| Application — spring-retry | 0 | 0 | 1 | 0 | 1 |
-| Total | 0 | 95 | 459 | 341 | 895 |
+| OS — `ubi9/ubi` 9.5 | 0 | 95 | 458 | 341 | 894 |
+| Application — `spring-retry` | 0 | 0 | 1 | 0 | 1 |
+| **Total** | 0 | 95 | 459 | 341 | 895 |
 
 The application-layer finding was already solved: `CVE-2026-41710` in `spring-retry` 1.0.3, which arrived transitively through `spring-data-jdbc`. Pinning it to 2.0.13 in the POM clears it on any rebuild. The 894 OS findings were the real work.
 
@@ -137,10 +137,10 @@ Twenty of the findings were not in the old image at all. Sixteen of them came fr
 
 | Package | New findings | Why it is in the image |
 | --- | --- | --- |
-| glibc-langpack-en | 9 | English locale messages. The image sets no locale. |
-| rpm-plugin-systemd-inhibit | 6 | systemd integration. Nothing systemd runs in here. |
-| gawk-all-langpacks | 1 | gawk translations, pulled in by the same mechanism. |
-| java-21-openjdk-headless | 1 | The JRE patch level itself — see below. |
+| `glibc-langpack-en` | 9 | English locale messages. The image sets no locale. |
+| `rpm-plugin-systemd-inhibit` | 6 | systemd integration. Nothing systemd runs in here. |
+| `gawk-all-langpacks` | 1 | gawk translations, pulled in by the same mechanism. |
+| `java-21-openjdk-headless` | 1 | The JRE patch level itself — see below. |
 
 The upgrade pulled these in as dependencies of the newer `glibc`, `rpm` and `util-linux`. A remediation step that raises the count you are measuring is a step that needs explaining before it ships.
 
@@ -170,7 +170,7 @@ Every gate from the plan, measured rather than assumed:
 | LOW | 341 | 274 | −67 |
 | Application findings | 1 | 0 | CVE-2026-41710 cleared |
 | Newly introduced | — | 1 | CVE-2026-95512, no fix available |
-| Boot to healthy | HTTP 200 | HTTP 200 in 30s | actuator UP |
+| Boot to healthy | HTTP 200 | HTTP 200 in 30s | actuator `UP` |
 | Runtime user | uid 1001 | uid 1001 | appuser, unchanged |
 | Java version | 21.0.12 | 21.0.12.1 | still Java 21 |
 

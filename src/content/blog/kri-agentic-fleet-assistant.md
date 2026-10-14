@@ -164,9 +164,9 @@ LLM emits intent; kri intercepts and decides. READ tools execute automatically; 
 
 | Category | Examples | Execution | Approval |
 | --- | --- | --- | --- |
-| READ | get_node_status, list_alerts, get_process_list | Auto, from cached DB | None — read-only, safe |
-| WRITE — guarded | run_salt_cmd, restart_service, apply_state | Dry-run first, then guarded Salt | Two-layer (see §5) |
-| DENIED | Anything targeting protected targets, rm -rf, etc. | Never | Denylist, no override |
+| **READ** | `get_node_status`, `list_alerts`, `get_process_list` | Auto, from cached DB | None — read-only, safe |
+| **WRITE — guarded** | `run_salt_cmd`, `restart_service`, `apply_state` | Dry-run first, then guarded Salt | Two-layer (see §5) |
+| **DENIED** | Anything targeting protected targets, `rm -rf`, etc. | Never | Denylist, no override |
 
 ## 4\. Tool Adapter Discovery — Why exo Forced a Design Decision
 
@@ -464,13 +464,13 @@ The trust boundary is enforced by the kri backend, not by the LLM. Anything the 
 
 | Principle | What It Prevents | Implementation |
 | --- | --- | --- |
-| LLM is untrusted | Treating model output as authoritative | All tool calls validated and routed by kri backend, never executed directly |
-| Approve verbatim bytes | Summary/args divergence attack | Layer 2 inbox shows exact resolved command; summary is for UX only |
-| Durable state machine | In-memory agent loop dying on HTTP timeout | Celery task + DB state columns; actions survive restarts |
-| Protected denylist | LLM targeting critical infra | Hardcoded at backend; no override path |
-| Scrub secrets at collection | Tokens/passwords entering model context or audit logs | Process cmdlines redacted before storage and before context assembly |
-| Rate-limit agentic queries | Loop query exhausting DB pool (2am cascade) | Per-user per-minute rate limit on agent endpoints |
-| Behavioral tests only | False confidence from presence tests | Every test has a scenario that fails if the feature is broken |
+| **LLM is untrusted** | Treating model output as authoritative | All tool calls validated and routed by kri backend, never executed directly |
+| **Approve verbatim bytes** | Summary/args divergence attack | Layer 2 inbox shows exact resolved command; summary is for UX only |
+| **Durable state machine** | In-memory agent loop dying on HTTP timeout | Celery task + DB state columns; actions survive restarts |
+| **Protected denylist** | LLM targeting critical infra | Hardcoded at backend; no override path |
+| **Scrub secrets at collection** | Tokens/passwords entering model context or audit logs | Process cmdlines redacted before storage and before context assembly |
+| **Rate-limit agentic queries** | Loop query exhausting DB pool (2am cascade) | Per-user per-minute rate limit on agent endpoints |
+| **Behavioral tests only** | False confidence from presence tests | Every test has a scenario that fails if the feature is broken |
 
 ## 9\. Lessons
 

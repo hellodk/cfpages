@@ -418,11 +418,11 @@ fi
 
 | Scenario | Behavior |
 | --- | --- |
-| In $HOME | Session named "main" (not "dk") |
+| In `$HOME` | Session named "main" (not "dk") |
 | Non-interactive shell | Skipped (scripts, cron) |
 | Zellij not installed | Skipped gracefully |
 | Already inside Zellij | Skipped (no nested Zellij) |
-| Directory with dots | Dots → dashes (e.g. my.project → my-project) |
+| Directory with dots | Dots → dashes (e.g. `my.project` → `my-project`) |
 
 ### Install
 
@@ -457,8 +457,8 @@ $ zj-migrate
 
 | Tool | Required | Install |
 | --- | --- | --- |
-| Zellij | Yes | Binary above or cargo install zellij |
-| fzf | For sess | apt install fzf |
+| Zellij | Yes | Binary above or `cargo install zellij` |
+| fzf | For sess | `apt install fzf` |
 | Tailscale | For remote | Already installed |
 
 ### Key Bindings

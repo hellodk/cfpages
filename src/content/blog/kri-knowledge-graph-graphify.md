@@ -372,12 +372,12 @@ The graph is a diagnostic, not a solution. Here's the concrete action list from 
 
 | Finding | Action | Priority |
 | --- | --- | --- |
-| Node has 131 edges across all feature communities | Add a NodeSummary projection with just ID + hostname + status for features that don't need full model | P2 |
-| PlatformSetting is referenced from bytes/bool types | Integration tests that cover the full Fernet encrypt/decrypt ↔ ORM roundtrip are already in place — verify they cover the bytes cast path | Done |
-| 20 isolated nodes with ≤1 connection | Run /graphify query "which nodes have zero callers?" and audit for dead code | P3 |
-| Playbook Discovery cohesion 0.49 — best module | Use as the template pattern when designing new services — small, focused, single-file, high internal cohesion | Reference |
-| Platform Config community cohesion 0.06 — lowest | platform_settings_svc has 15 importers. Document the public API clearly; consider a typed settings façade to reduce ad-hoc access | P2 |
-| Services raising HTTPException directly | Move HTTP-layer errors to route handlers; services should raise domain exceptions, routes convert them | P3 |
+| **Node** has 131 edges across all feature communities | Add a `NodeSummary` projection with just ID + hostname + status for features that don't need full model | P2 |
+| **PlatformSetting** is referenced from bytes/bool types | Integration tests that cover the full Fernet encrypt/decrypt ↔ ORM roundtrip are already in place — verify they cover the bytes cast path | Done |
+| **20 isolated nodes** with ≤1 connection | Run `/graphify query "which nodes have zero callers?"` and audit for dead code | P3 |
+| **Playbook Discovery** cohesion 0.49 — best module | Use as the template pattern when designing new services — small, focused, single-file, high internal cohesion | Reference |
+| **Platform Config community** cohesion 0.06 — lowest | platform_settings_svc has 15 importers. Document the public API clearly; consider a typed settings façade to reduce ad-hoc access | P2 |
+| Services raising **HTTPException** directly | Move HTTP-layer errors to route handlers; services should raise domain exceptions, routes convert them | P3 |
 
 <aside class="callout"><strong class="callout__title">Open the interactive graph:</strong><div class="callout__body"><code>graphify-out/graph.html</code> in the kri repo. It's a 1MB self-contained HTML file — no server needed, open directly in any browser. Filter by community, click nodes to trace edges, zoom to the clusters that matter.</div></aside>
 

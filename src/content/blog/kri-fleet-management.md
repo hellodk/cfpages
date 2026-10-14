@@ -537,27 +537,27 @@ The FastAPI application (`fleet_platform/api/main.py`) registers 21 routers at s
 
 | Router | Prefix | Purpose |
 | --- | --- | --- |
-| health | /health | Liveness / readiness probe |
-| auth | /api/v1/auth | Login, refresh, logout, user management |
-| nodes | /api/v1/nodes | Node CRUD, tags, facts history |
-| ingest | /api/v1/ingest | Grain ingest, execution results, SBOM upload |
-| fleet | /api/v1/fleet | Fleet summary, status aggregates |
-| groups | /api/v1/groups | Node grouping, group SSH credentials |
-| baselines | /api/v1/baselines | Baseline snapshots, pinning, comparison |
-| drift | /api/v1/drift | Per-node drift scores and history |
-| ansible | /api/v1/ansible | Bootstrap, playbook discovery and execution |
-| salt_keys | /api/v1/salt | Minion key list, accept, reject, delete |
-| salt_ops | /api/v1/salt-ops | Ad-hoc Salt command execution |
-| sbom | /api/v1/sbom | SBOM records, CVE scan results |
-| webssh | /api/v1/webssh | WebSocket SSH terminal proxy |
-| vnc | /api/v1/vnc | VNC proxy (screen sharing) |
-| security | /api/v1/security | Secrets scanning, security policies |
-| audit | /api/v1/audit | Audit log of all admin actions |
-| node_secrets | /api/v1/node-secrets | Per-node encrypted secrets |
-| group_secrets | /api/v1/group-secrets | Group-scoped encrypted secrets |
-| alerts | /api/v1/alerts | Drift/SBOM alert rules |
-| ios_tracking | /api/v1/ios | Xcode version, cert expiry, signing identities |
-| platform_settings | /api/v1/settings | Runtime config panel, playbook sources |
+| health | `/health` | Liveness / readiness probe |
+| auth | `/api/v1/auth` | Login, refresh, logout, user management |
+| nodes | `/api/v1/nodes` | Node CRUD, tags, facts history |
+| ingest | `/api/v1/ingest` | Grain ingest, execution results, SBOM upload |
+| fleet | `/api/v1/fleet` | Fleet summary, status aggregates |
+| groups | `/api/v1/groups` | Node grouping, group SSH credentials |
+| baselines | `/api/v1/baselines` | Baseline snapshots, pinning, comparison |
+| drift | `/api/v1/drift` | Per-node drift scores and history |
+| ansible | `/api/v1/ansible` | Bootstrap, playbook discovery and execution |
+| salt_keys | `/api/v1/salt` | Minion key list, accept, reject, delete |
+| salt_ops | `/api/v1/salt-ops` | Ad-hoc Salt command execution |
+| sbom | `/api/v1/sbom` | SBOM records, CVE scan results |
+| webssh | `/api/v1/webssh` | WebSocket SSH terminal proxy |
+| vnc | `/api/v1/vnc` | VNC proxy (screen sharing) |
+| security | `/api/v1/security` | Secrets scanning, security policies |
+| audit | `/api/v1/audit` | Audit log of all admin actions |
+| node_secrets | `/api/v1/node-secrets` | Per-node encrypted secrets |
+| group_secrets | `/api/v1/group-secrets` | Group-scoped encrypted secrets |
+| alerts | `/api/v1/alerts` | Drift/SBOM alert rules |
+| ios_tracking | `/api/v1/ios` | Xcode version, cert expiry, signing identities |
+| platform_settings | `/api/v1/settings` | Runtime config panel, playbook sources |
 
 All routers are async-first. Database sessions are injected via `get_db` (SQLAlchemy async session factory), authentication is enforced with `require_role("viewer" | "operator" | "admin")` dependency injection, and the unhandled exception handler logs structured errors (via structlog) and returns a consistent `{"error": {"code": ..., "message": ...}}` envelope.
 
@@ -570,11 +570,11 @@ Every technology choice in kri came with a deliberate trade-off evaluation. Here
 | FastAPI | Async-first (native asyncio), auto-generates OpenAPI docs, Pydantic v2 for schema validation, excellent ecosystem | Python async has gotchas; CPU-bound tasks must be offloaded to Celery (we do) |
 | PostgreSQL + TimescaleDB | TimescaleDB hypertables give us automatic partitioning for time-series drift/SBOM data without a separate TSDB. Standard Postgres SQL for everything else | Heavier than SQLite; requires a real DB server, but appropriate for production fleet data |
 | Celery + Redis | Distributed task queue with proper retry semantics, multiple named queues (drift, sbom, maintenance, default), and built-in result backend. Redis also serves as the JWT revocation store — dual use | Redis is an additional service to operate; we accept this because we need it for JWT revocation anyway |
-| SaltStack | Pull-based architecture: minions maintain long-lived ZeroMQ connections to the master and react to commands without requiring inbound firewall rules. Excellent macOS grain support | Salt's learning curve is steep; we wrap most operations behind the kri API so operators never touch salt CLI directly |
+| SaltStack | Pull-based architecture: minions maintain long-lived ZeroMQ connections to the master and react to commands without requiring inbound firewall rules. Excellent macOS grain support | Salt's learning curve is steep; we wrap most operations behind the kri API so operators never touch `salt` CLI directly |
 | Ansible | Idiomatic bootstrap automation — SSH-based, agentless, mature macOS support via community.general. The salt-minion install playbook is simple YAML any engineer can read and audit | Ansible is push-based: bootstrap requires SSH access. After bootstrap, Salt takes over for ongoing management |
 | React + TanStack Query | TanStack Query provides background refetch, stale-while-revalidate, and optimistic updates out of the box. The fleet dashboard stays live without manual polling code | React bundle size; acceptable because this is an internal tool, not a consumer app |
 | Python (backend) | Not CPU-bound (all heavy work is in Ansible/Salt/Celery), native macOS system integration via pyobjc if needed, vast ecosystem for security tooling (cryptography, bcrypt, detect-secrets) | GIL limits true CPU parallelism — mitigated by Celery workers and async I/O for everything else |
-| uv (package manager) | 10–100x faster than pip for dependency resolution and install. Lockfile-based reproducible builds. Drop-in replacement for pip in Docker layers | Newer tool — some CI environments may need pip install uv first |
+| uv (package manager) | 10–100x faster than pip for dependency resolution and install. Lockfile-based reproducible builds. Drop-in replacement for pip in Docker layers | Newer tool — some CI environments may need `pip install uv` first |
 
 **Why Python for the backend?** The common objection is performance. kri's API is not CPU-bound — it spends its time waiting on database queries, Redis calls, and dispatching Celery tasks. Async FastAPI handles hundreds of concurrent requests efficiently in this I/O-bound regime. The work that is CPU-intensive (Ansible playbooks, Salt state execution, Trivy scans) runs in the worker container and never blocks the API event loop.
 

@@ -257,12 +257,12 @@ Signed for specific UDIDs registered in the provisioning profile. Up to 100 regi
 
 | Variable | Used For | Example |
 | --- | --- | --- |
-| CODE_SIGN_IDENTITY | Selects which certificate to sign with | iPhone Distribution: Acme Corp |
-| PROVISIONING_PROFILE_SPECIFIER | Profile name or UUID to embed | MyApp_Enterprise |
-| DEVELOPMENT_TEAM | Apple Team ID for automatic signing | A1B2C3D4E5 |
-| CODE_SIGNING_REQUIRED | Disable signing for compile-only CI | NO |
-| ONLY_ACTIVE_ARCH | Build all architectures (not just host) | NO |
-| COMPILER_INDEX_STORE_ENABLE | Skip Xcode indexing in CI (faster) | NO |
+| CODE_SIGN_IDENTITY | Selects which certificate to sign with | `iPhone Distribution: Acme Corp` |
+| PROVISIONING_PROFILE_SPECIFIER | Profile name or UUID to embed | `MyApp_Enterprise` |
+| DEVELOPMENT_TEAM | Apple Team ID for automatic signing | `A1B2C3D4E5` |
+| CODE_SIGNING_REQUIRED | Disable signing for compile-only CI | `NO` |
+| ONLY_ACTIVE_ARCH | Build all architectures (not just host) | `NO` |
+| COMPILER_INDEX_STORE_ENABLE | Skip Xcode indexing in CI (faster) | `NO` |
 
 ## 2 🤖 Android Build Flow
 

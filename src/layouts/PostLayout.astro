@@ -11,9 +11,10 @@ interface Props {
   readingTime?: number;
   slug?: string;
   headings?: { depth: number; slug: string; text: string }[];
+  tldr?: { summary: string; points: { k: string; v: string }[] };
 }
 
-const { title, description, date, updated, tags, cover, readingTime, slug = '', headings = [] } = Astro.props;
+const { title, description, date, updated, tags, cover, readingTime, slug = '', headings = [], tldr } = Astro.props;
 const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 const crumb = title.length > 45 ? title.slice(0, 45) + '…' : title;
 const pageUrl = `https://hellodk.io/${slug}`;
@@ -56,18 +57,20 @@ const shareUrl = encodeURIComponent(pageUrl);
       {cover && <img src={cover} alt={title} class="post-art__cover" />}
     </header>
 
-    <aside class="post-tldr" data-pagefind-ignore aria-label="TL;DR summary">
-      <div class="post-tldr__head">
-        <span class="post-tldr__label">TL;DR</span>
-        <span class="post-tldr__meta">3 takeaways</span>
-      </div>
-      <p class="post-tldr__summary">A Java 21 Alpine base image appeared stuck at one UNKNOWN CVE. It was not unpatchable — the image was built on an Alpine package snapshot old enough to predate the fix. One `RUN apk upgrade` in the Dockerfile cleared it for 3.1 MB.</p>
-      <ul class="post-tldr__points">
-        <li><span class="post-tldr__k">The culprit</span><span>Stale package snapshot, not an unfixable CVE</span></li>
-        <li><span class="post-tldr__k">The field that settled it</span><span>FixedVersion was populated — it is a to-do, not a dead end</span></li>
-        <li><span class="post-tldr__k">The fix</span><span>One `apk upgrade`, 3.1 MB, cleared the remaining finding</span></li>
-      </ul>
-    </aside>
+    {tldr && (
+      <aside class="post-tldr" data-pagefind-ignore aria-label="TL;DR summary">
+        <div class="post-tldr__head">
+          <span class="post-tldr__label">TL;DR</span>
+          <span class="post-tldr__meta">{tldr.points.length} takeaways</span>
+        </div>
+        <p class="post-tldr__summary">{tldr.summary}</p>
+        <ul class="post-tldr__points">
+          {tldr.points.map((p) => (
+            <li><span class="post-tldr__k">{p.k}</span><span>{p.v}</span></li>
+          ))}
+        </ul>
+      </aside>
+    )}
 
     {toc.length > 0 && (
       <aside class="post-toc-inline" aria-label="On this page">

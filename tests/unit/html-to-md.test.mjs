@@ -81,6 +81,40 @@ describe('convertHtml — app shell layout', () => {
     expect(body).toContain('## Alerting');
   });
 
+  it('turns .tab labels into H2 on hyphen-less .tabpane panes', () => {
+    const { body } = convertHtml(
+      '<html><body><div class="tabs" role="tablist">'
+      + '<button class="tab active" data-tab="metrics">Metrics</button>'
+      + '<button class="tab" data-tab="logs">Logs</button></div>'
+      + '<div class="tabpane" id="metrics"><p>36 metric families.</p></div>'
+      + '<div class="tabpane" id="logs"><p>Streaming server logs.</p></div>'
+      + '</body></html>',
+    );
+    expect(body).toContain('## Metrics');
+    expect(body).toContain('## Logs');
+    expect(body).toContain('36 metric families.');
+  });
+
+  it('drops a foreign series nav of relative .html links', () => {
+    const { body } = convertHtml(
+      '<html><body><nav><a href="index.html">All posts</a> '
+      + '<a href="1-hardware-telemetry.html">Hardware</a> '
+      + '<a href="../vllm-metal/index.html">vLLM Metal</a></nav>'
+      + '<p>Real body prose stays.</p></body></html>',
+    );
+    expect(body).not.toContain('1-hardware-telemetry.html');
+    expect(body).toContain('Real body prose stays.');
+  });
+
+  it('keeps navs with same-page anchors or real links', () => {
+    const { body } = convertHtml(
+      '<html><body><nav><a href="https://example.com/x">Docs</a> <a href="/tag/y">Tag</a></nav>'
+      + '<p>Real body prose stays.</p></body></html>',
+    );
+    expect(body).toContain('[Docs](https://example.com/x)');
+    expect(body).toContain('Real body prose stays.');
+  });
+
   it('falls back to the hero paragraph when meta description is absent', () => {
     expect(convertHtml(APP_SHELL).description).toBe(
       'Config drift went unnoticed for six weeks before anyone looked.',
@@ -294,6 +328,24 @@ describe('convertHtml — structure', () => {
       + '<tr><td>1</td><td>2</td></tr></table></body></html>',
     );
     expect(body).toContain('| --- | --- |');
+  });
+
+  it('preserves inline code, strong, and links inside table cells', () => {
+    const { body } = convertHtml(
+      '<html><body><table><tr><th>Tool</th><th>Note</th></tr>'
+      + '<tr><td><code>curl</code>, <code>jq</code></td>'
+      + '<td><strong>fast</strong> per <a href="https://example.com/x">docs</a></td></tr>'
+      + '</table></body></html>',
+    );
+    expect(body).toContain('| `curl`, `jq` | **fast** per [docs](https://example.com/x) |');
+  });
+
+  it('turns br inside a table cell into a space instead of gluing words', () => {
+    const { body } = convertHtml(
+      '<html><body><table><tr><th>A</th></tr>'
+      + '<tr><td>Stage 1<br>Base Image</td></tr></table></body></html>',
+    );
+    expect(body).toContain('| Stage 1 Base Image |');
   });
 });
 

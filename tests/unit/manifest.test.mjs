@@ -3,13 +3,13 @@ import { POSTS } from '../../scripts/lib/manifest.mjs';
 import { maskSlug } from '../../scripts/lib/mask.mjs';
 
 describe('POSTS manifest', () => {
-  it('has 66 entries', () => {
-    expect(POSTS).toHaveLength(66);
+  it('has 88 entries', () => {
+    expect(POSTS).toHaveLength(88);
   });
 
-  it('has 58 live and 8 draft', () => {
-    expect(POSTS.filter((p) => !p.draft)).toHaveLength(58);
-    expect(POSTS.filter((p) => p.draft)).toHaveLength(8);
+  it('has 81 live and 7 draft', () => {
+    expect(POSTS.filter((p) => !p.draft)).toHaveLength(81);
+    expect(POSTS.filter((p) => p.draft)).toHaveLength(7);
   });
 
   it('has unique slugs', () => {

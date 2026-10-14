@@ -70,13 +70,13 @@ Before you embed anything, you decide what is worth embedding. For kri, the corp
 
 | Source type | What it contains | Cadence | Live or embedded? |
 | --- | --- | --- | --- |
-| node | hostname, IP, status, last_seen, OS, CPU, memory | seconds | Live (status) + embedded (specs) |
-| group | group name, membership, purpose | rare | Embedded |
-| salt_state | drift reports + executed state results | minutes/hours | Embedded (history) |
-| salt_sls | contents of .sls state files | on commit | Embedded |
-| playbook_run | Ansible run results, per-task outcome, logs | per run | Embedded |
-| playbook_def | playbook/role descriptions, tasks | on commit | Embedded |
-| event | alerts and events, last 7 days | seconds | Live (active) + embedded (history) |
+| `node` | hostname, IP, status, last_seen, OS, CPU, memory | seconds | **Live** (status) + embedded (specs) |
+| `group` | group name, membership, purpose | rare | Embedded |
+| `salt_state` | drift reports + executed state results | minutes/hours | Embedded (history) |
+| `salt_sls` | contents of `.sls` state files | on commit | Embedded |
+| `playbook_run` | Ansible run results, per-task outcome, logs | per run | Embedded |
+| `playbook_def` | playbook/role descriptions, tasks | on commit | Embedded |
+| `event` | alerts and events, last 7 days | seconds | **Live** (active) + embedded (history) |
 
 Note the two rows marked both Live _and_ embedded. Node status and active alerts are the tip of a volatile spear - you fetch them live - but their _history_ ("mm2 has flapped four times this week") is exactly what embeddings are good at. That dual nature is the central design tension and we come back to it in section 7.
 
@@ -173,11 +173,11 @@ Hardcoding `intent='explain'` is the bug that breaks the most things at once, be
 
 | Intent | What it needs |
 | --- | --- |
-| fleet_status | Live API only. No retrieval. "How many nodes are up?" needs the snapshot, not embeddings. |
-| salt_state_gen | Retrieve similar .sls files, then generate a new state. |
-| playbook_gen | Retrieve similar playbooks/roles, then generate. |
-| explain | Retrieve the relevant state/playbook and explain it. |
-| troubleshoot | Retrieve recent events + alerts + run logs, then diagnose. The retrieval-heaviest path. |
+| `fleet_status` | Live API only. No retrieval. "How many nodes are up?" needs the snapshot, not embeddings. |
+| `salt_state_gen` | Retrieve similar `.sls` files, then generate a new state. |
+| `playbook_gen` | Retrieve similar playbooks/roles, then generate. |
+| `explain` | Retrieve the relevant state/playbook and explain it. |
+| `troubleshoot` | Retrieve recent events + alerts + run logs, then diagnose. The retrieval-heaviest path. |
 
 The greeting bug
 
@@ -302,8 +302,8 @@ RAG reduces but does not eliminate the model-quality floor. The model still has 
 | --- | --- |
 | 3B quantized (current) | Unusable. Hallucinates hostnames, ignores citation rules, confuses context. |
 | Minimum viable | 7B-14B with a >8k context window so the live snapshot + retrieved chunks + history all fit. |
-| Recommended (self-host) | exo cluster running Llama-3.1-8B-Instruct or Qwen2.5-14B. The exo box at 192.0.2.23 already serves this fleet. |
-| Recommended (hosted) | Claude Haiku - cost-effective, reliable instruction-following, strong on citation discipline. The pragmatic default when local capacity is tight. |
+| Recommended (self-host) | exo cluster running `Llama-3.1-8B-Instruct` or `Qwen2.5-14B`. The exo box at 192.0.2.23 already serves this fleet. |
+| Recommended (hosted) | **Claude Haiku** - cost-effective, reliable instruction-following, strong on citation discipline. The pragmatic default when local capacity is tight. |
 
 The context-window requirement is not optional. The whole RAG premise is that you stuff relevant facts into the window; an 8k floor is what lets the live snapshot, six-to-eight retrieved chunks, and three turns of history coexist without truncation.
 

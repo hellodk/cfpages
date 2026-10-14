@@ -232,13 +232,13 @@ This is the part worth taking seriously: the review passes weren't a formality. 
 
 | Connector | What the plan assumed | What review found |
 | --- | --- | --- |
-| YugabyteDB | Version string parses like plain PostgreSQL | Real output is PostgreSQL 11.2-YB-2.20.0.0-b0 ... — the planned parser would have produced a mangled version string |
-| YugabyteDB | yb_servers() distinguishes master vs. tserver nodes | It actually distinguishes primary-cluster vs. read-replica nodes — a different axis entirely |
-| YugabyteDB | pg_locks ports over like the Postgres integration's tool | Flagged unsafe as-is — YugabyteDB's distributed lock manager needs a different mechanism, excluded permanently rather than left vague |
-| YugabyteDB | Plan covered every wiring touchpoint | A missing hookup in core/domain/diagnosis/alignment.py found and added |
-| Aerospike | latency: info-protocol command still current | Stale — modern Aerospike uses latencies: (plural) |
-| Aerospike | setup_order / verify_order slot was free | Collided with an existing integration's registry slot — fixed before it could ship broken |
-| Aerospike | Alert-routing keyword "as" is a safe alias | Real substring-collision bug — silently matches inside words like "ask" or "class"; dropped |
+| YugabyteDB | Version string parses like plain PostgreSQL | Real output is `PostgreSQL 11.2-YB-2.20.0.0-b0 ...` — the planned parser would have produced a mangled version string |
+| YugabyteDB | `yb_servers()` distinguishes master vs. tserver nodes | It actually distinguishes primary-cluster vs. read-replica nodes — a different axis entirely |
+| YugabyteDB | `pg_locks` ports over like the Postgres integration's tool | Flagged unsafe as-is — YugabyteDB's distributed lock manager needs a different mechanism, excluded permanently rather than left vague |
+| YugabyteDB | Plan covered every wiring touchpoint | A missing hookup in `core/domain/diagnosis/alignment.py` found and added |
+| Aerospike | `latency:` info-protocol command still current | Stale — modern Aerospike uses `latencies:` (plural) |
+| Aerospike | `setup_order` / `verify_order` slot was free | Collided with an existing integration's registry slot — fixed before it could ship broken |
+| Aerospike | Alert-routing keyword `"as"` is a safe alias | Real substring-collision bug — silently matches inside words like "ask" or "class"; dropped |
 
 **Why this matters more than the connector count:** every one of these is the kind of bug that a test suite written against the plan's own (wrong) assumptions would never catch — because the test would have encoded the same wrong assumption. Catching them required a second, independently-reasoning pass that treated the draft as something to verify, not something to trust.
 
@@ -438,7 +438,7 @@ connection refused  # final synthesis call — server dropped mid-investigation
 
 | # | What actually fixed it | Why it mattered |
 | --- | --- | --- |
-| 1 | oMLX's genuine grammar-constrained structured-output enforcement | Every other backend tried (MLX proxy, exo, vLLM at its context limit) returned HTTP 200 while silently ignoring response_format — a passing request that produced unusable output |
+| 1 | oMLX's genuine grammar-constrained structured-output enforcement | Every other backend tried (MLX proxy, exo, vLLM at its context limit) returned HTTP 200 while silently ignoring `response_format` — a passing request that produced unusable output |
 | 2 | A model with enough real capacity to reason and gather evidence honestly | The 4B-8bit model, not the 1.7B one — capacity is what separated genuine differential diagnosis from a fabricated one |
 | 3 | Kubernetes tools pointed at the correct namespace | A config fix made much earlier in the saga, still a precondition for every later attempt to gather real evidence at all |
 

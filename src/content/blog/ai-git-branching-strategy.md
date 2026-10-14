@@ -72,10 +72,10 @@ Four real options, not two. GitFlow is too heavy for a codebase where AI agents 
 
 | Strategy | Core Idea | Best Fit | Why (Not) Here |
 | --- | --- | --- | --- |
-| GitFlow | Long-lived develop, formal release/hotfix branches, scheduled merges | Shrink-wrapped software, versioned on-prem releases | Too much ceremony for continuous AI PR volume — develop adds a layer without adding a security gate |
-| GitHub Flow | main + short-lived feature branches, deploy on merge | Small teams, single deployable, fully trusted contributors | Too loose — no supervised space to gate AI-generated code before it's one merge from production |
+| GitFlow | Long-lived `develop`, formal `release`/`hotfix` branches, scheduled merges | Shrink-wrapped software, versioned on-prem releases | Too much ceremony for continuous AI PR volume — `develop` adds a layer without adding a security gate |
+| GitHub Flow | `main` + short-lived feature branches, deploy on merge | Small teams, single deployable, fully trusted contributors | Too loose — no supervised space to gate AI-generated code before it's one merge from production |
 | Trunk-Based Dev | Everyone commits to trunk; feature flags hide incomplete work | High-maturity teams with strong test coverage and flag infrastructure | The direct ancestor of Integration-Gate Flow below — but leans on flags instead of a reviewed branch to contain AI output, and has no dedicated slot for nightly integration/DAST/chaos runs |
-| Integration-Gate Flow | Trunk-Based Development, plus one supervised integration branch as a review-and-test buffer | Multi-surface teams (UI/backend/frontend/mobile) mixing AI agents and humans | Selected — the minimum structure that gives AI output a gated holding area with nightly integration/perf/DAST/chaos/mutation tests, without GitFlow's develop/release ceremony |
+| Integration-Gate Flow | Trunk-Based Development, plus one supervised `integration` branch as a review-and-test buffer | Multi-surface teams (UI/backend/frontend/mobile) mixing AI agents and humans | **Selected** — the minimum structure that gives AI output a gated holding area with nightly integration/perf/DAST/chaos/mutation tests, without GitFlow's `develop`/`release` ceremony |
 
 Three properties Integration-Gate Flow specifically buys for AI-assisted development:
 
@@ -348,10 +348,10 @@ The `helm-ci` check in Tab 3 lints the chart at PR time. Helm's own **release ho
 
 | Hook | Typical Job | Maps to Pipeline Stage |
 | --- | --- | --- |
-| pre-install / pre-upgrade | DB schema migration, config validation | Runs before Deploy Dev / Deploy QA / Production — a failure here aborts the release, nothing new is applied |
-| post-install / post-upgrade | Smoke-test Job, Slack/webhook notification | Smoke |
-| test | helm test Job, run on demand post-deploy | Integration / Post-Deploy |
-| pre-rollback / post-rollback | State snapshot, post-rollback verification | Fires automatically on helm rollback — the "Fast Rollback" path from Tab 1 |
+| pre-install / pre-upgrade | DB schema migration, config validation | Runs before `Deploy Dev` / `Deploy QA` / `Production` — a failure here aborts the release, nothing new is applied |
+| post-install / post-upgrade | Smoke-test Job, Slack/webhook notification | `Smoke` |
+| test | `helm test` Job, run on demand post-deploy | `Integration` / `Post-Deploy` |
+| pre-rollback / post-rollback | State snapshot, post-rollback verification | Fires automatically on `helm rollback` — the "Fast Rollback" path from Tab 1 |
 | pre-delete / post-delete | Backup Job, external resource cleanup (DNS, LB) | Decommissioning — outside the normal promotion path |
 
 **Failure policy:** if a `pre-*` hook Job fails, Helm halts before touching any release resources — the same fail-closed guarantee the rest of this pipeline relies on. Hook ordering within a phase is controlled by `helm.sh/hook-weight`; cleanup of one-shot hook Jobs is controlled by `helm.sh/hook-delete-policy`.
@@ -389,10 +389,10 @@ The version number and the changelog are both _computed_, not written by hand. B
 
 | Commits Since Last Tag | Bump | Example |
 | --- | --- | --- |
-| Any BREAKING CHANGE: footer, or a type! | Major — resets MINOR + PATCH | 1.1.99 → 2.0.0 |
-| At least one feat:, no breaking change | Minor — resets PATCH | 1.1.99 → 1.2.0 |
-| Only fix: / perf: / security: | Patch | 1.1.99 → 1.1.100 |
-| Only docs: / build: / ci: / test: / refactor: / otel: / ai: | No release cut | 1.1.99 stays 1.1.99 |
+| Any `BREAKING CHANGE:` footer, or a `type!` | Major — resets MINOR + PATCH | 1.1.99 → 2.0.0 |
+| At least one `feat:`, no breaking change | Minor — resets PATCH | 1.1.99 → 1.2.0 |
+| Only `fix:` / `perf:` / `security:` | Patch | 1.1.99 → 1.1.100 |
+| Only `docs:` / `build:` / `ci:` / `test:` / `refactor:` / `otel:` / `ai:` | No release cut | 1.1.99 stays 1.1.99 |
 
 Commit to signed, versioned tag — animated
 

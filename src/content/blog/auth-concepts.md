@@ -399,10 +399,10 @@ OAuth 2.0 is an authorization framework — it answers "what is this application
 
 | Grant Type | When to Use | Who Gets the Token |
 | --- | --- | --- |
-| Authorization Code | Web apps, mobile apps — user present | Backend server (after code exchange) |
-| Client Credentials | Machine-to-machine (no user) | The service itself |
-| Device Flow | CLI tools, TV apps, limited input | Device polls until user approves on phone |
-| Implicit (deprecated) | Old SPAs — avoid; use Auth Code + PKCE | Browser (unsafe) |
+| **Authorization Code** | Web apps, mobile apps — user present | Backend server (after code exchange) |
+| **Client Credentials** | Machine-to-machine (no user) | The service itself |
+| **Device Flow** | CLI tools, TV apps, limited input | Device polls until user approves on phone |
+| **Implicit** (deprecated) | Old SPAs — avoid; use Auth Code + PKCE | Browser (unsafe) |
 
 ## SAML 2.0
 

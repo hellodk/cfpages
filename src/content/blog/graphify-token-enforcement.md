@@ -65,8 +65,8 @@ After the graphify session, two implementation tasks were dispatched as backgrou
 
 | Agent | Task | graphify queries run before dispatch | Total tool calls | Tokens |
 | --- | --- | --- | --- | --- |
-| b43 | License compliance dashboard (#55) | 0 | 37 | 61,678 |
-| b44 | WebSSH connection cache (#166) | 0 | 23 | 55,519 |
+| `b43` | License compliance dashboard (#55) | 0 | 37 | 61,678 |
+| `b44` | WebSSH connection cache (#166) | 0 | 23 | 55,519 |
 
 The b43 agent's 37 tool calls break down roughly as: 12 file reads to explore the existing SBOM route, sbom.ts, App.tsx, Sidebar.tsx, and existing tests — all information that a single `graphify query "how does SBOM work in kri"` would have provided in one shot. The b44 agent similarly read webssh.py in full (445 lines) to understand the structure before modifying it.
 
@@ -174,7 +174,7 @@ The key insight: **the parent session has the context already warm in cache.** R
 | --- | --- | --- | --- |
 | Lazy brief (what happened) | ~0 (typed from memory) | ~35 | ~60K |
 | graphify + tight brief (correct) | 2 queries + 3 file reads (cheap, cached) | ~10 | ~25K |
-| Saving |  | ~70% fewer | ~58% fewer |
+| **Saving** |  | ~70% fewer | ~58% fewer |
 
 ## 6 The fix — enforcement via hooks
 
@@ -282,9 +282,9 @@ After the hook was in place, the next implementation task (b46 — Salt pillar i
 
 | Agent | Task | Brief style | Tool calls | Tokens | Result |
 | --- | --- | --- | --- | --- | --- |
-| b43 | License compliance dashboard (new backend + frontend) | Lazy — no graphify | 37 | 61,678 | Merged ✓ |
-| b44 | WebSSH connection cache (new service + route) | Lazy — no graphify | 23 | 55,519 | Merged ✓ |
-| b46 | Salt pillar input dialog (new frontend component) | graphify + tight brief | 38 | 62,999 | PR open ✓ |
+| `b43` | License compliance dashboard (new backend + frontend) | Lazy — no graphify | 37 | 61,678 | Merged ✓ |
+| `b44` | WebSSH connection cache (new service + route) | Lazy — no graphify | 23 | 55,519 | Merged ✓ |
+| `b46` | Salt pillar input dialog (new frontend component) | graphify + tight brief | 38 | 62,999 | PR open ✓ |
 
 **Verdict: no improvement on a frontend-only task.** b46 used 38 tool calls and 62,999 tokens — essentially identical to b43 (37 calls, 61,678 tokens). The graphify brief did not help.
 

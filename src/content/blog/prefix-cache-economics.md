@@ -99,11 +99,11 @@ A general-purpose workload — unrelated chat sessions landing cold — looks no
 
 | Capability | Where | What it buys |
 | --- | --- | --- |
-| Chained content-addressed block hashes | omlx/cache/paged_cache.py | vLLM-style paged blocks (256 tokens) hashed and chained — a prompt matches wherever its blocks match, so mid-prompt prefix reuse works without exact full-prompt hits. |
-| Two-tier cache | RAM hot tier + SSD cold tier | Paged SSD tier under a 100GB cap keeps evicted prefixes restorable — warm context survives longer than RAM alone would allow. |
-| Cluster-level cache-aware router | omlx/cluster/cache_aware_scheduler.py | Scores nodes by prefix-hash overlap, so requests drift toward whichever node already holds their context. |
-| Cache observability | PrefixCacheStats | tokens_saved, exact hits, partial-block skips — the raw material for exactly the measurement behind the tweet. |
-| Scheduling depth | max_num_seqs = 256 | Chunked prefill, decode-fairness scheduling, memory-guard watermarks — batch machinery ready to exploit whatever the cache saves. |
+| **Chained content-addressed block hashes** | omlx/cache/paged_cache.py | vLLM-style paged blocks (256 tokens) hashed and chained — a prompt matches wherever its blocks match, so mid-prompt prefix reuse works without exact full-prompt hits. |
+| **Two-tier cache** | RAM hot tier + SSD cold tier | Paged SSD tier under a 100GB cap keeps evicted prefixes restorable — warm context survives longer than RAM alone would allow. |
+| **Cluster-level cache-aware router** | omlx/cluster/cache_aware_scheduler.py | Scores nodes by prefix-hash overlap, so requests drift toward whichever node already holds their context. |
+| **Cache observability** | PrefixCacheStats | tokens_saved, exact hits, partial-block skips — the raw material for exactly the measurement behind the tweet. |
+| **Scheduling depth** | max_num_seqs = 256 | Chunked prefill, decode-fairness scheduling, memory-guard watermarks — batch machinery ready to exploit whatever the cache saves. |
 
 This is not a toy: content-addressed chaining, tiering, overlap routing and stats are the same architectural moves as production vLLM deployments. But auditing it against agent workloads surfaced six places where hit rate still leaks.
 
@@ -165,9 +165,9 @@ Hit rate is an input. Throughput is a minimum. Sustained request rate R is cappe
 
 | Ceiling | Inequality | Meaning |
 | --- | --- | --- |
-| Prefill | R × P × (1−h) ≤ PP_batched | Uncached prompt tokens must fit in the batched prefill budget. P = prompt tokens, h = hit rate. This is the ceiling caching attacks directly. |
-| Decode | R × O ≤ TG_batched | Every request still generates O output tokens one at a time. Caching does nothing here — decode is paid in full on every request. |
-| KV-RAM | streams ≤ KV_budget ÷ bytes/token | Concurrent streams must fit resident KV. On memory-constrained machines this binds before compute does. |
+| **Prefill** | R × P × (1−h) ≤ PP_batched | Uncached prompt tokens must fit in the batched prefill budget. P = prompt tokens, h = hit rate. This is the ceiling caching attacks directly. |
+| **Decode** | R × O ≤ TG_batched | Every request still generates O output tokens one at a time. Caching does nothing here — decode is paid in full on every request. |
+| **KV-RAM** | streams ≤ KV_budget ÷ bytes/token | Concurrent streams must fit resident KV. On memory-constrained machines this binds before compute does. |
 
 ### Worked example — reference bench fixture
 
@@ -175,9 +175,9 @@ Hit rate is an input. Throughput is a minimum. Sustained request rate R is cappe
 
 | Scenario | Hit Rate | Sustained Rate | Binding Ceiling |
 | --- | --- | --- | --- |
-| No cache | 0% | ~1.9 req/min | Prefill — 3,100 tok/s ÷ 100k tokens/request |
-| Tweet workload | 92% | ~22 req/min | Decode + prefill co-bound — both land near 22 |
-| Tuned: 95% hit + larger decode batch | 95% | ~30–48 req/min | Decode aggregate — the remaining wall |
+| No cache | 0% | **~1.9 req/min** | Prefill — 3,100 tok/s ÷ 100k tokens/request |
+| Tweet workload | 92% | **~22 req/min** | Decode + prefill co-bound — both land near 22 |
+| Tuned: 95% hit + larger decode batch | 95% | **~30–48 req/min** | Decode aggregate — the remaining wall |
 
 <svg viewBox="0 0 760 320" role="img" aria-label="Sustained request rate equals the minimum of three ceilings: prefill, decode, and KV-RAM">
           <rect x="0" y="0" width="760" height="320" fill="#FFFFFF"></rect>

@@ -197,9 +197,9 @@ That check is also a real pytest integration test, not just a manual command:
 
 | Alert | Condition | Severity |
 | --- | --- | --- |
-| DriftDetectorWatchdog | vector(1) — always firing | dead-man's-switch |
-| DriftDetected | sum(drift_drift) by (app, service) > 0 for 5m | warning |
-| DriftScanFailing | drift_up == 0 or absent(drift_up) for 5m | critical |
+| `DriftDetectorWatchdog` | `vector(1)` — always firing | dead-man's-switch |
+| `DriftDetected` | `sum(drift_drift) by (app, service) > 0` for 5m | warning |
+| `DriftScanFailing` | `drift_up == 0 or absent(drift_up)` for 5m | critical |
 
 ## 7 The dashboard
 

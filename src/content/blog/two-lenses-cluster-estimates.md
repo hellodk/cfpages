@@ -26,10 +26,10 @@ All four found while standing up a two-machine Apple Silicon inference cluster.
 
 |  | Bug | Why it matters |
 | --- | --- | --- |
-| A | Activation rejects the default macOS computer name | Setup Assistant names Macs <Name>'s <Model> using a curly apostrophe (U+2019). The node-ID validator allows ASCII alphanumerics, dot, underscore, hyphen. Every un-renamed Mac fails at activation. |
-| B | Correctly installed peer reported as "runtime not installed" | Interpreter discovery looks for a filename the product does not ship. The fallback path hardcodes a "not installed" verdict, which then surfaces as a diagnosis. A budgets endpoint 503s on every dashboard poll. |
-| C | Non-coordinator answers requests silently | Every node is a full standalone server. A request to the wrong node returns a valid 200 from that node's own model, indistinguishable from a distributed answer. |
-| D | Coordinator loss ends the deployment, undocumented | No failover, no shard rebalance. Ranks detect the dead launcher and exit rather than hang. Correct behaviour — but written down nowhere. |
+| **A** | Activation rejects the default macOS computer name | Setup Assistant names Macs `<Name>'s <Model>` using a curly apostrophe (U+2019). The node-ID validator allows ASCII alphanumerics, dot, underscore, hyphen. Every un-renamed Mac fails at activation. |
+| **B** | Correctly installed peer reported as "runtime not installed" | Interpreter discovery looks for a filename the product does not ship. The fallback path hardcodes a "not installed" verdict, which then surfaces as a diagnosis. A budgets endpoint 503s on every dashboard poll. |
+| **C** | Non-coordinator answers requests silently | Every node is a full standalone server. A request to the wrong node returns a valid 200 from that node's own model, indistinguishable from a distributed answer. |
+| **D** | Coordinator loss ends the deployment, undocumented | No failover, no shard rebalance. Ranks detect the dead launcher and exit rather than hang. Correct behaviour — but written down nowhere. |
 
 D was deliberately filed as three things: document the semantics, surface the crash event, and an optional assisted re-activation. That split turned out to matter.
 
@@ -206,10 +206,10 @@ Four tickets went in. Four things about them were wrong.
 
 | Ticket | What the reviews changed |
 | --- | --- |
-| A | Reframed from a validator nit to the entry point of a silent-corruption path. Two "candidate fixes" collapsed to one preferred source with a narrow fallback. Migration framing dropped in favour of failing loudly through the existing approval gate. |
-| B | Split conceptually in two: the discovery fix, and the health-cache and backoff work that must be ticketed separately so it does not vanish when the flapping stops. |
-| C | Acceptance criteria narrowed to the two additive designs. Estimate raised, because the hard part is distinguishing an enrolled non-coordinator from a standalone node — and no membership signal appears to exist. |
-| D | Split into three. Documentation is a quarter-day. Event surfacing is a day and depends on B's plumbing. Assisted re-activation is an unscoped feature that should never have shared a ticket with a writing task. |
+| **A** | Reframed from a validator nit to the entry point of a silent-corruption path. Two "candidate fixes" collapsed to one preferred source with a narrow fallback. Migration framing dropped in favour of failing loudly through the existing approval gate. |
+| **B** | Split conceptually in two: the discovery fix, and the health-cache and backoff work that must be ticketed separately so it does not vanish when the flapping stops. |
+| **C** | Acceptance criteria narrowed to the two additive designs. Estimate raised, because the hard part is distinguishing an enrolled non-coordinator from a standalone node — and no membership signal appears to exist. |
+| **D** | Split into three. Documentation is a quarter-day. Event surfacing is a day and depends on B's plumbing. Assisted re-activation is an unscoped feature that should never have shared a ticket with a writing task. |
 
 The totals were the least interesting output. What the two lenses were actually good for was catching what the other could not see: one found a path to confidently wrong answers hiding inside a typography bug, the other found that the obvious fix would conceal its own sibling. Neither found both. A single reviewer, however senior, would have shipped with one of those two still in the backlog and no idea it was there.
 

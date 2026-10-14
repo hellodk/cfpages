@@ -262,10 +262,10 @@ new Date(e.event_at).toLocaleString('en-IN', {
 | Situation | Do this |
 | --- | --- |
 | Persisting a timestamp | UTC. No exceptions. |
-| Sending one over the wire | ISO 8601 with Z / offset. |
-| Showing one to a person | Convert at render, zone explicit, suffix the label (IST). |
-| Running a job at a local hour | CronJob.spec.timeZone — not a container clock. |
-| Tempted to set container TZ | Don't, unless the workload is display-only. |
+| Sending one over the wire | ISO 8601 with `Z` / offset. |
+| Showing one to a person | Convert at render, zone explicit, suffix the label (`IST`). |
+| Running a job at a local hour | `CronJob.spec.timeZone` — not a container clock. |
+| Tempted to set container `TZ` | Don't, unless the workload is display-only. |
 | Computing a duration | Subtract instants (epochs), never wall clocks. |
 
 **The whole guide in one sentence:** keep one clock in the machine and let people wear their own.

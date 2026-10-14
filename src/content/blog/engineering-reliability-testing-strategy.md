@@ -360,7 +360,7 @@ Review flakiness rate, coverage trend, and mutation score every sprint. Trends m
 
 | Metric | Target | How to measure |
 | --- | --- | --- |
-| Unit test coverage | ≥ 60% | pytest-cov, --cov-fail-under=60 |
+| Unit test coverage | ≥ 60% | pytest-cov, `--cov-fail-under=60` |
 | Mutation score | ≥ 70% | mutmut — track surviving mutants per sprint |
 | E2E flakiness rate | < 2% | Track retry count in CI logs over 4-week window |
 | Contract drift | 0 fields | Schema comparison script in CI — exit non-zero on drift |

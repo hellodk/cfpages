@@ -1013,9 +1013,9 @@ Every Salt module is a Python file. The Salt loader injects special **dunder** (
 
 | Variable | What it gives you |
 | --- | --- |
-| __salt__ | Call other execution modules: __salt__['cmd.run']('uptime') |
-| __grains__ | Read minion grains: __grains__['os'] |
-| __pillar__ | Read pillar data: __pillar__.get('key', 'default') |
+| __salt__ | Call other execution modules: `__salt__['cmd.run']('uptime')` |
+| __grains__ | Read minion grains: `__grains__['os']` |
+| __pillar__ | Read pillar data: `__pillar__.get('key', 'default')` |
 | __opts__ | Master/minion config options |
 | __utils__ | Utility functions shared across modules |
 | __states__ | Call state functions from an execution module |
@@ -1343,16 +1343,16 @@ Targeting methods — how each selects minions
 
 | Flag | Type | Example |
 | --- | --- | --- |
-| (none) | Glob (default) | mm* web[12] |
-| -G | Grain | os:MacOS cpuarch:arm64 |
-| -P | Grain PCRE | os:Mac.* |
-| -E | PCRE minion ID | mm[0-9]+ |
-| -L | Comma list | mm1,mm2,mm3 |
-| -N | Nodegroup | production |
-| -I | Pillar | role:primary |
-| -J | Pillar PCRE | role:web.* |
-| -S | Subnet/IP | 192.0.2.0/24 |
-| -C | Compound | G@os:MacOS and not mm1 |
+| (none) | Glob (default) | `mm* web[12]` |
+| -G | Grain | `os:MacOS cpuarch:arm64` |
+| -P | Grain PCRE | `os:Mac.*` |
+| -E | PCRE minion ID | `mm[0-9]+` |
+| -L | Comma list | `mm1,mm2,mm3` |
+| -N | Nodegroup | `production` |
+| -I | Pillar | `role:primary` |
+| -J | Pillar PCRE | `role:web.*` |
+| -S | Subnet/IP | `192.0.2.0/24` |
+| -C | Compound | `G@os:MacOS and not mm1` |
 
 ## Nodegroups
 
@@ -1528,10 +1528,10 @@ salt-key --gen-keys=test --gen-keys-dir=/tmp/
 | /etc/salt/master | Main salt-master config |
 | /etc/salt/master.d/*.conf | Drop-in master config files (kri.conf, salt-api.conf) |
 | /etc/salt/minion | Minion config (master address, id, log level) |
-| /etc/salt/minion.d/*.conf | Drop-in minion config — kri writes kri-heartbeat.conf here |
+| /etc/salt/minion.d/*.conf | Drop-in minion config — kri writes `kri-heartbeat.conf` here |
 | /etc/salt/pki/master/ | Master RSA keys + all minion public keys |
 | /etc/salt/pki/minion/ | Minion private key + cached master.pub |
-| /srv/salt/states/ | State files (.sls) served via salt:// |
+| /srv/salt/states/ | State files (.sls) served via `salt://` |
 | /srv/salt/pillar/ | Pillar files — per-node secrets and config |
 | /Library/LaunchDaemons/com.saltstack.salt.master.plist | macOS launchd plist for salt-master |
 | /Library/LaunchDaemons/com.saltstack.salt.api.plist | macOS launchd plist for salt-api |

@@ -96,10 +96,10 @@ security import dist.p12 -k ios-ci.keychain -P 'DummyCertPass123!' \
 
 | Certificate type | Signed by | Runs where | Lifetime | Typical use |
 | --- | --- | --- | --- | --- |
-| iPhone Developer | WWDR CA | Registered devices only | 1 year | Daily development, debugger attach |
-| iPhone Distribution | WWDR CA | Per profile type ↓ | 1 year | Ad-hoc OTA, App Store, Enterprise fleets |
-| Enterprise (In-House) | WWDR CA (enterprise program) | Any device | 1 year | Internal corporate distribution |
-| Self-signed dummy CI-only | Your own local CA | Nobody — archive proof only | You choose | Pipelines with no Apple account |
+| **iPhone Developer** | WWDR CA | Registered devices only | 1 year | Daily development, debugger attach |
+| **iPhone Distribution** | WWDR CA | Per profile type ↓ | 1 year | Ad-hoc OTA, App Store, Enterprise fleets |
+| **Enterprise (In-House)** | WWDR CA (enterprise program) | Any device | 1 year | Internal corporate distribution |
+| **Self-signed dummy** CI-only | Your own local CA | Nobody — archive proof only | You choose | Pipelines with no Apple account |
 
 ### The keychain — and why partition lists exist
 
@@ -169,10 +169,10 @@ Anatomy of a provisioning profile
 
 | Profile type | Needs devices? | Store submission | Expiry | Note |
 | --- | --- | --- | --- | --- |
-| Development | Yes | No | ~7 days (free) / 1 yr | Xcode auto-manages ("automatic signing") |
-| Ad Hoc | Yes | No | 1 yr | Distribute builds directly to testers' UDIDs |
-| App Store | No | Yes | 1 yr | TestFlight + store; Apple re-signs after review |
-| Enterprise / In-House | No | No | 1 yr | Any device; $299/yr program; heavy compliance rules |
+| **Development** | Yes | No | ~7 days (free) / 1 yr | Xcode auto-manages ("automatic signing") |
+| **Ad Hoc** | Yes | No | 1 yr | Distribute builds directly to testers' UDIDs |
+| **App Store** | No | Yes | 1 yr | TestFlight + store; Apple re-signs after review |
+| **Enterprise / In-House** | No | No | 1 yr | Any device; $299/yr program; heavy compliance rules |
 
 **App IDs** An **explicit** App ID (`com.bank.superapp`) enables per-capability switches (push, Sign in with Apple, associated domains). A **wildcard** (`com.bank.*`) covers many apps but supports almost no capabilities. The bundle ID in Info.plist must match the pattern.
 
@@ -252,8 +252,8 @@ Same key, same command — one variable changed
 
 | Run | Setup | Observed behaviour |
 | --- | --- | --- |
-| NOPARTITION · build 1 | ephemeral KC, poisoned default keychain present | errSecInternalComponent, rc=1 in ~0.3 s |
-| NOPARTITION · build 2 | clean search list, KC registered | silent hang — codesign waits forever for an unanswerable GUI prompt; killed by timeout |
+| NOPARTITION · build 1 | ephemeral KC, poisoned default keychain present | `errSecInternalComponent`, rc=1 in ~0.3 s |
+| NOPARTITION · build 2 | clean search list, KC registered | **silent hang** — codesign waits forever for an unanswerable GUI prompt; killed by timeout |
 | PARTITION · build 2 | identical + one command | rc=0 instant signature, verification passes |
 
 **Debug scars worth remembering** A keychain whose password was generated randomly and then lost stays locked _forever_ — if it's also the **default** keychain it degrades every lookup. And `--keychain` alone does not make an identity visible: codesign walks the **search list**. Fix with `security default-keychain -s login.keychain-db` + `security list-keychains -d user -s …`.
@@ -315,10 +315,10 @@ Each generation patched a weakness of the last. `apksigner` picks automatically 
 
 | Scheme | Since | Signs what | Why it exists |
 | --- | --- | --- | --- |
-| v1 (JAR) | Android 1.0 | each ZIP entry in META-INF | Original model — but names were unsigned → the Janus vulnerability let attackers inject code while keeping valid v1 signatures |
-| v2 | Android 7.0 | whole file, one APKSig block between entries and central directory | any byte flip breaks it; far faster install-time verification |
-| v3 | Android 9 | v2 + signed rotation info | key rotation: new cert provably succeeds the old one (proof-of-rotation lineage) |
-| v4 | Android 11 | merkle tree sidecar (.idsig) | incremental / streaming installs, fs-verity |
+| **v1** (JAR) | Android 1.0 | each ZIP entry in META-INF | Original model — but names were unsigned → the Janus vulnerability let attackers inject code while keeping valid v1 signatures |
+| **v2** | Android 7.0 | whole file, one APKSig block between entries and central directory | any byte flip breaks it; far faster install-time verification |
+| **v3** | Android 9 | v2 + signed rotation info | **key rotation**: new cert provably succeeds the old one (proof-of-rotation lineage) |
+| **v4** | Android 11 | merkle tree sidecar (.idsig) | incremental / streaming installs, fs-verity |
 
 ```bash
 # explicit control instead of autodetection
@@ -378,12 +378,12 @@ Same concepts, different machinery. Keep this next to you when switching platfor
 | Concept | iOS | Android |
 | --- | --- | --- |
 | Private key home | Keychain item (ACL + partition list) | Entry inside a KeyStore file |
-| Portable credential bundle | .p12 (cert + encrypted key) | the .jks/.p12 keystore itself |
+| Portable credential bundle | `.p12` (cert + encrypted key) | the `.jks/.p12` keystore itself |
 | Certificate issuer | Apple via WWDR CA (CSR flow) | self-signed — nobody issues it |
 | "Who may install?" | provisioning profile (+ UDIDs) | nothing pre-installed; signature continuity at update time |
 | Capabilities grant | entitlements baked into signature | manifest permissions; some signature-protected |
-| CLI signer | codesign | apksigner / historically jarsigner |
-| Cert inspection | codesign -dv, security find-identity | keytool -printcert, apksigner verify |
+| CLI signer | `codesign` | `apksigner` / historically `jarsigner` |
+| Cert inspection | `codesign -dv`, `security find-identity` | `keytool -printcert`, `apksigner verify` |
 | Crash symbols | dSYMs → TestFlight/symbolicate | mapping.txt → retrace / Play Console |
 | Beta distribution | TestFlight / Ad-Hoc OTA | internal testing track / direct APK |
 | Store re-signing | Apple re-signs after review | Play App Signing re-signs splits |
@@ -421,13 +421,13 @@ apksigner verify --print-certs *.aab 2>/dev/null || \
 
 | You see | Platform | Actually means | Fix direction |
 | --- | --- | --- | --- |
-| errSecInternalComponent | iOS | key ACL/partition denies non-interactive use | unlock + set-key-partition-list |
+| `errSecInternalComponent` | iOS | key ACL/partition denies non-interactive use | unlock + set-key-partition-list |
 | codesign silently hangs | iOS | GUI auth prompt on headless agent | same as above — the prompt IS the bug |
-| no identity found | iOS | keychain missing from search list / expired | list-keychains -s … ; check cert dates |
-| Unable to find a destination | iOS | platform SDK absent or no destination given | xcodebuild -downloadPlatform iOS; -destination generic/platform=iOS |
-| INSTALL_PARSE_FAILED_NO_CERTIFICATES | Android | v2+ required but only v1 present | apksigner with min-sdk-aware schemes |
-| INSTALL_FAILED_UPDATE_INCOMPATIBLE | Android | installed build signed by different key | uninstall, or restore correct keystore |
-| Execution failed for task :signReleaseBundle | Android | keystore path/password wrong in CI env | check base64 round-trip + env names |
+| `no identity found` | iOS | keychain missing from search list / expired | list-keychains -s … ; check cert dates |
+| `Unable to find a destination` | iOS | platform SDK absent or no destination given | xcodebuild -downloadPlatform iOS; -destination generic/platform=iOS |
+| `INSTALL_PARSE_FAILED_NO_CERTIFICATES` | Android | v2+ required but only v1 present | apksigner with min-sdk-aware schemes |
+| `INSTALL_FAILED_UPDATE_INCOMPATIBLE` | Android | installed build signed by different key | uninstall, or restore correct keystore |
+| `Execution failed for task :signReleaseBundle` | Android | keystore path/password wrong in CI env | check base64 round-trip + env names |
 
 **The one-paragraph mental model** **iOS**: Apple owns the root of trust; you prove membership (certificate) and scope (profile), and macOS guards your private key behind ACLs and partition lists that must be explicitly opened for machines without hands.  
 **Android**: there is no issuer — _you_ are the root of trust from day one; the platform only guarantees that today's update was signed by the same entity as yesterday's install, and modern schemes + Play App Signing exist to keep that promise manageable.

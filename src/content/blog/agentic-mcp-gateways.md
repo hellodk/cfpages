@@ -389,7 +389,7 @@ Mid-operation, a server can ask the user for structured input ("which environmen
 | Transport | How | Use For |
 | --- | --- | --- |
 | stdio | Host spawns the server as a child process; JSON-RPC over stdin/stdout | Local servers — filesystem, shell, dev tools |
-| Streamable HTTP | Single HTTP endpoint; responses can upgrade to SSE streams; session via Mcp-Session-Id | Remote / hosted servers |
+| Streamable HTTP | Single HTTP endpoint; responses can upgrade to SSE streams; session via `Mcp-Session-Id` | Remote / hosted servers |
 | HTTP + SSE | Two-endpoint scheme from the original spec | Deprecated — replaced by Streamable HTTP (2025-03-26) |
 
 ```bash
@@ -722,7 +722,7 @@ Results come back as artifacts — text, files, structured data. The remote agen
 | MCP Registry | The official catalog for discovering published MCP servers (with private sub-registries inside enterprises) |
 | Agent Runtime | The managed place agents execute — loop scheduling, state persistence, scaling — e.g. cloud agent platforms or your own harness on k8s |
 | Tool Poisoning | Attack: hostile instructions hidden inside a tool's description or output, hijacking the model when they enter context |
-| Confused Deputy | Attack: tricking a privileged agent into using its authority for the attacker's request — why per-user, per-tool authorization beats one god-token |
+| Confused Deputy | Attack: tricking a privileged agent into using *its* authority for the attacker's request — why per-user, per-tool authorization beats one god-token |
 | Rug Pull | Attack: an MCP server changes a tool's behaviour after the user approved the original — mitigated by version pinning and gateway policy |
 
 <aside class="callout"><strong class="callout__title">How it all composes:</strong><div class="callout__body">a model becomes an <strong>agent</strong> when a harness runs it in a tool loop · <strong>MCP</strong> standardises how that loop reaches tools and data · <strong>A2A</strong> standardises how agents delegate to each other · and <strong>gateways</strong> put identity, policy, and observability on every one of those wires. Four layers — reasoning, tooling, collaboration, governance.</div></aside>

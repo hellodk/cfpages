@@ -115,10 +115,10 @@ f0bcb00e... refs/remotes/origin/feat/branch
 
 |  | Before | After |
 | --- | --- | --- |
-| Commits | 4 | 2 |
-| Files in PR | 67 | 13 |
-| Insertions | 56,190 | 1,633 |
-| Cache files | 55 | 0 |
+| **Commits** | 4 | 2 |
+| **Files in PR** | 67 | 13 |
+| **Insertions** | 56,190 | 1,633 |
+| **Cache files** | 55 | 0 |
 
 ### GitHub Says 422
 
@@ -363,10 +363,10 @@ When the host record carries no discovered interpreter, it falls back to the coo
 
 | Measurement | Value |
 | --- | --- |
-| Total ceiling-probe failures in the log | 297 |
-| Last failure | 03:06:17 |
-| Time of check | 03:15:47 |
-| Failures in the 9.5 minutes after the shim | 0 |
+| Total ceiling-probe failures in the log | **297** |
+| Last failure | **03:06:17** |
+| Time of check | **03:15:47** |
+| Failures in the 9.5 minutes after the shim | **0** |
 
 297 failures, then silence. The cluster was never unstable. One probe path was failing on a ten-second timer and the UI faithfully rendered it as an oscillation.
 
@@ -407,9 +407,9 @@ The machine had three different names, and the dashboard happened to send the on
 
 | Name | Value | Passes Validator |
 | --- | --- | --- |
-| ComputerName | Deepak’s Mac mini | No |
-| LocalHostName | Deepaks-Mac-mini | Yes |
-| HostName | mm | Yes |
+| `ComputerName` | Deepak’s Mac mini | **No** |
+| `LocalHostName` | Deepaks-Mac-mini | **Yes** |
+| `HostName` | mm | **Yes** |
 
 A useful side effect of chasing this: the log's references to `Deepaks-Mac-mini.local` looked like a third machine on the network. It was not. It was the same node under its `LocalHostName`, while `hostname` returned something else entirely.
 

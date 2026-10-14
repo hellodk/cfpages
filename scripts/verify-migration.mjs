@@ -14,7 +14,7 @@ const CHROME = ['On This Page', 'min read', 'hellodk.io · Deepak'];
 /**
  * Cover images live in src/data/post-covers.ts as a SLUG_COVERS map. It is a
  * .ts file, so it cannot be imported from this .mjs script — parse the literal
- * instead. Only 9 of the 66 managed slugs are mapped; the rest ship without a
+ * instead. Only 33 of the 88 managed slugs are mapped; the rest ship without a
  * cover until images are chosen for them.
  */
 function loadCovers() {
@@ -93,9 +93,9 @@ for (const post of POSTS) {
 // ---- totals, asserted rather than echoed ----
 const live = POSTS.filter((p) => !p.draft).length;
 const draft = POSTS.filter((p) => p.draft).length;
-if (POSTS.length !== 66) fail.push(`manifest has ${POSTS.length} posts, expected 66`);
-if (live !== 58) fail.push(`manifest has ${live} live posts, expected 58`);
-if (draft !== 8) fail.push(`manifest has ${draft} draft posts, expected 8`);
+if (POSTS.length !== 88) fail.push(`manifest has ${POSTS.length} posts, expected 88`);
+if (live !== 81) fail.push(`manifest has ${live} live posts, expected 81`);
+if (draft !== 7) fail.push(`manifest has ${draft} draft posts, expected 7`);
 
 // ---- masking: idempotence, injectivity, and no survivor ----
 // The real IP_TABLE / HOST_TABLE live only in the gitignored
@@ -106,7 +106,7 @@ if (draft !== 8) fail.push(`manifest has ${draft} draft posts, expected 8`);
 // (anchoring, case handling, the gate) against fixtures instead.
 const ipValues = Object.values(IP_TABLE);
 if (new Set(ipValues).size !== ipValues.length) fail.push('IP_TABLE masked values are not pairwise distinct');
-if (Object.keys(IP_TABLE).length !== 30) fail.push(`IP_TABLE has ${Object.keys(IP_TABLE).length} entries, expected 30`);
+if (Object.keys(IP_TABLE).length !== 37) fail.push(`IP_TABLE has ${Object.keys(IP_TABLE).length} entries, expected 37`);
 
 const hostValues = Object.values(HOST_TABLE);
 if (new Set(hostValues).size !== hostValues.length) fail.push('HOST_TABLE masked values are not pairwise distinct');
@@ -183,9 +183,9 @@ const stray = fs.readdirSync(BLOGS)
   .filter((n) => !n.startsWith('.') && !known.has(n) && !EXCLUDED.has(n));
 if (stray.length) fail.push(`unaccounted for in ~/Documents/blogs: ${stray.join(', ')}`);
 
-// ---- summary: 66 managed posts, distinct from the directory total ----
+// ---- summary: 88 managed posts, distinct from the directory total ----
 const total = fs.readdirSync(OUT).filter((f) => f.endsWith('.md')).length;
-console.log(`migrated: ${POSTS.length}/66  (${live} live, ${draft} draft)`);
+console.log(`migrated: ${POSTS.length}/88  (${live} live, ${draft} draft)`);
 console.log(`src/content/blog/ total: ${total}  (${total - POSTS.length} pre-existing, untouched)`);
 
 if (fail.length) {

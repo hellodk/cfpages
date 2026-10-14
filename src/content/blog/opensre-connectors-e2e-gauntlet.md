@@ -15,12 +15,12 @@ What followed was five acts of debugging that had almost nothing to do with the 
 
 | Element | Configuration |
 | --- | --- |
-| Investigation driver | tools.investigation.capability.run_investigation(), library mode, alert JSON in → full state out |
-| LLM | Local omlx server at 192.0.2.5:8000 — OpenAI-compatible, MLX models on the LAN |
+| Investigation driver | `tools.investigation.capability.run_investigation()`, library mode, alert JSON in → full state out |
+| LLM | Local `omlx` server at `192.0.2.5:8000` — OpenAI-compatible, MLX models on the LAN |
 | Fault A | Aerospike StatefulSet scaled 3 → 2 (node-down) |
-| Fault B | SELECT pg_sleep(900) via ysqlsh on yb-tserver-1 (runaway query) |
-| Fault C | 20,000-row orders_noidx table, deliberately scanned without indexes (seq-scan bait) |
-| Alerts | Synthetic JSON: CheckoutLatencySpike (YB) and SessionStoreErrors (AS) |
+| Fault B | `SELECT pg_sleep(900)` via `ysqlsh` on `yb-tserver-1` (runaway query) |
+| Fault C | 20,000-row `orders_noidx` table, deliberately scanned without indexes (seq-scan bait) |
+| Alerts | Synthetic JSON: `CheckoutLatencySpike` (YB) and `SessionStoreErrors` (AS) |
 
 Ground rule
 
@@ -238,7 +238,7 @@ App-of-apps heals not just workloads but the management layer itself. Fault inje
 | 3 | Driver wired, YB tools live | Cluster/server/slow-query/table payloads; 2 tool errors | Parse failed — diagnosis JSON truncated |
 | 4 | Tunnel aimed at tserver-1 pod | pg_sleep caught live (pid + pg_stat_statements); then port clobber ×3 | Unable to determine |
 | 5 | Port fix shipped | 4 clean payloads; 6 wrong-database FATALs | Honest refusal — "insufficient evidence" |
-| 6 | OLLAMA_MAX_TOKENS=4096 | Claims validated: pg_sleep visible, orders_noidx found (0 live tuples), 0% cache hit | Parses — honest, evidence-cited refusal |
+| 6 | `OLLAMA_MAX_TOKENS=4096` | Claims validated: pg_sleep visible, orders_noidx found (0 live tuples), 0% cache hit | Parses — honest, evidence-cited refusal |
 | 7 | Aerospike, healthy control | cluster_size 3, namespace test 211 objects, latency histograms parsed | Correct — declined to invent a fault |
 | 8 | Aerospike, node-down window | cluster_size 2, new cluster_key in evidence-0 | Parse failed — 3 loops, server flaked again |
 
@@ -274,7 +274,7 @@ Every synthesis failure above traces to one component. Isolating its performance
 
 |  | Llama-3.1-8B (as configured) | Qwen3.5-4B (switched to) |
 | --- | --- | --- |
-| Tool calling | Broken — renders calls as <\|python_tag\|> text inside content, never native tool_calls | Native — proper finish_reason: tool_calls, sensibly chosen |
+| Tool calling | Broken — renders calls as `<\|python_tag\|>` text inside content, never native `tool_calls` | Native — proper `finish_reason: tool_calls`, sensibly chosen |
 | Tool capacity | Hard HTTP 400 at ≥64 tools; opensre's registry sends up to 259 | All 259 accepted |
 | Ran investigations | 0 — died on attempt one | 7 of 7 remaining runs, end to end |
 
@@ -286,7 +286,7 @@ Same byte-identical request, twelve replays: 5 OK / 4 empty / 3×400. Hours late
 
 | Earned credit | Charged for |
 | --- | --- |
-| • Called connector tools by name once integrations resolved• Caught both injected faults, every faulted run• Correct negative control — invented nothing on the healthy cluster• Refused to convict pg_sleep on suspicion it was synthetic | • Copied schema defaults into arguments ({"port": 5433}) — 3 iterations burned• Flailed 6+ FATALs guessing nonexistent databases instead of listing catalogs• Diagnosis JSON parse failed twice (one truncation-caused, fixed; one raw flake)• Never attributed either fault by name in a final verdict |
+| • Called connector tools by name once integrations resolved • Caught both injected faults, every faulted run • Correct negative control — invented nothing on the healthy cluster • Refused to convict `pg_sleep` on suspicion it was synthetic | • Copied schema defaults into arguments (`{"port": 5433}`) — 3 iterations burned • Flailed 6+ FATALs guessing nonexistent databases instead of listing catalogs • Diagnosis JSON parse failed twice (one truncation-caused, fixed; one raw flake) • Never attributed either fault by name in a final verdict |
 
 Net grade: evidence collection A, synthesis C
 
@@ -307,10 +307,10 @@ Across five consecutive faulted runs, the evidence layer never missed once and t
 
 | Branch | Change | Trigger |
 | --- | --- | --- |
-| feat/yugabytedb-integration 791653e4d | port → injected_params on all 5 tools + schema tests | Port clobber (Act III) |
+| feat/yugabytedb-integration `791653e4d` | `port` → `injected_params` on all 5 tools + schema tests | Port clobber (Act III) |
 | feat/aerospike-integration | Same fix, all 3 tools | Preventive mirror |
-| feat/yugabytedb-integration c41381f84 | OLLAMA_MAX_TOKENS override, default 1024 unchanged | Truncated diagnoses (Act IV) |
-| feat/aerospike-integration ec0c41593 | Stale latency tests aligned to real grammar | Leftover pre-fix assertions |
+| feat/yugabytedb-integration `c41381f84` | `OLLAMA_MAX_TOKENS` override, default 1024 unchanged | Truncated diagnoses (Act IV) |
+| feat/aerospike-integration `ec0c41593` | Stale latency tests aligned to real grammar | Leftover pre-fix assertions |
 
 Merge note
 

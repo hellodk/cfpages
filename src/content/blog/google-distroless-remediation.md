@@ -23,11 +23,11 @@ There is no way to upgrade a package inside this image, because there is nothing
 
 | Tool | Present? |
 | --- | --- |
-| sh, bash | no — 2305 files, no shell of any kind |
-| apt, apt-get | no |
-| dpkg | no |
-| curl, tar | no |
-| dpkg metadata | yes — /var/lib/dpkg/status.d/<package>, one file per package |
+| `sh`, `bash` | no — 2305 files, no shell of any kind |
+| `apt`, `apt-get` | no |
+| `dpkg` | no |
+| `curl`, `tar` | no |
+| dpkg *metadata* | yes — `/var/lib/dpkg/status.d/<package>`, one file per package |
 
 That last row is the important one. Distroless keeps per-package dpkg records under `/var/lib/dpkg/status.d/` rather than one combined `/var/lib/dpkg/status`. A scanner trusts those files, not the binaries. So replacing a shared library does not by itself change what is reported — the metadata has to change too, or the fix is cosmetic.
 
@@ -56,12 +56,12 @@ Every one of those is byte-identical to what the distroless image already ships.
 
 | Package | Distroless ships | Debian candidate today | Findings | Fixable? |
 | --- | --- | --- | --- | --- |
-| libpng16-16t64 | 1.6.48-1+deb13u5 | 1.6.48-1+deb13u6 | 2 | yes |
-| libc6, libc-bin | 2.41-12+deb13u4 | 2.41-12+deb13u4 | 42 | no |
-| libexpat1 | 2.8.3-1~deb13u1 | 2.8.3-1~deb13u1 | 6 (4 HIGH) | no |
-| libuuid1 | 2.41.5-0+deb13u1 | 2.41.5-0+deb13u1 | 6 (4 HIGH) | no |
-| libstdc++6, gcc-14-base, libgcc-s1 | 14.2.0-19 | 14.2.0-19 | 3 | no |
-| zlib1g, libbz2-1.0, liblcms2-2-0, libpng16-16t64 (other) | — | — | 5 | no |
+| `libpng16-16t64` | `1.6.48-1+deb13u5` | **`1.6.48-1+deb13u6`** | 2 | **yes** |
+| `libc6`, `libc-bin` | `2.41-12+deb13u4` | `2.41-12+deb13u4` | 42 | no |
+| `libexpat1` | `2.8.3-1~deb13u1` | `2.8.3-1~deb13u1` | 6 (4 HIGH) | no |
+| `libuuid1` | `2.41.5-0+deb13u1` | `2.41.5-0+deb13u1` | 6 (4 HIGH) | no |
+| `libstdc++6`, `gcc-14-base`, `libgcc-s1` | `14.2.0-19` | `14.2.0-19` | 3 | no |
+| `zlib1g`, `libbz2-1.0`, `liblcms2-2-0`, `libpng16-16t64` (other) | — | — | 5 | no |
 
 **Of 64 OS findings, exactly one is fixable today.** The other 63 are on packages Debian has not rebuilt. Injecting a package manager would have produced a fragile, probably-broken image in exchange for zero additional fixes.
 
@@ -192,15 +192,15 @@ Two version changes, both intended, nothing else touched. The `spring-retry` rem
 
 | Measure | Control (rescanned 3 Oct) | Fixed | Change |
 | --- | --- | --- | --- |
-| OS findings | 68 | 67 | −1 |
-| Application findings | 1 | 0 | −1 |
-| Total | 69 | 67 | −2 |
+| OS findings | 68 | **67** | −1 |
+| Application findings | 1 | **0** | −1 |
+| **Total** | **69** | **67** | **−2** |
 | CRITICAL | 0 | 0 | — |
 | HIGH | 8 | 8 | — |
 | MEDIUM | 40 | 39 | −1 |
 | LOW | 20 | 20 | — |
 | UNKNOWN | 1 | 0 | −1 |
-| Findings introduced | — | 0 | — |
+| Findings introduced | — | **0** | — |
 
 Two findings cleared: `CVE-2026-46675` (libpng) by the library bump, and `CVE-2026-41710` (`spring-retry`) by the JAR rebuild. The HIGH count is unchanged at 8 because the one fixed finding was severity `UNKNOWN`.
 
@@ -220,12 +220,12 @@ OCI runtime exec failed: … executable file not found in $PATH
 
 | Check | Result |
 | --- | --- |
-| Container start | HTTP 200 in 8 s |
-| Actuator | {"groups":["liveness","readiness"],"status":"UP"} |
-| Image config User | 65532 — unchanged |
-| File count | 2305 in both control and fixed — nothing added or lost |
-| Shell / apt / dpkg | confirmed still absent |
-| libpng version on disk | 1.6.48-1+deb13u6, md5sum regenerated |
+| Container start | HTTP 200 in **8 s** |
+| Actuator | `{"groups":["liveness","readiness"],"status":"UP"}` |
+| Image config `User` | `65532` — unchanged |
+| File count | **2305** in both control and fixed — nothing added or lost |
+| Shell / `apt` / `dpkg` | confirmed still absent |
+| libpng version on disk | `1.6.48-1+deb13u6`, md5sum regenerated |
 
 The file-count equality is the strongest single check: 2305 files before and after means the overlay replaced files in place and introduced nothing. A build that had smuggled in a shell would have shown up here immediately.
 
@@ -233,8 +233,8 @@ The file-count equality is the strongest single check: 2305 files before and aft
 
 | Tag | Registry size | Layers |
 | --- | --- | --- |
-| google-4.0.2-java21-cvefix (control) | 123.6 MB | 36 |
-| google-4.0.2-java21-fixed | 123.7 MB | 37 |
+| `google-4.0.2-java21-cvefix` (control) | 123.6 MB | 36 |
+| `google-4.0.2-java21-fixed` | **123.7 MB** | 37 |
 
 **+0.1 MB, or +0.1%.** One additional layer holding one 100 KB library. Fixed digest: `sha256:ba8b0af3928054785db65e810771db0e56cbe83d138e46e5895ae54ddb57b1df`.
 
@@ -244,11 +244,11 @@ The file-count equality is the strongest single check: 2305 files before and aft
 
 | Package | Findings | Note |
 | --- | --- | --- |
-| libc6, libc-bin | 42 | Debian has not rebuilt glibc 2.41-12+deb13u4 |
-| libexpat1 | 6 (4 HIGH) | candidate is still 2.8.3-1~deb13u1 |
-| libuuid1 | 6 (4 HIGH) | candidate is still 2.41.5-0+deb13u1 |
-| libstdc++6, gcc-14-base, libgcc-s1 | 3 | already newest |
-| libpng16-16t64 (residual), zlib1g, libbz2-1.0, liblcms2-2-0 | 5 | already newest |
+| `libc6`, `libc-bin` | 42 | Debian has not rebuilt glibc 2.41-12+deb13u4 |
+| `libexpat1` | 6 (4 HIGH) | candidate is still `2.8.3-1~deb13u1` |
+| `libuuid1` | 6 (4 HIGH) | candidate is still `2.41.5-0+deb13u1` |
+| `libstdc++6`, `gcc-14-base`, `libgcc-s1` | 3 | already newest |
+| `libpng16-16t64` (residual), `zlib1g`, `libbz2-1.0`, `liblcms2-2-0` | 5 | already newest |
 
 **8 HIGH findings are not fixable on Debian 13.** They are not a defect in this build, and they are not fixable by rebuilding harder. They clear only when Debian ships `libexpat1` and `libuuid1` updates. Do not report this image as clean.
 

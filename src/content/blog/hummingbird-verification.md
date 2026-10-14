@@ -17,9 +17,9 @@ The published image `quay.io/hellodk/base-image:hummingbird-4.0.2-java21-cvefix2
 
 | Layer | Findings |
 | --- | --- |
-| OS packages | 0 |
-| Application dependencies | 0 |
-| CRITICAL / HIGH / MEDIUM / LOW | 0 / 0 / 0 / 0 |
+| OS packages | **0** |
+| Application dependencies | **0** |
+| CRITICAL / HIGH / MEDIUM / LOW | **0 / 0 / 0 / 0** |
 
 Digest `sha256:5e123f11250e750783e34d9b27b545c2493cedda7f39106e64c88ceacadfca80`, 145.5 MB. There is no residual list to publish, because there is no residual list.
 
@@ -31,9 +31,9 @@ The comparison found a clear pattern across the whole set: **the more an image c
 
 | Property | Hummingbird | Why it matters for CVE count |
 | --- | --- | --- |
-| Shell | none | No shell means no shell utilities, no scripting languages, no curl/wget, no editors |
-| Package manager | none | No apt, apk, dnf — and no dpkg/apk database to accumulate records |
-| Runtime UID | 65532 | The conventional unprivileged distroless user |
+| Shell | **none** | No shell means no shell utilities, no scripting languages, no curl/wget, no editors |
+| Package manager | **none** | No `apt`, `apk`, `dnf` — and no `dpkg`/`apk` database to accumulate records |
+| Runtime UID | `65532` | The conventional unprivileged distroless user |
 | Root filesystem | purpose-built minimal | Only the JRE and the application runtime are present |
 
 This is not a free lunch — it is a trade. An image with no shell cannot be debugged interactively, cannot be patched in place, and cannot run a health check that shells out. The compensating control is that such an image cannot be casually modified by whoever runs it either.
@@ -62,11 +62,11 @@ Runtime behaviour was checked the same way as every other image in the set:
 
 | Check | Command | Result |
 | --- | --- | --- |
-| Boots and serves | curl /petclinic/actuator/health | HTTP 200 in 8 s |
-| Actuator | — | {"groups":["liveness","readiness"],"status":"UP"} |
-| Java version | java -version | openjdk version "21.0.12.1" 2026-08-18 |
-| Runtime UID | image config .Config.User | 65532 |
-| Process UID | /proc/<pid>/status | Uid: 65532 65532 65532 65532 |
+| Boots and serves | `curl /petclinic/actuator/health` | HTTP **200** in **8 s** |
+| Actuator | — | `{"groups":["liveness","readiness"],"status":"UP"}` |
+| Java version | `java -version` | `openjdk version "21.0.12.1" 2026-08-18` |
+| Runtime UID | image config `.Config.User` | `65532` |
+| Process UID | `/proc/<pid>/status` | `Uid: 65532 65532 65532 65532` |
 
 **A detail worth recording.** The usual `docker exec … id` check cannot be used here, because there is no `id` binary and no shell to run it through: `exec: "id": executable file not found in $PATH`. The non-root claim was verified instead from the image config and from `/proc` on the host side. A verification script that assumes a shell would have reported this image as unverified.
 
@@ -76,7 +76,7 @@ The instruction for this image was "fix it". It did not need fixing, so the hone
 
 | Option | Why it was rejected |
 | --- | --- |
-| Rebuild from the same Dockerfile.hi-openjdk | Reproduces identical bytes with no security benefit. Any change to base layers, JDK build or the application layer could only introduce variance — and variance in a clean image is pure downside |
+| Rebuild from the same `Dockerfile.hi-openjdk` | Reproduces identical bytes with no security benefit. Any change to base layers, JDK build or the application layer could only introduce variance — and variance in a clean image is pure downside |
 | Refresh the base to a newer tag | A newer Chainguard base could add or remove packages. It might fix nothing, or it might introduce findings into an image that has none. That is a change with negative expected value until there is a CVE to fix |
 | Publish a new tag anyway, for consistency | New tags create new things to track, pull and document. A tag that points at the same content as an existing tag is pure operational overhead |
 
@@ -106,10 +106,10 @@ Findings remaining after remediation, 2026-10-03. UBI 9 full and Micro cannot re
 
 | Image | Action taken | Findings before | Findings after | Size cost |
 | --- | --- | --- | --- | --- |
-| Hummingbird | none — verified clean | 0 | 0 | none |
+| Hummingbird | **none — verified clean** | 0 | **0** | none |
 | Google Distroless | 1 library + dpkg metadata | 69 | 67 | +0.1 MB |
 | UBI 9 Micro | overlay rebuild from upstream | 115 | 56 | +6.8 MB |
-| UBI 9 full | dnf upgrade | 895 | 575 | +61.3 MB |
+| UBI 9 full | `dnf upgrade` | 895 | 575 | +61.3 MB |
 
 ## 6\. Reproduce it yourself
 

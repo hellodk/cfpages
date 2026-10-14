@@ -3,7 +3,7 @@ title: "How a Single VPN Misconfiguration Consumed 17 Terabytes in a Week"
 date: 2026-04-08
 description: "A deep dive into debugging a mysterious network spike in my home Kubernetes cluster"
 tags: [networking, incident, debugging]
-draft: true
+draft: false
 ---
 
 *A deep dive into debugging a mysterious network spike in my home Kubernetes cluster*
@@ -28,6 +28,14 @@ It was a regular Sunday morning when I noticed something alarming on my ISP's da
 1.6 terabytes. In a single day. On my home internet connection.
 
 My immediate thought: *"Something is very, very wrong."*
+
+This is what my ISP's data-usage screen looked like that morning — 22 February towering over every other day:
+
+![Phone screenshot of ISP data-usage bars for 17–23 February; every day stays under 260 GB except 22 February at 1,668.55 GB](/assets/blog/network-spike-investigation/network-spike-1.jpeg)
+
+And the same screen scrolled right: after the 22 February spike, daily usage settles back down:
+
+![Phone screenshot of ISP data-usage bars for 21–28 February; the 22 February spike followed by normal days under 31 GB](/assets/blog/network-spike-investigation/network-spike-2.jpeg)
 
 ---
 

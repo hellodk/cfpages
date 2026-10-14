@@ -23,13 +23,13 @@ It scanned at **115 findings**: 97 in the OS layer and 18 in the application lay
 
 Before designing anything, the blocker was verified rather than assumed. Both the published image and upstream `registry.access.redhat.com/ubi9/ubi-micro` were exported and searched for a package manager:
 
-| Binary | Published micro image | Upstream ubi9-micro |
+| Binary | Published micro image | Upstream `ubi9-micro` |
 | --- | --- | --- |
-| rpm | absent | absent |
-| dnf | absent | absent |
-| microdnf | absent | absent |
-| bash / sh | present | present |
-| java | /opt/jre, hand-installed | absent |
+| `rpm` | absent | absent |
+| `dnf` | absent | absent |
+| `microdnf` | absent | absent |
+| `bash` / `sh` | present | present |
+| `java` | `/opt/jre`, hand-installed | absent |
 
 What micro _does_ carry is the database: `/etc/dnf/*` configuration and a populated `/var/lib/rpm`. That matters, because a scanner reads the rpm database to decide what is installed. It means a correct fix must keep the database in agreement with the files on disk — you cannot simply drop in a newer `.so` and expect the finding to clear.
 
@@ -130,9 +130,9 @@ Exporting the rootfs showed `/opt/jre/conf/security/` simply absent while the st
 
 | Symlink | Points at | Present in micro? |
 | --- | --- | --- |
-| conf | /etc/java/java-21-openjdk/<v>/conf — holds java.security | no |
-| lib/security | /etc/java/java-21-openjdk/<v>/lib/security — holds cacerts | no |
-| tzdb.dat | /usr/share/javazi-1.8/tzdb.dat | no |
+| `conf` | `/etc/java/java-21-openjdk/<v>/conf` — holds `java.security` | no |
+| `lib/security` | `/etc/java/java-21-openjdk/<v>/lib/security` — holds `cacerts` | no |
+| `tzdb.dat` | `/usr/share/javazi-1.8/tzdb.dat` | no |
 
 Micro has neither `/etc/java` nor `javazi`, so `COPY` faithfully reproduced the symlinks as dangling pointers. The JVM then started, found `conf` unresolvable, and died. The fix is `cp -aL` in the staging stage — the `-L` dereferences, materialising all three as real files:
 
@@ -165,11 +165,11 @@ The layer breakdown gave it away — two layers of exactly the same size:
 
 | Layer | Size | What it actually is |
 | --- | --- | --- |
-| 1 | 6.68 MB | ubi9-micro base |
+| 1 | 6.68 MB | `ubi9-micro` base |
 | 2 | 7.12 MB | the patched overlay |
 | 3 | 70.30 MB | the JRE |
 | 4–7 | ~1 MB | native libraries, CA bundle, metadata |
-| 8 | 62.18 MB | the JAR, copied up a second time |
+| **8** | **62.18 MB** | **the JAR, copied up a second time** |
 | 9 | 62.18 MB | the JAR |
 
 The culprit was this line:
@@ -195,14 +195,14 @@ Result: **147.3 MB and 8 layers**, and the image boots in 8 seconds instead of 3
 
 | Measure | Before | After | Change |
 | --- | --- | --- | --- |
-| OS findings | 97 | 56 | −41 |
-| Application findings | 18 | 0 | −18 |
-| Total | 115 | 56 | −59 (−51.3%) |
-| CRITICAL | 3 | 0 | −3 |
+| OS findings | 97 | **56** | −41 |
+| Application findings | 18 | **0** | −18 |
+| **Total** | **115** | **56** | **−59 (−51.3%)** |
+| CRITICAL | 3 | **0** | −3 |
 | HIGH | 18 | 6 | −12 |
 | MEDIUM | 74 | 37 | −37 |
 | LOW | 20 | 13 | −7 |
-| Findings introduced | — | 0 | — |
+| Findings introduced | — | **0** | — |
 
 All three CRITICAL `tomcat-embed-core` findings and all 18 application findings are gone — the latter purely because the JAR was rebuilt against the already-updated `pom.xml`, the same fix applied on every other image in the set.
 
@@ -220,12 +220,12 @@ Zero introduced findings is the number that matters most here, because a remedia
 
 | Check | Result |
 | --- | --- |
-| Container start | HTTP 200 in 8 s |
-| Actuator | {"groups":["liveness","readiness"],"status":"UP"} |
-| Runtime user | uid=1001 gid=0(root) — numeric, no passwd entry, as intended |
-| Java | openjdk version "21.0.12.1" 2026-08-18 LTS |
+| Container start | HTTP 200 in **8 s** |
+| Actuator | `{"groups":["liveness","readiness"],"status":"UP"}` |
+| Runtime user | `uid=1001 gid=0(root)` — numeric, no passwd entry, as intended |
+| Java | `openjdk version "21.0.12.1" 2026-08-18 LTS` |
 | Package manager still absent | confirmed — micro's defining property preserved |
-| Control tag digest | sha256:7888370f76a… unchanged |
+| Control tag digest | `sha256:7888370f76a…` unchanged |
 
 ```bash
 docker rm -f um2 2>/dev/null
@@ -263,8 +263,8 @@ Final — 8 layers
 
 | Tag | Registry size | Layers | Digest |
 | --- | --- | --- | --- |
-| ubi-micro-4.0.2-java21 (control) | 140.5 MB | 9 | sha256:7888370f76a47467d59035355ba17e631d439ab8759c8db643403ff71fa20a97 |
-| ubi-micro-4.0.2-java21-fixed | 147.3 MB | 8 | sha256:69ee63e740f53b5aa463e4f3e7d8c45ba57d6debcfbe8a50f77a49744f06c167 |
+| `ubi-micro-4.0.2-java21` (control) | 140.5 MB | 9 | `sha256:7888370f76a47467d59035355ba17e631d439ab8759c8db643403ff71fa20a97` |
+| `ubi-micro-4.0.2-java21-fixed` | 147.3 MB | 8 | `sha256:69ee63e740f53b5aa463e4f3e7d8c45ba57d6debcfbe8a50f77a49744f06c167` |
 
 The control tag was deliberately left untouched so the before/after comparison stays reproducible. A redundant alias `-fixed2` also points at the fixed digest; it could not be removed because the registry token used here carries no delete permission.
 
@@ -274,10 +274,10 @@ The control tag was deliberately left untouched so the before/after comparison s
 
 | Package | Findings | Note |
 | --- | --- | --- |
-| glibc, glibc-common, glibc-minimal-langpack | 30 | 9 distinct CVEs × 3 packages; already at the newest RHEL 9 build |
-| pcre2, pcre2-syntax | 14 | 7 distinct CVEs; no erratum. This is where all 6 HIGH findings are |
-| libgcc | 4 | already at the newest build |
-| ncurses-base, ncurses-libs | 2 | already at the newest build |
+| `glibc`, `glibc-common`, `glibc-minimal-langpack` | 30 | 9 distinct CVEs × 3 packages; already at the newest RHEL 9 build |
+| `pcre2`, `pcre2-syntax` | 14 | 7 distinct CVEs; no erratum. This is where all 6 HIGH findings are |
+| `libgcc` | 4 | already at the newest build |
+| `ncurses-base`, `ncurses-libs` | 2 | already at the newest build |
 
 **Zero findings is not reachable on this base.** 56 findings, 6 of them HIGH, are the floor until Red Hat ships errata for `pcre2` and `glibc`. Claiming this image is "clean" would be wrong by 56.
 

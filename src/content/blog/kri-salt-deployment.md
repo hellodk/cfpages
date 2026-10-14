@@ -269,13 +269,13 @@ Boot → Salt Ready — Service Start Flow
 
 | Action | Command |
 | --- | --- |
-| Check status | launchctl list \| grep salt |
-| Restart master | sudo launchctl kickstart -k system/com.saltstack.salt.master |
-| Restart api | sudo launchctl kickstart -k system/com.saltstack.salt.api |
-| Stop master | sudo launchctl bootout system/com.saltstack.salt.master |
-| Load plist again | sudo launchctl bootstrap system /Library/LaunchDaemons/com.saltstack.salt.master.plist |
-| Check master log | tail -f /var/log/salt/master |
-| List minion keys | sudo /opt/salt/salt-key -L |
+| Check status | `launchctl list \| grep salt` |
+| Restart master | `sudo launchctl kickstart -k system/com.saltstack.salt.master` |
+| Restart api | `sudo launchctl kickstart -k system/com.saltstack.salt.api` |
+| Stop master | `sudo launchctl bootout system/com.saltstack.salt.master` |
+| Load plist again | `sudo launchctl bootstrap system /Library/LaunchDaemons/com.saltstack.salt.master.plist` |
+| Check master log | `tail -f /var/log/salt/master` |
+| List minion keys | `sudo /opt/salt/salt-key -L` |
 
 ## Minion Bootstrap
 
@@ -422,7 +422,7 @@ Salt 3006+ changed the default encryption algorithm for the minion→master auth
 | Salt Version | Default Algorithm | Config Required |
 | --- | --- | --- |
 | < 3006 | OAEP (implied) | No |
-| ≥ 3006 | None enforced — must declare | encryption_algorithm: OAEP-SHA1 |
+| ≥ 3006 | None enforced — must declare | `encryption_algorithm: OAEP-SHA1` |
 
 Without this key, Salt 3007 minions connecting to a Salt 3007 master produce confusing auth errors. Always set it explicitly.
 
@@ -575,10 +575,10 @@ kri → salt-api → salt-master — Request Flow
 
 | Client | What It Does | Example Call | ACL Prefix |
 | --- | --- | --- | --- |
-| local | Execute a function on targeted minion(s) (synchronous) | test.ping, state.apply | (function name directly) |
-| local_async | Same as local but returns a job ID immediately | Long-running state runs | (function name directly) |
-| runner | Fleet-wide status commands that run on the master itself | manage.up, manage.versions | @runner |
-| wheel | Manage master-side state: keys, configs | key.list_all, key.accept | @wheel |
+| `local` | Execute a function on targeted minion(s) (synchronous) | `test.ping`, `state.apply` | (function name directly) |
+| `local_async` | Same as local but returns a job ID immediately | Long-running state runs | (function name directly) |
+| `runner` | Fleet-wide status commands that run on the master itself | `manage.up`, `manage.versions` | `@runner` |
+| `wheel` | Manage master-side state: keys, configs | `key.list_all`, `key.accept` | `@wheel` |
 
 ## kri's Probe — How It Verifies a Master Is Healthy
 
@@ -620,11 +620,11 @@ kri runs a structured probe (`SaltMasterProbe`) whenever "Test connection" is cl
 
 | Symptom | Root Cause | Fix |
 | --- | --- | --- |
-| salt_api_auth: 400 Client disabled | netapi_enable_clients missing from master config | Add all 4 clients to /etc/salt/master.d/kri.conf and restart |
-| salt_api_auth: 500 on runner.X | Function not in @runner ACL, or calling a local function via runner client | Verify function name is in @runner ACL (e.g. manage.up not test.ping) |
-| key_store: 500 | Calling key.list_all via client=runner (should be wheel) | Use client=wheel for all key.* functions |
-| salt_api_auth: 401 | Wrong password, or krisalt user not created | Re-run provision to reset the PAM user password |
-| tcp_4505/4506 fail | salt-master not running, or firewall blocking | sudo launchctl kickstart -k system/com.saltstack.salt.master |
+| `salt_api_auth: 400 Client disabled` | `netapi_enable_clients` missing from master config | Add all 4 clients to `/etc/salt/master.d/kri.conf` and restart |
+| `salt_api_auth: 500` on `runner.X` | Function not in `@runner` ACL, or calling a local function via runner client | Verify function name is in `@runner` ACL (e.g. `manage.up` not `test.ping`) |
+| `key_store: 500` | Calling `key.list_all` via `client=runner` (should be `wheel`) | Use `client=wheel` for all `key.*` functions |
+| `salt_api_auth: 401` | Wrong password, or `krisalt` user not created | Re-run provision to reset the PAM user password |
+| tcp_4505/4506 fail | salt-master not running, or firewall blocking | `sudo launchctl kickstart -k system/com.saltstack.salt.master` |
 
 ## Worked Example — Two-Step salt-api Flow
 
@@ -677,13 +677,13 @@ Every check in `SaltMasterProbe` maps to a concrete socket operation or salt-api
 
 | Check Name | Type | Exact Call | What It Verifies |
 | --- | --- | --- | --- |
-| dns | Socket | socket.getaddrinfo(address, None) | Master IP/hostname is resolvable from the kri container |
-| tcp_4505 | Socket | socket.connect((address, 4505)) | ZeroMQ publish port open (minions subscribe here) |
-| tcp_4506 | Socket | socket.connect((address, 4506)) | ZeroMQ return port open (minions return results here) |
-| salt_api_auth | HTTP POST | client=runner, fun=manage.up | PAM auth works; runner client enabled; salt bus reachable |
-| key_store | HTTP POST | client=wheel, fun=key.list_all | Wheel ACL works; PKI directory readable by salt-master |
-| version | HTTP POST | client=runner, fun=manage.versions | Consistent Salt version across master and connected minions |
-| minions_up | HTTP POST | client=runner, fun=manage.up | At least one minion is currently connected and responsive |
+| `dns` | Socket | `socket.getaddrinfo(address, None)` | Master IP/hostname is resolvable from the kri container |
+| `tcp_4505` | Socket | `socket.connect((address, 4505))` | ZeroMQ publish port open (minions subscribe here) |
+| `tcp_4506` | Socket | `socket.connect((address, 4506))` | ZeroMQ return port open (minions return results here) |
+| `salt_api_auth` | HTTP POST | `client=runner, fun=manage.up` | PAM auth works; runner client enabled; salt bus reachable |
+| `key_store` | HTTP POST | `client=wheel, fun=key.list_all` | Wheel ACL works; PKI directory readable by salt-master |
+| `version` | HTTP POST | `client=runner, fun=manage.versions` | Consistent Salt version across master and connected minions |
+| `minions_up` | HTTP POST | `client=runner, fun=manage.up` | At least one minion is currently connected and responsive |
 
 <aside class="callout"><strong class="callout__title">Security Model — Defense in Depth</strong><div class="callout__body"><br><br>
     Four independent layers protect the salt-api surface:<br><br>
@@ -734,8 +734,8 @@ The single most important operational insight: **launchd guarantees process live
 
 | Signal | What It Means | Who Guarantees It |
 | --- | --- | --- |
-| Process Liveness | salt-minion / salt-master / salt-api process is running | launchd — RunAtLoad starts on boot; KeepAlive respawns on crash with a 5 s throttle |
-| Data Freshness | kri refreshed last_seen_at for this node recently | the presence-refresh chain (pull path via Celery beat + push path via grain_report) |
+| Process Liveness | salt-minion / salt-master / salt-api process is running | launchd — `RunAtLoad` starts on boot; `KeepAlive` respawns on crash with a 5 s throttle |
+| Data Freshness | kri refreshed `last_seen_at` for this node recently | the presence-refresh chain (pull path via Celery beat + push path via grain_report) |
 
 <aside class="callout"><strong class="callout__title">Key insight:</strong><div class="callout__body">kri's node status is computed purely as <code>now &#8722; last_seen_at</code>. Nothing about the badge inspects whether any process is alive. The thresholds (from <code>node_status.classify_status</code>): <strong>&#8804; 15 min = online</strong>, <strong>15 min&#8211;4 h = stale</strong>, <strong>&gt; 4 h = offline</strong>.</div></aside>
 
@@ -897,10 +897,10 @@ Presence Refresh Paths — Pull + Push → last\_seen\_at → Status Badge
 
 | Cause | What Happens | Scope |
 | --- | --- | --- |
-| Wrong master polled — multi-master failover | kri polls only the master flagged is_default. With master_type: failover + random_master: True, a minion may attach to a non-default master (e.g. cylon) while kri polls mm1. manage.up on mm1 will not list it → stale, even though the minion is healthily connected. | Per-node |
-| Default master's salt-api broken | Any error from salt-api (Salt 3006+ netapi_enable_clients 400, runner/wheel ACL 500, expired PAM password, TLS failure) returns nothing → no node is refreshed. The entire fleet goes stale in 15 min and offline in 4 h. | Fleet-wide |
-| No master flagged default | The query WHERE is_default IS TRUE returns nothing → the task skips entirely → everything stale. | Fleet-wide |
-| manage.up is a live ping with a short timeout | The runner pings every minion and waits a few seconds. A slow, loaded, or briefly unresponsive minion misses that window and is absent from the up-list, causing it to flap in and out of the stale state. | Per-node |
+| **Wrong master polled — multi-master failover** | kri polls only the master flagged `is_default`. With `master_type: failover` + `random_master: True`, a minion may attach to a non-default master (e.g. `cylon`) while kri polls `mm1`. `manage.up` on `mm1` will not list it → stale, even though the minion is healthily connected. | Per-node |
+| **Default master's salt-api broken** | Any error from salt-api (Salt 3006+ `netapi_enable_clients` 400, runner/wheel ACL 500, expired PAM password, TLS failure) returns nothing → *no node* is refreshed. The entire fleet goes stale in 15 min and offline in 4 h. | Fleet-wide |
+| **No master flagged default** | The query `WHERE is_default IS TRUE` returns nothing → the task skips entirely → everything stale. | Fleet-wide |
+| **`manage.up` is a live ping with a short timeout** | The runner pings every minion and waits a few seconds. A slow, loaded, or briefly unresponsive minion misses that window and is absent from the up-list, causing it to flap in and out of the stale state. | Per-node |
 
 ## Why the Push Path Breaks
 
