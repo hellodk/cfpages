@@ -1,7 +1,7 @@
 ---
 title: "69 to 67: The Honest Result of Remediating Distroless"
 date: 2026-10-03
-description: "Google Distroless has no shell, no apt and no dpkg. A full Debian 13 upgrade changes nothing and exactly one of its 64 OS findings has a fix published anywhere. This is the write-up of a remediation that cleared two findings for 0.1 MB, and of why that is the correct answer rather than a disappointi"
+description: "Google Distroless has no shell, no apt and no dpkg. A full Debian 13 upgrade changes nothing and exactly one of its 64 OS findings has a fix published anywhere. This is the write-up of a remediation that cleared two findings for 0.1 MB, and of why that is the correct answer rather than a disappointment."
 tags: [docker, distroless, container-security, cve]
 cover: "assets/images/covers/google-distroless-remediation.svg"
 draft: false
@@ -9,7 +9,7 @@ draft: false
 
 Container Security · Google Distroless · Debian 13
 
-Google Distroless has no shell, no `apt` and no `dpkg`. The plan was to inject a package manager, upgrade, then re-strip. Measuring first showed that a full Debian 13 upgrade changes _nothing_, and exactly one of its 64 OS findings has a fix published anywhere. This is the write-up of a remediation that cleared two findings for 0.1 MB — and of why that is the correct answer rather than a disappointing one.
+[Google Distroless](https://github.com/GoogleContainerTools/distroless) has no shell, no `apt` and no `dpkg`. The plan was to inject a package manager, upgrade, then re-strip. Measuring first showed that a full Debian 13 upgrade changes _nothing_, and exactly one of its 64 OS findings has a fix published anywhere. This is the write-up of a remediation that cleared two findings for 0.1 MB — and of why that is the correct answer rather than a disappointing one.
 
 ## 1\. Where we started
 
@@ -19,7 +19,7 @@ Scanned on 2 October it read **64 OS findings and 1 application finding**. The 8
 
 ## 2\. The blocker
 
-There is no way to upgrade a package inside this image, because there is nothing in the image that can upgrade a package:
+There is no way to upgrade a package inside this image, because there is nothing in the image that can do it:
 
 | Tool | Present? |
 | --- | --- |
@@ -31,7 +31,7 @@ There is no way to upgrade a package inside this image, because there is nothing
 
 That last row is the important one. Distroless keeps per-package dpkg records under `/var/lib/dpkg/status.d/` rather than one combined `/var/lib/dpkg/status`. A scanner trusts those files, not the binaries. So replacing a shared library does not by itself change what is reported — the metadata has to change too, or the fix is cosmetic.
 
-**The plan was rejected.** The original approach — inject `apt` and `dpkg` from a Debian build stage, run the upgrade, then re-strip to restore the distroless property — was dropped before implementation. Re-stripping a shell-less image after mutating it is exactly the kind of change that silently breaks the image, and measurement (next section) showed there was almost nothing to gain for the risk.
+**The plan was rejected.** The original approach — inject `apt` and `dpkg` from a Debian build stage, run the upgrade, then re-strip to restore the distroless property — never survived review. Re-stripping a shell-less image after mutating it is exactly the kind of change that silently breaks the image, and measurement (next section) showed there was almost nothing to gain for the risk.
 
 ## 3\. Almost nothing is fixable
 
@@ -52,7 +52,7 @@ libuuid1 2.41.5-0+deb13u1
 zlib1g 1:1.3.dfsg+really1.3.1-1+b1
 ```
 
-Every one of those is byte-identical to what the distroless image already ships. Checking what candidates the archive actually offers makes it explicit:
+Every one of those is byte-identical to what the distroless image already ships. Checking what candidates the archive actually offers confirms the ceiling:
 
 | Package | Distroless ships | Debian candidate today | Findings | Fixable? |
 | --- | --- | --- | --- | --- |
@@ -69,7 +69,7 @@ Every one of those is byte-identical to what the distroless image already ships.
 
 Since only one library can move, the build moves exactly that one, and does it in a way that is visible to the package metadata as well as to the binary.
 
-Where the single fixable library comes from
+**Where the single fixable library comes from**
 
 <svg viewBox="0 0 900 260" role="img" aria-label="debian 13-slim provides the fixed libpng, the distroless base provides its dpkg records, both are combined by a patch stage, and the result is copied into the final shell-less image.">
             <defs>
@@ -102,7 +102,7 @@ Where the single fixable library comes from
 
 The patch stage needs a shell, so it runs on Debian. The image it produces is only files — nothing executable beyond the one library — so the final image stays shell-less.
 
-### Stage 2 — obtain the fixed library
+### Stage 1 — obtain the fixed library
 
 ```bash
 FROM docker.io/library/debian:13-slim AS libpng
@@ -112,9 +112,9 @@ RUN apt-get update -qq \
 RUN dpkg-query -W -f='${Package} ${Version}\n' libpng16-16t64
 ```
 
-### Stage 3 — rewrite the record as well as the binary
+### Stage 2 — rewrite the record as well as the binary
 
-This is the part that actually clears the finding. Copying only `libpng16.so.16.48.0` would leave `Version: 1.6.48-1+deb13u5` in the dpkg record, and the scanner would keep reporting the finding while the actual bytes on disk were patched — the worst possible state, because it looks remediated and is not.
+This is the part that actually clears the finding. (`base` below is the `gcr.io/distroless/java21-debian13:nonroot` stage — see the complete Dockerfile at the end.) Copying only `libpng16.so.16.48.0` would leave `Version: 1.6.48-1+deb13u5` in the dpkg record, and the scanner would keep reporting the finding while the actual bytes on disk were patched — the worst possible state, because it looks remediated and is not.
 
 ```bash
 FROM docker.io/library/debian:13-slim AS patch
@@ -135,13 +135,14 @@ RUN cd /p \
     && newmd5=$(md5sum usr/lib/x86_64-linux-gnu/libpng16.so.16.48.0 | cut -d" " -f1) \
     && sed "s|^dfaa70c7860eceb19c8e0a2029ad057c |$newmd5 |" /p/md5sums \
         > var/lib/dpkg/status.d/libpng16-16t64.md5sums \
+    && grep -q "$newmd5 " var/lib/dpkg/status.d/libpng16-16t64.md5sums \
     && echo "new libpng md5: $newmd5" \
     && grep '^Version:' var/lib/dpkg/status.d/libpng16-16t64
 ```
 
-Three details are deliberate. `sed 's/deb13u5/deb13u6/g'` rewrites the `Version:`, `Provides:` and `Breaks:` lines together, because leaving `Provides: libpng16-16 (= …deb13u5)` would make the record internally inconsistent. The `md5sums` file is regenerated rather than left stale, since it would otherwise describe a file that no longer exists. And `grep '^Version:'` echoes the result, so the build log always states which version actually landed.
+Three details are deliberate. `sed 's/deb13u5/deb13u6/g'` rewrites the `Version:`, `Provides:` and `Breaks:` lines together, because leaving `Provides: libpng16-16 (= …deb13u5)` would make the record internally inconsistent. The `md5sums` file is regenerated rather than left stale, since it would otherwise describe a file that no longer exists. The `grep -q "$newmd5 "` is load-bearing, not decorative: the old hash above is pinned to today's base image, and once `java21-debian13:nonroot` moves, the substitution silently no-matches — without the assertion the build would ship a stale checksum file. And `grep '^Version:'` echoes the result, so the build log always states which version actually landed.
 
-### Stage 4 — the runtime image
+### Stage 3 — the runtime image
 
 ```bash
 FROM gcr.io/distroless/java21-debian13:nonroot
@@ -166,7 +167,7 @@ new 4: CVE-2026-95512 libfreetype6
        CVE-2026-95619 gcc-14-base, libgcc-s1, libstdc++6
 ```
 
-Those four were not caused by the change. The "before" number came from a scan on 2 October; the "after" from 3 October. Re-scanning the _unmodified control image_ on 3 October gave **69** — Trivy's database had simply gained four entries that apply to versions the image already shipped.
+Those four were not caused by the change. The "before" number came from a scan on 2 October; the "after" from 3 October. Re-scanning the _unmodified control image_ on 3 October gave **69** — [Trivy's](https://trivy.dev) database had simply gained four entries that apply to versions the image already shipped.
 
 | Scan | OS | App | Total |
 | --- | --- | --- | --- |
@@ -186,7 +187,7 @@ version changes control -> fixed:
   CVE-2026-46675   libpng16-16t64    1.6.48-1+deb13u5 -> None
 ```
 
-Two version changes, both intended, nothing else touched. The `spring-retry` removal is not a fix in this image — it is the same `pom.xml` rebuild every other image in the set received. **No other package version changed, so the base-image refresh introduced no regression.**
+Two version changes, both intended, nothing else touched. The `spring-retry` removal is not a fix in this image — it is the same `pom.xml` rebuild every other image in the set received, documented in the [Java 21 Alpine remediation](/java21-libpng-cve-fix/). Note the diff names three libpng CVEs against the two in the candidate table above — the third arrived with the 3 October database, part of the same drift this section documents. **No other package version changed, so the base-image refresh introduced no regression.**
 
 ## 6\. What it moved
 
@@ -211,11 +212,11 @@ Since the whole point of this image is what it does _not_ contain, the containme
 ```bash
 $ docker run --rm --entrypoint /busybox/sh \
     quay.io/hellodk/base-image:google-4.0.2-java21-fixed -c 'id'
-OCI runtime exec failed: exec: "id": executable file not found in $PATH
+docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: "/busybox/sh": stat /busybox/sh: no such file or directory
 
 $ docker run --rm --entrypoint /busybox/sh \
     quay.io/hellodk/base-image:google-4.0.2-java21-fixed -c 'ls /usr/bin/apt'
-OCI runtime exec failed: … executable file not found in $PATH
+docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: "/busybox/sh": stat /busybox/sh: no such file or directory
 ```
 
 | Check | Result |
@@ -245,10 +246,11 @@ The file-count equality is the strongest single check: 2305 files before and aft
 | Package | Findings | Note |
 | --- | --- | --- |
 | `libc6`, `libc-bin` | 42 | Debian has not rebuilt glibc 2.41-12+deb13u4 |
-| `libexpat1` | 6 (4 HIGH) | candidate is still `2.8.3-1~deb13u1` |
+| [`libexpat1`](https://security-tracker.debian.org/tracker/source-package/libexpat1) | 6 (4 HIGH) | candidate is still `2.8.3-1~deb13u1` |
 | `libuuid1` | 6 (4 HIGH) | candidate is still `2.41.5-0+deb13u1` |
 | `libstdc++6`, `gcc-14-base`, `libgcc-s1` | 3 | already newest |
 | `libpng16-16t64` (residual), `zlib1g`, `libbz2-1.0`, `liblcms2-2-0` | 5 | already newest |
+| All other packages | 5 | remainder to the 67 total; per-package list in the scan JSON |
 
 **8 HIGH findings are not fixable on Debian 13.** They are not a defect in this build, and they are not fixable by rebuilding harder. They clear only when Debian ships `libexpat1` and `libuuid1` updates. Do not report this image as clean.
 
@@ -346,11 +348,6 @@ RUN mvn -B -Djava.version=21 -DskipTests package \
 
 FROM gcr.io/distroless/java21-debian13:nonroot AS base
 
-FROM docker.io/library/debian:13-slim AS libpng
-RUN apt-get update -qq \
-    && apt-get install -y -qq --no-install-recommends libpng16-16t64 \
-    && rm -rf /var/lib/apt/lists/*
-
 FROM docker.io/library/debian:13-slim AS patch
 RUN apt-get update -qq \
     && apt-get install -y -qq --no-install-recommends libpng16-16t64 \
@@ -366,7 +363,8 @@ RUN cd /p \
     && cp /p/status var/lib/dpkg/status.d/libpng16-16t64 \
     && newmd5=$(md5sum usr/lib/x86_64-linux-gnu/libpng16.so.16.48.0 | cut -d" " -f1) \
     && sed "s|^dfaa70c7860eceb19c8e0a2029ad057c |$newmd5 |" /p/md5sums \
-        > var/lib/dpkg/status.d/libpng16-16t64.md5sums
+        > var/lib/dpkg/status.d/libpng16-16t64.md5sums \
+    && grep -q "$newmd5 " var/lib/dpkg/status.d/libpng16-16t64.md5sums
 
 FROM gcr.io/distroless/java21-debian13:nonroot
 COPY --from=patch /p/out/ /
@@ -382,5 +380,5 @@ ENTRYPOINT ["java", "-XX:+UseContainerSupport", \
 The control tag was never modified, so reverting is a pull:
 
 ```bash
-docker pull quay.io/hellodk/base-image@sha256:cd50ed9b02229151f
+docker pull quay.io/hellodk/base-image:google-4.0.2-java21-cvefix
 ```
