@@ -19,6 +19,13 @@ const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 
 const crumb = title.length > 45 ? title.slice(0, 45) + '…' : title;
 const pageUrl = `https://hellodk.io/${slug}`;
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+// Nest h3s under their preceding h2 so the TOC reads as an outline and
+// screen readers get a real list hierarchy. Orphan h3s become top-level.
+const tocTree = [];
+for (const h of toc) {
+  if (h.depth === 2 || tocTree.length === 0) tocTree.push({ ...h, children: [] });
+  else tocTree[tocTree.length - 1].children.push(h);
+}
 const tweetText = encodeURIComponent(title);
 const shareUrl = encodeURIComponent(pageUrl);
 ---
@@ -51,10 +58,11 @@ const shareUrl = encodeURIComponent(pageUrl);
           <span class="post-share__lbl">Share</span>
           <a class="post-share__btn" href={`https://twitter.com/intent/tweet?text=${tweetText}&url=${shareUrl}`} target="_blank" rel="noopener" aria-label="Share on X" title="Share on X">X</a>
           <a class="post-share__btn" href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`} target="_blank" rel="noopener" aria-label="Share on LinkedIn" title="Share on LinkedIn">in</a>
-          <button class="post-share__btn" type="button" aria-label="Copy link" title="Copy link" onclick={`navigator.clipboard.writeText('${pageUrl}')`}>&#128279;</button>
+          <button class="post-share__btn" type="button" data-copy-link={pageUrl} aria-label="Copy link" title="Copy link">&#128279;</button>
+          <span class="post-share__status sr-only" aria-live="polite"></span>
         </div>
       </div>
-      {cover && <img src={cover} alt={title} class="post-art__cover" />}
+      {cover && <img src={cover} alt="" loading="eager" fetchpriority="high" decoding="async" class="post-art__cover" />}
     </header>
 
     {tldr && (
@@ -76,9 +84,20 @@ const shareUrl = encodeURIComponent(pageUrl);
       <aside class="post-toc-inline" aria-label="On this page">
         <div class="post-toc-inline__head">On this page</div>
         <nav>
-          {toc.map((h) => (
-            <a href={`#${h.slug}`} class:list={['post-toc-inline__link', h.depth === 3 && 'post-toc-inline__link--sub']}>{h.text}</a>
-          ))}
+          <ul class="post-toc-inline__list">
+            {tocTree.map((h2) => (
+              <li>
+                <a href={`#${h2.slug}`} class="post-toc-inline__link" data-toc-link={h2.slug}>{h2.text}</a>
+                {h2.children.length > 0 && (
+                  <ul class="post-toc-inline__sublist">
+                    {h2.children.map((h) => (
+                      <li><a href={`#${h.slug}`} class="post-toc-inline__link post-toc-inline__link--sub" data-toc-link={h.slug}>{h.text}</a></li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
         </nav>
       </aside>
     )}
@@ -92,7 +111,8 @@ const shareUrl = encodeURIComponent(pageUrl);
         <span class="post-share__lbl">Share this post</span>
         <a class="post-share__btn" href={`https://twitter.com/intent/tweet?text=${tweetText}&url=${shareUrl}`} target="_blank" rel="noopener" aria-label="Share on X" title="Share on X">X</a>
         <a class="post-share__btn" href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`} target="_blank" rel="noopener" aria-label="Share on LinkedIn" title="Share on LinkedIn">in</a>
-        <button class="post-share__btn" type="button" aria-label="Copy link" title="Copy link" onclick={`navigator.clipboard.writeText('${pageUrl}')`}>&#128279;</button>
+        <button class="post-share__btn" type="button" data-copy-link={pageUrl} aria-label="Copy link" title="Copy link">&#128279;</button>
+        <span class="post-share__status sr-only" aria-live="polite"></span>
       </div>
     </footer>
 
@@ -110,20 +130,20 @@ const shareUrl = encodeURIComponent(pageUrl);
 .post-grid { display: block; }
 .post-main { min-width: 0; }
 .post-share { display: flex; align-items: center; gap: 10px; }
-.post-share__lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #9ca3af; margin-right: 2px; }
+.post-share__lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #6b7280; margin-right: 2px; }
 html[data-theme="dark"] .post-share__lbl { color: #6b7280; }
 .post-share__btn { width: 32px; height: 32px; border: 1px solid #dee2e6; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #6c757d; font-size: 0.8rem; font-weight: 700; text-decoration: none; background: #fff; cursor: pointer; font-family: system-ui, sans-serif; }
-.post-share__btn:hover { border-color: #d95f59; color: #d95f59; }
+.post-share__btn:hover { border-color: #a83a32; color: #a83a32; }
 html[data-theme="dark"] .post-share__btn { background: #242322; border-color: #38352f; color: #9d978e; }
 html[data-theme="dark"] .post-share__btn:hover { border-color: #ef8a84; color: #ef8a84; }
 
 /* Inline table of contents, part of the article flow. */
-.post-toc-inline__head { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #d95f59; margin-bottom: 10px; }
+.post-toc-inline__head { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #a83a32; margin-bottom: 10px; }
 html[data-theme="dark"] .post-toc-inline__head { color: #ef8a84; }
-.post-toc-inline nav { display: flex; flex-wrap: wrap; gap: 10px; font-family: system-ui, sans-serif; }
-.post-toc-inline__link { display: block; font-size: 0.86rem; color: #44403c; text-decoration: none; line-height: 1.4; padding: 4px 10px; border: 1px solid #e8e3da; border-radius: 999px; background: #fbfaf7; transition: background .15s, border-color .15s, color .15s; }
+.post-toc-inline nav { display: block; font-family: system-ui, sans-serif; }
+.post-toc-inline__link { display: inline-block; font-size: 0.86rem; color: #44403c; text-decoration: none; line-height: 1.4; padding: 4px 10px; border: 1px solid #e8e3da; border-radius: 999px; background: #fbfaf7; transition: background .15s, border-color .15s, color .15s; }
 html[data-theme="dark"] .post-toc-inline__link { color: #ece8e1; border-color: #38352f; background: #242322; }
-.post-toc-inline__link:hover { background: #f9e9e7; border-color: #d95f59; color: #d95f59; }
+.post-toc-inline__link:hover { background: #f9e9e7; border-color: #a83a32; color: #a83a32; }
 html[data-theme="dark"] .post-toc-inline__link:hover { background: #3a2a28; border-color: #ef8a84; color: #ef8a84; }
 .post-toc-inline__link--sub { padding-left: 14px; font-size: 0.82rem; }
 @media (max-width: 900px) {
@@ -148,7 +168,7 @@ html[data-theme="dark"] .post-toc-inline__link:hover { background: #3a2a28; bord
 .post-art__ft { margin-top: 34px; padding-top: 18px; border-top: 1px solid #dee2e6; }
 html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
 
-.post-art__cover { width: 100%; max-height: 360px; object-fit: cover; border-radius: 8px; margin-top: 20px; display: block; }
+.post-art__cover { width: 100%; aspect-ratio: 16 / 9; max-height: 360px; object-fit: cover; border-radius: 8px; margin-top: 20px; display: block; }
 
 /* Serif body */
 /* Post body content comes from markdown through <slot />, so it carries no
@@ -158,7 +178,7 @@ html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
    dead on every post. :global() on the descendant keeps the rule anchored to
    .post-art__body while letting it reach markdown elements.
    Values are unchanged; only the table rules are new. */
-.post-art__body { font-family: 'Merriweather', Georgia, serif; font-size: 1.0625rem; line-height: 1.85; color: #2b2b2b; font-weight: 400; }
+.post-art__body { font-family: 'Merriweather', Georgia, serif; font-size: 1.0625rem; line-height: 1.65; color: #2b2b2b; font-weight: 400; }
 .post-art__body :global(h2) { font-family: 'Merriweather', Georgia, serif; font-size: 1.5rem; font-weight: 700; margin: 2.2rem 0 0.8rem; color: #1a1a1a; letter-spacing: -0.01em; }
 .post-art__body :global(h3) { font-family: 'Merriweather', Georgia, serif; font-size: 1.22rem; font-weight: 700; margin: 1.9rem 0 0.6rem; color: #1a1a1a; }
 .post-art__body :global(h4) { font-family: 'Merriweather', Georgia, serif; font-size: 1.05rem; font-weight: 700; margin: 1.6rem 0 0.5rem; color: #1a1a1a; }
@@ -175,17 +195,17 @@ html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
 .post-art__body :global(code:not(pre code)) { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #f1f3f5; color: #ad3b2b; border: 1px solid #e5e6e7; padding: 0.1em 0.4em; border-radius: 3px; }
 .post-art__body :global(hr) { border: none; border-top: 1px solid #e8e3da; margin: 2.2rem 0; }
 
-/* Measure. Prose uses the full content column (200ch ≈ uncapped at real
-   viewports) on explicit owner request (issue #14): readability best practice
-   tops out near 80ch, and the longer lines this produces were accepted as a
-   deliberate trade-off for full-width prose. */
+/* Measure. Prose is capped near 68ch per the 45–75ch readability band
+   (issue #15, reversing the 200ch trade-off from issue #14): past ~80ch
+   the eye stops reliably finding the next line's left edge. Wide elements
+   (pre, table, diagrams, stat cards) keep the full column. */
 .post-art__body :global(p),
 .post-art__body :global(ul),
 .post-art__body :global(ol),
 .post-art__body :global(blockquote),
 .post-art__body :global(h2),
 .post-art__body :global(h3),
-.post-art__body :global(h4) { max-width: 200ch; }
+.post-art__body :global(h4) { max-width: 68ch; }
 
 /* Tables: the layout never had rules for these. Several migrated posts and the
    resume skills matrix contain them; without these they render as unspaced text. */
@@ -197,6 +217,9 @@ html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
 .post-art__body :global(th[align="right"]), .post-art__body :global(td[align="right"]) { text-align: right; }
 .post-art__body :global(th[align="center"]), .post-art__body :global(td[align="center"]) { text-align: center; }
 .post-art__body :global(td) { border: 1px solid #dee2e6; padding: 0.5rem 0.7rem; vertical-align: top; }
+.post-art__body :global(thead th) { position: sticky; top: 0; background: #f8f9fa; }
+.post-art__body :global(tbody tr:nth-child(even) td) { background: #f8f9fa; }
+.post-art__body :global(caption) { font-family: system-ui, sans-serif; font-size: 0.85rem; color: #6c757d; text-align: left; padding-bottom: 0.4rem; caption-side: top; }
 
 /* Style 2 components (issue #14): stat cards and callouts emitted by the
    migration converter (scripts/lib/html-to-md.mjs) as raw HTML. :global() for
@@ -205,26 +228,26 @@ html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
 .post-art__body :global(.stat-card) { border: 1px solid #dee2e6; border-radius: 10px; padding: 14px; background: #fff; }
 .post-art__body :global(.stat-card__n) { display: block; font-size: 1.3rem; font-weight: 800; color: #1a1a1a; }
 .post-art__body :global(.stat-card__l) { display: block; font-size: 0.78rem; color: #6c757d; margin-top: 2px; }
-.post-art__body :global(.stat-card--ok .stat-card__n) { color: #16a34a; }
-.post-art__body :global(.stat-card--err .stat-card__n) { color: #dc2626; }
-.post-art__body :global(.stat-card--warn .stat-card__n) { color: #d97706; }
-.post-art__body :global(.callout) { border-left: 4px solid #0066cc; background: #eff6ff; border-radius: 8px; padding: 14px 16px; margin: 1.5rem 0; font-family: system-ui, sans-serif; max-width: 200ch; }
+.post-art__body :global(.stat-card--ok .stat-card__n) { color: #15803d; }
+.post-art__body :global(.stat-card--err .stat-card__n) { color: #b91c1c; }
+.post-art__body :global(.stat-card--warn .stat-card__n) { color: #b45309; }
+.post-art__body :global(.callout) { border-left: 4px solid #0066cc; background: #eff6ff; border-radius: 8px; padding: 14px 16px; margin: 1.5rem 0; font-family: system-ui, sans-serif; max-width: 68ch; }
 .post-art__body :global(.callout__title) { display: block; margin-bottom: 2px; }
 .post-art__body :global(.callout__body p:last-child) { margin-bottom: 0; }
-.post-art__body :global(.callout--ok) { border-color: #16a34a; background: #f0fdf4; }
-.post-art__body :global(.callout--err) { border-color: #dc2626; background: #fef2f2; }
-.post-art__body :global(.callout--warn) { border-color: #d97706; background: #fffbeb; }
+.post-art__body :global(.callout--ok) { border-color: #15803d; background: #f0fdf4; }
+.post-art__body :global(.callout--err) { border-color: #b91c1c; background: #fef2f2; }
+.post-art__body :global(.callout--warn) { border-color: #b45309; background: #fffbeb; }
 @media (max-width: 700px) {
   .post-art__body :global(.stat-cards) { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* TL;DR summary panel at the top of the post (ledger-style). */
-.post-tldr { background: #fbfaF7; border: 1px solid #e8e3da; border-left: 3px solid #d95f59; border-radius: 8px; padding: 18px 20px; margin: -28px -24px 28px; max-width: 200ch; }
+.post-tldr { background: #fbfaF7; border: 1px solid #e8e3da; border-left: 3px solid #d95f59; border-radius: 8px; padding: 18px 20px; margin: 0 0 28px; max-width: 68ch; }
 html[data-theme="dark"] .post-tldr { background: #242322; border-color: #38352f; }
 .post-tldr__head { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-.post-tldr__label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.16em; color: #d95f59; border: 1px solid #d95f59; border-radius: 3px; padding: 2px 9px; background: #f9e9e7; }
+.post-tldr__label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.16em; color: #a83a32; border: 1px solid #a83a32; border-radius: 3px; padding: 2px 9px; background: #f9e9e7; }
 html[data-theme="dark"] .post-tldr__label { color: #ef8a84; border-color: #ef8a84; background: #3a2a28; }
-.post-tldr__meta { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #8b857e; }
+.post-tldr__meta { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #6b7280; }
 html[data-theme="dark"] .post-tldr__meta { color: #9d978e; }
 .post-tldr__summary { font-family: 'Merriweather', Georgia, serif; font-size: 1rem; line-height: 1.75; color: #242220; margin: 0 0 12px; }
 html[data-theme="dark"] .post-tldr__summary { color: #ece8e1; }
@@ -232,8 +255,57 @@ html[data-theme="dark"] .post-tldr__summary { color: #ece8e1; }
 .post-tldr__points li { display: flex; gap: 14px; padding: 10px 0; border-top: 1px solid #e8e3da; }
 html[data-theme="dark"] .post-tldr__points li { border-top-color: #38352f; }
 .post-tldr__points li:first-of-type { padding-top: 8px; border-top: none; }
-.post-tldr__k { font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; color: #d95f59; white-space: nowrap; align-self: flex-start; line-height: 1.4; }
+.post-tldr__k { font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; color: #a83a32; white-space: nowrap; align-self: flex-start; line-height: 1.4; }
 html[data-theme="dark"] .post-tldr__k { color: #ef8a84; }
 .post-tldr__points li span:last-child { color: #242220; font-size: 0.94rem; line-height: 1.5; }
 html[data-theme="dark"] .post-tldr__points li span:last-child { color: #ece8e1; }
+
+/* TOC hierarchy: nested lists keep DOM outline semantics while pills flow
+   inline. (No display:contents — it strips list semantics in some readers.) */
+.post-toc-inline__list, .post-toc-inline__sublist { list-style: none; margin: 0; padding: 0; display: inline; }
+.post-toc-inline nav, .post-toc-inline__list > li { display: inline; }
+.post-toc-inline__link { margin: 0 10px 10px 0; }
+.post-toc-inline__link[aria-current="true"] { background: #f9e9e7; border-color: #a83a32; color: #a83a32; }
+html[data-theme="dark"] .post-toc-inline__link[aria-current="true"] { background: #3a2a28; border-color: #ef8a84; color: #ef8a84; }
+
+/* Screen-reader-only live region for copy-link confirmation. */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 </style>
+
+<script>
+  // Copy-link buttons announce confirmation in their sibling live region.
+  document.querySelectorAll('[data-copy-link]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const url = btn.getAttribute('data-copy-link') || location.href;
+      try { await navigator.clipboard.writeText(url); }
+      catch { /* clipboard unavailable — still announce below */ }
+      const status = btn.parentElement?.querySelector('.post-share__status');
+      if (status) {
+        status.textContent = 'Link copied';
+        setTimeout(() => { status.textContent = ''; }, 2000);
+      }
+    });
+  });
+
+  // TOC scrollspy: mark the section in view with aria-current.
+  const tocLinks = [...document.querySelectorAll('[data-toc-link]')];
+  if (tocLinks.length > 0 && 'IntersectionObserver' in window) {
+    const sections = tocLinks
+      .map((a) => document.getElementById(a.getAttribute('data-toc-link') || ''))
+      .filter(Boolean);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          tocLinks.forEach((a) =>
+            a.getAttribute('data-toc-link') === e.target.id
+              ? a.setAttribute('aria-current', 'true')
+              : a.removeAttribute('aria-current'),
+          );
+        }
+      },
+      { rootMargin: '-20% 0px -70% 0px' },
+    );
+    sections.forEach((s) => io.observe(s));
+  }
+</script>

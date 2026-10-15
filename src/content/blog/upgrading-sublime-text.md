@@ -8,7 +8,7 @@ draft: false
 
 ### Upgrade your Sublime Text with the below steps
 
-![](/assets/images/upgrade-sublime-text/sublime.jpeg)
+![Sublime Text editor](/assets/images/upgrade-sublime-text/sublime.jpeg)
 
 #### Environment Details
 

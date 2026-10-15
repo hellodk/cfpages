@@ -38,7 +38,7 @@ This article shows how to configure **split DNS** so:
 
 ------------------------------------------------------------------------
 
-# Architecture
+## Architecture
 
 Below is the DNS architecture after configuration.
 
@@ -58,7 +58,7 @@ RESOLVER -->|Public domains| GOOGLE[Public DNS<br>8.8.8.8]
 
 ------------------------------------------------------------------------
 
-# Environment
+## Environment
 
 Example environment used in this guide:
 
@@ -72,7 +72,7 @@ Example environment used in this guide:
 
 ------------------------------------------------------------------------
 
-# Step 1 --- Find kube-dns Service IP
+## Step 1 --- Find kube-dns Service IP
 
 Retrieve the kube-dns service IP from Kubernetes.
 
@@ -89,7 +89,7 @@ This IP is the **DNS endpoint inside the Kubernetes cluster**.
 
 ------------------------------------------------------------------------
 
-# Step 2 --- Configure systemd-resolved Split DNS
+## Step 2 --- Configure systemd-resolved Split DNS
 
 Create a resolver override configuration.
 
@@ -114,13 +114,13 @@ It tells `systemd-resolved`:
 
 ------------------------------------------------------------------------
 
-# Step 3 --- Restart the Resolver
+## Step 3 --- Restart the Resolver
 
     sudo systemctl restart systemd-resolved
 
 ------------------------------------------------------------------------
 
-# Step 4 --- Verify DNS Configuration
+## Step 4 --- Verify DNS Configuration
 
 Run:
 
@@ -144,7 +144,7 @@ and optionally:
 
 ------------------------------------------------------------------------
 
-# DNS Resolution Flow
+## DNS Resolution Flow
 
 The DNS resolution flow now looks like this:
 
@@ -175,7 +175,7 @@ Resolved-->>App: Response
 
 ------------------------------------------------------------------------
 
-# Step 5 --- Test Kubernetes DNS
+## Step 5 --- Test Kubernetes DNS
 
 Test service resolution.
 
@@ -191,7 +191,7 @@ Example result:
 
 ------------------------------------------------------------------------
 
-# Access Services Directly
+## Access Services Directly
 
 Once configured, you can access Kubernetes services directly from the
 host.
@@ -208,7 +208,7 @@ This dramatically simplifies debugging workflows.
 
 ------------------------------------------------------------------------
 
-# Optional Enhancement --- Pod DNS
+## Optional Enhancement --- Pod DNS
 
 You can also add support for **Pod DNS records**.
 
@@ -232,7 +232,7 @@ This allows resolving:
 
 ------------------------------------------------------------------------
 
-# Benefits of this Setup
+## Benefits of this Setup
 
 ✔ Resolve Kubernetes services from your host\
 ✔ No need for port-forwarding\
@@ -242,7 +242,7 @@ This allows resolving:
 
 ------------------------------------------------------------------------
 
-# Final DNS Architecture
+## Final DNS Architecture
 
 ``` mermaid
 flowchart LR
@@ -258,7 +258,7 @@ KubeDNS --> KubernetesCluster[Kubernetes Services]
 
 ------------------------------------------------------------------------
 
-# Conclusion
+## Conclusion
 
 Using **systemd-resolved split DNS** with Kubernetes enables a very
 powerful workflow for DevOps engineers.
