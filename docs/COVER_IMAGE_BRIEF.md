@@ -274,6 +274,14 @@ that is what keeps the set grounded.
 | `two-lenses-cluster-estimates` | A pair of worn binoculars on a fence post at dusk, one lens cap on, the other hanging by its strap. |
 | `ubi9-full-remediation` | An overstuffed toolbox with its lid sprung open, sockets spilling onto an oil-stained rag. |
 | `mobile-code-signing` | A wax seal stamp beside a brass key on a dark desk blotter, sealing wax pooled and cooled. |
+| `container-scanner-divergence` | Four identical padlocks in a row on a workbench, three open, one shut, keys scattered, machining oil on the steel. |
+| `temurin-cve-2025-69644-fix` | A socket set with one socket removed and set apart on a shop rag, the empty slot in the rail catching the light. |
+| `sre-llm-fleet-decision` | A rack of twenty identical small black boxes receding down a shelf, one pulled slightly forward, dust on the rails. |
+| `mlx-oc-monitoring-explained` | An analogue mixing desk with a single channel fader pushed up, its meter lit, neighbouring channels dark and dusty. |
+| `mlx-supervision-launchagent` | A brass alarm clock beside a sleeping laptop, morning light across the desk, the clock hands just past the hour. |
+| `opensre-integrations` | A switchboard of labelled patch cords, most seated, two crossed mid-air, bakelite worn smooth at the jacks. |
+| `cve-agent-autopush` | A conveyor stamper caught mid-press over a metal plate, the previous plates stacked neatly, oil sheen on the bed. |
+| `omlx-071-upstream-roadmap` | A railway junction at dusk with converging tracks merging into one line, an amber signal lamp against the gloom. |
 
 ---
 

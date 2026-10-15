@@ -1,7 +1,7 @@
 ---
 title: "21 — LaunchDaemons Keep the Thunderbolt Ring Up: IP + MTU That Survive Link Flaps"
 date: 2026-08-09
-description: "Every Thunderbolt link re-negotiation — the peer Mac falling asleep, a cable event, an OS network reset — silently reverted en2 to link-local addressing and MTU 1500. Traffic to the peer then leaked out the LAN gateway to a router, and the tensor-parallel ring died. Here is the idempotent LaunchDaem"
+description: "Every Thunderbolt link re-negotiation — the peer Mac falling asleep, a cable event, an OS network reset — silently reverted en2 to link-local addressing and MTU 1500. Traffic to the peer then leaked out the LAN gateway to a router, and the tensor-parallel ring died. Here is the idempotent"
 tags: [macos, networking]
 draft: false
 ---

@@ -1,7 +1,7 @@
 ---
 title: "19 — Every Signal, One Map: Telemetry and Test Tooling in Tables"
 date: 2026-08-08
-description: "This stack generates a lot of artifacts — 36 metric families on the proxy alone, another 40-odd on four exporters, spans, log streams, feedback scores, and alerts. And it is tested with four different rigs. This post is the reference map: what is generated, where each thing goes, and how the load an"
+description: "This stack generates a lot of artifacts — 36 metric families on the proxy alone, another 40-odd on four exporters, spans, log streams, feedback scores, and alerts. And it is tested with four different rigs. This post is the reference map: what is generated, where each thing goes, and how the load"
 tags: [observability, testing]
 draft: false
 ---

@@ -1,7 +1,7 @@
 ---
 title: "14 — The Decision Ledger: Tuning, metal_gpu_error, and Every Recommendation in One Place"
 date: 2026-08-08
-description: "Post 13 gave us the root cause: a heterogeneous ring whose remote M4 faults and then poisons the GPU, with a readiness check that cannot see it. This post is everything the cluster has learned, consolidated into the three artifacts we now choose from — a tuning guide for edge scenarios, a handling p"
+description: "Post 13 gave us the root cause: a heterogeneous ring whose remote M4 faults and then poisons the GPU, with a readiness check that cannot see it. This post is everything the cluster has learned, consolidated into the three artifacts we now choose from — a tuning guide for edge scenarios, a handling"
 tags: [mlx, observability]
 draft: false
 ---

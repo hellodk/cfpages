@@ -2,6 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { normalizeBody } from './lib/normalize-md.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -164,7 +165,7 @@ for (const draft of draftFiles) {
   const description = extractDescription(raw) || title;
 
   // Extract body content
-  const body = extractTextContent(raw);
+  const body = normalizeBody(draft, extractTextContent(raw));
 
   // Build frontmatter
   let fm = `---\n`;

@@ -75,7 +75,7 @@ sum(increase(container_network_transmit_bytes_total{namespace="kube-system"}[24h
 
 ### 2. Cluster Topology Analysis
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────┐
 │                        Kubernetes Cluster                            │
 │                         (k0s v1.34.3)                                │
@@ -108,7 +108,7 @@ sum(increase(container_network_transmit_bytes_total{namespace="kube-system"}[24h
 
 **Current Tailscale Status:**
 
-```
+```text
 Node                    Connection Type    Status
 ────────────────────────────────────────────────────────────────
 cylon (198.51.100.27)    direct            Active, control-plane
@@ -132,7 +132,7 @@ typhoon                 direct            Active, 192.0.2.52:41641
 
 ### Why DERP Relay Causes Traffic Explosions
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                    NORMAL PATH (Direct P2P)                             │
 │  ┌────────────┐              LAN               ┌────────────┐          │
@@ -246,7 +246,7 @@ When a node transitions between Ready/NotReady states, Calico must:
 
 ### Network Traffic Graph (Feb 22)
 
-```
+```text
 Traffic Rate (Gbps)
     0.5 │                    ████
         │                   █████
@@ -264,7 +264,7 @@ Traffic Rate (Gbps)
 
 ### Node Ready Status Changes
 
-```
+```text
 Feb 22, ~14:00 UTC (timestamp 1771783200):
 ├── lima-mm0-k0s-ubuntu: 22 status transitions
 ├── lima-mm1-k0s-ubuntu: 14 status transitions
@@ -485,7 +485,7 @@ The network spikes on February 22nd and 28th were caused by a **cascading failur
 
 ### The Feedback Loop
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────┐
 │                     INCIDENT FEEDBACK LOOP                          │
 │                                                                     │

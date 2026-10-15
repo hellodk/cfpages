@@ -1,7 +1,7 @@
 ---
 title: "Six Loops, No Timeout: The MLX Bug That Hangs a Mac Cluster Forever"
 date: 2026-08-16
-description: "MLX issue #3910: when a peer dies mid-collective, JACCL spins forever with zero errno, zero exception, zero log output. I read the source. It is six unbounded loops, not one, plus a second unreported bug with a negative-offset pointer. Here is what is actually broken and why Rust would not have save"
+description: "MLX issue #3910: when a peer dies mid-collective, JACCL spins forever with zero errno, zero exception, zero log output. I read the source. It is six unbounded loops, not one, plus a second unreported bug with a negative-offset pointer. Here is what is actually broken and why Rust would not have"
 tags: [mlx, macos, apple-silicon, debugging, distributed-systems]
 cover: "assets/images/covers/mlx-jaccl-silent-hang.svg"
 draft: false

@@ -21,6 +21,7 @@ import path from 'path';
 import { parse } from 'node-html-parser';
 import { maskText } from './lib/mask.mjs';
 import { buildTurndown, firstProseParagraph, decodeEntities } from './lib/html-to-md.mjs';
+import { normalizeBody, clipDescription } from './lib/normalize-md.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'src/content/blog');
@@ -101,6 +102,54 @@ const ASSET_ROOTS = [
   'https://raw.githubusercontent.com/hellodk/staging.hellodk.in/master',
 ];
 
+/**
+ * Content patches for frozen upstream sources. The legacy Jekyll repos are
+ * read-only history — these fixes cannot land there, so they live here and
+ * are re-applied on every recovery run instead of being hand-edited into
+ * output that the next run would overwrite:
+ * - deploy-jenkins-with-ssl: Jekyll's `![](url "title")` syntax leaves empty
+ *   alt text; the title already describes the image, so move it into alt.
+ * - upgrading-sublime-text: bare logo image with neither alt nor title.
+ */
+function legacyContentFixes(post, body) {
+  let out = body;
+  if (post.slug === 'deploy-jenkins-with-ssl') {
+    out = out.replace(/!\[\s*\]\((\S+) "([^"]+)"\)/g, '![$2]($1 "$2")');
+    // The openssl screenshot carries Distinguished Name answers that exist
+    // nowhere as text (Google: never let an image be the sole carrier of
+    // text). Transcribe them beside the image.
+    out = out.replace(
+      '![open ssl certificate creation](/assets/images/jenkins/jenkins_open_ssl.png "open ssl certificate creation")',
+      `![open ssl certificate creation](/assets/images/jenkins/jenkins_open_ssl.png "open ssl certificate creation")
+
+    Answer the Distinguished Name prompts (transcribed from the screenshot above so the post works without images):
+
+    \`\`\`text
+    Country Name (2 letter code) [XX]: IN
+    State or Province Name (full name) []: KA
+    Locality Name (eg, city) [Default City]: Bengaluru
+    Organization Name (eg, company) [Default Company Ltd]: theCylon
+    Organizational Unit Name (eg, section) []:
+    Common Name (eg, your name or your server's hostname) []:
+    Email Address []: jenkins@thecylon.com
+    \`\`\``,
+    );
+  }
+  if (post.slug === 'upgrading-sublime-text') {
+    out = out.replace(
+      '![](/assets/images/upgrade-sublime-text/sublime.jpeg)',
+      '![Sublime Text editor](/assets/images/upgrade-sublime-text/sublime.jpeg)',
+    );
+    // Frozen upstream nests the steps as h3 > h4 > h6×5 — a skipped outline
+    // the pipeline guards refuse to shift. Renest explicitly: steps section
+    // h2, environment h3, individual steps h4.
+    out = out.replace('### Upgrade your Sublime Text with the below steps', '## Upgrade your Sublime Text with the below steps');
+    out = out.replace('#### Environment Details', '### Environment Details');
+    out = out.replaceAll('###### ', '#### ');
+  }
+  return out;
+}
+
 async function fetchAssets(md) {
   const refs = [...md.matchAll(/!\[[^\]]*\]\((assets\/[^)\s"]+)/g)].map((m) => m[1]);
   for (const rel of new Set(refs)) {
@@ -148,12 +197,15 @@ async function main() {
     if (!title) throw new Error(`${post.slug}: no title`);
     if (!date) throw new Error(`${post.slug}: no date — refusing to stamp today's`);
 
-    const body = await fetchAssets(maskText(md).replace(/\n{3,}/g, '\n\n').trim());
+    const rawBody = await fetchAssets(maskText(md).replace(/\n{3,}/g, '\n\n').trim());
+    // Same readability normalizations as the main migration, plus the
+    // frozen-upstream content patches above — re-applied, never hand-edited.
+    const body = normalizeBody(post, legacyContentFixes(post, rawBody));
     const words = body.split(/\s+/).length;
     if (words < 80) throw new Error(`${post.slug}: only ${words} words — wrong container?`);
 
     const description =
-      maskText(firstProseParagraph(body) ?? '').slice(0, 300) ||
+      clipDescription(maskText(firstProseParagraph(body) ?? '')) ||
       `${title} — recovered from the legacy site.`;
 
     fs.writeFileSync(

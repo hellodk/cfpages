@@ -1,7 +1,7 @@
 ---
 title: "12 — The Fault Ledger: Detailed Restart & Error Analysis in Grafana"
 date: 2026-08-08
-description: "Post 9 typed the crash and counted restarts; post 11 measured the crash rate and wrote a plan. This post makes the analysis visible: a per-reason crash counter in the supervisor, and a Grafana row that answers “how many restarts, of what kind, when, and how many requests died with them” — plus the s"
+description: "Post 9 typed the crash and counted restarts; post 11 measured the crash rate and wrote a plan. This post makes the analysis visible: a per-reason crash counter in the supervisor, and a Grafana row that answers “how many restarts, of what kind, when, and how many requests died with them” — plus the"
 tags: [observability, grafana]
 draft: false
 ---

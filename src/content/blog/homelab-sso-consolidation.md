@@ -1,7 +1,7 @@
 ---
 title: "3 Root Causes, 2 Identical Errors, 1 Dead NFS Box: Consolidating a Homelab Behind SSO"
 date: 2026-08-07
-description: "Wiring every homelab service behind one login URL via Keycloak and Cloudflare Tunnel sounded like an afternoon of DNS records. It turned into an accidentally-public admin console, two apps failing OAuth with the identical error for two unrelated reasons, a three-cause Grafana outage, and a dead NFS "
+description: "Wiring every homelab service behind one login URL via Keycloak and Cloudflare Tunnel sounded like an afternoon of DNS records. It turned into an accidentally-public admin console, two apps failing OAuth with the identical error for two unrelated reasons, a three-cause Grafana outage, and a dead NFS"
 tags: [sso, keycloak, homelab, cloudflare]
 draft: false
 ---

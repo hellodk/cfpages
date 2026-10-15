@@ -1,7 +1,7 @@
 ---
 title: "192.0.2.64 Kept Freezing After Login — the Trail Ended at a Port Collision on 16GB"
 date: 2026-08-02
-description: "Two Mac minis headed for Apple MLX distributed inference both froze after SSH login. The hunt crossed an mDNSResponder reverse-DNS stall, a WiFi wake-latency bug with a fix that only half-worked, a Thunderbolt/RDMA detour — and ended with two forgotten background inference servers squatting on the e"
+description: "Two Mac minis headed for Apple MLX distributed inference both froze after SSH login. The hunt crossed an mDNSResponder reverse-DNS stall, a WiFi wake-latency bug with a fix that only half-worked, a Thunderbolt/RDMA detour — and ended with two forgotten background inference servers squatting on the"
 tags: [macos, mlx, debugging, networking]
 draft: false
 ---

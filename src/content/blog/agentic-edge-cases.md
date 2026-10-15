@@ -1,7 +1,7 @@
 ---
 title: "11 — Edge Cases Are the Load: Tools, Streaming, and the Zero-Completion Traces"
 date: 2026-08-08
-description: "The agentic benchmark suite ran, the token counters looked nearly dead, and “why so little token consumption?” turned out to be a crash report. This post is the full accounting: the agentic work we performed, the zero-completion trace investigation, a pass over every other metric, and a recommendati"
+description: "The agentic benchmark suite ran, the token counters looked nearly dead, and “why so little token consumption?” turned out to be a crash report. This post is the full accounting: the agentic work we performed, the zero-completion trace investigation, a pass over every other metric, and a"
 tags: [agents, llm]
 draft: false
 ---

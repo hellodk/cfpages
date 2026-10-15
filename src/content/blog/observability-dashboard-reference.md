@@ -1,7 +1,7 @@
 ---
 title: "22 — The Observability Reference: Every Panel, Every Formula, and the Day the Server Fell Over"
 date: 2026-08-09
-description: "A complete reference to the twelve Grafana dashboards: what each of the 259 panels is, the exact PromQL behind it, and the significance of the signal. Plus the crash post-mortem that shaped three of them, the proxy guardrails that stopped it, and the signal-to-noise pass that removed 20 duplicate wi"
+description: "A complete reference to the twelve Grafana dashboards: what each of the 259 panels is, the exact PromQL behind it, and the significance of the signal. Plus the crash post-mortem that shaped three of them, the proxy guardrails that stopped it, and the signal-to-noise pass that removed 20 duplicate"
 tags: [observability, grafana]
 draft: false
 ---

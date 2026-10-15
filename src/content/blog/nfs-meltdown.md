@@ -1,7 +1,7 @@
 ---
 title: "When Your NFS Server Eats Itself: Diagnosing a Load Average of 215 on a 20-Core Machine"
 date: 2026-05-10
-description: "TL;DR — A Kubernetes node running an NFS server that also consumed its own NFS exports hit memory pressure, causing swap thrashing that starved the NFS daemon. The result: a self-referencing deadlock, 30+ processes stuck in uninterruptible sleep, a runaway cron job spawning 1,172 zombie processes, a"
+description: "TL;DR — A Kubernetes node running an NFS server that also consumed its own NFS exports hit memory pressure, causing swap thrashing that starved the NFS daemon. The result: a self-referencing deadlock, 30+ processes stuck in uninterruptible sleep, a runaway cron job spawning 1,172 zombie processes,"
 tags: [nfs, kubernetes, incident, storage]
 draft: false
 ---

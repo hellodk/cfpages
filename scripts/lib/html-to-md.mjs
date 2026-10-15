@@ -9,6 +9,7 @@
  */
 import { parse } from 'node-html-parser';
 import TurndownService from 'turndown';
+import { clipDescription } from './normalize-md.mjs';
 
 /**
  * Page furniture. Removed before SVG extraction so decorative icons go with it.
@@ -204,7 +205,7 @@ export function firstProseParagraph(md) {
     if ((block.match(METADATA_LABEL) || []).length >= 2) continue;
     if (isCommandBlock(block) || (block.match(FLAG_TOKEN) || []).length >= 2) continue;
     if (block.length <= 60) continue;
-    return decodeEntities(block).replace(/[#*`>[\]]/g, '').replace(/\s+/g, ' ').trim().slice(0, 300);
+    return clipDescription(decodeEntities(block).replace(/[#*`>[\]]/g, '').replace(/\s+/g, ' ').trim());
   }
   return '';
 }
@@ -319,7 +320,8 @@ export function convertHtml(html) {
     || root.querySelector('header .sub')?.textContent
     || root.querySelector('.section-desc')?.textContent
     || ''
-  ).replace(/\s+/g, ' ').trim().slice(0, 300);
+  ).replace(/\s+/g, ' ').trim();
+  description = clipDescription(description);
 
   // 2. Tab labels become H2 headings on their panels, before the bar is removed.
   // Selector coverage across the corpus: `.tab-panel` 10 files, `.tab` 8,

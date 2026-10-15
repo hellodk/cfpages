@@ -239,6 +239,24 @@ describe('fenced code blocks carry a language tag', () => {
   });
 });
 
+describe('copy-paste commands are complete', () => {
+  // A truncated digest in a `docker pull` is an `invalid reference format`
+  // at paste time (verified live against the daemon). Short SHAs in prose
+  // are a legitimate display convention and are not flagged — only the
+  // pull-by-digest command form is asserted.
+  it('has no docker pull by a truncated sha256 digest', () => {
+    const dir = path.join(ROOT, 'src/content/blog');
+    const offenders = [];
+    for (const f of publishedPosts()) {
+      const raw = fs.readFileSync(path.join(dir, f), 'utf8');
+      for (const m of raw.matchAll(/docker pull \S*@sha256:([0-9a-f]+)/g)) {
+        if (m[1].length !== 64) offenders.push(`${f}: sha256:${m[1]}`);
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+});
+
 describe('guards', () => {
   it('reads enough published posts for the sweeps to be meaningful', () => {
     expect(publishedPosts().length).toBeGreaterThan(40);

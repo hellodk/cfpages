@@ -1,7 +1,7 @@
 ---
 title: "Jenkins on macOS: The GUI Session Agent — Complete Visual Guide"
 date: 2026-09-09
-description: "A complete, reproducible guide to running a Jenkins inbound agent inside the macOS GUI (Aqua) session: auto-login, keychain auto-unlock, launchd LaunchAgent plist, the codesign consent-prompt pitfalls — and a real macOS Tahoe case where codesign worked from Xcode but failed from Jenkins because the "
+description: "A complete, reproducible guide to running a Jenkins inbound agent inside the macOS GUI (Aqua) session: auto-login, keychain auto-unlock, launchd LaunchAgent plist, the codesign consent-prompt pitfalls — and a real macOS Tahoe case where codesign worked from Xcode but failed from Jenkins because the"
 tags: [jenkins, macos, ci, devops]
 cover: "assets/images/covers/jenkins-macos-gui-session-agent.svg"
 draft: false
