@@ -1,7 +1,7 @@
 ---
 title: "Local Tool-Calling Models — Complete Visual Guide"
 date: 2026-08-15
-description: "While running opensre (an AI-SRE investigation tool) locally through oMLX — a macOS-native MLX inference server — on two Mac Minis, the same real Kubernetes investigation task was pointed at two different open-weight instruct models in turn. Same oMLX server, same tool schemas, same alert. Only the "
+description: "While running opensre (an AI-SRE investigation tool) locally through oMLX — a macOS-native MLX inference server — on two Mac Minis, the same real Kubernetes investigation task was pointed at two different open-weight instruct models in turn. Same oMLX server, same tool schemas, same alert. Only the"
 tags: [llm, agents, local-llm, inference, tool-calling]
 cover: "assets/images/covers/local-tool-calling-models.svg"
 draft: false

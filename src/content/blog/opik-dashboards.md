@@ -1,7 +1,7 @@
 ---
 title: "17 — Opik Custom Dashboards: The mlx Project Gets a Live View"
 date: 2026-08-08
-description: "Post 5 traced every request into Opik and post 6 added the online feedback loop that scores each one. The question we finally answered: can Opik itself turn that data into a dashboard we keep, share and version — no Grafana import needed? Yes — and the answer is a 120-line idempotent script in the r"
+description: "Post 5 traced every request into Opik and post 6 added the online feedback loop that scores each one. The question we finally answered: can Opik itself turn that data into a dashboard we keep, share and version — no Grafana import needed? Yes — and the answer is a 120-line idempotent script in the"
 tags: [opik, observability]
 draft: false
 ---

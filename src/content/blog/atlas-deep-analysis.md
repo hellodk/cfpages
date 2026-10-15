@@ -1,7 +1,7 @@
 ---
 title: "Atlas NGINX Manager — Deep Analysis Report"
 date: 2026-03-03
-description: "Atlas is a comprehensive NGINX fleet management platform comprising a Go agent, Go gateway, Python AI engine, and Next.js frontend, backed by PostgreSQL (config/metadata) and ClickHouse (analytics/timeseries). The project is at v1.1.0 with significant feature breadth — but several critical items rem"
+description: "Atlas is a comprehensive NGINX fleet management platform comprising a Go agent, Go gateway, Python AI engine, and Next.js frontend, backed by PostgreSQL (config/metadata) and ClickHouse (analytics/timeseries). The project is at v1.1.0 with significant feature breadth — but several critical items"
 tags: [analysis, observability]
 draft: true
 ---

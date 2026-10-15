@@ -32,13 +32,13 @@ all, and 307 label/backdrop pairs fall under the 4.5:1 contrast floor.
 
 | Metric | Value |
 |---|---|
-| publishedPosts | 104 |
-| postsWithSvg | 62 |
-| svgs | 208 |
-| diagrams | 189 |
+| publishedPosts | 112 |
+| postsWithSvg | 68 |
+| svgs | 221 |
+| diagrams | 202 |
 | icons | 19 |
-| cleanSvgs | 41 |
-| coversOnDefault | 45 |
+| cleanSvgs | 44 |
+| coversOnDefault | 53 |
 | distinctCovers | 57 |
 | missingCovers | 0 |
 | missingBodyImages | 0 |
@@ -48,11 +48,11 @@ all, and 307 label/backdrop pairs fall under the 4.5:1 contrast floor.
 
 | SVG defect | Occurrences | SVGs | Posts |
 |---|---|---|---|
-| tiny-font | 1459 | 113 | 38 |
-| low-contrast | 354 | 86 | 32 |
-| dark-panel | 19 | 17 | 10 |
-| no-role | 118 | 118 | 30 |
-| no-aria-label | 116 | 116 | 28 |
+| tiny-font | 1612 | 122 | 43 |
+| low-contrast | 355 | 87 | 33 |
+| dark-panel | 21 | 18 | 11 |
+| no-role | 124 | 124 | 32 |
+| no-aria-label | 122 | 122 | 30 |
 | diagonal | 33 | 33 | 20 |
 | text-past-viewbox | 20 | 15 | 13 |
 | blank-line | 0 | 0 | 0 |
@@ -108,9 +108,9 @@ declared size.
 
 ---
 
-## S2 — 1,459 labels below the 12px floor
+## S2 — 1,612 labels below the 12px floor
 
-**Severity: critical. 113 SVGs, 38 posts.**
+**Severity: critical. 122 SVGs, 43 posts.**
 
 ui.md sets 12px as the minimum for any label that carries meaning, and 11px
 only for genuinely decorative micro-text. Distribution of what is actually
@@ -156,7 +156,7 @@ shrunk further.
 
 ---
 
-## S3 — 354 labels below the 4.5:1 contrast floor
+## S3 — 355 labels below the 4.5:1 contrast floor
 
 **Severity: high. 63 SVGs, 21 posts.**
 
@@ -222,7 +222,7 @@ against tinted cards specifically.
 
 ## S4 — Dark panels still present inside diagrams
 
-**Severity: high. 17 SVGs, 10 posts.**
+**Severity: high. 18 SVGs, 11 posts.**
 
 Code blocks went light in #6. The same dark treatment survives inside the
 diagrams, where `#1a1a3e` and `#111827` are used as "main actor" emphasis
@@ -264,9 +264,9 @@ from S3 live.
 
 ## S5 — Diagrams are invisible to screen readers
 
-**Severity: high. 118 of 192 SVGs, 30 posts.**
+**Severity: high. 124 of 221 SVGs, 32 posts.**
 
-118 SVGs have no `role="img"` and 116 have no `aria-label`. An inline `<svg>`
+124 SVGs have no `role="img"` and 122 have no `aria-label`. An inline `<svg>`
 with neither is announced as a meaningless group of text fragments, read out
 label by label in document order — which for a diagram is close to random.
 
@@ -410,12 +410,12 @@ are upscaled and soft:
 
 ---
 
-## S10 — 44 posts share one cover image
+## S10 — 53 posts share one cover image
 
-**Severity: high. 44 of 103 posts.**
+**Severity: high. 53 of 112 posts.**
 
-44 posts resolve to `assets/images/cover1.jpg` and only 57 distinct images
-serve 103 posts. Tracked separately in
+53 posts resolve to `assets/images/cover1.jpg` and only 57 distinct images
+serve 112 posts. Tracked separately in
 [#9](https://github.com/hellodk/cfpages/issues/9) with the full per-post brief
 in `docs/COVER_IMAGE_BRIEF.md`.
 
@@ -509,6 +509,23 @@ mis-scored in either direction. Every figure quoted in S3 was spot-checked
 against the rendered diagram.
 
 ---
+
+## Addendum 2026-10-15 — eight migrated posts
+
+Eight standalone sources that were never migrated joined the site:
+`container-scanner-divergence`, `temurin-cve-2025-69644-fix`,
+`sre-llm-fleet-decision`, `mlx-oc-monitoring-explained`,
+`mlx-supervision-launchagent`, `opensre-integrations`, `cve-agent-autopush`,
+`omlx-071-upstream-roadmap`. Headline totals and defect tables above are
+current including them. The per-section distribution histograms (S2 font-size
+table and friends) predate the additions — representative, not recounted.
+New issue-list members from this batch: `container-scanner-divergence`,
+`cve-agent-autopush`, `omlx-071-upstream-roadmap`, `temurin-cve-2025-69644-fix`
+(tiny-font); `opensre-integrations` (tiny-font, low-contrast);
+`mlx-oc-monitoring-explained` (dark-panel). `sre-llm-fleet-decision` and
+`mlx-supervision-launchagent` arrived with no SVG defects. The two held stubs
+(`2026-10-02-gemma-4-e2b-mm1-mlx`, `2026-10-03-gemma-4-mlx-kaggle-mirror`)
+stay unmigrated per the manifest.
 
 ## Suggested order of work
 

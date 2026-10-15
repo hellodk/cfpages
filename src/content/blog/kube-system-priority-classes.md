@@ -1,7 +1,7 @@
 ---
 title: "Ensuring kube-system Pods Always Start First in Kubernetes"
 date: 2026-05-11
-description: "When a node restarts, Kubernetes makes no guarantee about which pods come up first — unless you tell it to. This post covers how to use PriorityClasses to ensure kube-system pods (coredns, calico, kube-proxy, etc.) are always scheduled before workload pods, and walks through a real-world containerd "
+description: "When a node restarts, Kubernetes makes no guarantee about which pods come up first — unless you tell it to. This post covers how to use PriorityClasses to ensure kube-system pods (coredns, calico, kube-proxy, etc.) are always scheduled before workload pods, and walks through a real-world containerd"
 tags: [kubernetes, scheduling]
 draft: true
 ---
@@ -39,7 +39,7 @@ kubectl get pods -n kube-system -o json \
 
 In our cluster, three Deployments had no `priorityClassName`:
 
-```
+```text
 my-headlamp-...                          MISSING
 nfs-subdir-external-provisioner-...      MISSING
 sealed-secrets-controller-...            MISSING
@@ -162,7 +162,7 @@ fi
 
 While applying the patches, every pod in the cluster got stuck in `ContainerCreating` with this error:
 
-```
+```text
 failed to create containerd container: failed to stat parent:
 stat /var/lib/k0s/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1/fs:
 no such file or directory

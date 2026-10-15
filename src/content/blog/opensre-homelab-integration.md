@@ -1,7 +1,7 @@
 ---
 title: "19 Investigations, 1 Correct Diagnosis: Wiring opensre Into a Real Kubernetes Homelab"
 date: 2026-08-09
-description: "Wiring the opensre AI-SRE CLI into a real k0s cluster, a local LLM, and Grafana behind Traefik. A Cloudflare Access edge that silently breaks API clients, a literal never-substituted password placeholder in git, two new database connectors caught by review before a line of code shipped, and a live i"
+description: "Wiring the opensre AI-SRE CLI into a real k0s cluster, a local LLM, and Grafana behind Traefik. A Cloudflare Access edge that silently breaks API clients, a literal never-substituted password placeholder in git, two new database connectors caught by review before a line of code shipped, and a live"
 tags: [opensre, homelab, kubernetes, sre]
 cover: "assets/images/covers/opensre-homelab-integration.svg"
 draft: false

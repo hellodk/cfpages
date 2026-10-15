@@ -37,7 +37,7 @@ The investigation revealed a cascade of failures:
 **The result:** 17.6 TB transmitted in 7 days from just 2 nodes.
 
 **The fix:** Ensure direct peer-to-peer connectivity. One command:
-```
+```text
 tailscale status | grep relay
 ```
 
@@ -73,7 +73,7 @@ Full technical writeup in comments 👇
 ## Carousel Post Option (7 slides)
 
 ### Slide 1 (Hook)
-```
+```text
 My Kubernetes cluster
 consumed 1,668 GB
 in ONE day.
@@ -82,7 +82,7 @@ Here's what went wrong →
 ```
 
 ### Slide 2 (The Setup)
-```
+```text
 THE SETUP:
 • 5-node k8s cluster
 • Tailscale mesh VPN
@@ -94,7 +94,7 @@ until it wasn't.
 ```
 
 ### Slide 3 (The Discovery)
-```
+```text
 THE DISCOVERY:
 
 tailscale status
@@ -107,7 +107,7 @@ Instead of:
 ```
 
 ### Slide 4 (The Problem)
-```
+```text
 THE PROBLEM:
 
 Normal path:
@@ -120,7 +120,7 @@ Node A → ISP → India → ISP → Node B
 ```
 
 ### Slide 5 (The Cascade)
-```
+```text
 THE CASCADE:
 
 Relay adds latency
@@ -137,7 +137,7 @@ REPEAT
 ```
 
 ### Slide 6 (The Damage)
-```
+```text
 THE DAMAGE:
 
 7-day totals:
@@ -152,7 +152,7 @@ vs
 ```
 
 ### Slide 7 (The Lesson)
-```
+```text
 THE LESSON:
 
 Before running k8s over VPN:

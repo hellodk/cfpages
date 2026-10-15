@@ -1,7 +1,7 @@
 ---
 title: "7 — The Performance Dashboard: KV Cache and Context, Finally Visible"
 date: 2026-08-08
-description: "The cluster already exported hardware, request and quality metrics. The one thing nobody could see was the thing that decides how much of a 40,960-token window a request actually uses — the prompt (KV) cache and the context length. This week a log-tailing agent on :9104 plus a handful of proxy gauge"
+description: "The cluster already exported hardware, request and quality metrics. The one thing nobody could see was the thing that decides how much of a 40,960-token window a request actually uses — the prompt (KV) cache and the context length. This week a log-tailing agent on :9104 plus a handful of proxy"
 tags: [mlx, llm, observability]
 draft: false
 ---

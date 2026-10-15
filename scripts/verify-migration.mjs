@@ -93,8 +93,8 @@ for (const post of POSTS) {
 // ---- totals, asserted rather than echoed ----
 const live = POSTS.filter((p) => !p.draft).length;
 const draft = POSTS.filter((p) => p.draft).length;
-if (POSTS.length !== 88) fail.push(`manifest has ${POSTS.length} posts, expected 88`);
-if (live !== 81) fail.push(`manifest has ${live} live posts, expected 81`);
+if (POSTS.length !== 96) fail.push(`manifest has ${POSTS.length} posts, expected 96`);
+if (live !== 89) fail.push(`manifest has ${live} live posts, expected 89`);
 if (draft !== 7) fail.push(`manifest has ${draft} draft posts, expected 7`);
 
 // ---- masking: idempotence, injectivity, and no survivor ----
@@ -174,6 +174,8 @@ const EXCLUDED = new Set([
   'token-consumption-24h.html', 'token-consumption.svg', '.superpowers',
   'omlx-blog-mocks-v2.html',
   '2026-10-02-gemma-4-e2b-mm1-mlx', '2026-10-03-gemma-4-mlx-kaggle-mirror',
+  // Consumed post assets in the blogs root (referenced by network-spike-investigation), not posts.
+  'network-spike-1.jpeg', 'network-spike-2.jpeg',
   // Owner decision: personal photos dropped in the blogs root, not posts.
   'WhatsApp Image 2026-03-01 at 10.14.02 AM (1).jpeg',
   'WhatsApp Image 2026-03-01 at 10.14.02 AM.jpeg',
@@ -183,9 +185,9 @@ const stray = fs.readdirSync(BLOGS)
   .filter((n) => !n.startsWith('.') && !known.has(n) && !EXCLUDED.has(n));
 if (stray.length) fail.push(`unaccounted for in ~/Documents/blogs: ${stray.join(', ')}`);
 
-// ---- summary: 88 managed posts, distinct from the directory total ----
+// ---- summary: 96 managed posts, distinct from the directory total ----
 const total = fs.readdirSync(OUT).filter((f) => f.endsWith('.md')).length;
-console.log(`migrated: ${POSTS.length}/88  (${live} live, ${draft} draft)`);
+console.log(`migrated: ${POSTS.length}/96  (${live} live, ${draft} draft)`);
 console.log(`src/content/blog/ total: ${total}  (${total - POSTS.length} pre-existing, untouched)`);
 
 if (fail.length) {

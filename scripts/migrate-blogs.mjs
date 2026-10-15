@@ -14,6 +14,7 @@ import fs from 'fs';
 import path from 'path';
 import { POSTS } from './lib/manifest.mjs';
 import { convertHtml, firstProseParagraph, decodeEntities } from './lib/html-to-md.mjs';
+import { normalizeBody } from './lib/normalize-md.mjs';
 import { maskText, findUnmasked } from './lib/mask.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -131,6 +132,10 @@ for (const post of POSTS) {
   if (!description) description = title;
 
   body = copyAssets(post, body);
+
+  // Readability normalizations (fence tags, H1 demotion, heading shifts)
+  // live here so re-migration reproduces them — never hand-edit output.
+  body = normalizeBody(post, body);
 
   // Mask last, over the finished markdown, so values inside SVG labels and
   // code blocks are caught too.

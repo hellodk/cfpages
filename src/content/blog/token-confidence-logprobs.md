@@ -1,7 +1,7 @@
 ---
 title: "18 — The Sampler Doesn't Lie: Entropy, Perplexity and Confidence from Logprobs"
 date: 2026-08-08
-description: "Every quality signal in this stack so far reads the model’s text — repetition, hedge words, refusal patterns. Those fire after the model has already written something wrong. Logprobs read the sampler, and the sampler goes flat first. This post closes the last gap in the post 8 comparison against Hyd"
+description: "Every quality signal in this stack so far reads the model’s text — repetition, hedge words, refusal patterns. Those fire after the model has already written something wrong. Logprobs read the sampler, and the sampler goes flat first. This post closes the last gap in the post 8 comparison against"
 tags: [llm, mlx]
 draft: false
 ---

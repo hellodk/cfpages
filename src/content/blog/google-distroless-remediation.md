@@ -1,7 +1,7 @@
 ---
 title: "69 to 67: The Honest Result of Remediating Distroless"
 date: 2026-10-03
-description: "Google Distroless has no shell, no apt and no dpkg. A full Debian 13 upgrade changes nothing and exactly one of its 64 OS findings has a fix published anywhere. This is the write-up of a remediation that cleared two findings for 0.1 MB, and of why that is the correct answer rather than a disappointment."
+description: "Google Distroless has no shell, no apt and no dpkg. A full Debian 13 upgrade changes nothing and exactly one of its 64 OS findings has a fix published anywhere. This is the write-up of a remediation that cleared two findings for 0.1 MB, and of why that is the correct answer rather than a"
 tags: [docker, distroless, container-security, cve]
 cover: "assets/images/covers/google-distroless-remediation.svg"
 draft: false
@@ -114,7 +114,9 @@ RUN dpkg-query -W -f='${Package} ${Version}\n' libpng16-16t64
 
 ### Stage 2 — rewrite the record as well as the binary
 
-This is the part that actually clears the finding. (`base` below is the `gcr.io/distroless/java21-debian13:nonroot` stage — see the complete Dockerfile at the end.) Copying only `libpng16.so.16.48.0` would leave `Version: 1.6.48-1+deb13u5` in the dpkg record, and the scanner would keep reporting the finding while the actual bytes on disk were patched — the worst possible state, because it looks remediated and is not.
+(`base` below is the `gcr.io/distroless/java21-debian13:nonroot` stage — see the complete Dockerfile at the end.)
+
+This is the part that actually clears the finding. Copying only `libpng16.so.16.48.0` would leave `Version: 1.6.48-1+deb13u5` in the dpkg record, and the scanner would keep reporting the finding while the actual bytes on disk were patched — the worst possible state, because it looks remediated and is not.
 
 ```bash
 FROM docker.io/library/debian:13-slim AS patch
@@ -140,7 +142,7 @@ RUN cd /p \
     && grep '^Version:' var/lib/dpkg/status.d/libpng16-16t64
 ```
 
-Three details are deliberate. `sed 's/deb13u5/deb13u6/g'` rewrites the `Version:`, `Provides:` and `Breaks:` lines together, because leaving `Provides: libpng16-16 (= …deb13u5)` would make the record internally inconsistent. The `md5sums` file is regenerated rather than left stale, since it would otherwise describe a file that no longer exists. The `grep -q "$newmd5 "` is load-bearing, not decorative: the old hash above is pinned to today's base image, and once `java21-debian13:nonroot` moves, the substitution silently no-matches — without the assertion the build would ship a stale checksum file. And `grep '^Version:'` echoes the result, so the build log always states which version actually landed.
+Three details are deliberate. `sed 's/deb13u5/deb13u6/g'` rewrites the `Version:`, `Provides:` and `Breaks:` lines together, because leaving `Provides: libpng16-16 (= …deb13u5)` would make the record internally inconsistent. The `md5sums` file is regenerated rather than left stale, since it would otherwise describe a file that no longer exists. The `grep -q "$newmd5 "` is load-bearing, not decorative: the old hash is pinned to today's base image, and once the floating distroless tag moves, the substitution silently no-matches — without the assertion the build would ship a stale checksum file. And `grep '^Version:'` echoes the result, so the build log always states which version actually landed.
 
 ### Stage 3 — the runtime image
 

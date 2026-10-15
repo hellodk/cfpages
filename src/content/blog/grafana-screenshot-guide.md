@@ -15,7 +15,7 @@ Open each URL in your browser, login (admin/prom-operator), and take a screensho
 ## Screenshot 1: Network Spike - Feb 22 (lima-mm0)
 **Purpose:** Shows the massive spike on the problematic node
 
-```
+```text
 http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:00:00.000Z&to=2026-02-23T23:59:59.000Z&timezone=browser&var-datasource=default&var-job=node-exporter&var-node=198.51.100.82:9100&viewPanel=74
 ```
 
@@ -26,7 +26,7 @@ http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:0
 ## Screenshot 2: Network Spike - Feb 22 (lima-mm1)
 **Purpose:** Shows the mirrored spike on the other problematic node
 
-```
+```text
 http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:00:00.000Z&to=2026-02-23T23:59:59.000Z&timezone=browser&var-datasource=default&var-job=node-exporter&var-node=198.51.100.104:9100&viewPanel=74
 ```
 
@@ -37,7 +37,7 @@ http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:0
 ## Screenshot 3: Network Spike - Feb 28 (lima-mm0)
 **Purpose:** Shows the second incident
 
-```
+```text
 http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-27T00:00:00.000Z&to=2026-03-01T23:59:59.000Z&timezone=browser&var-datasource=default&var-job=node-exporter&var-node=198.51.100.82:9100&viewPanel=74
 ```
 
@@ -48,7 +48,7 @@ http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-27T00:0
 ## Screenshot 4: Normal Node Comparison (cylon)
 **Purpose:** Shows what normal traffic looks like on a stable node
 
-```
+```text
 http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:00:00.000Z&to=2026-02-23T23:59:59.000Z&timezone=browser&var-datasource=default&var-job=node-exporter&var-node=198.51.100.27:9100&viewPanel=74
 ```
 
@@ -59,7 +59,7 @@ http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:0
 ## Screenshot 5: Normal Node Comparison (raspberrypi)
 **Purpose:** Shows minimal traffic on direct-connected nodes
 
-```
+```text
 http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:00:00.000Z&to=2026-02-23T23:59:59.000Z&timezone=browser&var-datasource=default&var-job=node-exporter&var-node=198.51.100.32:9100&viewPanel=74
 ```
 
@@ -70,7 +70,7 @@ http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:0
 ## Screenshot 6: Full Dashboard Overview
 **Purpose:** Shows the overall system health during the incident
 
-```
+```text
 http://203.0.113.177/d/rYdddlPWk/node-exporter-full?orgId=1&from=2026-02-21T00:00:00.000Z&to=2026-02-23T23:59:59.000Z&timezone=browser&var-datasource=default&var-job=node-exporter&var-node=198.51.100.82:9100
 ```
 
