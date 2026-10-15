@@ -32,13 +32,13 @@ all, and 307 label/backdrop pairs fall under the 4.5:1 contrast floor.
 
 | Metric | Value |
 |---|---|
-| publishedPosts | 103 |
+| publishedPosts | 104 |
 | postsWithSvg | 62 |
 | svgs | 208 |
 | diagrams | 189 |
 | icons | 19 |
 | cleanSvgs | 41 |
-| coversOnDefault | 44 |
+| coversOnDefault | 45 |
 | distinctCovers | 57 |
 | missingCovers | 0 |
 | missingBodyImages | 0 |

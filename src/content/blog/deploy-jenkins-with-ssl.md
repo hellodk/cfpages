@@ -8,13 +8,13 @@ draft: false
 
 It has been quiet sometime since I got my hands dirty, so here we go today!! Recently we had a use-case where we needed to setup a Jenkins server on a public network for some POC and we as DevOps could not bear the fact that the traffic exiting from our network is in plain text. Hence we wanted to do something about it and we would like to share our view point on how did we achieved this goal.
 
-##### For successfully testing this, we have the below pre-requisites:
+## For successfully testing this, we have the below pre-requisites:
 
 -   Operating system: Ubuntu 20.04
 -   Administrator or sudo access to the server
 -   Open Internet connectivity to ensure package installation go through
 
-##### A high level set of the steps involved will be:
+## A high level set of the steps involved will be:
 
 -   Generation of ssh keys followed by the verification of the generated files
 -   Updating the apt cache
@@ -23,7 +23,7 @@ It has been quiet sometime since I got my hands dirty, so here we go today!! Rec
 -   Creating public and private SSL keys using openssl tool
 -   Getting started with the Jenkins UI and plugins installations
 
-##### Install Jenkins
+## Install Jenkins
 
 Follow the below steps to install Jenkins on your server
 
@@ -60,6 +60,18 @@ Follow the below steps to install Jenkins on your server
     ```
     
     ![open ssl certificate creation](/assets/images/jenkins/jenkins_open_ssl.png "open ssl certificate creation")
+    
+    Answer the Distinguished Name prompts (these values are also visible in the screenshot above, transcribed here so the post works without images):
+    
+    ```text
+    Country Name (2 letter code) [XX]: IN
+    State or Province Name (full name) []: KA
+    Locality Name (eg, city) [Default City]: Bengaluru
+    Organization Name (eg, company) [Default Company Ltd]: theCylon
+    Organizational Unit Name (eg, section) []:
+    Common Name (eg, your name or your server's hostname) []:
+    Email Address []: jenkins@thecylon.com
+    ```
     
 -   Convert the generated keys into a .p12 keystore, it will ask for a password. For the sake of convenience I will be setting them as Jenkins123
     

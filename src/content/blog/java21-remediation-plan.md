@@ -160,7 +160,7 @@ Measurement first: a full `apt-get upgrade` on `debian:13-slim` upgrades **nothi
 `2.41-12+deb13u4`, libgcc/libstdc++ at `14.2.0-19`, zlib, libuuid and libexpat are all already the
 newest Debian 13 publishes. Of 64 OS findings exactly **one** is fixable today:
 
-```
+```text
 CVE-2026-46675  libpng16-16t64  1.6.48-1+deb13u5 -> 1.6.48-1+deb13u6
 ```
 

@@ -38,9 +38,9 @@ describe('the brief covers exactly what the site publishes', () => {
   const published = publishedSlugs();
   const briefed = briefedSlugs();
 
-  it('briefs all 103 published posts', () => {
-    expect(briefed).toHaveLength(103);
-    expect(published).toHaveLength(103);
+  it('briefs all 104 published posts', () => {
+    expect(briefed).toHaveLength(104);
+    expect(published).toHaveLength(104);
   });
 
   it('leaves no published post without a subject', () => {

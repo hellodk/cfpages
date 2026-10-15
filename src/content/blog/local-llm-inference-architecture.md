@@ -10,9 +10,9 @@ A unified stack for running, routing, and observing LLMs — currently deployed 
 
 ✓ Ollama Running ✓ Observability Stack Planned: K8s GPU Planned: Mac Mini MLX
 
-### Current Deployment Status Live
+## Current Deployment Status Live
 
-### ✓ Running: Ollama
+## ✓ Running: Ollama
 
 -   **Endpoint:** localhost:11434
 -   **qwen2.5-coder:1.5b** — 986MB, 50 layers GPU
@@ -20,7 +20,7 @@ A unified stack for running, routing, and observing LLMs — currently deployed 
 -   **nomic-embed-text** — 274MB embeddings
 -   **GPU:** RTX 3050 Ti, 4GB VRAM
 
-### ✓ Running: Observability
+## ✓ Running: Observability
 
 -   **Prometheus:** :9090 (metrics)
 -   **Grafana:** :3001 (dashboards)
@@ -28,14 +28,14 @@ A unified stack for running, routing, and observing LLMs — currently deployed 
 -   **Loki:** :3100 (logs)
 -   **Tempo:** :3200 (traces)
 
-### Planned: Expansion
+## Planned: Expansion
 
 -   **K8s GPU Node:** Add NVIDIA GPU node
 -   **vLLM:** Tensor parallel inference
 -   **Mac Mini:** MLX cluster (TBD)
 -   **LiteLLM:** Multi-backend routing
 
-### Quick Start Commands
+## Quick Start Commands
 
 \# Start Ollama  
 ollama serve &  
@@ -48,9 +48,9 @@ curl http://localhost:11434/v1/models \# Ollama
 curl http://localhost:9090/-/healthy \# Prometheus  
 curl http://localhost:3001/api/health \# Grafana
 
-### The Complete Stack Architecture
+## The Complete Stack Architecture
 
-### End-to-End Data Flow
+## End-to-End Data Flow
 
 <svg viewBox="0 0 1100 540" width="100%" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -153,27 +153,27 @@ curl http://localhost:3001/api/health \# Grafana
       </circle>
     </svg>
 
-### Parallelism Strategies How Models Split
+## Parallelism Strategies How Models Split
 
-### Tensor Parallelism
+## Tensor Parallelism
 
 Split each layer **by width**. Every node holds part of every layer. All nodes process the same token simultaneously.
 
 All-reduce per layer Low latency Needs fast interconnect
 
-### Pipeline Parallelism
+## Pipeline Parallelism
 
 Split model **by depth**. Each node holds a contiguous slice of layers. Activations flow node-to-node in a pipeline.
 
 P2P between stages Higher latency Less bandwidth
 
-### Expert Parallelism
+## Expert Parallelism
 
 MoE models only. Different **experts** live on different nodes. Router dispatches tokens. Only active experts communicate.
 
 MoE-specific Scales well to 4 nodes Llama 4 Maverick
 
-### How Parallelism Splits a Transformer Block
+## How Parallelism Splits a Transformer Block
 
 <svg viewBox="0 0 1000 280" width="100%" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -250,9 +250,9 @@ MoE-specific Scales well to 4 nodes Llama 4 Maverick
       <text x="835" y="250" text-anchor="middle" style="font-size:8px;fill:#059669">Active expert (green dot)</text>
     </svg>
 
-### KV-Cache Architecture llm-d
+## KV-Cache Architecture llm-d
 
-### Hierarchical KV-Cache with Prefix-Aware Routing
+## Hierarchical KV-Cache with Prefix-Aware Routing
 
 <svg viewBox="0 0 1000 400" width="100%" xmlns="http://www.w3.org/2000/svg">
       <rect x="30" y="30" width="180" height="80" rx="10" fill="#FEE2E2" stroke="#FECACA" stroke-width="1.5"></rect>
@@ -330,9 +330,9 @@ MoE-specific Scales well to 4 nodes Llama 4 Maverick
       </circle>
     </svg>
 
-### MLX Mac Cluster Apple Silicon
+## MLX Mac Cluster Apple Silicon
 
-### Thunderbolt 5 Mesh — JACCL RDMA
+## Thunderbolt 5 Mesh — JACCL RDMA
 
 <svg viewBox="0 0 800 360" width="100%" xmlns="http://www.w3.org/2000/svg">
       <rect x="100" y="30" width="140" height="70" rx="12" fill="#EEF2FF" stroke="#818CF8" stroke-width="2"></rect>
@@ -381,14 +381,14 @@ MoE-specific Scales well to 4 nodes Llama 4 Maverick
       </circle>
     </svg>
 
-### MLX Distributed Stack
+## MLX Distributed Stack
 
 -   **JACCL** — RDMA over Thunderbolt 5, 80 Gbps direct memory
 -   **mlx.distributed** — all\_reduce, all\_gather, send/recv primitives
 -   **mlx-lm** — sharded\_load, stream\_generate, --pipeline flag
 -   **mlx.launch** — SSH orchestration from your MacBook
 
-### Scaling Numbers
+## Scaling Numbers
 
 | Setup | Tok/s | TTFT | Max Model (4-bit) |
 | --- | --- | --- | --- |
@@ -397,9 +397,9 @@ MoE-specific Scales well to 4 nodes Llama 4 Maverick
 | 2x Mac Studio M5 Ultra | ~14 | ~740ms | ~400B MoE |
 | 4x Mac Studio M5 Ultra | ~35 | ~400ms | 1T params |
 
-### Prefill/Decode Disaggregation llm-d on K8s
+## Prefill/Decode Disaggregation llm-d on K8s
 
-### Separated Prefill and Decode Stages
+## Separated Prefill and Decode Stages
 
 <svg viewBox="0 0 900 260" width="100%" xmlns="http://www.w3.org/2000/svg">
       <rect x="20" y="100" width="90" height="50" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.5"></rect>
@@ -458,9 +458,9 @@ MoE-specific Scales well to 4 nodes Llama 4 Maverick
       </circle>
     </svg>
 
-### Observability Stack Metrics · Traces · Logs
+## Observability Stack Metrics · Traces · Logs
 
-### Signal Flow — From Code to Dashboards
+## Signal Flow — From Code to Dashboards
 
 <svg viewBox="0 0 1000 300" width="100%" xmlns="http://www.w3.org/2000/svg">
       <rect x="20" y="20" width="140" height="260" rx="10" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"></rect>
@@ -528,7 +528,7 @@ MoE-specific Scales well to 4 nodes Llama 4 Maverick
       </circle>
     </svg>
 
-### docker-compose.yml
+## docker-compose.yml
 
 \# Location:  
 ~/Documents/git/local-llm/observability/  
@@ -540,7 +540,7 @@ otel-collector:4317/:4318
 loki:3100  
 tempo:3200
 
-### Grafana Credentials
+## Grafana Credentials
 
 \# URL:  
 http://localhost:3001  
@@ -554,9 +554,9 @@ Tempo
 Loki  
 OTEL (collector metrics)
 
-### Key Metrics What to Monitor
+## Key Metrics What to Monitor
 
-### LLM Performance
+## LLM Performance
 
 | Metric | Type |
 | --- | --- |
@@ -568,7 +568,7 @@ OTEL (collector metrics)
 | champ_llm_cost_usd_total | Counter |
 | champ_llm_errors_total | Counter |
 
-### Agent & Tool
+## Agent & Tool
 
 | Metric | Type |
 | --- | --- |
@@ -579,7 +579,7 @@ OTEL (collector metrics)
 | champ_rag_result_count | Histogram |
 | champ_hallucination_score | Histogram |
 
-### Infrastructure
+## Infrastructure
 
 | Metric | Source |
 | --- | --- |
@@ -590,9 +590,9 @@ OTEL (collector metrics)
 | vllm:num_requests_running | vLLM /metrics |
 | kv_cache_hit_rate | llm-d EPP |
 
-### Quick Reference Config Cheatsheet
+## Quick Reference Config Cheatsheet
 
-### Champ → LiteLLM (Single URL)
+## Champ → LiteLLM (Single URL)
 
 Champ sees one OpenAI-compatible endpoint. LiteLLM routes to everything.
 
@@ -603,7 +603,7 @@ champ.openaiCompatible.apiKey: sk-champ
 champ.autocomplete.model: fast  
 champ.indexing.embeddingProvider: ollama
 
-### LiteLLM → Model Fleet
+## LiteLLM → Model Fleet
 
 One config file, every backend behind one port.
 

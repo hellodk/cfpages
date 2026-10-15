@@ -6,17 +6,17 @@ tags: [tooling, editor]
 draft: false
 ---
 
-### Upgrade your Sublime Text with the below steps
+## Upgrade your Sublime Text with the below steps
 
 ![Sublime Text editor](/assets/images/upgrade-sublime-text/sublime.jpeg)
 
-#### Environment Details
+### Environment Details
 
 ```bash
 OS Ubuntu-20.04
 ```
 
-###### From the Sublime official website, download the 64-bit tarball
+#### From the Sublime official website, download the 64-bit tarball
 
 ```bash
 wget https://download.sublimetext.com/sublime_text_build_4113_x64.tar.xz
@@ -24,25 +24,25 @@ wget https://download.sublimetext.com/sublime_text_build_4113_x64.tar.xz
 
 You can point the URL to the latest available Sublime Text package.
 
-###### Backup your existing Sublime Installation
+#### Backup your existing Sublime Installation
 
 ```bash
 sudo cp -r /opt/sublime_text/ /opt/sublime_text_backup
 ```
 
-###### Copy the newly downloaded Sublime files
+#### Copy the newly downloaded Sublime files
 
 ```bash
 sudo cp -r ~/Downloads/sublime_text_build_4113_x64/sublime_text /opt/
 ```
 
-###### Remove the downloaded files
+#### Remove the downloaded files
 
 ```bash
 rm -rf ~/Downloads/sublime_text_build_4113_x64 ~/Downloads/sublime_text_build_4113_x64.tar.xz
 ```
 
-###### Remove the backup after a few days
+#### Remove the backup after a few days
 
 ```bash
 sudo rm -rf /opt/sublime_text_backup

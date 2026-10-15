@@ -718,7 +718,7 @@ graph LR
 
 ## Quick Reference
 
-```
+```text
 # Check tunnel is connected
 cloudflared tunnel info guacamole-tunnel
 

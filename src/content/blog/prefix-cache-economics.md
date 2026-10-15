@@ -29,7 +29,7 @@ req/min sustained on one node: no cache vs the tweet's 92% workload
 
 independent ceilings — prefill, decode, KV-RAM — that bound throughput
 
-### 01 · The Tweet That Reframed Cluster Sizing
+## 01 · The Tweet That Reframed Cluster Sizing
 
 Most LLM cost discussions start at model price. This one starts with a counter.
 
@@ -45,7 +45,7 @@ The arithmetic is the point: 12.5x = 1 ÷ 0.08. Only the uncached 8% ever pays f
 
 The claim isn't about a smarter model or faster silicon. It is a statement about **workload shape**: if nearly every token a client sends has been seen before, then nearly every token is free to process — you pay only for the delta. Cost stops scaling with conversation length and starts scaling with novelty. For anyone running inference — cloud GPUs billed per token, or a home lab of Mac minis — that ratio changes what hardware can absorb.
 
-### 02 · Why Coding Agents Are So Cacheable
+## 02 · Why Coding Agents Are So Cacheable
 
 An agent turn doesn't send a question. It re-sends a world state, plus a tiny append.
 
@@ -93,7 +93,7 @@ Bar widths are schematic. The pattern is real: each turn re-sends everything and
 
 A general-purpose workload — unrelated chat sessions landing cold — looks nothing like this. Same GPUs, different traffic shape, **12.5x** different economics. Which raises the practical question for a self-hosted setup: does my inference stack actually capture this?
 
-### 03 · Case Study: What oMLX Already Does Right
+## 03 · Case Study: What oMLX Already Does Right
 
 [oMLX](https://github.com/jundot/omlx) is Apache-2.0 local LLM inference for Apple Silicon. I run it on a personal two-node Mac mini cluster linked over WiFi + Thunderbolt bridge — and its cache design already earns a large slice of the tweet's economics.
 
@@ -107,7 +107,7 @@ A general-purpose workload — unrelated chat sessions landing cold — looks no
 
 This is not a toy: content-addressed chaining, tiering, overlap routing and stats are the same architectural moves as production vLLM deployments. But auditing it against agent workloads surfaced six places where hit rate still leaks.
 
-### 04 · Six Gaps Between Here and 92%
+## 04 · Six Gaps Between Here and 92%
 
 The improvement backlog, ordered roughly by leverage on a small cluster.
 
@@ -159,7 +159,7 @@ Resident prefix capacity is bounded by KV bytes. Dropping hot-tier KV to 8-bit d
 
 Fix: opt-in 8-bit KV quantization with a documented quality delta.
 
-### 05 · The Three Ceilings: From Hit Rate to Request Budget
+## 05 · The Three Ceilings: From Hit Rate to Request Budget
 
 Hit rate is an input. Throughput is a minimum. Sustained request rate R is capped by whichever ceiling binds first.
 
@@ -169,7 +169,7 @@ Hit rate is an input. Throughput is a minimum. Sustained request rate R is cappe
 | **Decode** | R × O ≤ TG_batched | Every request still generates O output tokens one at a time. Caching does nothing here — decode is paid in full on every request. |
 | **KV-RAM** | streams ≤ KV_budget ÷ bytes/token | Concurrent streams must fit resident KV. On memory-constrained machines this binds before compute does. |
 
-### Worked example — reference bench fixture
+## Worked example — reference bench fixture
 
 44GB model on a 128GB machine; batched prefill PP = 3,100 tok/s; decode TG = 180 tok/s at batch 4. Agent turn shape: P = 100,000 prompt tokens, O = 500 output tokens.
 
@@ -219,7 +219,7 @@ Raising hit rate pushes R off the prefill ceiling — until decode becomes the w
 
 **Memory-constrained footnote:** on a 16GB Mac mini the KV-RAM ceiling binds first — concurrent streams run out of resident KV long before compute saturates. There, session stickiness and 8-bit KV quantization are worth more than raw batch scaling.
 
-### 06 · Takeaways
+## 06 · Takeaways
 
 -   **Coding agents are a cache-native workload.** Append-only prompts make 90%+ hit rates normal, not exceptional — the 92% figure is a property of the traffic, not the vendor.
 -   **Cost models should be built on miss rate, not token count.** Price follows the 8% that misses, not the 100% that flows.
