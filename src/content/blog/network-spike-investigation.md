@@ -92,7 +92,7 @@ Then I ran the command that revealed everything:
 $ tailscale status
 ```
 
-```
+```text
 198.51.100.82    lima-mm0-k0s-ubuntu  active; direct 192.0.2.64:44340
 198.51.100.104  lima-mm1-k0s-ubuntu  active; relay "blr"; offline ⚠️
 198.51.100.32     raspberrypi          active; direct 192.0.2.118:41641
@@ -109,14 +109,14 @@ One of my nodes wasn't using a direct peer-to-peer connection. It was routing th
 Tailscale uses a protocol called DERP (Designated Encrypted Relay for Packets) as a fallback when direct connections fail.
 
 ### Normal Path (Direct P2P):
-```
+```text
 Node A ←→ Node B (via LAN)
 Latency: ~1ms
 Traffic: Counted once
 ```
 
 ### DERP Relay Path:
-```
+```text
 Node A → Upload → ISP → DERP Server → ISP → Download → Node B
 Latency: ~28ms (14ms each direction)
 Traffic: Counted 4x (upload + download, twice)
@@ -140,7 +140,7 @@ You might wonder: if DERP is so bad for bandwidth, why does Tailscale use it at 
 
 ### The NAT Problem
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │              WHY PEER-TO-PEER FAILS                         │
 │                                                             │
@@ -171,7 +171,7 @@ You might wonder: if DERP is so bad for bandwidth, why does Tailscale use it at 
 
 ### My Lima VM Network Path
 
-```
+```text
 Lima VM (lima-mm1)
       │
       ▼
@@ -220,7 +220,7 @@ This gives the VM a real LAN IP, eliminating the VM NAT layers.
 
 Here's what happened:
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │             THE INCIDENT FEEDBACK LOOP                  │
 │                                                         │
@@ -358,7 +358,7 @@ DERP relay is designed to "just work" when direct connections fail. But for band
 ### 2. Kubernetes + Overlay Networks + VPN = Triple Encapsulation
 
 My traffic path was:
-```
+```text
 App → Pod Network → Calico VXLAN → Tailscale WireGuard → DERP Relay → Internet
 ```
 
@@ -386,7 +386,7 @@ When that traffic routes through a relay? Boom. Terabytes.
 ### 5. VMs Add Hidden NAT Layers
 
 My Lima VMs had four NAT layers between them and the internet:
-```
+```text
 VM NAT → macOS NAT → Router NAT → ISP CGNAT
 ```
 

@@ -84,6 +84,14 @@ describe('body line-height in the Butterick band', () => {
     expect(lh).toBeGreaterThanOrEqual(1.5);
     expect(lh).toBeLessThanOrEqual(1.75);
   });
+
+  // Second-opinion calibration (issue #17): Smashing centers ~140-150%,
+  // Butterick 120-145%. 1.65 sat above every expert band, so pin 1.6.
+  it('pins post body line-height at the 1.6 consensus value', () => {
+    const m = LAYOUT.match(/\.post-art__body\s*\{[^}]*line-height:\s*([\d.]+)/);
+    expect(m, 'no line-height on .post-art__body').not.toBeNull();
+    expect(parseFloat(m[1])).toBe(1.6);
+  });
 });
 
 describe('light-mode text contrast meets WCAG AA 4.5:1', () => {
@@ -106,8 +114,7 @@ describe('light-mode text contrast meets WCAG AA 4.5:1', () => {
 });
 
 describe('single-H1 outline', () => {
-  // markdown-cheatsheet.md demonstrates `#` syntax itself — the H1s there
-  // are the subject, not the structure. Documented exception.
+  // Cheatsheet exception: its `#` lines demonstrate syntax, not structure.
   const EXCEPTIONS = new Set(['markdown-cheatsheet.md']);
   it('has no top-level "# " heading in any published post body (outside fences)', () => {
     const dir = path.join(ROOT, 'src/content/blog');
@@ -168,6 +175,67 @@ describe('TL;DR panel flow', () => {
     const m = LAYOUT.match(/\.post-tldr\s*\{([^}]*)\}/);
     expect(m, 'no .post-tldr rule').not.toBeNull();
     expect(m[1]).not.toMatch(/margin:\s*-/);
+  });
+});
+
+describe('no skipped heading levels (outside fences)', () => {
+  // markdown-cheatsheet.md demonstrates heading syntax itself.
+  const EXCEPTIONS = new Set(['markdown-cheatsheet.md']);
+  it('never jumps more than one level below the title H1', () => {
+    const dir = path.join(ROOT, 'src/content/blog');
+    const offenders = [];
+    for (const f of publishedPosts()) {
+      if (EXCEPTIONS.has(f)) continue;
+      const raw = fs.readFileSync(path.join(dir, f), 'utf8');
+      const body = stripFences(raw.replace(/^---[\s\S]*?---\s*/, ''));
+      let prev = 1;
+      for (const m of body.matchAll(/^(#{1,6})\s+\S/gm)) {
+        if (m[1].length - prev > 1) {
+          offenders.push(`${f}: h${prev} -> h${m[1].length}`);
+          break;
+        }
+        prev = m[1].length;
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+});
+
+describe('fenced code blocks carry a language tag', () => {
+  it('has no untagged fences in published posts', () => {
+    const dir = path.join(ROOT, 'src/content/blog');
+    const offenders = [];
+    for (const f of publishedPosts()) {
+      const raw = fs.readFileSync(path.join(dir, f), 'utf8');
+      const body = raw.replace(/^---[\s\S]*?---\s*/, '');
+      let inFence = false;
+      for (const line of body.split('\n')) {
+        if (line.trim().startsWith('```')) {
+          if (!inFence && line.trim() === '```') offenders.push(`${f}: untagged fence`);
+          inFence = !inFence;
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  // ASCII box art cannot wrap (rewrapping breaks alignment), so it is
+  // explicitly tagged `text` = author asserts preformatted art. Everything
+  // else must fit: Google wraps code at 80ch for narrow windows and print.
+  // The fence match is indent-tolerant: list-nested fences are indented,
+  // and a naive match would glue separate blocks into one false offender.
+  it('has no wrappable block with 6+ lines over 80 chars', () => {
+    const dir = path.join(ROOT, 'src/content/blog');
+    const offenders = [];
+    for (const f of publishedPosts()) {
+      const raw = fs.readFileSync(path.join(dir, f), 'utf8');
+      for (const m of raw.matchAll(/^[ \t]*```(\w*)[^\S\n]*\n([\s\S]*?)\n[ \t]*```/gm)) {
+        if (m[1] === 'text') continue;
+        const over = m[2].split('\n').filter((l) => l.length > 80).length;
+        if (over >= 6) offenders.push(`${f} (${m[1] || 'untagged'}): ${over} lines over 80ch`);
+      }
+    }
+    expect(offenders).toEqual([]);
   });
 });
 

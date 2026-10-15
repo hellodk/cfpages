@@ -15,7 +15,7 @@ Complete Visual Guide — Understanding Attention Heads, Model Configuration, an
 
 1\. Overview 2\. Attention Architecture 3\. Pipeline Parallelism 4\. Supported Models 5\. Config.json Guide
 
-### What is Tensor Parallelism?
+## What is Tensor Parallelism?
 
 Split a model's layers across multiple nodes so they compute every token together. oMLX reports 1.78x on a 27B across two Macs over Thunderbolt RDMA.
 
@@ -56,9 +56,9 @@ A — Single Node vs. Tensor Parallel
 
 **When to use:** When your model has many attention heads that divide evenly by the number of nodes, and you have a fast link (Thunderbolt, RDMA).
 
-### The Trade-off
+## The Trade-off
 
-### ✓ Tensor Parallelism
+## ✓ Tensor Parallelism
 
 **Faster responses.** oMLX's published figure is 1.78x, measured on a 27B over Thunderbolt RDMA — not a general guarantee.
 
@@ -66,7 +66,7 @@ A — Single Node vs. Tensor Parallel
 
 Best for speed
 
-### → Pipeline Parallelism
+## → Pipeline Parallelism
 
 **Bigger models:** Each node holds different layers, no model size limit.
 
@@ -74,7 +74,7 @@ Best for speed
 
 Best for capacity
 
-### How Attention Heads Work
+## How Attention Heads Work
 
 The dimensions that matter for tensor parallelism, explained visually.
 
@@ -143,7 +143,7 @@ C — Sharding a Layer Across Two Nodes
           <text x="330" y="270" font-size="10" text-anchor="middle" fill="#4B5563">Gradient and activation sync per layer</text>
         </svg>
 
-### Pipeline Parallelism — The Alternative
+## Pipeline Parallelism — The Alternative
 
 When tensor parallelism won't work, split the model's layers across nodes instead.
 
@@ -188,7 +188,7 @@ D — Pipeline vs. Tensor Parallelism
           <text x="500" y="270" font-size="10" text-anchor="middle" fill="#4B5563">Works on any model and any link</text>
         </svg>
 
-### How Pipeline Parallelism Works
+## How Pipeline Parallelism Works
 
 1.  **Node 1 processes token through layers 1-3**
 
@@ -256,16 +256,16 @@ E — Pipeline Parallelism Timeline
           <text x="50" y="270" font-size="10" fill="#4B5563">⏱ Total time = Token 1 + Token 2 + Token 3... (Sequential per token)</text>
         </svg>
 
-### Tensor vs. Pipeline: When to Use Each
+## Tensor vs. Pipeline: When to Use Each
 
-### ✓ Use Tensor Parallelism When:
+## ✓ Use Tensor Parallelism When:
 
 -   Model has many attention heads that divide evenly
 -   You need **fast token latency**
 -   You have a fast link (Thunderbolt, RDMA)
 -   Qwen3, Qwen3.5, Nemotron-H, Llama 3
 
-### ✓ Use Pipeline Parallelism When:
+## ✓ Use Pipeline Parallelism When:
 
 -   Model doesn't support tensor sharding (like Qwen3.8)
 -   You need **larger context windows** (fits bigger models)
@@ -274,9 +274,9 @@ E — Pipeline Parallelism Timeline
 
 **Pipeline stages add latency per token:** While tensor parallelism speeds up responses (oMLX reports 1.78x on a 27B over TB RDMA), pipeline parallelism may be **slightly slower** than a single node. The trade-off is **fitting larger models** that wouldn't run on one Mac alone.
 
-### Your Qwen3.8 Question: Yes, on 2 Nodes
+## Your Qwen3.8 Question: Yes, on 2 Nodes
 
-#### ✓ Can you deploy Qwen3.8-27B on 2 Mac minis?
+### ✓ Can you deploy Qwen3.8-27B on 2 Mac minis?
 
 Yes — using **pipeline parallelism**.
 
@@ -285,7 +285,7 @@ Yes — using **pipeline parallelism**.
 -   **Speed:** Slightly slower than one node, but you can run the full 27B model
 -   **Memory:** ~14 GB per Mac (fits 24GB MacBook Pro)
 
-#### How to Deploy Qwen3.8 on 2 Nodes:
+### How to Deploy Qwen3.8 on 2 Nodes:
 
 1.  Load the model in oMLX dashboard
 2.  Select **"Deploy on 2 Macs"**
@@ -293,7 +293,7 @@ Yes — using **pipeline parallelism**.
 4.  oMLX splits layers: roughly 16 layers on each Mac
 5.  Done — model runs across both nodes
 
-### Which Models Support Tensor vs. Pipeline Parallelism?
+## Which Models Support Tensor vs. Pipeline Parallelism?
 
 Only models with a native MLX shard() implementation support distributed tensor parallelism.
 
@@ -311,7 +311,7 @@ Only models with a native MLX shard() implementation support distributed tensor 
 
 **Important:** Just because a model isn't in the "full support" list doesn't mean it won't work. MLX can dynamically detect if a model has a `shard()` method. Check the oMLX dashboard — it will tell you if a specific model supports tensor parallelism when you try to load it.
 
-### How to Check a Specific Model
+## How to Check a Specific Model
 
 1.  **Find the model's config.json** — Usually in the model directory on Hugging Face or your local storage.
 2.  **Look for architecture dimensions:**
@@ -350,31 +350,31 @@ D — Why This Model Failed: 16 ÷ 2 = 8, But 4 ÷ 2 = 2, And 32 ÷ 2 = 16
           <text x="475" y="242" font-size="9" fill="#4B5563">(one known to support TP)</text>
         </svg>
 
-### Reading Model Config.json Files
+## Reading Model Config.json Files
 
 The configuration file that tells oMLX how a model is structured and whether it can be parallelized.
 
-### Essential Fields for Tensor Parallelism
+## Essential Fields for Tensor Parallelism
 
 { "model\_type": "qwen3", "hidden\_size": 3584, "num\_attention\_heads": 24, // Primary dimension for sharding "num\_key\_value\_heads": 8, // GQA dimension (optional) "num\_hidden\_layers": 32, "intermediate\_size": 18944, "vocab\_size": 128000, "max\_position\_embeddings": 32768, }
 
-### `model_type`
+## `model_type`
 
 Architecture name: `qwen3`, `llama`, `nemotron_h`, etc. oMLX uses this to find the MLX implementation and check for `shard()`.
 
-### `num_attention_heads`
+## `num_attention_heads`
 
 Total query attention heads. Must divide evenly by node count. Example: 24 heads ÷ 2 nodes = 12 per node ✓
 
-### `num_key_value_heads`
+## `num_key_value_heads`
 
 **Grouped Query Attention:** Fewer KV heads than query heads to save memory. Must also divide evenly.
 
-### `hidden_size`
+## `hidden_size`
 
 Total embedding dimension. Usually `num_attention_heads × head_size`. Example: 24 × 149.33 ≈ 3584
 
-### Extended Fields (Model-Specific)
+## Extended Fields (Model-Specific)
 
 { "linear\_num\_key\_heads": 16, // Qwen3-Next: linear attention dimension "linear\_num\_value\_heads": 4, // Must also divide evenly "mamba\_num\_heads": 4, // Nemotron-H: Mamba layer heads "n\_groups": 32, // Nemotron-H: group dimension }
 
@@ -382,7 +382,7 @@ Total embedding dimension. Usually `num_attention_heads × head_size`. Example: 
 
 **Nemotron-H:** Hybrid Mamba + Attention architecture. Uses `mamba_num_heads` and `n_groups` instead of traditional heads.
 
-### Quick Check: Can This Model Use Tensor Parallelism?
+## Quick Check: Can This Model Use Tensor Parallelism?
 
 1.  **Open the model's config.json**
 
@@ -441,19 +441,19 @@ E — Real-World Example: Qwen3-32B Config
 
 **Real Model:** Qwen3-32B with 24 heads and 8 KV heads works with 2 or 4 nodes, but not 3 nodes. This is exactly why oMLX's autoconfigure picks the best split automatically.
 
-### Model Folder Structure and File Types
+## Model Folder Structure and File Types
 
 What each file in a model directory does and why it matters for oMLX.
 
 model-directory/ ├── config.json ← Architecture and metadata ├── model.safetensors ← Weights (MLX format) ├── model-00001-of-00005.safetensors ├── model-00002-of-00005.safetensors ├── ... ├── model.safetensors.index.json ← Weight sharding map ├── tokenizer.model ← Token vocabulary ├── tokenizer.json ├── generation\_config.json ← Inference defaults ├── README.md └── .gitattributes
 
-### `config.json`
+## `config.json`
 
 **Architecture blueprint.** Defines model structure (attention heads, layers, hidden size). oMLX reads this to determine if tensor parallelism is possible.
 
 Required for: Parallelism detection
 
-### `model.safetensors`  
+## `model.safetensors`  
 or  
 `model-00001-of-N.safetensors`
 
@@ -461,13 +461,13 @@ or
 
 Required for: Running inference
 
-### `model.safetensors.index.json`
+## `model.safetensors.index.json`
 
 **Weight shard map.** Lists which weights live in which shard file. Tells oMLX how to load layers progressively without loading the entire model.
 
 Required for: Progressive layer loading
 
-### `tokenizer.model`  
+## `tokenizer.model`  
 and  
 `tokenizer.json`
 
@@ -475,13 +475,13 @@ and
 
 Required for: Text input processing
 
-### `generation_config.json`
+## `generation_config.json`
 
 **Inference defaults.** Settings like max tokens, temperature, top\_p. oMLX uses these as fallbacks if you don't override them.
 
 Optional: Defaults if not specified
 
-### `README.md`
+## `README.md`
 
 **Model documentation.** License, usage notes, training data, known limitations. Always read this before deployment.
 
@@ -545,20 +545,20 @@ F — How oMLX Uses Model Files
 
 **Why the safetensors format?** Modern models use safetensors (safe, fast, and designed for MLX). Older models might use \`.bin\` (PyTorch) or \`.gguf\` (GGML), but oMLX converts to safetensors on load. Always prefer safetensors — they load 10-20x faster.
 
-### Quick File Checklist Before Running a Model
+## Quick File Checklist Before Running a Model
 
-#### ✓ Required Files (Model Won't Load Without These)
+### ✓ Required Files (Model Won't Load Without These)
 
 -    `config.json` — Architecture definition
 -    `model*.safetensors` (or all shards) — Weights
 -    `tokenizer.model` or `tokenizer.json` — Token encoding
 
-#### ⚠ Important (Deployment Will Fail Without Proper Values)
+### ⚠ Important (Deployment Will Fail Without Proper Values)
 
 -    `model.safetensors.index.json` (if weights are sharded) — Weight location map
 -    All shard files present if index.json references them
 
-#### ✓ Optional (Nice to Have)
+### ✓ Optional (Nice to Have)
 
 -    `generation_config.json` — Inference defaults
 -    `README.md` — Documentation

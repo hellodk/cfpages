@@ -14,7 +14,7 @@ draft: false
 
 I sat down at my workstation and everything felt sluggish. The terminal was lagging, Firefox was barely responding, and even `ls` took seconds to return. A quick `uptime` confirmed the worst:
 
-```
+```text
 18:10:45 up 2 days, 49 min, 1 user, load average: 215.29, 154.40, 95.49
 ```
 
@@ -108,14 +108,14 @@ Kubernetes was rescheduling pods (Grafana, Jenkins, ClickHouse, PostgreSQL), and
 
 The kubelet logs confirmed the churn:
 
-```
+```text
 Error syncing pod, skipping: unmounted volumes=[nfs-subdir-external-provisioner-root],
   failed to process volumes=[]: context deadline exceeded
 ```
 
 And etcd was also struggling:
 
-```
+```text
 "apply request took too long", "took":"901.840152ms", "expected-duration":"100ms",
   "request":"key:\"/registry/services/endpoints/kube-system/cluster.local-nfs-subdir-external-provisioner\""
 ```
@@ -148,7 +148,7 @@ Using `sar` (System Activity Reporter) historical data, I reconstructed the exac
 
 The **memory commit ratio** was the smoking gun:
 
-```
+```text
 %commit peaked at 261% — the system had promised 192GB of memory
 to processes, but only had 64GB RAM + 8GB swap = 72GB available.
 ```
@@ -188,7 +188,7 @@ $ sudo systemctl restart nfs-server
 
 The kernel log shows a clean recovery:
 
-```
+```text
 NFSD: starting 90-second grace period (net effffff9)
 NFSD: all clients done reclaiming, ending NFSv4 grace period (net effffff9)
 ```

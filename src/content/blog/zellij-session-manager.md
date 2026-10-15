@@ -6,7 +6,7 @@ tags: [zellij, terminal, dotfiles]
 draft: false
 ---
 
-### The Problem
+## The Problem
 
 Two laptops, two cities, terminal chaos. Sessions unnamed, untracked, and gone after reboot.
 

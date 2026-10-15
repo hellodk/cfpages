@@ -145,7 +145,7 @@ Chirping’s **sidebars, search, and chat** stay. We only replaced the main colu
 
 Every card gets art via a fallback chain:
 
-```
+```text
 1. frontmatter cover: "assets/images/..."
 2. first inline image in the post body
 3. tag default (kubernetes → logo, cassandra → astronaut, …)

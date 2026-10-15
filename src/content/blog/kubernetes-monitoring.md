@@ -28,7 +28,7 @@ We'll cover:
 
 The kube-prometheus-stack bundles several components into a cohesive monitoring solution:
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────────────┐
 │                           KUBERNETES CLUSTER                                     │
 ├─────────────────────────────────────────────────────────────────────────────────┤
@@ -86,7 +86,7 @@ The kube-prometheus-stack bundles several components into a cohesive monitoring 
 
 One of the most powerful features is allowing applications to deploy their own dashboards. Here's how it works:
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                     DASHBOARD DISCOVERY FLOW                             │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -172,7 +172,7 @@ A common question: *"If the app specifies a folder after kube-prometheus-stack i
 
 The answer: **The sidecar handles folder creation dynamically at runtime!**
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                        RUNTIME FLOW (No restart needed!)                      │
 └──────────────────────────────────────────────────────────────────────────────┘
@@ -309,7 +309,7 @@ Grafana plugins are typically downloaded from grafana.com at startup. This cause
 
 ### Solution: Init Container Approach
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                     PLUGIN INSTALLATION FLOW                             │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -412,7 +412,7 @@ resources:
 
 Use actual usage data to right-size your containers:
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                   RESOURCE OPTIMIZATION WORKFLOW                         │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -509,7 +509,7 @@ sum(container_memory_working_set_bytes{container!="POD"}) by (pod)
 
 ## Complete Architecture Diagram
 
-```
+```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                                   KUBERNETES CLUSTER                                    │
 │                                                                                         │

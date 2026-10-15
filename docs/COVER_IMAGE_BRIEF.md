@@ -138,6 +138,7 @@ that is what keeps the set grounded.
 | `upgrading-sublime-text` | A chisel being drawn across a wet whetstone on a workbench, water beading on the stone, metal shavings at the edge. |
 | `markdown-cheatsheet` | A letterpress type case with metal sorts in their compartments, seen from directly above, individual letterforms too small to resolve. |
 | `how-to-pass-datastax-cassandra-administrator-certification` | A study desk at dawn: closed notebook, mechanical pencil, cooling cup of coffee, low sun across the surface. Nothing written is legible. |
+| `how-to-write-a-readable-technical-blog` | A steel ruler laid diagonally across a marked-up paper proof on a desk, red pencil beside it, margins full of illegible pencil ticks. |
 | `the-road-to-a-kingdom` | A single-track dirt road running toward distant hills at dusk, ruts holding the last light, no vehicles or figures. |
 | `resume` | A tidy desk flat-lay from above: fountain pen, a folded sheet of heavy paper, a linen bookmark, morning window light. No writing visible. |
 

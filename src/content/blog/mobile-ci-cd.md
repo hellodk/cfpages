@@ -6,7 +6,7 @@ tags: [ci-cd, mobile, android, ios]
 draft: false
 ---
 
-##### Let’s take a stroll over the different terminologies we may come across during our journey of Mobile CI CD
+## Let’s take a stroll over the different terminologies we may come across during our journey of Mobile CI CD
 
 -   Dynamic Instrumentation
 

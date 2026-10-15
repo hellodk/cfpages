@@ -194,7 +194,7 @@ WWDC26 answers the next question: **what if you have four Macs on your desk?**
 
 Distributed MLX on Apple silicon rests on three layers:
 
-```
+```text
 ┌─────────────────────────────────────────────────┐
 │  MLX / MLX LM                                   │  ← Your code (CLI, Python, Swift)
 ├─────────────────────────────────────────────────┤

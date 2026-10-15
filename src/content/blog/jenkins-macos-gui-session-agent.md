@@ -9,11 +9,11 @@ draft: false
 
 01 Why GUI Context Matters 02 Auto-Login & Keychain 03 LaunchAgent Plist 04 Setup Script + Jenkins 05 Pitfalls & Checklist 06 The Domain Trap
 
-### Why the GUI session matters
+## Why the GUI session matters
 
 A Jenkins agent launched via ssh or launchctl into a non-interactive session is a different animal from one running inside the logged-in Aqua session. For pure-shell jobs it makes no difference. The moment you sign with a keychain, drive a Simulator, run XCUITests, or route audio/video — it decides everything.
 
-### GUI session vs. background session
+## GUI session vs. background session
 
 Two ways the agent process can be born — and what each can reach
 
@@ -48,79 +48,79 @@ Two ways the agent process can be born — and what each can reach
       <line x1="530" y1="115" x2="620" y2="115" stroke="#4F6BFF" stroke-width="2" marker-end="url(#ar1)"></line>
     </svg>
 
-### The consent-prompt flow (why this bites codesign)
+## The consent-prompt flow (why this bites codesign)
 
 When a private key in a keychain is used by a process that is **not** in the key's partition list, Security.framework must ask the user. Where it asks depends entirely on the **session** the process lives in:
 
-#### codesign wants to use the key
+### codesign wants to use the key
 
 Key is found and opened; ACL allows request to proceed.
 
-#### is codesign in the key's partition list?
+### is codesign in the key's partition list?
 
 If security set-key-partition-list ... codesign: was applied — approval is silent, rc=0, no prompt.
 
-#### No partition entry -> can securityd render a prompt?
+### No partition entry -> can securityd render a prompt?
 
 Process has an Aqua session → dialog is registered and **waits forever**. No Aqua session → framework takes the fast-fail path: errSecInternalComponent (rc=1, ~0.3s).
 
 <aside class="callout"><strong class="callout__title">Real-world data point.</strong><div class="callout__body"><span class="a-icon">i</span><div> Our ios-m4 no-partition experiment produced <b>one instant error and three hangs from byte-identical keychain state</b> — the deciding variable was whether the Mac's GUI session was reachable at that moment. See Tab 5.</div></div></aside>
 
-### Jobs that flat-out need the GUI session
+## Jobs that flat-out need the GUI session
 
 🔑
 
-### iOS / macOS codesign
+## iOS / macOS codesign
 
 Keychain key access + Xcode requires a GUI login; non-partitioned keys otherwise error or hang.
 
 📱
 
-### Simulator
+## Simulator
 
 CoreSimulator spawns UIKit apps in the GUI session; headless launches either fail or render nothing.
 
 🧪
 
-### XCUITest
+## XCUITest
 
 Automation needs a WindowServer-target — the test runner must reach the login session.
 
 🎬
 
-### Video / audio capture
+## Video / audio capture
 
 Element capture, AVFoundation output, screen recording require WindowServer + screen recording permission.
 
 🗝️
 
-### Keychain-backed secrets
+## Keychain-backed secrets
 
 Any binary that gets a password from the login keychain for the first time triggers a consent prompt.
 
 🧯
 
-### System prompt handling
+## System prompt handling
 
 macOS dialogs (updates, Camera/WiFi keys, Gatekeeper) only auto-dismiss in an interactive session.
 
 <aside class="callout"><strong class="callout__title">"But my agent runs as the logged-in user."</strong><div class="callout__body"><span class="a-icon">!</span><div> Same uid is not the same session. A LaunchDaemon with <span class="inline-code">UserName</span> set runs your builds as you, with your <span class="inline-code">$HOME</span>, your keychains, your identity — and still outside the Aqua session. codesign works from Xcode and fails from Jenkins, and every obvious comparison comes back identical. <a href="#s60" onclick="switchTab(5)" style="color:var(--accent);font-weight:600">Tab 06 walks through that exact case →</a></div></div></aside>
 
-### Auto-login & keychain
+## Auto-login & keychain
 
 A GUI-session agent is useless if the session doesn't exist after a reboot. Three things must survive power cycles: the logged-in user, the unlocked keychain, and a machine that never sleeps.
 
-### 1\. Enable auto-login
+## 1\. Enable auto-login
 
-#### System Settings → Users & Groups
+### System Settings → Users & Groups
 
 Enable Automatically log in as for the dedicated build user (e.g. dk). macOS requires the user to be in the **Administrators** group.
 
-#### Confirm fileVault/secure-boot status
+### Confirm fileVault/secure-boot status
 
 Auto-login is skipped if FileVault is on (unless capable "secure token" user). For a build Mac this is usually fine — the box is on a locked LAN.
 
-#### Reboot test
+### Reboot test
 
 No account is more reliable than one you re-test. After \`sudo reboot\`, confirm the console lands on the desktop, not the login window.
 
@@ -148,19 +148,19 @@ Boot → GUI session → agent lifecycle
       <text x="732" y="70" fill="#059669" font-size="10.5" font-weight="600" text-anchor="middle">RunAtLoad + KeepAlive</text>
     </svg>
 
-### 2\. Keychain auto-unlock
+## 2\. Keychain auto-unlock
 
 A freshly booted login keychain is **locked**. Any agent job touching a key will hang on "unlock login keychain" unless it is pre-unlocked. Two mechanisms:
 
 🔓
 
-#### Unlock on login (launchd uses the session unlocked state)
+### Unlock on login (launchd uses the session unlocked state)
 
 Because the agent runs inside the GUI session, the login keychain is unlocked as part of sign-in. Keep the **screen-saver password** disabled, or the session becomes idle-locked and the agent loses access.
 
 🗂️
 
-#### Ephemeral keychains for CI (the cleaner pattern)
+### Ephemeral keychains for CI (the cleaner pattern)
 
 Create a per-build keychain, import the p12, apply the partition list, delete on exit:
 
@@ -185,29 +185,29 @@ security delete-keychain "$KC"
 
 <aside class="callout"><strong class="callout__title">Single most common CI failure.</strong><div class="callout__body"><span class="a-icon">!</span><div> Importing a p12 then signing <i>without</i> <span class="inline-code">set-key-partition-list</span> is what triggers the consent flow. With a GUI session → <b>hang</b>. Without one → <b>errSecInternalComponent</b>. Apply the partition list in headless CI, every time.</div></div></aside>
 
-### 3\. Sleep / screen / update hardening
+## 3\. Sleep / screen / update hardening
 
-### ⚡ Prevent sleep
+## ⚡ Prevent sleep
 
 sudo pmset -a sleep 0 and sudo pmset -a displaysleep 0. A sleeping Mac drops the WindowServer session, breaking the GUI context mid-build.
 
-### 🖥️ Disable screen lock
+## 🖥️ Disable screen lock
 
 System Settings → Lock Screen → "Require password" = Never. An idle-locked session freezes keychain access.
 
-### 📴 Block auto-updates
+## 📴 Block auto-updates
 
 Turn off "Install macOS updates" and "Install application updates from the App Store" — a midnight reboot kills the next morning's build.
 
-### 🔌 Disable deep sleep
+## 🔌 Disable deep sleep
 
 sudo pmset -a sleep 0 plus setting System Settings → Battery → "Prevent automatic sleeping on power adapter".
 
-### The LaunchAgent plist
+## The LaunchAgent plist
 
 The agent must be a **user LaunchAgent** (bootstrap domain gui/<uid>), not a Linux-style systemd user. This is the piece that puts the process inside the Aqua session.
 
-### Anatomy — what each key does
+## Anatomy — what each key does
 
 | Key | Value in our agent | Why |
 | --- | --- | --- |
@@ -219,7 +219,7 @@ The agent must be a **user LaunchAgent** (bootstrap domain gui/<uid>), not a Lin
 | StandardOutPath / StandardErrorPath | ~/jenkins-agent-b/agent.log | Catch the agent's own stderr so a silent connect-failure is debuggable. |
 | EnvironmentVariables | PATH, LANG, HOME, RBENV_ROOT | launchd gives a minimal env; real builds need the full PATH of the user shell. |
 
-### The complete plist
+## The complete plist
 
 ~/Library/LaunchAgents/com.jenkins.ios-m4.plistcopy
 
@@ -277,7 +277,7 @@ The agent must be a **user LaunchAgent** (bootstrap domain gui/<uid>), not a Lin
 </plist>
 ```
 
-### Load & verify (no sudo needed)
+## Load & verify (no sudo needed)
 
 terminalcopy
 
@@ -300,33 +300,33 @@ tail -f ~/jenkins-agent-b/agent.log
 
 <aside class="callout"><strong class="callout__title">secret</strong><div class="callout__body"><span class="a-icon">✓</span><div>The  must never be hardcoded in a repo copy of the plist — the setup script injects it from an env var at install time (see Tab 4).</div></div></aside>
 
-### Setup script + Jenkins side
+## Setup script + Jenkins side
 
 A single idempotent installer does the whole job — down below is the exact flow used for ios-m4 (from the pulse repo, jenkins-k8s/ios/agent/setup-ios-m4-agent.sh).
 
-### The installer flow
+## The installer flow
 
-#### Preconditions
+### Preconditions
 
 Java 21 at a known path (/opt/homebrew/opt/openjdk@21/bin/java), python3, and AGENT\_SECRET from the Jenkins node page.
 
-#### Work dir + agent.jar
+### Work dir + agent.jar
 
 Create ~/jenkins-agent-b/remoting, download agent.jar from <jenkins>/jnlpJars/agent.jar, validate size ≥ 1 MB (a truncated jar makes \`java -jar\` fail cryptically).
 
-#### Write the plist via plistlib
+### Write the plist via plistlib
 
 Python generates the LaunchAgent from env vars — keeps the secret out of the repo and interpolates paths consistently.
 
-#### Validate + bootstrap
+### Validate + bootstrap
 
 plutil -lint then launchctl bootstrap "gui/$(id -u)" (user domain — no sudo, fully permitted on a login session).
 
-#### Verify connection
+### Verify connection
 
 Poll agent.log for "Connected" for up to 30s; fail loudly if not.
 
-### Jenkins node config
+## Jenkins node config
 
 Controller <-> Agent
 
@@ -355,11 +355,11 @@ Controller <-> Agent
       <text x="670" y="110" fill="#059669" font-size="11.5" font-weight="600">-webSocket keeps NAT simple</text>
     </svg>
 
-### Getting the secret safely
+## Getting the secret safely
 
 🔐
 
-#### No hardcoded secrets
+### No hardcoded secrets
 
 The node page at /computer/ios-m4/slave-agent.jnlp exposes the one-time secret. In our flow it is passed as AGENT\_SECRET=<secret> ./setup-ios-m4-agent.sh, injected into the plist at write time, and never committed.
 
@@ -375,11 +375,11 @@ gui/uid
 
 bootstrap domain
 
-### Pitfalls & checklist
+## Pitfalls & checklist
 
 The whole guide distilled into the parts that actually break production CI.
 
-### The codesign saga (real builds, ios-m4)
+## The codesign saga (real builds, ios-m4)
 
 | Build | Kind | Partition list | GUI session at that moment | Result |
 | --- | --- | --- | --- | --- |
@@ -390,7 +390,7 @@ The whole guide distilled into the parts that actually break production CI.
 
 <aside class="callout"><strong class="callout__title">Interpretation trap.</strong><div class="callout__body"><span class="a-icon">!</span><div> A missing <span class="inline-code">errSecInternalComponent</span> in your logs does <b>not</b> mean signing worked — it may simply mean the Mac had a GUI session, so codesign <i>hung</i> instead of failing. Any pre-fix no-partition run not returning rc=1 within a second is a hang, never a pass.</div></div></aside>
 
-### Headless CI decision table
+## Headless CI decision table
 
 | Variant | UI session seen | End state | Rule |
 | --- | --- | --- | --- |
@@ -398,51 +398,51 @@ The whole guide distilled into the parts that actually break production CI.
 | partition list skipped | none | instant error, rc=1 | keeps the diagnostic |
 | partition list skipped | GUI reachable | indefinite hang | MUST wrap codesign in a watchdog (SIGTERM won't stop it — use kill -9) |
 
-### Final checklist — a GUI session agent done right
+## Final checklist — a GUI session agent done right
 
-#### Auto-login for the build user
+### Auto-login for the build user
 
 Console lands on the desktop after every reboot; FileVault considered consciously.
 
-#### Screen lock & sleep disabled
+### Screen lock & sleep disabled
 
 pmset sleep 0, screensaver password off, auto-updates off.
 
-#### User LaunchAgent, not systemd/service
+### User LaunchAgent, not systemd/service
 
 A launchd plist bootstrapped into gui/$(id -u) with KeepAlive=true + RunAtLoad=true.
 
-#### Prove the domain from inside a job
+### Prove the domain from inside a job
 
 Add launchctl managername as the first line of any signing job. It must print Aqua. System means a LaunchDaemon is running your builds — see Tab 06.
 
-#### Full PATH in EnvironmentVariables
+### Full PATH in EnvironmentVariables
 
 launchd env is minimal — inject the full user shell PATH or every build fails at \`command not found\`.
 
-#### Keychain partition list applied before any sign
+### Keychain partition list applied before any sign
 
 security set-key-partition-list -S apple-tool:,apple:,codesign: right after p12 import — no prompt, no hang.
 
-#### Per-build ephemeral keychains
+### Per-build ephemeral keychains
 
 create → unlock → import → sign → restore search list → delete. Zero cross-build state.
 
-#### External watchdog on any key-touching command
+### External watchdog on any key-touching command
 
 Jenkins' polite SIGTERM won't stop a blocked codesign; wrap in a shell watchdog that uses kill -9.
 
-#### Re-test after every reboot
+### Re-test after every reboot
 
 Run one real signing job after a power cycle — auto-login and keychain unlock are the two things most likely to quietly regress.
 
 <aside class="callout"><strong class="callout__title">Summary.</strong><div class="callout__body"><span class="a-icon">✓</span><div> A GUI-session agent is what makes signing, Simulator, and XCUITest jobs deterministic. The one extra thing nobody documents is that a reachable-but-unattended GUI session turns a clean <span class="inline-code">errSecInternalComponent</span> into an indefinite hang — so always pair the partition list (the real fix) with a kill -9 watchdog (the insurance), and treat <i>any</i> absence of a fast error as a hang, not a pass.</div></div></aside>
 
-### The domain trap: same user, wrong session
+## The domain trap: same user, wrong session
 
 A real Apple Distribution identity signed cleanly from Terminal, Xcode and xcodebuild on a Mac mini running macOS Tahoe — and failed every single time from Jenkins. Same uid. Same $HOME. Same p12. Partition list applied. Every comparison anyone suggested came back identical. This is the evidence, the red herrings that cost a day, and the one command that ended it.
 
-### The symptom — everything matches, except the result
+## The symptom — everything matches, except the result
 
 Diagnostics printed by the signing script immediately before codesign, in both contexts:
 
@@ -459,33 +459,33 @@ Diagnostics printed by the signing script immediately before codesign, in both c
 
 <aside class="callout"><strong class="callout__title">Two separate bugs in one log.</strong><div class="callout__body"><span class="a-icon">!</span><div> The signing failure is the interesting one, but <span class="inline-code">Finished: SUCCESS</span> under a <i>SIGNING FAILED</i> verdict is the dangerous one — a downstream job would happily ship an unsigned binary. Diagnostic scripts must <span class="inline-code">exit "$RC_SIGN"</span>, not just print a verdict.</div></div></aside>
 
-### Red herrings — what we ruled out, and how
+## Red herrings — what we ruled out, and how
 
-### dead "login.keychain-db appears twice"
+## dead "login.keychain-db appears twice"
 
 An earlier analysis read the Jenkins keychain block as a duplicated search list. It wasn't: the block ran security default-keychain _then_ list-keychains. Line 1 was the default-keychain output. Search lists were identical. Lesson: one command per output block, or you'll compare noise.
 
-### dead "Bad p12 / missing private key"
+## dead "Bad p12 / missing private key"
 
 find-identity -v — the **\-v** does trust evaluation — reported **1 valid identity** in both contexts. The identity was fine; the keychain was fine.
 
-### dead "Running as SYSTEM"
+## dead "Running as SYSTEM"
 
 That line in the Jenkins console is Jenkins' _authorization_ principal for the build. It says nothing about the Unix user or the launchd domain. Ignore it for this class of problem.
 
-### not verified "Same script, both places"
+## not verified "Same script, both places"
 
 The two runs printed different diagnostic sections — they were two revisions of the script. And the Terminal run never captured codesign's stderr, so nobody knew whether the chain warning appeared there too. If it isn't byte-identical, it isn't a comparison.
 
-### useful The self-signed dummy control
+## useful The self-signed dummy control
 
 Earlier (Tab 05) a self-signed dummy identity + partition list signed fine on the ios-m4 agent. A self-signed cert needs no intermediate; an Apple Distribution cert must chain through WWDR. That left two candidates: **certificate chain** or **process session**.
 
-### useful Xcode and xcodebuild both sign OK
+## useful Xcode and xcodebuild both sign OK
 
 Anything launched from the GUI login session works. Only Jenkins fails. The agent process, not the certificate, is the variable — so the next question is _where does that process actually live?_
 
-### launchd domains — why "same uid" proves nothing
+## launchd domains — why "same uid" proves nothing
 
 launchd runs several **domains**. Which one a process is born into decides its audit/security session: whether securityd can talk to it about keychain consent, whether WindowServer exists for it, which trustd it evaluates certificates with. The Unix uid is orthogonal — a LaunchDaemon with UserName hellodk runs as uid 502 _inside the system domain_.
 
@@ -551,7 +551,7 @@ Same Uid, Two Domains — Where Each codesign Process Is Born
 
 <aside class="callout"><strong class="callout__title">Read the PID.</strong><div class="callout__body"><span class="a-icon">i</span><div> The wrapper <span class="inline-code">jenkins-slave</span> was PID <b>346</b>. On a Mac that number is boot-time — long before any GUI login. A <span class="inline-code">gui/&lt;uid&gt;</span> agent cannot have a PID that low unless auto-login is instantaneous. The PID alone was a strong hint the process was a daemon.</div></div></aside>
 
-### Why launchctl load lies to you
+## Why launchctl load lies to you
 
 The legacy load/unload verbs take no domain argument. They load the job into **whatever domain the shell you typed them in belongs to**. The file's location under ~/Library/LaunchAgents is a convention for _auto_\-loading at login — it does not bind a manual load to the GUI domain.
 
@@ -577,7 +577,7 @@ launchctl bootout   "gui/$(id -u)" ~/Library/LaunchAgents/com.jenkins.mobileapp.
 # launchctl unload ~/Library/LaunchAgents/com.jenkins.mobileapp.plist
 ```
 
-### The one command: launchctl managername
+## The one command: launchctl managername
 
 It prints the name of the launchd manager for **the caller's own domain**. Run it from inside the job and the process tells you, in one word, where it lives. Actual outputs, verbatim:
 
@@ -615,45 +615,45 @@ ls -l ~/Library/LaunchAgents /Library/LaunchAgents /Library/LaunchDaemons | grep
 
 <aside class="callout"><strong class="callout__title">Confirmed: LaunchDaemon.</strong><div class="callout__body"><span class="a-icon">✓</span><div> The <span class="inline-code">jenkins-slave</span> wrapper lived in <span class="inline-code">/Library/LaunchDaemons</span>, ran as <span class="inline-code">hellodk</span> via <span class="inline-code">UserName</span>, and spawned the agent JVM at boot. Every build shell inherited the system domain. Xcode and Terminal, born from <span class="inline-code">loginwindow</span>, never did.</div></div></aside>
 
-### The fix — retire the daemon, bootstrap a user agent
+## The fix — retire the daemon, bootstrap a user agent
 
 Do this at the console (Terminal.app or Screen Sharing). **Not over SSH** — step 4 would land in the SSH session's domain and you'd be back where you started. The sudo lines are yours to run; the daemon plist is root-owned.
 
-#### Capture the daemon's command line before touching it
+### Capture the daemon's command line before touching it
 
 launchctl print system/jenkins-slave | grep -iE 'path|program|arguments' -A8 — you need the exact java -jar agent.jar -url … -secret … -name mobileapp -webSocket -workDir … line, and the path of the plist.
 
-#### Stop and retire the daemon
+### Stop and retire the daemon
 
 sudo launchctl bootout system /Library/LaunchDaemons/<file>.plist then sudo mv /Library/LaunchDaemons/<file>.plist ~/jenkins-daemon-plist.bak. Moving it out is not optional — left in place it comes back on the next boot and silently wins.
 
-#### Write the user LaunchAgent
+### Write the user LaunchAgent
 
 ~/Library/LaunchAgents/com.jenkins.mobileapp.plist — same ProgramArguments as step 1; **delete** any UserName key; EnvironmentVariables with HOME=/Users/hellodk and the full PATH; RunAtLoad + KeepAlive true. Tab 03 has the template — substitute the user and paths.
 
-#### Bootstrap into the GUI domain, explicitly
+### Bootstrap into the GUI domain, explicitly
 
 plutil -lint …plist → launchctl bootstrap "gui/$(id -u)" …plist → launchctl print "gui/$(id -u)/com.jenkins.mobileapp" | head -5.
 
-#### Auto-login for the build user
+### Auto-login for the build user
 
 System Settings → Users & Groups → Automatic Login → hellodk. Without it gui/502 does not exist after a reboot and the agent is simply down until someone logs in. This is the trade-off you accept for a working keychain session.
 
-#### Re-run the failing job _unchanged_
+### Re-run the failing job _unchanged_
 
 Verification order matters: first launchctl managername in the job log must print Aqua — if not, step 4 ran from the wrong place and codesign output is meaningless. Then, and only then, look at codesign rc.
 
 <aside class="callout"><strong class="callout__title">One variable at a time.</strong><div class="callout__body"><span class="a-icon">!</span><div> Do not add the WWDR intermediate import or <span class="inline-code">set-keychain-settings</span> to the script in the same run. If it passes with three changes you have no idea which one fixed it — and you'll carry two cargo-cult lines forever.</div></div></aside>
 
-### Still open — labelled honestly
+## Still open — labelled honestly
 
 The domain difference is **verified**. The mechanism by which it produces this particular pair of messages for an Apple-issued cert, when the self-signed dummy passed in the same daemon context, is **inferred**, not proven. Two candidates, each to be tested on its own after the session fix lands:
 
-### inferred WWDR chain in the system session
+## inferred WWDR chain in the system session
 
 unable to build chain to self-signed root means trust evaluation could not reach the WWDR intermediate. Hypothesis: it lives in the login keychain, which is unlocked in Aqua and locked in a fresh system-domain security session. Test: import the intermediate into the ephemeral keychain and compare. Evidence to collect first: security verify-cert -c leaf.pem -p codeSign in both contexts, and where find-certificate -c "Apple Worldwide Developer Relations" finds it.
 
-### inferred Keychain lock-on-sleep = 300 s
+## inferred Keychain lock-on-sleep = 300 s
 
 The job printed lock-on-sleep timeout=300s for the ephemeral keychain — the create-keychain default. A 20-second ls sign never hits it; a real xcodebuild archive will, and fails with the same errSecInternalComponent mid-build. Fix: security set-keychain-settings "$KC" (no flags = never lock) right after create-keychain. Not observed failing yet; test as its own run.
 

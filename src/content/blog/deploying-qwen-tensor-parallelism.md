@@ -13,7 +13,7 @@ This post originally reported that tensor parallelism was working across both Ma
 
 Complete walkthrough: Hardware assessment → Memory optimization → Deployment → Testing
 
-### 1\. Hardware Assessment & Capacity Planning
+## 1\. Hardware Assessment & Capacity Planning
 
 Before deployment, understand your cluster's limitations and choose the right model.
 
@@ -54,7 +54,7 @@ A — Cluster Topology & Capacity
 | **abhisheks** (M4) | 16 GB | 10c | ✓ Yes (3.5 GB/node) | Comfortable margin, no swap |
 | **Total** | 24 GB | 18c | ✓ Full 7B model | With tensor parallelism across both nodes |
 
-### 2\. Memory Reclamation
+## 2\. Memory Reclamation
 
 Free up system memory by terminating unnecessary services before loading the model.
 
@@ -74,7 +74,7 @@ Free up system memory by terminating unnecessary services before loading the mod
 
 **Result:** Freed ~1 GB on abhisheks, ~0.5 GB on mm. Total available: 16 GB cluster-wide for model + inference.
 
-### 3\. Code Deployment & Server Startup
+## 3\. Code Deployment & Server Startup
 
 Deploy the latest oMLX code and restart inference servers on both nodes.
 
@@ -141,7 +141,7 @@ B — Deployment Pipeline
 
 **✓ Deployment Complete:** Both servers restarted with latest code, tests passing, ready for model loading.
 
-### 4\. Model Loading & Configuration
+## 4\. Model Loading & Configuration
 
 Load Qwen3.5-7B and configure tensor parallelism across both nodes.
 
@@ -193,7 +193,7 @@ C — Tensor Parallelism Configuration
 
     curl -s http://192.0.2.5:8000/cluster/status | jq '.loaded\_models' # Should show: qwen3\_5-7b-instruct with state "ready"
 
-### 5\. Performance Testing
+## 5\. Performance Testing
 
 Run inference tests and measure throughput, latency, and memory usage during operation.
 
@@ -242,31 +242,31 @@ D — Inference Test Timeline & Expected Performance
 -   ✅ Memory stays < 7 GB/node during inference
 -   ✅ No swap or memory errors
 
-### Key Commands Reference
+## Key Commands Reference
 
 \### Deployment cd /home/dk/Documents/hydra/omlx ./deploy.sh local-develop -y --restart --test \### Memory Cleanup ssh dk@192.0.2.5 "killall -9 Finder Dock Slack Chrome; purge" ssh dk@192.0.2.64 "killall -9 Finder Dock Slack Chrome; purge" \### Check Health curl -s http://192.0.2.5:8000/health | jq . \### Load Model (Tensor Parallel) curl -X POST http://192.0.2.5:8000/cluster/autoconfigure \\ -H "Content-Type: application/json" \\ -d '{"model\_id":"mlx-community/Qwen3.5-7B-Instruct","strategy":"auto","nodes":2}' \### Run Inference curl -X POST http://192.0.2.5:8000/v1/chat/completions \\ -H "Content-Type: application/json" \\ -d '{ "model":"qwen3.5-7b", "messages":\[{"role":"user","content":"Hello"}\], "max\_tokens":100 }' \### Monitor Performance ssh dk@192.0.2.5 "top -l1 | grep PhysMem" ssh dk@192.0.2.64 "top -l1 | grep PhysMem"
 
-### Troubleshooting
+## Troubleshooting
 
-### ❌ Server not responding (404 error)
+## ❌ Server not responding (404 error)
 
 The server is running, but dashboard endpoint is authenticated.
 
 **Solution:** Use API endpoints directly (e.g., \`/cluster/status\`, \`/v1/chat/completions\`). Dashboard at \`/admin\` requires login token.
 
-### ❌ Model loading fails
+## ❌ Model loading fails
 
 Weights download or sharding failed.
 
 **Solution:** Check disk space, internet connection, and logs. Retry with smaller model (Qwen3-7B) first.
 
-### ❌ Memory overflow (no swap available)
+## ❌ Memory overflow (no swap available)
 
 Model + inference exceed node RAM.
 
 **Solution:** Kill background processes, use pipeline parallelism instead, or switch to smaller model.
 
-### ❌ Latency too high (>10s/token)
+## ❌ Latency too high (>10s/token)
 
 Throughput is low despite using tensor parallelism.
 

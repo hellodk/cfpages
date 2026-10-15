@@ -6,7 +6,7 @@ tags: [tmux, terminal, dotfiles]
 draft: false
 ---
 
-### The Problem
+## The Problem
 
 Every developer who uses tmux hits the same wall: sessions pile up, names get forgotten, and `tmux ls` becomes a wall of text you scroll through while alt-tabbing between terminals.
 

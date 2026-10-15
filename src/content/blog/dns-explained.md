@@ -49,7 +49,7 @@ Use an **A record** when you know the **IP address** and it is stable.
 
 **Example (Namecheap-style panel):**
 
-```
+```text
 Type   Host   Value
 A      @      203.0.113.10
 A      www    203.0.113.10
@@ -73,7 +73,7 @@ A **CNAME** says: *this name is really that other name*. The target must be a ho
 
 Typical pattern:
 
-```
+```text
 CNAME   www   example.com.
 ```
 
@@ -86,7 +86,7 @@ CNAME   www   example.com.
 
 **MX** tells the world which mail servers accept email for your domain. Lower **priority** number = preferred server.
 
-```
+```text
 MX   @   10 mail.example.com.
 MX   @   20 backup.example.com.
 ```
@@ -105,7 +105,7 @@ Used for:
 
 Example SPF:
 
-```
+```text
 TXT   @   "v=spf1 include:_spf.google.com ~all"
 ```
 
@@ -132,7 +132,7 @@ Prefer a proper **A/CNAME + HTTPS** setup on real hosting when you can. Redirect
 
 ## Choosing a record type (decision tree)
 
-```
+```text
 Need to point a name to an IP?
   └─ Yes → A (or AAAA for v6)
 
