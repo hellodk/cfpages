@@ -3,6 +3,7 @@ title: "15 — SGLang on Two Mac Minis: A Scaffold, Not a Benchmark"
 date: 2026-08-04
 description: "SGLang joins the MLX vs vllm-metal comparison on two Mac Minis as an experimental scaffold — two independent replicas, native Prometheus metrics, and an unverified Apple Silicon device backend stated plainly, not glossed over."
 tags: [sglang, llm, macos]
+cover: "assets/images/covers/sglang-on-two-mac-minis.svg"
 draft: false
 ---
 

@@ -3,6 +3,7 @@ title: "Salt — Complete Visual Guide"
 date: 2026-05-30
 description: "SaltStack is a remote execution and configuration management system. One salt-master controls many salt-minions over encrypted ZeroMQ channels. Everything is event-driven and asynchronous."
 tags: [saltstack, devops, automation]
+cover: "assets/images/covers/salt-concepts.svg"
 draft: false
 ---
 

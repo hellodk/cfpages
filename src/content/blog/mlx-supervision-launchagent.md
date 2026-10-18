@@ -3,6 +3,7 @@ title: "Supervising mlx_lm.server With LaunchAgents (and Catching the Wedge)"
 date: 2026-10-06
 description: "Keeping mlx_lm.server alive on a headless FileVault Mac mini: LaunchAgent configs, HTTP watchdog that catches the wedge PID monitors miss, cron, caffeinate."
 tags: [mlx, macos, launchd, supervision]
+cover: "assets/images/covers/mlx-supervision-launchagent.svg"
 draft: false
 ---
 

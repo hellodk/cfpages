@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A data path stepping from pod to service into a graph panel">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EEF2FF"/>
+      <stop offset="1" stop-color="#DDE4FB"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#C7D2FE" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#A5B4FC" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#818CF8" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C9D2F2"/>
+<rect x="340" y="520" width="170" height="150" rx="18" fill="#4F46E5"/><circle cx="425" cy="595" r="26" fill="#FFFFFF"/><rect x="570" y="520" width="170" height="150" rx="18" fill="#4338CA"/><circle cx="655" cy="595" r="26" fill="#FFFFFF"/><rect x="800" y="520" width="170" height="150" rx="18" fill="#4F46E5"/><circle cx="885" cy="595" r="26" fill="#FFFFFF"/><line x1="510" y1="595" x2="570" y2="595" stroke="#818CF8" stroke-width="12" stroke-linecap="round"/><line x1="740" y1="595" x2="800" y2="595" stroke="#818CF8" stroke-width="12" stroke-linecap="round"/><rect x="1050" y="380" width="320" height="380" rx="20" fill="#FFFFFF" stroke="#94A3B8" stroke-width="6"/><polyline points="1090,660 1170,590 1250,630 1330,500" fill="none" stroke="#4F46E5" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

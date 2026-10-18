@@ -3,7 +3,7 @@ title: "920 Nodes, 2767 Edges: Mapping kri with graphify — A Real Fleet Codeba
 date: 2026-05-27
 description: "I ran graphify on kri, a FastAPI + React + SaltStack Mac Mini fleet manager, and let AST extraction + community detection reveal its 51 architectural clusters, 10 god-nodes, and the surprising cross-community bridges hiding in plain sight."
 tags: [kri, knowledge-graph, graphify]
-cover: "assets/images/Coding_with_Style-2_uhd.jpg"
+cover: "assets/images/covers/kri-knowledge-graph-graphify.svg"
 draft: false
 ---
 

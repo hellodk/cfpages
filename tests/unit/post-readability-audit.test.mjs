@@ -155,6 +155,30 @@ describe('font loading', () => {
   });
 });
 
+describe('reading typography', () => {
+  it('defines a system-sans reading font', () => {
+    expect(GLOBAL_CSS).toMatch(/--font-reading:\s*system-ui[^;]*sans-serif/);
+  });
+
+  it('post body and title read in that sans, not the Merriweather serif', () => {
+    const body = LAYOUT.match(/\.post-art__body\s*\{([^}]*)\}/);
+    const title = LAYOUT.match(/\.post-art__title\s*\{([^}]*)\}/);
+    expect(body, 'no .post-art__body rule').not.toBeNull();
+    expect(title, 'no .post-art__title rule').not.toBeNull();
+    for (const [name, css] of [['body', body[1]], ['title', title[1]]]) {
+      expect(css, name).not.toMatch(/Merriweather/i);
+      expect(css, name).toMatch(/var\(--font-reading\)|system-ui/);
+    }
+    for (const h of ['h2', 'h3', 'h4']) {
+      const m = LAYOUT.match(new RegExp('\\.post-art__body :global\\(' + h + '\\)\\s*\\{([^}]*)\\}'));
+      expect(m, 'no ' + h + ' rule').not.toBeNull();
+      expect(m[1], h).not.toMatch(/Merriweather/i);
+    }
+    // the reading serif is gone from the post layout entirely
+    expect(LAYOUT).not.toMatch(/Merriweather/);
+  });
+});
+
 describe('keyboard + share feedback', () => {
   it('defines a visible :focus-visible style', () => {
     const all = LAYOUT + GLOBAL_CSS + NEWSLETTER;

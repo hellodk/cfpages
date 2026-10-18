@@ -3,6 +3,7 @@ title: "The Library That Thinks — RAG, Embeddings & Vector DB"
 date: 2026-06-09
 description: "RAG, embeddings, and vector databases explained through analogy and animated SVG diagrams — with a deep-dive into how kri fleet platform uses pgvector for AI-augmented fleet queries."
 tags: [rag, embeddings, pgvector]
+cover: "assets/images/covers/rag-embeddings-vector-db.svg"
 draft: false
 ---
 

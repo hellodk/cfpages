@@ -3,6 +3,7 @@ title: "1 — Reading Apple Silicon GPU & Power Without Root"
 date: 2026-08-08
 description: "macOS exposes almost nothing about GPU memory, GPU utilization or die power through a public API. We found three command-line seams that together give us a full hardware picture — on both nodes, over SSH, no kernel modules."
 tags: [macos, mlx, observability]
+cover: "assets/images/covers/hardware-telemetry.svg"
 draft: false
 ---
 

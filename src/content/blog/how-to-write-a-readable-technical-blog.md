@@ -3,6 +3,7 @@ title: "How to Write a Technical Blog People Actually Finish"
 date: 2026-10-15
 description: "Five expert sources, six rules: what Baymard, Smashing Magazine, Google's docs guide, NN/g, and the W3C agree on about readable technical writing — applied to this very blog, with the numbers."
 tags: [writing, blogging, readability, ux]
+cover: "assets/images/covers/how-to-write-a-readable-technical-blog.jpg"
 draft: false
 tldr:
   summary: "Readable technical writing is a solved problem with agreed numbers: 50–75 characters per line, ~150% line height, one H1 with no skipped levels, 4.5:1 text contrast, tagged code samples wrapped at 80 characters, and alt text that follows the W3C decision tree. This post applies all six to this blog and shows the receipts."

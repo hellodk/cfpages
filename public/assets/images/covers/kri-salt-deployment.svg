@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A shaker dusting salt over a grid of nodes">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECFDF5"/>
+      <stop offset="1" stop-color="#D3EDE2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#A7F3D0" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#6EE7B7" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#5EEAD4" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C4D8CE"/>
+<path d="M700 340 L900 340 L840 520 L760 520 Z" fill="#14B8A6"/><rect x="690" y="300" width="220" height="60" rx="16" fill="#0D9488"/><circle cx="560" cy="680" r="16" fill="#5EEAD4"/><circle cx="720" cy="680" r="16" fill="#F59E0B"/><circle cx="880" cy="680" r="16" fill="#5EEAD4"/><circle cx="1040" cy="680" r="16" fill="#F59E0B"/><circle cx="560" cy="740" r="16" fill="#F59E0B"/><circle cx="720" cy="740" r="16" fill="#5EEAD4"/><circle cx="880" cy="740" r="16" fill="#F59E0B"/><circle cx="1040" cy="740" r="16" fill="#5EEAD4"/><circle cx="560" cy="800" r="16" fill="#5EEAD4"/><circle cx="720" cy="800" r="16" fill="#F59E0B"/><circle cx="880" cy="800" r="16" fill="#5EEAD4"/><circle cx="1040" cy="800" r="16" fill="#F59E0B"/><circle cx="560" cy="860" r="16" fill="#F59E0B"/><circle cx="720" cy="860" r="16" fill="#5EEAD4"/><circle cx="880" cy="860" r="16" fill="#F59E0B"/><circle cx="1040" cy="860" r="16" fill="#5EEAD4"/><circle cx="660" cy="560" r="8" fill="#0D9488"/><circle cx="700" cy="584" r="8" fill="#0D9488"/><circle cx="740" cy="560" r="8" fill="#0D9488"/><circle cx="780" cy="584" r="8" fill="#0D9488"/><circle cx="820" cy="560" r="8" fill="#0D9488"/><circle cx="860" cy="584" r="8" fill="#0D9488"/>
+</svg>

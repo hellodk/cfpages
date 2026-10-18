@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A stack of tokens beside a prompt card">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F7FEE7"/>
+      <stop offset="1" stop-color="#E6F5C9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#D9F99D" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#BEF264" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#BEF264" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#D6DCB8"/>
+<rect x="400" y="320" width="420" height="480" rx="20" fill="#FFFFFF" stroke="#4D7C0F" stroke-width="6"/><rect x="440" y="370" width="340" height="240" rx="12" fill="#F7FEE7" stroke="#BEF264" stroke-width="4"/><rect x="470" y="410" width="220" height="16" rx="8" fill="#BEF264"/><rect x="470" y="450" width="280" height="16" rx="8" fill="#BEF264"/><rect x="470" y="490" width="180" height="16" rx="8" fill="#BEF264"/><ellipse cx="1000" cy="660" rx="130" ry="40" fill="#4D7C0F"/><ellipse cx="1000" cy="616" rx="130" ry="40" fill="#65A30D"/><ellipse cx="1000" cy="572" rx="130" ry="40" fill="#4D7C0F"/><ellipse cx="1000" cy="528" rx="130" ry="40" fill="#65A30D"/><circle cx="1000" cy="300" r="70" fill="#4F46E5"/><circle cx="1000" cy="300" r="42" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.8"/><circle cx="1000" cy="300" r="15.4" fill="#FFFFFF"/>
+</svg>

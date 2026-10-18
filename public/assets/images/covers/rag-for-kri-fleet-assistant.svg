@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Documents chunking into a retrieval pipeline">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECFDF5"/>
+      <stop offset="1" stop-color="#D3EDE2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#A7F3D0" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#6EE7B7" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#5EEAD4" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C4D8CE"/>
+<rect x="360" y="300" width="260" height="340" rx="14" fill="#FFFFFF" stroke="#0D9488" stroke-width="6"/><polygon points="550,300 620,370 550,370" fill="#0D9488" opacity="0.25"/><rect x="394" y="430" width="192" height="16" rx="8" fill="#0D9488" opacity="0.35"/><rect x="394" y="476" width="112" height="16" rx="8" fill="#0D9488" opacity="0.35"/><rect x="394" y="522" width="192" height="16" rx="8" fill="#0D9488" opacity="0.35"/><rect x="394" y="568" width="112" height="16" rx="8" fill="#0D9488" opacity="0.35"/><path d="M660 470 H760" fill="none" stroke="#14B8A6" stroke-width="12"/><polygon points="750,440 790,470 750,500" fill="#14B8A6"/><rect x="830" y="360" width="240" height="220" rx="16" fill="#FFFFFF" stroke="#0D9488" stroke-width="6"/><rect x="860" y="400" width="180" height="16" rx="8" fill="#5EEAD4"/><rect x="860" y="440" width="140" height="16" rx="8" fill="#5EEAD4"/><rect x="860" y="480" width="180" height="16" rx="8" fill="#5EEAD4"/><rect x="860" y="520" width="120" height="16" rx="8" fill="#5EEAD4"/><polygon points="1090,470 1130,470 1110,510" fill="#14B8A6"/><circle cx="1190" cy="470" r="70" fill="#14B8A6"/><circle cx="1190" cy="470" r="26" fill="#FFFFFF"/>
+</svg>

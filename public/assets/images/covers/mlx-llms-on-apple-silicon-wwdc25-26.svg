@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Three small computers beneath a rising growth arrow">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EFF6FF"/>
+      <stop offset="1" stop-color="#D8E5FD"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#BFDBFE" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#C7D2FE" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#A5B4FC" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C9D6F2"/>
+<rect x="300" y="620" width="210" height="130" rx="22" fill="#A5B4FC" stroke="#4F46E5" stroke-width="6"/><circle cx="344" cy="685" r="15" fill="#4F46E5"/><rect x="450" y="675" width="34" height="12" rx="6" fill="#4F46E5"/><rect x="620" y="620" width="210" height="130" rx="22" fill="#A5B4FC" stroke="#4F46E5" stroke-width="6"/><circle cx="664" cy="685" r="15" fill="#4F46E5"/><rect x="770" y="675" width="34" height="12" rx="6" fill="#4F46E5"/><rect x="940" y="620" width="210" height="130" rx="22" fill="#A5B4FC" stroke="#4F46E5" stroke-width="6"/><circle cx="984" cy="685" r="15" fill="#4F46E5"/><rect x="1090" y="675" width="34" height="12" rx="6" fill="#4F46E5"/><line x1="510" y1="685" x2="620" y2="685" stroke="#6366F1" stroke-width="10" stroke-linecap="round"/><line x1="830" y1="685" x2="940" y2="685" stroke="#6366F1" stroke-width="10" stroke-linecap="round"/><path d="M420 560 C560 440 720 380 900 340" fill="none" stroke="#10B981" stroke-width="16"/><polygon points="880,306 960,336 900,392" fill="#10B981"/><circle cx="420" cy="560" r="26" fill="#6366F1"/><circle cx="660" cy="404" r="26" fill="#6366F1"/>
+</svg>

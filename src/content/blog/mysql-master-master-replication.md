@@ -4,7 +4,7 @@ date: 2017-06-21
 description: "Setting up MySQL master-master replication — the configuration, the caveats, and what to watch out for."
 tags: [mysql, databases, replication]
 draft: false
-cover: "assets/images/rethinkdb/rethinkdb1.jpg"
+cover: "assets/images/covers/mysql-master-master-replication.jpg"
 ---
 
 <html>

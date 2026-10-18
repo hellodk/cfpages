@@ -3,6 +3,7 @@ title: "Building a Robust RAG Pipeline for Fleet Management: Lessons from kri"
 date: 2026-05-31
 description: "A hands-on deep dive into building a Retrieval-Augmented Generation pipeline for a Mac Mini build fleet: data taxonomy, chunking, hybrid retrieval, live-state integration, pgvector, intent routing, grounding, and evaluation."
 tags: [rag, llm, kri]
+cover: "assets/images/covers/rag-for-kri-fleet-assistant.svg"
 draft: false
 ---
 

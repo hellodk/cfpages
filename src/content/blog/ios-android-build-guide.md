@@ -3,6 +3,7 @@ title: "iOS & Android Build Flows — Deep Dive Guide"
 date: 2026-06-01
 description: "Enterprise reference guide · Covers Xcode 16, CocoaPods 1.16, AGP 8.x, Gradle 8.x · Updated June 2026"
 tags: [ios, android, ci, mobile]
+cover: "assets/images/covers/ios-android-build-guide.svg"
 draft: false
 ---
 

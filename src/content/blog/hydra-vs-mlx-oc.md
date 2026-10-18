@@ -3,6 +3,7 @@ title: "8 — Hydra vs mlx-oc: Two Monitoring Architectures, One Metric Contract
 date: 2026-08-08
 description: "mlx-oc scrapes healthy nodes directly; hydra pushes everything through an OTel pipeline. Both track the same Apple Silicon GPU on the same macOS APIs — and both let the metric names silently drift until a dashboard panel goes dead. Here is the side-by-side, the apple-silicon-exporter answer, and the"
 tags: [observability, mlx]
+cover: "assets/images/covers/hydra-vs-mlx-oc.svg"
 draft: false
 ---
 

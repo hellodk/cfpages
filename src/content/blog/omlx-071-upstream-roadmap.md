@@ -3,6 +3,7 @@ title: "542 Commits In One Fast-Forward: The omlx 0.7.1.dev2 Upstream Merge"
 date: 2026-10-15
 description: "Merging 542 upstream omlx commits (0.7.0.dev4 → 0.7.1.dev2): 933 files, +147k/−36k lines. New serving endpoints, speculative decoding, MoE offload, and the kernel work behind them."
 tags: [omlx, llm, roadmap]
+cover: "assets/images/covers/omlx-071-upstream-roadmap.jpg"
 draft: false
 ---
 

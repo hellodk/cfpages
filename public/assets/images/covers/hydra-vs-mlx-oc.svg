@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A multi-headed pump beside a single clockwork monitor">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0FDFA"/>
+      <stop offset="1" stop-color="#D6F0EC"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#99F6E4" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#5EEAD4" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#99F6E4" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C6DCD8"/>
+<rect x="330" y="560" width="300" height="180" rx="20" fill="#14B8A6"/><rect x="330" y="560" width="300" height="44" rx="20" fill="#0F766E"/><path d="M430 560 V430 M530 560 V400 M630 560 V440" fill="none" stroke="#0F766E" stroke-width="24"/><circle cx="430" cy="420" r="30" fill="#F59E0B"/><circle cx="530" cy="390" r="30" fill="#F59E0B"/><circle cx="630" cy="430" r="30" fill="#F59E0B"/><circle cx="1120" cy="620" r="130" fill="#FFFFFF" stroke="#0F766E" stroke-width="14"/><line x1="1120" y1="620" x2="1120" y2="520" stroke="#0F766E" stroke-width="14" stroke-linecap="round"/><line x1="1120" y1="620" x2="1190" y2="650" stroke="#0F766E" stroke-width="14" stroke-linecap="round"/><circle cx="1120" cy="620" r="14" fill="#0F766E"/><circle cx="1120" cy="360" r="26" fill="#14B8A6"/><circle cx="1120" cy="360" r="60" fill="none" stroke="#14B8A6" stroke-width="8" opacity="0.5"/>
+</svg>

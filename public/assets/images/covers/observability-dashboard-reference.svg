@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A grid of dashboard panels with one line chart">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EEF2FF"/>
+      <stop offset="1" stop-color="#DDE4FB"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#C7D2FE" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#A5B4FC" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#818CF8" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C9D2F2"/>
+<rect x="380" y="250" width="840" height="560" rx="22" fill="#FFFFFF" stroke="#94A3B8" stroke-width="6"/><rect x="420" y="292" width="350" height="220" rx="16" fill="#EEF2FF" stroke="#818CF8" stroke-width="4"/><rect x="800" y="292" width="380" height="220" rx="16" fill="#E0E7FF" stroke="#818CF8" stroke-width="4"/><rect x="420" y="540" width="240" height="230" rx="16" fill="#E0E7FF" stroke="#818CF8" stroke-width="4"/><rect x="690" y="540" width="240" height="230" rx="16" fill="#EEF2FF" stroke="#818CF8" stroke-width="4"/><rect x="960" y="540" width="220" height="230" rx="16" fill="#E0E7FF" stroke="#818CF8" stroke-width="4"/><polyline points="450,470 520,410 590,440 660,350 730,380" fill="none" stroke="#4338CA" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><polyline points="830,470 900,360 970,420 1040,300 1150,340" fill="none" stroke="#4F46E5" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><rect x="450" y="700" width="60" height="50" rx="8" fill="#4F46E5"/><rect x="530" y="680" width="60" height="70" rx="8" fill="#4338CA"/><rect x="610" y="660" width="60" height="90" rx="8" fill="#4F46E5"/>
+</svg>

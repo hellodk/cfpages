@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A stack of alert cards beside a ringing bell">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF1F2"/>
+      <stop offset="1" stop-color="#FDE0E4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#FECDD3" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#FDA4AF" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#FDA4AF" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#EBC9CE"/>
+<path d="M628 470 Q628 300 734 280 Q840 300 840 470 Z" fill="#BE123C"/><rect x="600" y="464" width="268" height="26" rx="13" fill="#BE123C"/><circle cx="734" cy="522" r="22" fill="#BE123C"/><rect x="940" y="470" width="300" height="66" rx="14" fill="#FDA4AF"/><rect x="940" y="556" width="300" height="66" rx="14" fill="#E11D48"/><rect x="940" y="642" width="300" height="66" rx="14" fill="#FDA4AF"/><circle cx="980" cy="503" r="12" fill="#FFFFFF"/><circle cx="980" cy="589" r="12" fill="#FFFFFF"/><circle cx="980" cy="675" r="12" fill="#FFFFFF"/>
+</svg>

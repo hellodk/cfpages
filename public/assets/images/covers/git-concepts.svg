@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A commit graph with branches merging back">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0FDFA"/>
+      <stop offset="1" stop-color="#D6F0EC"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#99F6E4" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#5EEAD4" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#99F6E4" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C6DCD8"/>
+<line x1="500" y1="280" x2="500" y2="800" stroke="#14B8A6" stroke-width="14" stroke-linecap="round"/><circle cx="500" cy="320" r="26" fill="#0F766E"/><circle cx="500" cy="480" r="26" fill="#0F766E"/><circle cx="500" cy="640" r="26" fill="#0F766E"/><circle cx="500" cy="800" r="26" fill="#0F766E"/><path d="M500 480 C700 480 700 360 900 360" fill="none" stroke="#14B8A6" stroke-width="14"/><circle cx="900" cy="360" r="26" fill="#F59E0B"/><circle cx="900" cy="520" r="26" fill="#0F766E"/><path d="M900 360 C900 480 900 520 900 520" fill="none" stroke="#14B8A6" stroke-width="14"/><path d="M500 640 C760 640 760 800 1020 800" fill="none" stroke="#14B8A6" stroke-width="14"/><circle cx="1020" cy="800" r="26" fill="#F59E0B"/>
+</svg>

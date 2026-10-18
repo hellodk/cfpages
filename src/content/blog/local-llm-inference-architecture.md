@@ -3,6 +3,7 @@ title: "Local LLM Inference Architecture — From Silicon to Stack"
 date: 2026-07-17
 description: "A unified stack for running, routing, and observing LLMs — currently deployed on a laptop with RTX 3050 Ti, with planned expansions to K8s GPU nodes and Apple Silicon clusters."
 tags: [llm, inference, architecture]
+cover: "assets/images/covers/local-llm-inference-architecture.svg"
 draft: false
 ---
 

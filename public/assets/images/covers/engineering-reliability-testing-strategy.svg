@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A layered pyramid under a check shield">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#E7EDF6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#E2E8F0" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#CBD5E1" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#94A3B8" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#D7DEEB"/>
+<polygon points="800,380 1000,660 600,660" fill="#94A3B8"/><polygon points="800,500 940,660 660,660" fill="#475569"/><rect x="560" y="700" width="480" height="60" rx="12" fill="#334155"/><path d="M1180 348 L1272 384 V462 C1272 518 1228 554 1180 570 C1132 554 1088 518 1088 462 V384 Z" fill="#10B981" stroke="#1E293B" stroke-width="8"/><polyline points="1140,458 1172,490 1226,424" fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

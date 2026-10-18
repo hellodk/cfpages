@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A rack with a failing node under a magnifier">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#E7EDF6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#E2E8F0" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#CBD5E1" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#94A3B8" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#D7DEEB"/>
+<rect x="520" y="280" width="300" height="540" rx="24" fill="#E8EDF5" stroke="#94A3B8" stroke-width="6"/><rect x="520" y="280" width="300" height="54" rx="24" fill="#CBD5E1"/><rect x="542" y="350" width="256" height="96.5" rx="12" fill="#F8FAFC" stroke="#B6C2D6" stroke-width="4"/><circle cx="566" cy="398.25" r="11" fill="#10B981"/><rect x="590" y="389.25" width="180" height="18" rx="9" fill="#D7DEEB"/><rect x="542" y="462.5" width="256" height="96.5" rx="12" fill="#F8FAFC" stroke="#B6C2D6" stroke-width="4"/><circle cx="566" cy="510.75" r="11" fill="#10B981"/><rect x="590" y="501.75" width="180" height="18" rx="9" fill="#D7DEEB"/><rect x="542" y="575" width="256" height="96.5" rx="12" fill="#F8FAFC" stroke="#B6C2D6" stroke-width="4"/><circle cx="566" cy="623.25" r="11" fill="#EF4444"/><rect x="590" y="614.25" width="180" height="18" rx="9" fill="#D7DEEB"/><rect x="542" y="687.5" width="256" height="96.5" rx="12" fill="#F8FAFC" stroke="#B6C2D6" stroke-width="4"/><circle cx="566" cy="735.75" r="11" fill="#10B981"/><rect x="590" y="726.75" width="180" height="18" rx="9" fill="#D7DEEB"/><circle cx="1010" cy="600" r="130" fill="#FFFFFF" stroke="#1E293B" stroke-width="16"/><line x1="1101" y1="691" x2="1257" y2="847" stroke="#1E293B" stroke-width="22" stroke-linecap="round"/><circle cx="1010" cy="600" r="96" fill="#FFFFFF" opacity="0.01"/><circle cx="1010" cy="600" r="60" fill="none" stroke="#EF4444" stroke-width="14"/>
+</svg>

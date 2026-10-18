@@ -3,6 +3,7 @@ title: "2 — 28 Alert Rules and the Full Loop to Alertmanager"
 date: 2026-08-08
 description: "VictoriaMetrics on its own just stores numbers. Adding vmalert for evaluation and Alertmanager for routing turns a 92% full disk into a firing alert that actually reaches a webhook — with inhibit rules stopping the cascade when a whole node dies."
 tags: [observability, prometheus]
+cover: "assets/images/covers/alerting.svg"
 draft: false
 ---
 

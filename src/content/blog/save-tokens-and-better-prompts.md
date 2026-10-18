@@ -3,6 +3,7 @@ title: "How to Save Tokens and Write Better Prompts When Using AI Coding Assista
 date: 2026-03-04
 description: "Practical tips to reduce token exhaustion and get more useful responses from AI coding tools."
 tags: [llm, prompting, tokens]
+cover: "assets/images/covers/save-tokens-and-better-prompts.svg"
 draft: false
 ---
 

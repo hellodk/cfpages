@@ -3,6 +3,7 @@ title: "16 — Distributed MLX Tuning: The Lever Table, Applied and Measured"
 date: 2026-08-08
 description: "Post 14 shipped the decision ledger and the tuning guide. This post turns the tuning levers into an implementation plan for the ring cluster — and before writing any flags, the first thing we had to do was correct our own mental model of the network. The ring was already running on dedicated Gigabit"
 tags: [mlx, observability]
+cover: "assets/images/covers/mlx-distributed-options-tuning.svg"
 draft: false
 ---
 

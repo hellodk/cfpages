@@ -4,7 +4,7 @@ date: 2020-05-08
 description: "Step-by-step guide to generating self-signed and CA-signed SSL certificates on Linux."
 tags: [ssl, certificates, security]
 draft: false
-cover: "assets/images/cover3.jpg"
+cover: "assets/images/covers/generating-ssl-certificates.jpg"
 ---
 
 SSL – Secure Socket Layer

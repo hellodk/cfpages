@@ -4,7 +4,7 @@ date: 2026-06-20
 description: "A practical walkthrough of Apple's MLX framework for local LLMs — inference, quantization, fine-tuning on a single Mac, then scaling to multi-Mac clusters with JACCL and Thunderbolt 5."
 tags: [mlx, apple, llm, machine-learning, devops, mlops]
 draft: false
-cover: "assets/images/Coding_with_Style-2_uhd.jpg"
+cover: "assets/images/covers/mlx-llms-on-apple-silicon-wwdc25-26.svg"
 ---
 
 > **TL;DR** — Apple’s MLX stack lets you run, quantize, and fine-tune large language models entirely on your Mac — no cloud, no API keys. WWDC25 showed how to do it on a single machine; WWDC26 showed how to wire multiple Macs together over Thunderbolt 5 and run trillion-parameter models at your desk. This post distills both sessions into something you can actually use.

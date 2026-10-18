@@ -3,6 +3,7 @@ title: "Testing kri: Reliability Engineering for a macOS Fleet Management Platfo
 date: 2026-05-23
 description: "How we ensure a fleet management platform stays reliable across bootstraps, drift checks, and Salt operations — and where the gaps still are."
 tags: [kri, testing, strategy]
+cover: "assets/images/covers/kri-testing-strategy.svg"
 draft: false
 ---
 

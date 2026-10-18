@@ -3,6 +3,7 @@ title: "SRE LLM Fleet Decision: 20x M4 Minis, LiteLLM, Opik"
 date: 2026-10-04
 description: "Decision record: 20x Mac Mini M4 agentic LLM fleet for Open SRE — models, LiteLLM gateway, Opik tracing and hallucination control, monitoring."
 tags: [sre, llm, fleet, litellm, opik]
+cover: "assets/images/covers/sre-llm-fleet-decision.svg"
 draft: false
 ---
 

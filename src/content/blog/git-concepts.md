@@ -3,6 +3,7 @@ title: "Git Concepts — Visual Guide"
 date: 2026-05-27
 description: "Two branches co-exist: main (blue) has commits A→B→C; feature (green) diverged from B and added D→E."
 tags: [git, concepts, version-control]
+cover: "assets/images/covers/git-concepts.svg"
 draft: false
 ---
 

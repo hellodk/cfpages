@@ -3,6 +3,7 @@ title: "Container Scanners — Complete Visual Guide: Why Clair, Trivy, Prisma a
 date: 2026-10-11
 description: "Same image, four different answers: Quay/Clair says 18 Low where Trivy says 68 findings, and Trivy says 0 where Quay says 2 High. How Clair, Trivy, Prisma Cloud and Grype actually scan container images, the 7 reasons their findings differ, and the discipline that makes scanner output trustworthy."
 tags: [docker, container-security, trivy, clair, scanning]
+cover: "assets/images/covers/container-scanner-divergence.jpg"
 draft: false
 ---
 

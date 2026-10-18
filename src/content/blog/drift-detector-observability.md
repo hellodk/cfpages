@@ -3,6 +3,7 @@ title: "27 Tests, 3 Alerts, 1 Real Bug Review Caught: Making a Drift Detector Wa
 date: 2026-08-04
 description: "A Kubernetes drift detector could tell you when prod and dr fell out of sync — but had no way to tell you it had stopped checking. Here's how I closed that gap with structured logs, a real health check, Prometheus alerts, and a dashboard, ticket-first and test-first."
 tags: [observability, prometheus, kubernetes]
+cover: "assets/images/covers/drift-detector-observability.svg"
 draft: false
 ---
 

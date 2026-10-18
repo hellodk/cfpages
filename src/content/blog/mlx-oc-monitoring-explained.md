@@ -3,6 +3,7 @@ title: "MLX-OC — How LLM Monitoring Works"
 date: 2026-10-06
 description: "A component-by-component trace of how LLM monitoring works in ../mlx-oc: what is measured, which macOS tool or Python library produces each metric, how it travels, and where it lands."
 tags: [mlx, observability, monitoring, llm]
+cover: "assets/images/covers/mlx-oc-monitoring-explained.svg"
 draft: false
 ---
 

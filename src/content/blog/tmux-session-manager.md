@@ -3,6 +3,7 @@ title: "sess — Fuzzy Tmux Session Manager in 3 Scripts"
 date: 2026-07-17
 description: "A 3-file tmux session manager: fzf-powered session picker, auto-naming by project directory, and a sane tmux.conf. 50 lines of bash that replaced my terminal chaos."
 tags: [tmux, terminal, dotfiles]
+cover: "assets/images/covers/tmux-session-manager.svg"
 draft: false
 ---
 

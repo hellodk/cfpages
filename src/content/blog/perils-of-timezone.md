@@ -3,6 +3,7 @@ title: "The Perils of Timezone — A Complete Visual Guide"
 date: 2026-08-06
 description: "Why UTC is the only sane default, how timezones silently corrupt distributed systems, and the discipline that keeps IST (or any local time) exactly where it belongs — at the edge."
 tags: [timezone, distributed-systems, observability]
+cover: "assets/images/covers/perils-of-timezone.svg"
 draft: false
 ---
 

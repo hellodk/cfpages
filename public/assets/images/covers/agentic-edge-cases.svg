@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A flow chart where one branch dead-ends">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFBEB"/>
+      <stop offset="1" stop-color="#FCEFC7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#FDE68A" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#FCD34D" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#FCD34D" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#E7D6AE"/>
+<rect x="300" y="300" width="240" height="140" rx="18" fill="#FFFFFF" stroke="#D97706" stroke-width="6"/><rect x="680" y="300" width="240" height="140" rx="18" fill="#FFFFFF" stroke="#D97706" stroke-width="6"/><rect x="1060" y="300" width="240" height="140" rx="18" fill="#FFFFFF" stroke="#D97706" stroke-width="6"/><line x1="540" y1="370" x2="680" y2="370" stroke="#FCD34D" stroke-width="10" stroke-linecap="round"/><line x1="920" y1="370" x2="1060" y2="370" stroke="#FCD34D" stroke-width="10" stroke-linecap="round"/><line x1="800" y1="440" x2="800" y2="560" stroke="#B45309" stroke-width="8" stroke-linecap="round"/><rect x="680" y="560" width="240" height="140" rx="18" fill="none" stroke="#B45309" stroke-width="6" stroke-dasharray="18 14"/><polyline points="340,820 540,820 600,760 700,880 790,820 900,820 980,820 1260,820" fill="none" stroke="#B45309" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

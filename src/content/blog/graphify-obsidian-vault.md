@@ -3,6 +3,7 @@ title: "920 Nodes in Your Editor: graphify + Obsidian as a Living Codebase Map"
 date: 2026-05-28
 description: "How graphify turns a Python codebase into a queryable knowledge graph, and how the --obsidian flag exports it as a living Obsidian vault — annotatable, navigable, and persistent across sessions."
 tags: [graphify, obsidian, knowledge-graph]
+cover: "assets/images/covers/graphify-obsidian-vault.svg"
 draft: false
 ---
 

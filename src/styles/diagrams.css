@@ -71,9 +71,11 @@
   --d-surface: #F8FAFC;
   --d-bad: #B91C1C;
   --d-good: #15803D;
-  --d-warn: #D97706;
+  --d-warn: #B45309;
   --d-accent: #2563EB;
-  --d-dark: #1A1A3E;
+  /* Blue 100 tint — the pastel anchor. Replaces the navy #1A1A3E the source
+     diagrams used for their central actor. */
+  --d-anchor: #DBEAFE;
 }
 
 /* ---------------- core fill classes ----------------
@@ -91,11 +93,20 @@
 .post-art__body svg .sub {
   fill: var(--d-muted);
 }
-.post-art__body svg .bad-t {
-  fill: var(--d-bad);
+/* Semantic label text. svg-palette.css pins every <text> to the ink tone so
+   diagram labels never become a pastel; these re-assert good/bad and the
+   heading weight above that blanket rule, hence !important and the explicit
+   `text`/`tspan` target — the ink rule is `!important` too, so only a higher
+   specificity can beat it. */
+.post-art__body svg .bad-t,
+.post-art__body svg text.bad-t,
+.post-art__body svg tspan.bad-t {
+  fill: var(--d-bad) !important;
 }
-.post-art__body svg .good-t {
-  fill: var(--d-good);
+.post-art__body svg .good-t,
+.post-art__body svg text.good-t,
+.post-art__body svg tspan.good-t {
+  fill: var(--d-good) !important;
 }
 .post-art__body svg .wire {
   stroke: var(--d-muted);
@@ -106,20 +117,26 @@
    elements across the migrated builds sit directly on the card, so they get
    the primary text color and a bold weight. */
 .post-art__body svg .head-t {
-  fill: var(--d-text);
+  fill: var(--d-text) !important;
   font-weight: 800;
 }
 
-/* Dark "main actor" emphasis box (ui-diagrams.md central anchor). */
+/* "Main actor" emphasis box (ui-diagrams.md central anchor). The source filled
+   this navy #1A1A3E with white text — the single heaviest block on 27 posts.
+   It keeps the accent stroke so it still reads as the focal point, but moves to
+   the blue 100 tint, and its text drops to ink because a pastel fill can no
+   longer carry white. */
 .post-art__body svg .mainbox {
-  fill: var(--d-dark);
+  fill: var(--d-anchor);
   stroke: var(--d-accent);
   stroke-width: 1.5;
 }
 .post-art__body svg .mainbox text,
-.post-art__body svg .mainbox .lbl,
+.post-art__body svg .mainbox .lbl {
+  fill: var(--d-text);
+}
 .post-art__body svg .mainbox .sub {
-  fill: #FFFFFF;
+  fill: var(--d-muted) !important;
 }
 
 /* ---------------- flow-diagram classes ---------------- */

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Two small computers sharing a crowded socket">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF1F2"/>
+      <stop offset="1" stop-color="#FDE0E4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#FECDD3" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#FDA4AF" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#FDA4AF" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#EBC9CE"/>
+<rect x="300" y="480" width="210" height="130" rx="22" fill="#FDA4AF" stroke="#BE123C" stroke-width="6"/><circle cx="344" cy="545" r="15" fill="#BE123C"/><rect x="450" y="535" width="34" height="12" rx="6" fill="#BE123C"/><rect x="620" y="480" width="210" height="130" rx="22" fill="#FDA4AF" stroke="#BE123C" stroke-width="6"/><circle cx="664" cy="545" r="15" fill="#BE123C"/><rect x="770" y="535" width="34" height="12" rx="6" fill="#BE123C"/><rect x="980" y="560" width="220" height="200" rx="22" fill="#FFFFFF" stroke="#9F1239" stroke-width="10"/><circle cx="1030" cy="620" r="22" fill="#9F1239"/><circle cx="1150" cy="620" r="22" fill="#9F1239"/><g transform="rotate(0 1080 470)"><rect x="1054" y="430" width="52" height="78" rx="14" fill="#BE123C"/><rect x="1064" y="412" width="10" height="22" rx="5" fill="#BE123C"/><rect x="1086" y="412" width="10" height="22" rx="5" fill="#BE123C"/><rect x="1073" y="508" width="14" height="44" rx="7" fill="#94A3B8"/></g><g transform="rotate(-18 1120 470)"><rect x="1094" y="430" width="52" height="78" rx="14" fill="#0D9488"/><rect x="1104" y="412" width="10" height="22" rx="5" fill="#0D9488"/><rect x="1126" y="412" width="10" height="22" rx="5" fill="#0D9488"/><rect x="1113" y="508" width="14" height="44" rx="7" fill="#94A3B8"/></g><line x1="510" y1="610" x2="1010" y2="640" stroke="#FDA4AF" stroke-width="10" stroke-linecap="round"/><line x1="830" y1="610" x2="1060" y2="650" stroke="#FDA4AF" stroke-width="10" stroke-linecap="round"/><polygon points="1130,420 1170,470 1090,470" fill="#EF4444"/>
+</svg>

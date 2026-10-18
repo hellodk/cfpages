@@ -3,6 +3,7 @@ title: "Operating kri — The Fleet Manager's Field Guide"
 date: 2026-05-21
 description: "You've deployed kri. Postgres and Redis are in Docker, the FastAPI backend is on port 8000, and the React dashboard is on 5173. This post is the practical reference for the first week of operating it: starting services, reading logs, and diagnosing a node that won't bootstrap."
 tags: [kri, operations, devops]
+cover: "assets/images/covers/kri-ops-guide.svg"
 draft: false
 ---
 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A flow of parallel branches between two rails">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECFEFF"/>
+      <stop offset="1" stop-color="#D5F2F6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#A5F3FC" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#67E8F9" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#67E8F9" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C3DCE0"/>
+<line x1="300" y1="800" x2="1300" y2="800" stroke="#0E7490" stroke-width="16" stroke-linecap="round"/><line x1="300" y1="300" x2="1300" y2="300" stroke="#0891B2" stroke-width="16" stroke-linecap="round"/><path d="M420 800 C520 800 520 520 620 520" fill="none" stroke="#0891B2" stroke-width="14"/><path d="M620 520 H900" fill="none" stroke="#0891B2" stroke-width="14"/><path d="M900 520 C1000 520 1000 300 1100 300" fill="none" stroke="#0891B2" stroke-width="14"/><circle cx="420" cy="800" r="22" fill="#0E7490"/><circle cx="620" cy="520" r="26" fill="#F59E0B"/><circle cx="900" cy="520" r="22" fill="#0E7490"/><circle cx="1100" cy="300" r="22" fill="#0891B2"/><rect x="560" y="420" width="400" height="200" rx="20" fill="#FFFFFF" stroke="#67E8F9" stroke-width="6"/>
+</svg>

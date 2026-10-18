@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A grid of fleet nodes joined to a central orb">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EEF2FF"/>
+      <stop offset="1" stop-color="#DDE4FB"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#C7D2FE" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#A5B4FC" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#818CF8" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C9D2F2"/>
+<circle cx="800" cy="560" r="96" fill="#FFFFFF" stroke="#4338CA" stroke-width="12"/><circle cx="800" cy="560" r="34" fill="#4338CA"/><circle cx="420" cy="360" r="30" fill="#4F46E5"/><circle cx="1180" cy="360" r="30" fill="#4F46E5"/><circle cx="420" cy="760" r="30" fill="#4F46E5"/><circle cx="1180" cy="760" r="30" fill="#4F46E5"/><circle cx="560" cy="560" r="24" fill="#10B981"/><circle cx="1040" cy="560" r="24" fill="#10B981"/><line x1="450" y1="375" x2="720" y2="520" stroke="#818CF8" stroke-width="10" stroke-linecap="round"/><line x1="1150" y1="375" x2="880" y2="520" stroke="#818CF8" stroke-width="10" stroke-linecap="round"/><line x1="450" y1="745" x2="720" y2="600" stroke="#818CF8" stroke-width="10" stroke-linecap="round"/><line x1="1150" y1="745" x2="880" y2="600" stroke="#818CF8" stroke-width="10" stroke-linecap="round"/><line x1="584" y1="560" x2="704" y2="560" stroke="#818CF8" stroke-width="10" stroke-linecap="round"/><line x1="896" y1="560" x2="1016" y2="560" stroke="#818CF8" stroke-width="10" stroke-linecap="round"/>
+</svg>

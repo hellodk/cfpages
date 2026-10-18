@@ -3,6 +3,7 @@ title: "typhoon Was Strangling Itself — WiFi Power-Save & the CPU Governor Tra
 date: 2026-06-28
 description: "A k0s worker node's pods were stuck ContainerCreating and its CPU 'spiked too soon'. The real culprits weren't load — they were WiFi power-save (10% packet loss) starving the Calico CNI and a powersave governor pinning all cores at 800MHz. Full diagnosis, the fix script, and before/after evidence."
 tags: [kubernetes, k0s, calico, networking]
+cover: "assets/images/covers/typhoon-wifi-cpu-powersave.svg"
 draft: false
 ---
 

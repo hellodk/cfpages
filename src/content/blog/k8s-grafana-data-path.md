@@ -3,6 +3,7 @@ title: "20 — The Same Dashboards, Any Grafana: Shipping mlx-oc Data to the k8s
 date: 2026-08-09
 description: "The dashboards are files with a fixed datasource uid and a sidecar-based provisioning path. Sending this stack’s data to the k8s Grafana is therefore three disjoint problems: get the metrics into a reachable VictoriaMetrics, provision the dashboards as labeled ConfigMaps, and point Grafana at the"
 tags: [kubernetes, grafana, observability]
+cover: "assets/images/covers/k8s-grafana-data-path.svg"
 draft: false
 ---
 

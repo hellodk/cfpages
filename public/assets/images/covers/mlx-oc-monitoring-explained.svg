@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A monitor showing a metric line beside a model chip">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECFEFF"/>
+      <stop offset="1" stop-color="#D5F2F6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#A5F3FC" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#67E8F9" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#67E8F9" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C3DCE0"/>
+<rect x="360" y="300" width="620" height="420" rx="20" fill="#FFFFFF" stroke="#94A3B8" stroke-width="6"/><line x1="360" y1="500" x2="620" y2="500" stroke="#0891B2" stroke-width="12" stroke-linecap="round"/><line x1="360" y1="400" x2="620" y2="400" stroke="#0891B2" stroke-width="12" stroke-linecap="round"/><line x1="360" y1="600" x2="620" y2="600" stroke="#0891B2" stroke-width="12" stroke-linecap="round"/><polyline points="400,620 470,540 540,600 610,420 680,520 760,380 900,470" fill="none" stroke="#0E7490" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><line x1="670" y1="720" x2="670" y2="800" stroke="#94A3B8" stroke-width="16" stroke-linecap="round"/><rect x="560" y="800" width="220" height="26" rx="12" fill="#0891B2"/><rect x="1080" y="420" width="300" height="260" rx="20" fill="#155E75"/><rect x="1130" y="470" width="200" height="160" rx="12" fill="#0891B2"/><line x1="1220" y1="470" x2="1220" y2="420" stroke="#0891B2" stroke-width="12" stroke-linecap="round"/><circle cx="1160" cy="400" r="16" fill="#F59E0B"/><circle cx="1280" cy="400" r="16" fill="#F59E0B"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="One container judged by four different magnifiers">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECFEFF"/>
+      <stop offset="1" stop-color="#D5F2F6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#A5F3FC" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#67E8F9" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#67E8F9" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C3DCE0"/>
+<rect x="600" y="380" width="400" height="420" rx="24" fill="#0891B2"/><rect x="600" y="380" width="400" height="70" rx="24" fill="#0E7490"/><line x1="640" y1="500" x2="960" y2="500" stroke="#67E8F9" stroke-width="12" stroke-linecap="round"/><line x1="640" y1="570" x2="960" y2="570" stroke="#67E8F9" stroke-width="12" stroke-linecap="round"/><line x1="640" y1="640" x2="960" y2="640" stroke="#67E8F9" stroke-width="12" stroke-linecap="round"/><circle cx="360" cy="340" r="70" fill="#FFFFFF" stroke="#F59E0B" stroke-width="16"/><line x1="409" y1="389" x2="493" y2="473" stroke="#F59E0B" stroke-width="22" stroke-linecap="round"/><circle cx="1240" cy="340" r="70" fill="#FFFFFF" stroke="#0E7490" stroke-width="16"/><line x1="1289" y1="389" x2="1373" y2="473" stroke="#0E7490" stroke-width="22" stroke-linecap="round"/><circle cx="360" cy="840" r="70" fill="#FFFFFF" stroke="#0891B2" stroke-width="16"/><line x1="409" y1="889" x2="493" y2="973" stroke="#0891B2" stroke-width="22" stroke-linecap="round"/><circle cx="1240" cy="840" r="70" fill="#FFFFFF" stroke="#F59E0B" stroke-width="16"/><line x1="1289" y1="889" x2="1373" y2="973" stroke="#F59E0B" stroke-width="22" stroke-linecap="round"/><circle cx="360" cy="340" r="30" fill="#EF4444"/><circle cx="1240" cy="340" r="30" fill="#10B981"/><circle cx="360" cy="840" r="30" fill="#10B981"/><circle cx="1240" cy="840" r="30" fill="#F59E0B"/>
+</svg>

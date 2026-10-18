@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A circular restart arrow around a cracked gear">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF7ED"/>
+      <stop offset="1" stop-color="#FCEBD6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#FED7AA" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#FDBA74" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#FDBA74" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#E7D3B8"/>
+<rect x="930.5" y="540.5" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(0.0 950.0 560.0)"/><rect x="901.9" y="628.7" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(36.0 921.4 648.2)"/><rect x="826.9" y="683.2" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(72.0 846.4 702.7)"/><rect x="734.1" y="683.2" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(108.0 753.6 702.7)"/><rect x="659.1" y="628.7" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(144.0 678.6 648.2)"/><rect x="630.5" y="540.5" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(180.0 650.0 560.0)"/><rect x="659.1" y="452.3" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(216.0 678.6 471.8)"/><rect x="734.1" y="397.8" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(252.0 753.6 417.3)"/><rect x="826.9" y="397.8" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(288.0 846.4 417.3)"/><rect x="901.9" y="452.3" width="39.0" height="39.0" rx="9.0" fill="#EA580C" transform="rotate(324.0 921.4 471.8)"/><circle cx="800" cy="560" r="150" fill="#EA580C"/><circle cx="800" cy="560" r="63" fill="#FFFFFF"/><polygon points="760,470 840,540 775,545 850,660 790,575 855,570" fill="#FFFFFF" opacity="0.9"/><path d="M800 360 a200 200 0 1 1 -190 150" fill="none" stroke="#C2410C" stroke-width="18"/><polygon points="790,330 850,368 786,392" fill="#C2410C"/>
+</svg>

@@ -3,6 +3,7 @@ title: "Git Branching Strategy for AI-Assisted Development — Complete Visual G
 date: 2026-08-02
 description: "Four real options, not two. GitFlow is too heavy for a codebase where AI agents open PRs continuously; GitHub Flow is too loose once AI-generated code needs a supervised gate before production. The strategy below, Integration-Gate Flow, is a Trunk-Based Development variant — it keeps TBD's"
 tags: [git, ai, workflow]
+cover: "assets/images/covers/ai-git-branching-strategy.svg"
 draft: false
 ---
 

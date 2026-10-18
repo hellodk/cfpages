@@ -3,6 +3,7 @@ title: "OpenSRE Integrations — Complete Visual Guide"
 date: 2026-10-06
 description: "How to add an OpenSRE vendor integration the agent can actually call: the eight-layer anatomy, the build order, credential tiers, tool discovery, and the rules that make it reviewable. Worked example: NATS."
 tags: [opensre, devops, integrations]
+cover: "assets/images/covers/opensre-integrations.svg"
 draft: false
 ---
 

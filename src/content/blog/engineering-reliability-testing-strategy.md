@@ -3,6 +3,7 @@ title: "Engineering Reliability: A Testing & Quality Framework for Modern Web Pl
 date: 2026-05-23
 description: "A practical framework covering every layer — from fast unit tests to full-stack E2E — and the quality gates that make merging safe."
 tags: [testing, reliability, engineering]
+cover: "assets/images/covers/engineering-reliability-testing-strategy.svg"
 draft: false
 ---
 

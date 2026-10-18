@@ -3,6 +3,7 @@ title: "Zellij Session Manager — Every Terminal, Named, Resumable, Remote"
 date: 2026-07-17
 description: "A Zellij session management system: auto-naming from directories, auto-attach on shell open, capture existing terminals, fzf picker, Tailscale remote access, and reboot recovery. 4 scripts, 150 lines of bash."
 tags: [zellij, terminal, dotfiles]
+cover: "assets/images/covers/zellij-session-manager.svg"
 draft: false
 ---
 

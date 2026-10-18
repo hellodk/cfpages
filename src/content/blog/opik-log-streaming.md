@@ -3,6 +3,7 @@ title: "10 — The Other Half of the Story: Streaming Server Logs into Opik"
 date: 2026-08-08
 description: "Every request produces a trace — and a stack of raw lines in logs/server.log that used to be thrown away. This post is what we built to ship the server’s side of the story: tracing switched on, a filtered and flood-protected log tailer feeding the OTLP collector’s durable JSONL file, and the crash"
 tags: [opik, observability]
+cover: "assets/images/covers/opik-log-streaming.svg"
 draft: false
 ---
 

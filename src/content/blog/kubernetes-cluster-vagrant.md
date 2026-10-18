@@ -3,7 +3,7 @@ title: "Kubernetes Cluster on Vagrant"
 date: 2016-02-04
 description: "Step-by-step guide to spinning up a local multi-node Kubernetes cluster using Vagrant — useful for learning and testing without cloud costs."
 tags: [tutorials]
-cover: "assets/images/screen3.png"
+cover: "assets/images/covers/kubernetes-cluster-vagrant.jpg"
 draft: false
 ---
 

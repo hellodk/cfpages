@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A shaker pouring grains into labelled boxes">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFBEB"/>
+      <stop offset="1" stop-color="#FCEFC7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#FDE68A" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#FCD34D" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#FCD34D" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#E7D6AE"/>
+<path d="M760 320 L940 320 L880 520 L820 520 Z" fill="#B45309"/><rect x="750" y="280" width="200" height="56" rx="16" fill="#D97706"/><circle cx="820" cy="560" r="10" fill="#0D9488"/><circle cx="870.4882590884738" cy="590" r="10" fill="#0D9488"/><circle cx="874.5578456095409" cy="620" r="10" fill="#0D9488"/><circle cx="828.467200483592" cy="650" r="10" fill="#0D9488"/><circle cx="774.5918502815243" cy="680" r="10" fill="#0D9488"/><rect x="560" y="720" width="300" height="140" rx="16" fill="#FFFFFF" stroke="#B45309" stroke-width="6"/><rect x="960" y="720" width="300" height="140" rx="16" fill="#FFFFFF" stroke="#B45309" stroke-width="6"/>
+</svg>

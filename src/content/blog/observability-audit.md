@@ -3,6 +3,7 @@ title: "4 — What an External Observability Audit Found"
 date: 2026-08-08
 description: "An outside pass over the whole stack came back with two accepted criticals and nine findings we actually fixed — from double-counted OTel metrics and NaN gauges to stale series and dashboard provisioning drift."
 tags: [observability, audit]
+cover: "assets/images/covers/observability-audit.svg"
 draft: false
 ---
 

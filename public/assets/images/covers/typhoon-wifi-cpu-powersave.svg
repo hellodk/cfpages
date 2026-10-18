@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Wifi signal arcs beside a power meter">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F7FEE7"/>
+      <stop offset="1" stop-color="#E6F5C9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#D9F99D" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#BEF264" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#BEF264" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#D6DCB8"/>
+<path d="M400 600 Q800 150 1200 600" fill="none" stroke="#4D7C0F" stroke-width="22"/><path d="M520 660 Q800 330 1080 660" fill="none" stroke="#4D7C0F" stroke-width="22"/><path d="M640 720 Q800 510 960 720" fill="none" stroke="#4D7C0F" stroke-width="22"/><circle cx="800" cy="790" r="32" fill="#4F46E5"/><circle cx="1280" cy="620" r="86" fill="none" stroke="#3F6212" stroke-width="16"/><line x1="1280" y1="620" x2="1226" y2="566" stroke="#65A30D" stroke-width="14" stroke-linecap="round"/><circle cx="1280" cy="620" r="12" fill="#3F6212"/><circle cx="360" cy="800" r="24" fill="#65A30D"/>
+</svg>

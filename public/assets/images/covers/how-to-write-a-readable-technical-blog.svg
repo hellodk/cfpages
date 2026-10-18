@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A pen beside a page of even, readable lines">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EFF6FF"/>
+      <stop offset="1" stop-color="#D8E5FD"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#BFDBFE" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#C7D2FE" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#A5B4FC" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C9D6F2"/>
+<rect x="480" y="260" width="560" height="620" rx="14" fill="#FFFFFF" stroke="#4F46E5" stroke-width="6"/><polygon points="970,260 1040,330 970,330" fill="#4F46E5" opacity="0.25"/><rect x="514" y="390" width="492" height="16" rx="8" fill="#4F46E5" opacity="0.35"/><rect x="514" y="436" width="412" height="16" rx="8" fill="#4F46E5" opacity="0.35"/><rect x="514" y="482" width="492" height="16" rx="8" fill="#4F46E5" opacity="0.35"/><rect x="514" y="528" width="412" height="16" rx="8" fill="#4F46E5" opacity="0.35"/><rect x="560" y="380" width="400" height="20" rx="10" fill="#A5B4FC"/><rect x="560" y="460" width="340" height="20" rx="10" fill="#A5B4FC"/><rect x="560" y="540" width="400" height="20" rx="10" fill="#A5B4FC"/><rect x="560" y="620" width="340" height="20" rx="10" fill="#A5B4FC"/><rect x="560" y="700" width="400" height="20" rx="10" fill="#A5B4FC"/><rect x="1040" y="380" width="40" height="520" rx="16" fill="#4F46E5"/><polygon points="1040,380 1080,380 1060,320" fill="#4F46E5"/><circle cx="1060" cy="330" r="8" fill="#3730A3"/>
+</svg>

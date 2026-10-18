@@ -3,6 +3,7 @@ title: "Authentication Concepts — Persona Platform"
 date: 2026-06-06
 description: "LDAP, SSO, OIDC, OAuth 2.0, SAML 2.0, and Keycloak — explained with diagrams"
 tags: [auth, oidc, security, concepts]
+cover: "assets/images/covers/auth-concepts.svg"
 draft: false
 ---
 

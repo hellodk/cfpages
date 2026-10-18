@@ -3,6 +3,7 @@ title: "Token-Efficient E2E Testing with Claude Code & Playwright"
 date: 2026-05-21
 description: "How to cut AI-assisted testing costs by 10× while getting better coverage — using a three-tier strategy that keeps screenshots out of your context window."
 tags: [testing, e2e, tokens]
+cover: "assets/images/covers/e2e-testing-token-efficiency.svg"
 draft: false
 ---
 

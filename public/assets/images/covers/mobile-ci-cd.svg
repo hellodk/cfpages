@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A phone travelling a pipeline of rollers">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0FDFA"/>
+      <stop offset="1" stop-color="#D6F0EC"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#99F6E4" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#5EEAD4" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#99F6E4" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C6DCD8"/>
+<rect x="400" y="340" width="190" height="330" rx="26" fill="#0F766E"/><rect x="414" y="384" width="162" height="226" rx="10" fill="#FFFFFF"/><circle cx="495" cy="636" r="13" fill="#FFFFFF"/><circle cx="700" cy="660" r="60" fill="#14B8A6"/><circle cx="900" cy="660" r="60" fill="#14B8A6"/><circle cx="1100" cy="660" r="60" fill="#14B8A6"/><circle cx="700" cy="660" r="22" fill="#FFFFFF"/><circle cx="900" cy="660" r="22" fill="#FFFFFF"/><circle cx="1100" cy="660" r="22" fill="#FFFFFF"/><line x1="300" y1="620" x2="1300" y2="620" stroke="#99F6E4" stroke-width="12" stroke-linecap="round"/><rect x="1180" y="340" width="200" height="240" rx="20" fill="#FFFFFF" stroke="#0F766E" stroke-width="6"/><circle cx="1280" cy="460" r="44" fill="#F59E0B"/><polyline points="1258,460 1274,478 1306,440" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

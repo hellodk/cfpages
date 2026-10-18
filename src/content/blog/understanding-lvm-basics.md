@@ -4,7 +4,7 @@ date: 2017-08-21
 description: "A practical introduction to LVM — physical volumes, volume groups, logical volumes, and how to manage them."
 tags: [linux, storage, lvm]
 draft: false
-cover: "assets/images/cover5.jpg"
+cover: "assets/images/covers/understanding-lvm-basics.jpg"
 ---
 
 <p>

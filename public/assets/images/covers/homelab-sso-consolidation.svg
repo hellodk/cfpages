@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="One key opening three locks, one crossed out">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECFEFF"/>
+      <stop offset="1" stop-color="#D5F2F6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#A5F3FC" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#67E8F9" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#67E8F9" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C3DCE0"/>
+<circle cx="420" cy="560" r="44" fill="none" stroke="#0E7490" stroke-width="20"/><rect x="460" y="549" width="130" height="22" rx="11" fill="#0E7490"/><rect x="570" y="560" width="20" height="34" rx="8" fill="#0E7490"/><rect x="538" y="560" width="20" height="26" rx="8" fill="#0E7490"/><path d="M766 548 v-24 a34 34 0 0 1 68 0 v24" fill="none" stroke="#0891B2" stroke-width="16"/><rect x="752" y="548" width="96" height="84" rx="14" fill="#0891B2"/><circle cx="800" cy="590" r="12" fill="#FFFFFF"/><path d="M1026 548 v-24 a34 34 0 0 1 68 0 v24" fill="none" stroke="#0891B2" stroke-width="16"/><rect x="1012" y="548" width="96" height="84" rx="14" fill="#0891B2"/><circle cx="1060" cy="590" r="12" fill="#FFFFFF"/><path d="M1286 548 v-24 a34 34 0 0 1 68 0 v24" fill="none" stroke="#0891B2" stroke-width="16"/><rect x="1272" y="548" width="96" height="84" rx="14" fill="#0891B2"/><circle cx="1320" cy="590" r="12" fill="#FFFFFF"/><line x1="1290" y1="520" x2="1350" y2="600" stroke="#EF4444" stroke-width="14" stroke-linecap="round"/><line x1="1350" y1="520" x2="1290" y2="600" stroke="#EF4444" stroke-width="14" stroke-linecap="round"/><line x1="500" y1="560" x2="700" y2="560" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/>
+</svg>

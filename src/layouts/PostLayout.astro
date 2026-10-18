@@ -123,54 +123,97 @@ const shareUrl = encodeURIComponent(pageUrl);
 </ChirpingLayout>
 
 <style>
-.post-art { width: 100%; max-width: none; }
+/* The Confluence benchmark preview's design tokens, scoped to the article so
+   the rest of the site keeps its own palette. --pv-ok/--pv-warn are the darker
+   tones this repo already ships: the preview's own #16A34A / #D97706 measure
+   3.30:1 and 3.19:1 on white and fail WCAG AA for text. */
+.post-art {
+  --pv-ink: #111827;
+  --pv-muted: #4B5563;
+  --pv-border: #E5E7EB;
+  --pv-accent: #2563EB;
+  --pv-accent-soft: #EFF6FF;
+  --pv-surface: #F9FAFB;
+  --pv-card: #FFFFFF;
+  --pv-ok: #15803D; --pv-ok-soft: #F0FDF4;
+  --pv-warn: #B45309; --pv-warn-soft: #FFFBEB;
+  --pv-bad: #B91C1C; --pv-bad-soft: #FEF2F2;
+
+  /* The preview's .page — a bordered card on tinted ground. 800px rather than
+     the preview's 1100px because prose is held to a 68ch measure further down,
+     so a wider card would leave a dead gutter beside every paragraph. */
+  width: 100%;
+  max-width: 800px;
+  margin: 28px auto 64px;
+  background: var(--pv-card);
+  border: 1px solid var(--pv-border);
+  border-radius: 14px;
+  padding: 36px 44px 44px;
+}
+html[data-theme="dark"] .post-art {
+  --pv-ink: #ECE8E1; --pv-muted: #9D978E; --pv-border: #38352F;
+  --pv-accent: #8AB4F8; --pv-accent-soft: #1E2433; --pv-surface: #242322;
+  --pv-card: #1A1918;
+  --pv-ok: #6EE7B7; --pv-ok-soft: #10251C;
+  --pv-warn: #FCD34D; --pv-warn-soft: #241C0E;
+  --pv-bad: #FCA5A5; --pv-bad-soft: #2A1414;
+  background: var(--pv-card);
+  border-color: var(--pv-border);
+}
 
 /* Single content column: the TOC moved inline and Share moved into the
    header/footer, so the old 230px rail is gone and the body reclaims it. */
 .post-grid { display: block; }
 .post-main { min-width: 0; }
 .post-share { display: flex; align-items: center; gap: 10px; }
-.post-share__lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #6b7280; margin-right: 2px; }
-html[data-theme="dark"] .post-share__lbl { color: #6b7280; }
-.post-share__btn { width: 32px; height: 32px; border: 1px solid #dee2e6; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #6c757d; font-size: 0.8rem; font-weight: 700; text-decoration: none; background: #fff; cursor: pointer; font-family: system-ui, sans-serif; }
-.post-share__btn:hover { border-color: #a83a32; color: #a83a32; }
+.post-share__lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #4B5563; margin-right: 2px; }
+html[data-theme="dark"] .post-share__lbl { color: #9d978e; }
+.post-share__btn { width: 32px; height: 32px; border: 1px solid #E5E7EB; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #4B5563; font-size: 0.8rem; font-weight: 700; text-decoration: none; background: #fff; cursor: pointer; font-family: system-ui, sans-serif; }
+.post-share__btn:hover { border-color: #2563EB; color: #2563EB; }
 html[data-theme="dark"] .post-share__btn { background: #242322; border-color: #38352f; color: #9d978e; }
-html[data-theme="dark"] .post-share__btn:hover { border-color: #ef8a84; color: #ef8a84; }
+html[data-theme="dark"] .post-share__btn:hover { border-color: #8ab4f8; color: #8ab4f8; }
 
 /* Inline table of contents, part of the article flow. */
-.post-toc-inline__head { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #a83a32; margin-bottom: 10px; }
-html[data-theme="dark"] .post-toc-inline__head { color: #ef8a84; }
+.post-toc-inline__head { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #2563EB; margin-bottom: 10px; }
+html[data-theme="dark"] .post-toc-inline__head { color: #8ab4f8; }
 .post-toc-inline nav { display: block; font-family: system-ui, sans-serif; }
-.post-toc-inline__link { display: inline-block; font-size: 0.86rem; color: #44403c; text-decoration: none; line-height: 1.4; padding: 4px 10px; border: 1px solid #e8e3da; border-radius: 999px; background: #fbfaf7; transition: background .15s, border-color .15s, color .15s; }
+.post-toc-inline__link { display: inline-block; font-size: 0.86rem; color: #111827; text-decoration: none; line-height: 1.4; padding: 4px 10px; border: 1px solid #E5E7EB; border-radius: 999px; background: #F9FAFB; transition: background .15s, border-color .15s, color .15s; }
 html[data-theme="dark"] .post-toc-inline__link { color: #ece8e1; border-color: #38352f; background: #242322; }
-.post-toc-inline__link:hover { background: #f9e9e7; border-color: #a83a32; color: #a83a32; }
-html[data-theme="dark"] .post-toc-inline__link:hover { background: #3a2a28; border-color: #ef8a84; color: #ef8a84; }
+.post-toc-inline__link:hover { background: #EFF6FF; border-color: #2563EB; color: #2563EB; }
+html[data-theme="dark"] .post-toc-inline__link:hover { background: #1e2433; border-color: #8ab4f8; color: #8ab4f8; }
 .post-toc-inline__link--sub { padding-left: 14px; font-size: 0.82rem; }
 @media (max-width: 900px) {
   .post-main { padding-left: 0; }
 }
 
-.post-art__hd { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid #dee2e6; }
+.post-art__hd { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid #E5E7EB; }
+html[data-theme="dark"] .post-art__hd { border-bottom-color: #38352f; }
 
 .post-art__tags { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-.post-art__tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #0066cc; background: #e7f1ff; padding: 2px 8px; border-radius: 3px; text-decoration: none; }
-.post-art__tag:hover { background: #0066cc; color: #fff; }
+.post-art__tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #2563EB; background: #EFF6FF; border: 1px solid #DCE7FB; padding: 2px 8px; border-radius: 4px; text-decoration: none; }
+.post-art__tag:hover { background: #2563EB; border-color: #2563EB; color: #fff; }
+html[data-theme="dark"] .post-art__tag { background: #1e2433; border-color: #2a3450; color: #8ab4f8; }
 
-.post-art__title { font-family: 'Merriweather', Georgia, serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 900; line-height: 1.22; color: #1a1a1a; margin-bottom: 14px; letter-spacing: -0.4px; }
+/* Preview h1: 28px / 1.25 / -0.3px tracking. */
+.post-art__title { font-family: var(--font-reading); font-size: clamp(1.5rem, 5vw, 1.75rem); font-weight: 700; line-height: 1.25; color: #111827; margin: 0 0 12px; letter-spacing: -0.3px; }
+html[data-theme="dark"] .post-art__title { color: #ece8e1; }
 
-.post-art__byline { font-size: 0.8rem; color: #6c757d; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.s { color: #dee2e6; }
+.post-art__byline { font-size: 0.75rem; color: #4B5563; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+html[data-theme="dark"] .post-art__byline { color: #9d978e; }
+.s { color: #E5E7EB; }
+html[data-theme="dark"] .s { color: #38352f; }
 
 /* Header meta row: byline on the left, Share on the right. */
 .post-art__meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
 /* Footer share bar after the body. */
-.post-art__ft { margin-top: 34px; padding-top: 18px; border-top: 1px solid #dee2e6; }
+.post-art__ft { margin-top: 34px; padding-top: 18px; border-top: 1px solid #E5E7EB; }
 html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
 
-.post-art__cover { width: 100%; aspect-ratio: 16 / 9; max-height: 360px; object-fit: cover; border-radius: 8px; margin-top: 20px; display: block; }
+.post-art__cover { width: 100%; aspect-ratio: 16 / 9; max-height: 360px; object-fit: cover; border: 1px solid #E5E7EB; border-radius: 10px; margin-top: 20px; display: block; }
 
-/* Serif body */
+/* Post body typography: the preview's scale — h1 28, h2 20 with a bottom rule,
+   h3 16, body 14 → 17px here (kept at the site's measure-optimised size). */
 /* Post body content comes from markdown through <slot />, so it carries no
    data-astro-cid attribute. Astro scopes descendant selectors by adding that
    attribute to BOTH sides, so `.post-art__body h2` compiled to
@@ -178,22 +221,34 @@ html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
    dead on every post. :global() on the descendant keeps the rule anchored to
    .post-art__body while letting it reach markdown elements.
    Values are unchanged; only the table rules are new. */
-.post-art__body { font-family: 'Merriweather', Georgia, serif; font-size: 1.0625rem; line-height: 1.6; color: #2b2b2b; font-weight: 400; }
-.post-art__body :global(h2) { font-family: 'Merriweather', Georgia, serif; font-size: 1.5rem; font-weight: 700; margin: 2.2rem 0 0.8rem; color: #1a1a1a; letter-spacing: -0.01em; }
-.post-art__body :global(h3) { font-family: 'Merriweather', Georgia, serif; font-size: 1.22rem; font-weight: 700; margin: 1.9rem 0 0.6rem; color: #1a1a1a; }
-.post-art__body :global(h4) { font-family: 'Merriweather', Georgia, serif; font-size: 1.05rem; font-weight: 700; margin: 1.6rem 0 0.5rem; color: #1a1a1a; }
-.post-art__body :global(p) { margin-bottom: 1.5rem; }
-.post-art__body :global(ul), .post-art__body :global(ol) { margin: 0 0 1.5rem 0; padding-left: 1.5rem; }
+.post-art__body { font-family: var(--font-reading); font-size: 1.0625rem; line-height: 1.6; color: #111827; font-weight: 400; }
+html[data-theme="dark"] .post-art__body { color: #ece8e1; }
+.post-art__body :global(h2) { font-family: var(--font-reading); font-size: 20px; font-weight: 700; margin: 38px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #E5E7EB; color: #111827; letter-spacing: -0.3px; }
+.post-art__body :global(h3) { font-family: var(--font-reading); font-size: 16px; font-weight: 700; margin: 26px 0 10px; color: #111827; }
+.post-art__body :global(h4) { font-family: var(--font-reading); font-size: 0.875rem; font-weight: 700; margin: 24px 0 8px; color: #111827; text-transform: none; }
+html[data-theme="dark"] .post-art__body :global(h2),
+html[data-theme="dark"] .post-art__body :global(h3),
+html[data-theme="dark"] .post-art__body :global(h4) { color: #ece8e1; }
+html[data-theme="dark"] .post-art__body :global(h2) { border-bottom-color: #38352f; }
+.post-art__body :global(p) { margin: 10px 0; }
+.post-art__body :global(ul), .post-art__body :global(ol) { margin: 10px 0; padding-left: 1.5rem; }
 .post-art__body :global(ul) { list-style: disc; }
 .post-art__body :global(ol) { list-style: decimal; }
 .post-art__body :global(li) { margin-bottom: 0.45rem; padding-left: 0.25rem; }
 .post-art__body :global(li > ul), .post-art__body :global(li > ol) { margin-top: 0.45rem; }
-.post-art__body :global(a) { color: #0066cc; text-decoration: underline; text-underline-offset: 2px; }
+.post-art__body :global(a) { color: #2563EB; text-decoration: underline; text-underline-offset: 2px; }
+html[data-theme="dark"] .post-art__body :global(a) { color: #8ab4f8; }
 .post-art__body :global(strong) { font-weight: 700; }
-.post-art__body :global(blockquote) { border-left: 3px solid #d95f59; padding: 0.6rem 1.2rem; margin: 1.6rem 0; color: #6c757d; font-style: italic; background: #fbfaf7; }
-.post-art__body :global(pre) { margin: 1.5rem 0; border-radius: 8px; overflow-x: auto; border: 1px solid #dee2e6; font-size: 0.875rem; line-height: 1.7; }
-.post-art__body :global(code:not(pre code)) { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #f1f3f5; color: #ad3b2b; border: 1px solid #e5e6e7; padding: 0.1em 0.4em; border-radius: 3px; }
-.post-art__body :global(hr) { border: none; border-top: 1px solid #e8e3da; margin: 2.2rem 0; }
+.post-art__body :global(blockquote) { border-left: 4px solid #E5E7EB; padding: 8px 18px; margin: 18px 0; color: #4B5563; font-style: italic; background: #F9FAFB; border-radius: 0 10px 10px 0; }
+html[data-theme="dark"] .post-art__body :global(blockquote) { border-left-color: #38352f; background: #242322; color: #9d978e; }
+/* Code blocks. Shiki writes background-color as an inline style on every <pre>
+   (github-light, #fff), which a normal declaration cannot beat — hence
+   !important. The pastel tint separates the block from the white card; the
+   github-light token colours are already legible on it. */
+.post-art__body :global(pre) { margin: 18px 0; border-radius: 10px; overflow-x: auto; border: 1px solid #E5E7EB; background: #F6F8FA !important; font-size: 0.875rem; line-height: 1.7; }
+.post-art__body :global(code:not(pre code)) { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: #F3F4F6; color: #B91C1C; border: 1px solid #E5E7EB; padding: 0.1em 0.4em; border-radius: 4px; }
+.post-art__body :global(hr) { border: none; border-top: 1px solid #E5E7EB; margin: 30px 0; }
+html[data-theme="dark"] .post-art__body :global(hr) { border-top-color: #38352f; }
 
 /* Measure. Prose is capped near 68ch per the 45–75ch readability band
    (issue #15, reversing the 200ch trade-off from issue #14): past ~80ch
@@ -207,57 +262,77 @@ html[data-theme="dark"] .post-art__ft { border-top-color: #38352f; }
 .post-art__body :global(h3),
 .post-art__body :global(h4) { max-width: 68ch; }
 
-/* Tables: the layout never had rules for these. Several migrated posts and the
-   resume skills matrix contain them; without these they render as unspaced text. */
-.post-art__body :global(table) { width: 100%; max-width: 900px; border-collapse: collapse; margin: 0 0 1.4rem; font-family: system-ui, sans-serif; font-size: 0.92rem; line-height: 1.5; display: block; overflow-x: auto; font-variant-numeric: tabular-nums; }
-.post-art__body :global(th) { font-weight: 700; background: #f8f9fa; border: 1px solid #dee2e6; padding: 0.5rem 0.7rem; text-align: left; }
+/* Tables in the preview's format: tinted uppercase header, 1px rules, zebra. */
+.post-art__body :global(table) { width: 100%; max-width: 900px; border-collapse: collapse; margin: 14px 0; font-family: var(--font-reading); font-size: 13px; line-height: 1.5; display: block; overflow-x: auto; font-variant-numeric: tabular-nums; }
+.post-art__body :global(th) { font-weight: 600; background: #EFF6FF; border: 1px solid #E5E7EB; padding: 10px 12px; text-align: left; font-size: 12px; color: #4B5563; letter-spacing: 0.6px; text-transform: uppercase; }
 /* GFM column alignment (---: / :---:) arrives as align attributes from the
    migration converter; these override the default-left above (higher
    specificity + later order) so numeric columns right-align per data-table UX. */
 .post-art__body :global(th[align="right"]), .post-art__body :global(td[align="right"]) { text-align: right; }
 .post-art__body :global(th[align="center"]), .post-art__body :global(td[align="center"]) { text-align: center; }
-.post-art__body :global(td) { border: 1px solid #dee2e6; padding: 0.5rem 0.7rem; vertical-align: top; }
-.post-art__body :global(thead th) { position: sticky; top: 0; background: #f8f9fa; }
-.post-art__body :global(tbody tr:nth-child(even) td) { background: #f8f9fa; }
-.post-art__body :global(caption) { font-family: system-ui, sans-serif; font-size: 0.85rem; color: #6c757d; text-align: left; padding-bottom: 0.4rem; caption-side: top; }
+.post-art__body :global(td) { border: 1px solid #E5E7EB; padding: 9px 12px; vertical-align: top; background: #FFFFFF; }
+.post-art__body :global(thead th) { position: sticky; top: 0; background: #EFF6FF; }
+.post-art__body :global(tbody tr:nth-child(even) td) { background: #F9FAFB; }
+.post-art__body :global(caption) { font-family: var(--font-reading); font-size: 0.78rem; color: #4B5563; text-align: left; padding-bottom: 0.4rem; caption-side: top; }
+html[data-theme="dark"] .post-art__body :global(th) { background: #1e2433; border-color: #38352f; color: #9d978e; }
+html[data-theme="dark"] .post-art__body :global(td) { background: #1a1918; border-color: #38352f; color: #ece8e1; }
+html[data-theme="dark"] .post-art__body :global(tbody tr:nth-child(even) td) { background: #242322; }
 
 /* Style 2 components (issue #14): stat cards and callouts emitted by the
    migration converter (scripts/lib/html-to-md.mjs) as raw HTML. :global() for
    the same scoping reason as every rule above — markdown carries no cid. */
-.post-art__body :global(.stat-cards) { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 1.5rem 0; font-family: system-ui, sans-serif; }
-.post-art__body :global(.stat-card) { border: 1px solid #dee2e6; border-radius: 10px; padding: 14px; background: #fff; }
-.post-art__body :global(.stat-card__n) { display: block; font-size: 1.3rem; font-weight: 800; color: #1a1a1a; }
-.post-art__body :global(.stat-card__l) { display: block; font-size: 0.78rem; color: #6c757d; margin-top: 2px; }
+.post-art__body :global(.stat-cards) { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0; font-family: system-ui, sans-serif; }
+.post-art__body :global(.stat-card) { border: 1px solid #E5E7EB; border-radius: 10px; padding: 14px; background: #FFFFFF; }
+.post-art__body :global(.stat-card__n) { display: block; font-size: 1.3rem; font-weight: 800; color: #111827; }
+.post-art__body :global(.stat-card__l) { display: block; font-size: 0.78rem; color: #4B5563; margin-top: 2px; }
+/* These three are pinned to literal hex: the WCAG suite reads them back with
+   ruleColor() and scores them against #FFFFFF, so var() would fail the test. */
 .post-art__body :global(.stat-card--ok .stat-card__n) { color: #15803d; }
 .post-art__body :global(.stat-card--err .stat-card__n) { color: #b91c1c; }
 .post-art__body :global(.stat-card--warn .stat-card__n) { color: #b45309; }
-.post-art__body :global(.callout) { border-left: 4px solid #0066cc; background: #eff6ff; border-radius: 8px; padding: 14px 16px; margin: 1.5rem 0; font-family: system-ui, sans-serif; max-width: 68ch; }
-.post-art__body :global(.callout__title) { display: block; margin-bottom: 2px; }
+
+/* Callouts in the preview's format: 4px accent rail, soft tint, 10px radius.
+   ok/warn use the AA-passing tones rather than the preview's own #16A34A /
+   #D97706 (3.30:1 and 3.19:1 on white). */
+.post-art__body :global(.callout) { border: 1px solid #E5E7EB; border-left: 4px solid #2563EB; border-radius: 10px; padding: 14px 18px; margin: 18px 0; background: #EFF6FF; font-family: system-ui, sans-serif; max-width: 68ch; }
+.post-art__body :global(.callout__title) { display: block; font-weight: 700; font-size: 13px; margin-bottom: 4px; color: #2563EB; }
 .post-art__body :global(.callout__body p:last-child) { margin-bottom: 0; }
-.post-art__body :global(.callout--ok) { border-color: #15803d; background: #f0fdf4; }
-.post-art__body :global(.callout--err) { border-color: #b91c1c; background: #fef2f2; }
-.post-art__body :global(.callout--warn) { border-color: #b45309; background: #fffbeb; }
+.post-art__body :global(.callout--ok) { border-left-color: #15803D; background: #F0FDF4; }
+.post-art__body :global(.callout--ok .callout__title) { color: #15803D; }
+.post-art__body :global(.callout--err) { border-left-color: #B91C1C; background: #FEF2F2; }
+.post-art__body :global(.callout--err .callout__title) { color: #B91C1C; }
+.post-art__body :global(.callout--warn) { border-left-color: #B45309; background: #FFFBEB; }
+.post-art__body :global(.callout--warn .callout__title) { color: #B45309; }
+html[data-theme="dark"] .post-art__body :global(.callout) { background: #1e2433; border-color: #2a3450; border-left-color: #8ab4f8; color: #ece8e1; }
+html[data-theme="dark"] .post-art__body :global(.callout__title) { color: #8ab4f8; }
+html[data-theme="dark"] .post-art__body :global(.callout--ok) { background: #10251C; border-left-color: #6EE7B7; }
+html[data-theme="dark"] .post-art__body :global(.callout--ok .callout__title) { color: #6EE7B7; }
+html[data-theme="dark"] .post-art__body :global(.callout--err) { background: #2A1414; border-left-color: #FCA5A5; }
+html[data-theme="dark"] .post-art__body :global(.callout--err .callout__title) { color: #FCA5A5; }
+html[data-theme="dark"] .post-art__body :global(.callout--warn) { background: #241C0E; border-left-color: #FCD34D; }
+html[data-theme="dark"] .post-art__body :global(.callout--warn .callout__title) { color: #FCD34D; }
 @media (max-width: 700px) {
   .post-art__body :global(.stat-cards) { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* TL;DR summary panel at the top of the post (ledger-style). */
-.post-tldr { background: #fbfaF7; border: 1px solid #e8e3da; border-left: 3px solid #d95f59; border-radius: 8px; padding: 18px 20px; margin: 0 0 28px; max-width: 68ch; }
-html[data-theme="dark"] .post-tldr { background: #242322; border-color: #38352f; }
+/* TL;DR summary panel — same geometry as the preview's .callout: tinted body,
+   4px accent rail, 10px radius. */
+.post-tldr { background: #EFF6FF; border: 1px solid #E5E7EB; border-left: 4px solid #2563EB; border-radius: 10px; padding: 14px 18px; margin: 0 0 28px; max-width: 68ch; }
+html[data-theme="dark"] .post-tldr { background: #1e2433; border-color: #2a3450; border-left-color: #8ab4f8; }
 .post-tldr__head { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-.post-tldr__label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.16em; color: #a83a32; border: 1px solid #a83a32; border-radius: 3px; padding: 2px 9px; background: #f9e9e7; }
-html[data-theme="dark"] .post-tldr__label { color: #ef8a84; border-color: #ef8a84; background: #3a2a28; }
-.post-tldr__meta { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #6b7280; }
+.post-tldr__label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.16em; color: #FFFFFF; border: 1px solid #2563EB; border-radius: 4px; padding: 2px 9px; background: #2563EB; }
+html[data-theme="dark"] .post-tldr__label { background: #8ab4f8; border-color: #8ab4f8; color: #10151f; }
+.post-tldr__meta { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #4B5563; }
 html[data-theme="dark"] .post-tldr__meta { color: #9d978e; }
-.post-tldr__summary { font-family: 'Merriweather', Georgia, serif; font-size: 1rem; line-height: 1.75; color: #242220; margin: 0 0 12px; }
+.post-tldr__summary { font-family: var(--font-reading); font-size: 1rem; line-height: 1.75; color: #111827; margin: 0 0 12px; }
 html[data-theme="dark"] .post-tldr__summary { color: #ece8e1; }
 .post-tldr__points { list-style: none; margin: 0; padding: 0; }
-.post-tldr__points li { display: flex; gap: 14px; padding: 10px 0; border-top: 1px solid #e8e3da; }
-html[data-theme="dark"] .post-tldr__points li { border-top-color: #38352f; }
+.post-tldr__points li { display: flex; gap: 14px; padding: 10px 0; border-top: 1px solid #DCE7FB; }
+html[data-theme="dark"] .post-tldr__points li { border-top-color: #2a3450; }
 .post-tldr__points li:first-of-type { padding-top: 8px; border-top: none; }
-.post-tldr__k { font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; color: #a83a32; white-space: nowrap; align-self: flex-start; line-height: 1.4; }
-html[data-theme="dark"] .post-tldr__k { color: #ef8a84; }
-.post-tldr__points li span:last-child { color: #242220; font-size: 0.94rem; line-height: 1.5; }
+.post-tldr__k { font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; color: #2563EB; white-space: nowrap; align-self: flex-start; line-height: 1.4; }
+html[data-theme="dark"] .post-tldr__k { color: #8ab4f8; }
+.post-tldr__points li span:last-child { color: #111827; font-size: 0.94rem; line-height: 1.5; }
 html[data-theme="dark"] .post-tldr__points li span:last-child { color: #ece8e1; }
 
 /* TOC hierarchy: nested lists keep DOM outline semantics while pills flow
@@ -265,8 +340,8 @@ html[data-theme="dark"] .post-tldr__points li span:last-child { color: #ece8e1; 
 .post-toc-inline__list, .post-toc-inline__sublist { list-style: none; margin: 0; padding: 0; display: inline; }
 .post-toc-inline nav, .post-toc-inline__list > li { display: inline; }
 .post-toc-inline__link { margin: 0 10px 10px 0; }
-.post-toc-inline__link[aria-current="true"] { background: #f9e9e7; border-color: #a83a32; color: #a83a32; }
-html[data-theme="dark"] .post-toc-inline__link[aria-current="true"] { background: #3a2a28; border-color: #ef8a84; color: #ef8a84; }
+.post-toc-inline__link[aria-current="true"] { background: #EFF6FF; border-color: #2563EB; color: #2563EB; }
+html[data-theme="dark"] .post-toc-inline__link[aria-current="true"] { background: #1e2433; border-color: #8ab4f8; color: #8ab4f8; }
 
 /* Screen-reader-only live region for copy-link confirmation. */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

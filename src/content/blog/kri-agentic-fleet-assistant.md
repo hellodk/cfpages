@@ -3,6 +3,7 @@ title: "From RAG to Agentic: How We Let an LLM Touch a 920-Node Fleet — Safely
 date: 2026-06-09
 description: "Continuing the kri fleet assistant story: the bugs that shipped after RAG landed, the agentic design we red-teamed before building, a 6-persona audit that found the control plane was broken, and the safety model for letting an LLM act on real infrastructure."
 tags: [agents, kri, llm, saltstack]
+cover: "assets/images/covers/kri-agentic-fleet-assistant.svg"
 draft: false
 ---
 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Telemetry signals converging into one node map">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ECFEFF"/>
+      <stop offset="1" stop-color="#D5F2F6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#A5F3FC" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#67E8F9" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#67E8F9" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#C3DCE0"/>
+<circle cx="800" cy="560" r="92" fill="#FFFFFF" stroke="#0E7490" stroke-width="12"/><circle cx="800" cy="560" r="30" fill="#0E7490"/><circle cx="420" cy="320" r="30" fill="#0891B2"/><circle cx="320" cy="620" r="26" fill="#F59E0B"/><circle cx="430" cy="840" r="30" fill="#0891B2"/><circle cx="1180" cy="320" r="30" fill="#0891B2"/><circle cx="1280" cy="620" r="26" fill="#F59E0B"/><circle cx="1170" cy="840" r="30" fill="#0891B2"/><line x1="450" y1="330" x2="740" y2="520" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/><line x1="346" y1="620" x2="708" y2="560" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/><line x1="455" y1="830" x2="730" y2="600" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/><line x1="1150" y1="330" x2="860" y2="520" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/><line x1="1254" y1="620" x2="892" y2="560" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/><line x1="1145" y1="830" x2="870" y2="600" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/><polyline points="360,540 560,540 620,470 700,610 780,540 980,540 1040,540 1240,540" fill="none" stroke="#0E7490" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

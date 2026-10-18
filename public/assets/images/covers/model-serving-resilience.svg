@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="A server rack with a steady heartbeat trace">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF1F2"/>
+      <stop offset="1" stop-color="#FDE0E4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#FECDD3" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#FDA4AF" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#FDA4AF" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#EBC9CE"/>
+<rect x="360" y="300" width="300" height="520" rx="24" fill="#E8EDF5" stroke="#94A3B8" stroke-width="6"/><rect x="360" y="300" width="300" height="54" rx="24" fill="#CBD5E1"/><rect x="382" y="370" width="256" height="91.5" rx="12" fill="#F8FAFC" stroke="#B6C2D6" stroke-width="4"/><circle cx="406" cy="415.75" r="11" fill="#10B981"/><rect x="430" y="406.75" width="180" height="18" rx="9" fill="#D7DEEB"/><rect x="382" y="477.5" width="256" height="91.5" rx="12" fill="#F8FAFC" stroke="#B6C2D6" stroke-width="4"/><circle cx="406" cy="523.25" r="11" fill="#10B981"/><rect x="430" y="514.25" width="180" height="18" rx="9" fill="#D7DEEB"/><rect x="382" y="585" width="256" height="91.5" rx="12" fill="#F8FAFC" stroke="#B6C2D6" stroke-width="4"/><circle cx="406" cy="630.75" r="11" fill="#F59E0B"/><rect x="430" y="621.75" width="180" height="18" rx="9" fill="#D7DEEB"/><rect x="382" y="692.5" width="256" height="91.5" rx="12" fill="#F8FAFC" stroke="#B6C2D6" stroke-width="4"/><circle cx="406" cy="738.25" r="11" fill="#10B981"/><rect x="430" y="729.25" width="180" height="18" rx="9" fill="#D7DEEB"/><rect x="720" y="330" width="520" height="460" rx="22" fill="#FFFFFF" stroke="#94A3B8" stroke-width="6"/><polyline points="760,600 850,600 900,480 960,720 1020,560 1090,600 1210,600" fill="none" stroke="#BE123C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><circle cx="1210" cy="600" r="20" fill="#0D9488"/>
+</svg>

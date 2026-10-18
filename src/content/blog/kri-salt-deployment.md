@@ -3,6 +3,7 @@ title: "Salt on macOS — How kri Deploys and Operates the Fleet Control Plane"
 date: 2026-06-21
 description: "A deep dive into how kri deploys salt-master and salt-minion on macOS Mac Minis using Ansible — plist services, PAM auth, salt-api, and how minions find their master."
 tags: [saltstack, macos, kri, launchd]
+cover: "assets/images/covers/kri-salt-deployment.svg"
 draft: false
 ---
 

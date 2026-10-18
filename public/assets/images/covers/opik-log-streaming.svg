@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" role="img" aria-label="Log lines streaming through a funnel into a barrel">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#E7EDF6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg)"/>
+  <circle cx="215" cy="205" r="150" fill="#E2E8F0" opacity="0.55"/>
+  <circle cx="1405" cy="855" r="180" fill="#CBD5E1" opacity="0.45"/>
+  <circle cx="1355" cy="185" r="62" fill="#94A3B8" opacity="0.5"/>
+  <ellipse cx="800" cy="898" rx="545" ry="56" fill="#D7DEEB"/>
+<rect x="420" y="300" width="300" height="24" rx="12" fill="#94A3B8"/><rect x="450" y="356" width="240" height="24" rx="12" fill="#475569"/><rect x="480" y="412" width="180" height="24" rx="12" fill="#94A3B8"/><rect x="510" y="468" width="120" height="24" rx="12" fill="#475569"/><path d="M620 520 L1000 560 L1000 720 L620 760 Z" fill="#475569"/><rect x="1040" y="540" width="280" height="300" rx="22" fill="#334155"/><rect x="1040" y="540" width="280" height="40" rx="22" fill="#1E293B"/><line x1="1100" y1="640" x2="1280" y2="640" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/><line x1="1100" y1="700" x2="1240" y2="700" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/><line x1="1100" y1="760" x2="1300" y2="760" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/>
+</svg>

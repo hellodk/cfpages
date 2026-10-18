@@ -9,6 +9,12 @@
   --font-serif:  'Merriweather', Georgia, 'Times New Roman', serif;
   --font-mono:   'JetBrains Mono', 'Fira Code', monospace;
 
+  /* Long-form reading text. The Confluence preview renders posts in the plain
+     system UI sans (system-ui/-apple-system/Segoe UI/Roboto); match that so
+     article bodies read the same way instead of in the Merriweather serif.
+     'Open Sans' stays last as a webfont fallback for systems without a UI face. */
+  --font-reading: system-ui, -apple-system, 'Segoe UI', Roboto, 'Open Sans', sans-serif;
+
   /* Casper palette */
   --color-bg:        #ffffff;
   --color-bg-dark:   #15171a;
@@ -17,6 +23,15 @@
   --color-accent:    #e5645e;
   --color-border:    #e7eef2;
   --color-mid-gray:  #ccc;
+}
+
+/* One font system on the post page.
+   ChirpingLayout tags article pages with .chirp-shell--article, so rebinding
+   --font-sans here pulls the sidebars, topbar and footer into the same
+   system-UI stack the article body reads in — without touching the home,
+   listing, about and tag pages, which keep the Open Sans webfont. */
+.chirp-shell--article {
+  --font-sans: var(--font-reading);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

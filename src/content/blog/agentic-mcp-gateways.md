@@ -3,6 +3,7 @@ title: "Agentic AI, MCP & Gateways — Complete Visual Guide"
 date: 2026-06-08
 description: "Strip away the hype and an AI agent is one simple thing: a language model running in a loop, calling tools, and reading the results until a goal is reached. A chatbot answers once and stops. An agent acts — it decides its own next step based on what just happened in the environment."
 tags: [mcp, agents, llm]
+cover: "assets/images/covers/agentic-mcp-gateways.svg"
 draft: false
 ---
 

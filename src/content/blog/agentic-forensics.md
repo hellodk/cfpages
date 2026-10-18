@@ -3,6 +3,7 @@ title: "13 — The Fault Is Remote: Why rank1 Dies First"
 date: 2026-08-08
 description: "Post 11 called metal_gpu_error a streaming+tools trigger and suspected version skew. Both were wrong. A fresh incident — two real agentic requests, then a trivial five-token request crashing the box — sent us to the machines themselves. The macOS crash reports live on only one of them, the backtrace"
 tags: [agents, debugging]
+cover: "assets/images/covers/agentic-forensics.svg"
 draft: false
 ---
 

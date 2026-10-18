@@ -3,6 +3,7 @@ title: "9 — The Night the GPU Crashed: Serving Health, Supervision & Load Test
 date: 2026-08-08
 description: "A Metal command-buffer fault silently killed mlx_lm.server while the proxy kept answering 503s. The alert fired — but it was generic, nothing restarted the server, and no metric could say \"the model is actually loaded and serving right now.\" This post fixes all three: a supervising watchdog,"
 tags: [llm, mlx, observability]
+cover: "assets/images/covers/model-serving-resilience.svg"
 draft: false
 ---
 
