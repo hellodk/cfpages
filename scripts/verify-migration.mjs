@@ -93,8 +93,8 @@ for (const post of POSTS) {
 // ---- totals, asserted rather than echoed ----
 const live = POSTS.filter((p) => !p.draft).length;
 const draft = POSTS.filter((p) => p.draft).length;
-if (POSTS.length !== 96) fail.push(`manifest has ${POSTS.length} posts, expected 96`);
-if (live !== 89) fail.push(`manifest has ${live} live posts, expected 89`);
+if (POSTS.length !== 105) fail.push(`manifest has ${POSTS.length} posts, expected 105`);
+if (live !== 98) fail.push(`manifest has ${live} live posts, expected 98`);
 if (draft !== 7) fail.push(`manifest has ${draft} draft posts, expected 7`);
 
 // ---- masking: idempotence, injectivity, and no survivor ----
@@ -187,7 +187,7 @@ if (stray.length) fail.push(`unaccounted for in ~/Documents/blogs: ${stray.join(
 
 // ---- summary: 96 managed posts, distinct from the directory total ----
 const total = fs.readdirSync(OUT).filter((f) => f.endsWith('.md')).length;
-console.log(`migrated: ${POSTS.length}/96  (${live} live, ${draft} draft)`);
+console.log(`migrated: ${POSTS.length}/${POSTS.length}  (${live} live, ${draft} draft)`);
 console.log(`src/content/blog/ total: ${total}  (${total - POSTS.length} pre-existing, untouched)`);
 
 if (fail.length) {

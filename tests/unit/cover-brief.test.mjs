@@ -38,9 +38,12 @@ describe('the brief covers exactly what the site publishes', () => {
   const published = publishedSlugs();
   const briefed = briefedSlugs();
 
-  it('briefs all 112 published posts', () => {
-    expect(briefed).toHaveLength(112);
-    expect(published).toHaveLength(112);
+  it('briefs every published post, one row each', () => {
+    // No hardcoded total: the brief must track the site, so a post added or
+    // unpublished changes this count on its own.
+    const duplicated = briefed.filter((s, i) => briefed.indexOf(s) !== i);
+    expect(briefed).toHaveLength(published.length);
+    expect(duplicated).toEqual([]);
   });
 
   it('leaves no published post without a subject', () => {

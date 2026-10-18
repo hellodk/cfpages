@@ -282,6 +282,15 @@ that is what keeps the set grounded.
 | `opensre-integrations` | A switchboard of labelled patch cords, most seated, two crossed mid-air, bakelite worn smooth at the jacks. |
 | `cve-agent-autopush` | A conveyor stamper caught mid-press over a metal plate, the previous plates stacked neatly, oil sheen on the bed. |
 | `omlx-071-upstream-roadmap` | A railway junction at dusk with converging tracks merging into one line, an amber signal lamp against the gloom. |
+| `local-llm-mlx-serving-landscape` | A wall of pigeonhole shelves in an old post office, dozens of identical small boxes each holding one sorted bundle, side light picking out the divisions between families. |
+| `omlx-vs-mlx-serve-benchmark` | Two identical stopwatch clocks mounted side by side on a bench, both stopped on the same reading, a single cable looping between them. |
+| `mlx-architecture` | A glass skeleton of a building's frame standing on one continuous foundation, no separate base, the load path running straight through, a single overhead lamp on the Metal structure. |
+| `mlx-hw-telemetry` | A bank of old analogue needle gauges bolted to a brushed panel, two of them twitching at different rhythms, wiring disappearing into the back of the case. |
+| `mlx-metrics-proxy` | A single brass water meter clamped in the middle of one copper pipe, the whole house's flow passing through its one dial before it continues onward. |
+| `mtp-multi-token-prediction` | A printing press ejecting several stacked sheets from one pull of the lever instead of a single page, ink still wet on the top sheet. |
+| `omlx-speculative-decoding` | A writing desk with a stack of blank draft pages, a red rubber stamp resting idle beside them, nothing pressed. |
+| `omlx-tiered-ssd-cache` | A filing system of shallow drawers beside a deep archive box, the hot cards fanned in the open drawer, the cold ones squared away and tied in the box below. |
+| `transformer-architecture` | A cutaway cross-section of a machine bolted to a classroom stand, every internal layer exposed and bare, a pointer resting on the attention block. |
 
 ---
 

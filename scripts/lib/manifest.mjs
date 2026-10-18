@@ -127,4 +127,15 @@ export const POSTS = [
   { src: 'mlx-oc/20-k8s-grafana-data-path.html', slug: 'k8s-grafana-data-path', date: '2026-08-09', tags: ['kubernetes', 'grafana', 'observability'], draft: false },
   { src: 'mlx-oc/21-thunderbolt-ring-launchdaemons.html', slug: 'thunderbolt-ring-launchdaemons', date: '2026-08-09', tags: ['macos', 'networking'], draft: false },
   { src: 'mlx-oc/22-observability-dashboard-reference.html', slug: 'observability-dashboard-reference', date: '2026-08-09', tags: ['observability', 'grafana'], draft: false },
+
+  // ---- Bucket E: 2026-10-17/18 mlx + oMLX serving series, date from the directory name ----
+  { src: '2026-10-17-local-llm-mlx-serving-landscape/2026-10-17-local-llm-mlx-serving-landscape.html', slug: 'local-llm-mlx-serving-landscape', date: '2026-10-17', tags: ['llm', 'inference', 'mlx', 'apple-silicon'], draft: false },
+  { src: '2026-10-17-omlx-vs-mlx-serve-benchmark/2026-10-17-omlx-vs-mlx-serve-benchmark.html', slug: 'omlx-vs-mlx-serve-benchmark', date: '2026-10-17', tags: ['mlx', 'llm', 'inference', 'prometheus'], draft: false },
+  { src: '2026-10-18-mlx-architecture/2026-10-18-mlx-architecture.html', slug: 'mlx-architecture', date: '2026-10-18', tags: ['mlx', 'apple-silicon', 'inference'], draft: false },
+  { src: '2026-10-18-mlx-hw-telemetry/2026-10-18-mlx-hw-telemetry.html', slug: 'mlx-hw-telemetry', date: '2026-10-18', tags: ['mlx', 'macos', 'observability', 'prometheus'], draft: false },
+  { src: '2026-10-18-mlx-metrics-proxy/2026-10-18-mlx-metrics-proxy.html', slug: 'mlx-metrics-proxy', date: '2026-10-18', tags: ['mlx', 'observability', 'prometheus', 'llm'], draft: false },
+  { src: '2026-10-18-mtp-multi-token-prediction/2026-10-18-mtp-multi-token-prediction.html', slug: 'mtp-multi-token-prediction', date: '2026-10-18', tags: ['llm', 'inference', 'mlx'], draft: false },
+  { src: '2026-10-18-omlx-speculative-decoding/2026-10-18-omlx-speculative-decoding.html', slug: 'omlx-speculative-decoding', date: '2026-10-18', tags: ['mlx', 'llm', 'inference', 'debugging'], draft: false },
+  { src: '2026-10-18-omlx-tiered-ssd-cache/2026-10-18-omlx-tiered-ssd-cache.html', slug: 'omlx-tiered-ssd-cache', date: '2026-10-18', tags: ['mlx', 'llm', 'inference', 'macos'], draft: false },
+  { src: '2026-10-18-transformer-architecture/2026-10-18-transformer-architecture.html', slug: 'transformer-architecture', date: '2026-10-18', tags: ['llm', 'inference', 'architecture'], draft: false },
 ];

@@ -32,33 +32,33 @@ all, and 307 label/backdrop pairs fall under the 4.5:1 contrast floor.
 
 | Metric | Value |
 |---|---|
-| publishedPosts | 112 |
-| postsWithSvg | 68 |
-| svgs | 221 |
-| diagrams | 202 |
+| publishedPosts | 121 |
+| postsWithSvg | 77 |
+| svgs | 241 |
+| diagrams | 222 |
 | icons | 19 |
-| cleanSvgs | 44 |
-| coversOnDefault | 53 |
-| distinctCovers | 57 |
+| cleanSvgs | 46 |
+| coversOnDefault | 9 |
+| distinctCovers | 113 |
 | missingCovers | 0 |
 | missingBodyImages | 0 |
-| oversizedCovers | 14 |
-| narrowCovers | 14 |
-| distinctAspects | 15 |
+| oversizedCovers | 12 |
+| narrowCovers | 12 |
+| distinctAspects | 13 |
 
 | SVG defect | Occurrences | SVGs | Posts |
 |---|---|---|---|
-| tiny-font | 1612 | 122 | 43 |
-| low-contrast | 355 | 87 | 33 |
+| tiny-font | 1915 | 140 | 51 |
+| low-contrast | 372 | 93 | 36 |
 | dark-panel | 21 | 18 | 11 |
-| no-role | 124 | 124 | 32 |
-| no-aria-label | 122 | 122 | 30 |
+| no-role | 134 | 134 | 35 |
+| no-aria-label | 132 | 132 | 33 |
 | diagonal | 33 | 33 | 20 |
 | text-past-viewbox | 20 | 15 | 13 |
 | blank-line | 0 | 0 | 0 |
 | no-viewbox | 0 | 0 | 0 |
 
-Only **4 of 121** SVGs are clean.
+Only **46 of 241** SVGs are clean.
 
 ---
 
@@ -526,6 +526,24 @@ New issue-list members from this batch: `container-scanner-divergence`,
 `mlx-supervision-launchagent` arrived with no SVG defects. The two held stubs
 (`2026-10-02-gemma-4-e2b-mm1-mlx`, `2026-10-03-gemma-4-mlx-kaggle-mirror`)
 stay unmigrated per the manifest.
+
+## Addendum 2026-10-18 — nine mlx/omX serving posts
+
+Nine posts from the Apple-silicon serving series joined the site:
+`local-llm-mlx-serving-landscape`, `omlx-vs-mlx-serve-benchmark`,
+`mlx-architecture`, `mlx-hw-telemetry`, `mlx-metrics-proxy`,
+`mtp-multi-token-prediction`, `omlx-speculative-decoding`,
+`omlx-tiered-ssd-cache`, `transformer-architecture`. Headline totals and
+defect tables above are current including them; the per-section distribution
+histograms (S2 font-size table and friends) predate the additions —
+representative, not recounted. New issue-list members from this batch:
+`local-llm-mlx-serving-landscape`, `mlx-architecture`, `mlx-hw-telemetry`,
+`mlx-metrics-proxy`, `mtp-multi-token-prediction`, `omlx-speculative-decoding`,
+`omlx-tiered-ssd-cache`, `transformer-architecture` (tiny-font);
+`mlx-architecture`, `mtp-multi-token-prediction`, `transformer-architecture`
+(low-contrast). All nine arrived without `cover:` frontmatter and are not in
+`SLUG_COVERS`, so they resolve a cover through the tag fallback or
+`extractFirstImage` rather than a dedicated image.
 
 ## Suggested order of work
 
